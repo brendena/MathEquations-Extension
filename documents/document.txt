@@ -1,0 +1,16 @@
+How to add elements to page
+https://stackoverflow.com/questions/14068879/modify-html-of-loaded-pages-using-chrome-extensions/14069119#14069119
+
+I have a example of this in m other example
+https://github.com/brendena/askew/blob/master/extension/content.js
+
+
+how to save text to clipboard
+https://hackernoon.com/you-need-to-discover-the-awesome-clipboard-web-api-12b248d05dd3
+
+
+Library to 
+https://clipboardjs.com/
+
+Library on how to copy image 
+https://jsfiddle.net/p83gp77c/

@@ -25,25 +25,30 @@ main =
 
 init : (Model, Cmd Msg)
 init  =
-  ( Model "" False 200, Cmd.none
+  ( Model "" False 800 Tex, Cmd.none
   )
 
 { id, class, classList } =
     withNamespace "main"
 
+type  MathType =
+         MathML
+        | AsciiMath
+        | Tex
 
 type alias Model =
   { 
     baseUrl: String,
     trackMousePointerBool: Bool,
-    equationContainerTop: Int
+    equationContainerTop: Int,
+    selectedMathEquation: MathType
   }
 
 type Msg
   = UrlChange String
   | MouseChange Int Int
-  | SetTrackMousePointerTrue
-  | SetTrackMousePointerFalse
+  | SetTrackMousePointer Bool
+  | ChangeMathType MathType
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -55,22 +60,21 @@ update msg model =
       in
         ({model | equationContainerTop = y } , Cmd.none)
 
-    SetTrackMousePointerTrue  ->
-      let
-          _ = Debug.log "testing this out" 2
-      in
-          
-      ({model | trackMousePointerBool = True}, Cmd.none)
+    SetTrackMousePointer set -> 
+      ({model | trackMousePointerBool = set}, Cmd.none)
 
-    SetTrackMousePointerFalse ->
-      ({model | trackMousePointerBool = False}, Cmd.none)
+    
+    ChangeMathType mathType ->
+      ({model | selectedMathEquation = mathType}, Cmd.none)
+    
+    
 
 view : Model -> Html Msg
 view model =
     div [ id "elmContainer"] [
         div [id MyCss.EquationsContainer, style[ ("top",toString(model.equationContainerTop) ++"px")]  ] [ 
           div [] [
-            img [draggable "False",id MyCss.ResizeIcon, onMouseDown SetTrackMousePointerTrue, src ( model.baseUrl ++ "images/resizeIcon.svg") ] []
+            img [draggable "False",id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src ( model.baseUrl ++ "images/resizeIcon.svg") ] []
           ],
           div [id MyCss.MathTextEquationContainer] [
             textarea [placeholder "equation location", id MyCss.MathEquationText] [text ""]
@@ -78,13 +82,23 @@ view model =
         ],
         div [id MyCss.NavContainer]  [ 
            img [id "logo", class [MyCss.NavLogo] , src ( model.baseUrl ++ "images/logoClearBackground.svg") ] [],
-           button [class [MyCss.NavButton]] [
+           button [onClick (ChangeMathType Tex), (navButtonClass model.selectedMathEquation Tex )] [
              img [id MyCss.LatexImage, src ( model.baseUrl ++ "images/latex.svg")] []
            ],
-           button [class [MyCss.NavButton]] [text "AsciiMath"],
-           button [class [MyCss.NavButton]] [text "MathML"]
+           button [onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathEquation AsciiMath ) ] [text "AsciiMath"],
+           button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathEquation MathML )] [text "MathML"]
         ]
     ]
+{--------------ViewHelperFunc----------------------------------------}
+navButtonClass : MathType -> MathType  -> Attribute Msg
+navButtonClass modelMathTypeSelect mathType =
+  let
+      equal = modelMathTypeSelect ==  mathType
+  in
+    case equal of
+      True -> class [MyCss.NavButton, MyCss.NavButtonSelected]
+      False -> class [MyCss.NavButton]
+{--------------ViewHelperFunc----------------------------------------}
 
 {--------------SubScriptions----------------------------------------}
 subscriptions : Model -> Sub Msg
@@ -92,7 +106,7 @@ subscriptions model =
 
   Sub.batch (trackMousePointer(model.trackMousePointerBool) ++  [
       updatingBaseUrl UrlChange,
-      Mouse.ups (\{x, y} -> SetTrackMousePointerFalse)
+      Mouse.ups (\{x, y} -> SetTrackMousePointer(False)  )
     ])
 
 trackMousePointer : Bool -> List (Sub Msg)

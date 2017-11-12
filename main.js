@@ -14748,6 +14748,7 @@ var _user$project$MyCss$heightNavContainer = 100;
 var _user$project$MyCss$userSelect = function (i) {
 	return A2(_rtfeldman$elm_css$Css$property, 'user-select', i);
 };
+var _user$project$MyCss$NavButtonSelected = {ctor: 'NavButtonSelected'};
 var _user$project$MyCss$NavButton = {ctor: 'NavButton'};
 var _user$project$MyCss$NavLogo = {ctor: 'NavLogo'};
 var _user$project$MyCss$NavBar = {ctor: 'NavBar'};
@@ -14938,14 +14939,18 @@ var _user$project$MyCss$css = function (_p0) {
 												_0: _user$project$MyCss$userSelect('none'),
 												_1: {
 													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$hover(
-														{
-															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$opacity(
-																_rtfeldman$elm_css$Css$num(1)),
-															_1: {ctor: '[]'}
-														}),
-													_1: {ctor: '[]'}
+													_0: _rtfeldman$elm_css$Css$cursor(_rtfeldman$elm_css$Css$nsResize),
+													_1: {
+														ctor: '::',
+														_0: _rtfeldman$elm_css$Css$hover(
+															{
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$opacity(
+																	_rtfeldman$elm_css$Css$num(1)),
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
 												}
 											}
 										}
@@ -15070,7 +15075,19 @@ var _user$project$MyCss$css = function (_p0) {
 														}
 													}
 												}),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_rtfeldman$elm_css$Css$class,
+													_user$project$MyCss$NavButtonSelected,
+													{
+														ctor: '::',
+														_0: _rtfeldman$elm_css$Css$backgroundColor(
+															_rtfeldman$elm_css$Css$hex('#aaaa78')),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
@@ -15104,13 +15121,12 @@ var _user$project$Main$update = F2(
 						{equationContainerTop: _p2}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			case 'SetTrackMousePointerTrue':
-				var _p3 = A2(_elm_lang$core$Debug$log, 'testing this out', 2);
+			case 'SetTrackMousePointer':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{trackMousePointerBool: true}),
+						{trackMousePointerBool: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
@@ -15118,27 +15134,58 @@ var _user$project$Main$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{trackMousePointerBool: false}),
+						{selectedMathEquation: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 		}
 	});
-var _user$project$Main$_p4 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('main');
-var _user$project$Main$id = _user$project$Main$_p4.id;
-var _user$project$Main$class = _user$project$Main$_p4.$class;
-var _user$project$Main$classList = _user$project$Main$_p4.classList;
-var _user$project$Main$updatingBaseUrl = _elm_lang$core$Native_Platform.incomingPort('updatingBaseUrl', _elm_lang$core$Json_Decode$string);
-var _user$project$Main$Model = F3(
-	function (a, b, c) {
-		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c};
+var _user$project$Main$_p3 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('main');
+var _user$project$Main$id = _user$project$Main$_p3.id;
+var _user$project$Main$class = _user$project$Main$_p3.$class;
+var _user$project$Main$classList = _user$project$Main$_p3.classList;
+var _user$project$Main$navButtonClass = F2(
+	function (modelMathTypeSelect, mathType) {
+		var equal = _elm_lang$core$Native_Utils.eq(modelMathTypeSelect, mathType);
+		var _p4 = equal;
+		if (_p4 === true) {
+			return _user$project$Main$class(
+				{
+					ctor: '::',
+					_0: _user$project$MyCss$NavButton,
+					_1: {
+						ctor: '::',
+						_0: _user$project$MyCss$NavButtonSelected,
+						_1: {ctor: '[]'}
+					}
+				});
+		} else {
+			return _user$project$Main$class(
+				{
+					ctor: '::',
+					_0: _user$project$MyCss$NavButton,
+					_1: {ctor: '[]'}
+				});
+		}
 	});
+var _user$project$Main$updatingBaseUrl = _elm_lang$core$Native_Platform.incomingPort('updatingBaseUrl', _elm_lang$core$Json_Decode$string);
+var _user$project$Main$Model = F4(
+	function (a, b, c, d) {
+		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathEquation: d};
+	});
+var _user$project$Main$Tex = {ctor: 'Tex'};
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: A3(_user$project$Main$Model, '', false, 200),
+	_0: A4(_user$project$Main$Model, '', false, 800, _user$project$Main$Tex),
 	_1: _elm_lang$core$Platform_Cmd$none
 };
-var _user$project$Main$SetTrackMousePointerFalse = {ctor: 'SetTrackMousePointerFalse'};
-var _user$project$Main$SetTrackMousePointerTrue = {ctor: 'SetTrackMousePointerTrue'};
+var _user$project$Main$AsciiMath = {ctor: 'AsciiMath'};
+var _user$project$Main$MathML = {ctor: 'MathML'};
+var _user$project$Main$ChangeMathType = function (a) {
+	return {ctor: 'ChangeMathType', _0: a};
+};
+var _user$project$Main$SetTrackMousePointer = function (a) {
+	return {ctor: 'SetTrackMousePointer', _0: a};
+};
 var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -15189,7 +15236,8 @@ var _user$project$Main$view = function (model) {
 										_0: _user$project$Main$id(_user$project$MyCss$ResizeIcon),
 										_1: {
 											ctor: '::',
-											_0: _elm_lang$html$Html_Events$onMouseDown(_user$project$Main$SetTrackMousePointerTrue),
+											_0: _elm_lang$html$Html_Events$onMouseDown(
+												_user$project$Main$SetTrackMousePointer(true)),
 											_1: {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$src(
@@ -15273,13 +15321,13 @@ var _user$project$Main$view = function (model) {
 								_elm_lang$html$Html$button,
 								{
 									ctor: '::',
-									_0: _user$project$Main$class(
-										{
-											ctor: '::',
-											_0: _user$project$MyCss$NavButton,
-											_1: {ctor: '[]'}
-										}),
-									_1: {ctor: '[]'}
+									_0: _elm_lang$html$Html_Events$onClick(
+										_user$project$Main$ChangeMathType(_user$project$Main$Tex)),
+									_1: {
+										ctor: '::',
+										_0: A2(_user$project$Main$navButtonClass, model.selectedMathEquation, _user$project$Main$Tex),
+										_1: {ctor: '[]'}
+									}
 								},
 								{
 									ctor: '::',
@@ -15304,13 +15352,13 @@ var _user$project$Main$view = function (model) {
 									_elm_lang$html$Html$button,
 									{
 										ctor: '::',
-										_0: _user$project$Main$class(
-											{
-												ctor: '::',
-												_0: _user$project$MyCss$NavButton,
-												_1: {ctor: '[]'}
-											}),
-										_1: {ctor: '[]'}
+										_0: _elm_lang$html$Html_Events$onClick(
+											_user$project$Main$ChangeMathType(_user$project$Main$AsciiMath)),
+										_1: {
+											ctor: '::',
+											_0: A2(_user$project$Main$navButtonClass, model.selectedMathEquation, _user$project$Main$AsciiMath),
+											_1: {ctor: '[]'}
+										}
 									},
 									{
 										ctor: '::',
@@ -15323,13 +15371,13 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$html$Html$button,
 										{
 											ctor: '::',
-											_0: _user$project$Main$class(
-												{
-													ctor: '::',
-													_0: _user$project$MyCss$NavButton,
-													_1: {ctor: '[]'}
-												}),
-											_1: {ctor: '[]'}
+											_0: _elm_lang$html$Html_Events$onClick(
+												_user$project$Main$ChangeMathType(_user$project$Main$MathML)),
+											_1: {
+												ctor: '::',
+												_0: A2(_user$project$Main$navButtonClass, model.selectedMathEquation, _user$project$Main$MathML),
+												_1: {ctor: '[]'}
+											}
 										},
 										{
 											ctor: '::',
@@ -15381,7 +15429,7 @@ var _user$project$Main$subscriptions = function (model) {
 					_0: _elm_lang$mouse$Mouse$ups(
 						function (_p8) {
 							var _p9 = _p8;
-							return _user$project$Main$SetTrackMousePointerFalse;
+							return _user$project$Main$SetTrackMousePointer(false);
 						}),
 					_1: {ctor: '[]'}
 				}

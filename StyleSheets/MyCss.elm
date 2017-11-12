@@ -9,6 +9,7 @@ type CssClasses
     = NavBar
     | NavLogo
     | NavButton
+    | NavButtonSelected
 
 
 type CssIds
@@ -72,6 +73,7 @@ css =
         , margin auto
         , opacity (Css.num 0.5)
         , userSelect "none"
+        , cursor nsResize
         , hover
           [ opacity (Css.num 1) ]
         ]
@@ -103,6 +105,9 @@ css =
         , fontFamilies ["Times New Roman"]
         , hover
           [ backgroundColor (hex "#aaaa78") ]
+        ]
+    , class NavButtonSelected
+        [ backgroundColor (hex "#aaaa78")    
         ]
     ]
 

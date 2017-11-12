@@ -44,6 +44,7 @@
     margin: auto;
     opacity: 0.5;
     user-select: none;
+    cursor: ns-resize;
 }
 
 #ResizeIcon:hover {
@@ -81,5 +82,9 @@
 }
 
 .mainNavButton:hover {
+    background-color: #aaaa78;
+}
+
+.mainNavButtonSelected {
     background-color: #aaaa78;
 }

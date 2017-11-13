@@ -20,6 +20,7 @@ type CssIds
     | ResizeIcon
     | MathTextEquationContainer
     | MathEquationText
+    | SvgContainer
 
 userSelect : String -> Style
 userSelect i =
@@ -84,6 +85,8 @@ css =
         [ height (pct 100)
         , borderWidth (px 0)
         ]
+    , id SvgContainer
+        [ float right]
     , class NavBar
         [ margin zero
         , padding zero

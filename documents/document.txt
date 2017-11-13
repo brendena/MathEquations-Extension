@@ -14,3 +14,7 @@ https://clipboardjs.com/
 
 Library on how to copy image 
 https://jsfiddle.net/p83gp77c/
+
+
+Load data into a image
+https://github.com/petereigenschink/steganography.js/blob/master/examples/showcase/tshirts-20.jpg

@@ -13,12 +13,16 @@
     {
       "matches":["<all_urls>"],
       "css": ["./StyleSheets/MyCss.css"],
-      "js": ["main.js","content.js"]
+      "js": ["main.js",
+             "content.js",
+             "ports.js"],
+      "run_at": "document_end"
     }
   ],
   "web_accessible_resources": [
     "images/*.png",
-    "images/*.svg"
+    "images/*.svg",
+    "MathJaxEvent.js"
   ],
   
   "permissions": [

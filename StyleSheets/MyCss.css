@@ -60,6 +60,10 @@
     border-width: 0px;
 }
 
+#SvgContainer {
+    float: right;
+}
+
 .mainNavBar {
     margin: 0;
     padding: 0;

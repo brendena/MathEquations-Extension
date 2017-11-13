@@ -14752,6 +14752,7 @@ var _user$project$MyCss$NavButtonSelected = {ctor: 'NavButtonSelected'};
 var _user$project$MyCss$NavButton = {ctor: 'NavButton'};
 var _user$project$MyCss$NavLogo = {ctor: 'NavLogo'};
 var _user$project$MyCss$NavBar = {ctor: 'NavBar'};
+var _user$project$MyCss$SvgContainer = {ctor: 'SvgContainer'};
 var _user$project$MyCss$MathEquationText = {ctor: 'MathEquationText'};
 var _user$project$MyCss$MathTextEquationContainer = {ctor: 'MathTextEquationContainer'};
 var _user$project$MyCss$ResizeIcon = {ctor: 'ResizeIcon'};
@@ -14986,92 +14987,43 @@ var _user$project$MyCss$css = function (_p0) {
 									_1: {
 										ctor: '::',
 										_0: A2(
-											_rtfeldman$elm_css$Css$class,
-											_user$project$MyCss$NavBar,
+											_rtfeldman$elm_css$Css$id,
+											_user$project$MyCss$SvgContainer,
 											{
 												ctor: '::',
-												_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
-												_1: {
-													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
-													_1: {
-														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$children(
-															{
-																ctor: '::',
-																_0: _rtfeldman$elm_css$Css_Elements$li(
-																	{
-																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css$important(
-																			_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
-																		_1: {
-																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
-																			_1: {ctor: '[]'}
-																		}
-																	}),
-																_1: {ctor: '[]'}
-															}),
-														_1: {ctor: '[]'}
-													}
-												}
+												_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$right),
+												_1: {ctor: '[]'}
 											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
 												_rtfeldman$elm_css$Css$class,
-												_user$project$MyCss$NavButton,
+												_user$project$MyCss$NavBar,
 												{
 													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$height(
-														_rtfeldman$elm_css$Css$pct(100)),
+													_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
 													_1: {
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$paddingLeft(
-															_rtfeldman$elm_css$Css$px(10)),
+														_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
 														_1: {
 															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$paddingRight(
-																_rtfeldman$elm_css$Css$px(10)),
-															_1: {
-																ctor: '::',
-																_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left),
-																_1: {
+															_0: _rtfeldman$elm_css$Css$children(
+																{
 																	ctor: '::',
-																	_0: _rtfeldman$elm_css$Css$fontSize(
-																		_rtfeldman$elm_css$Css$px(30)),
-																	_1: {
-																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css$borderWidth(
-																			_rtfeldman$elm_css$Css$px(0)),
-																		_1: {
+																	_0: _rtfeldman$elm_css$Css_Elements$li(
+																		{
 																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$backgroundColor(
-																				_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor)),
+																			_0: _rtfeldman$elm_css$Css$important(
+																				_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
 																			_1: {
 																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$fontFamilies(
-																					{
-																						ctor: '::',
-																						_0: 'Times New Roman',
-																						_1: {ctor: '[]'}
-																					}),
-																				_1: {
-																					ctor: '::',
-																					_0: _rtfeldman$elm_css$Css$hover(
-																						{
-																							ctor: '::',
-																							_0: _rtfeldman$elm_css$Css$backgroundColor(
-																								_rtfeldman$elm_css$Css$hex('#aaaa78')),
-																							_1: {ctor: '[]'}
-																						}),
-																					_1: {ctor: '[]'}
-																				}
+																				_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
+																				_1: {ctor: '[]'}
 																			}
-																		}
-																	}
-																}
-															}
+																		}),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {ctor: '[]'}
 														}
 													}
 												}),
@@ -15079,14 +15031,74 @@ var _user$project$MyCss$css = function (_p0) {
 												ctor: '::',
 												_0: A2(
 													_rtfeldman$elm_css$Css$class,
-													_user$project$MyCss$NavButtonSelected,
+													_user$project$MyCss$NavButton,
 													{
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$backgroundColor(
-															_rtfeldman$elm_css$Css$hex('#aaaa78')),
-														_1: {ctor: '[]'}
+														_0: _rtfeldman$elm_css$Css$height(
+															_rtfeldman$elm_css$Css$pct(100)),
+														_1: {
+															ctor: '::',
+															_0: _rtfeldman$elm_css$Css$paddingLeft(
+																_rtfeldman$elm_css$Css$px(10)),
+															_1: {
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$paddingRight(
+																	_rtfeldman$elm_css$Css$px(10)),
+																_1: {
+																	ctor: '::',
+																	_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left),
+																	_1: {
+																		ctor: '::',
+																		_0: _rtfeldman$elm_css$Css$fontSize(
+																			_rtfeldman$elm_css$Css$px(30)),
+																		_1: {
+																			ctor: '::',
+																			_0: _rtfeldman$elm_css$Css$borderWidth(
+																				_rtfeldman$elm_css$Css$px(0)),
+																			_1: {
+																				ctor: '::',
+																				_0: _rtfeldman$elm_css$Css$backgroundColor(
+																					_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor)),
+																				_1: {
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$fontFamilies(
+																						{
+																							ctor: '::',
+																							_0: 'Times New Roman',
+																							_1: {ctor: '[]'}
+																						}),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$hover(
+																							{
+																								ctor: '::',
+																								_0: _rtfeldman$elm_css$Css$backgroundColor(
+																									_rtfeldman$elm_css$Css$hex('#aaaa78')),
+																								_1: {ctor: '[]'}
+																							}),
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
+														}
 													}),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_rtfeldman$elm_css$Css$class,
+														_user$project$MyCss$NavButtonSelected,
+														{
+															ctor: '::',
+															_0: _rtfeldman$elm_css$Css$backgroundColor(
+																_rtfeldman$elm_css$Css$hex('#aaaa78')),
+															_1: {ctor: '[]'}
+														}),
+													_1: {ctor: '[]'}
+												}
 											}
 										}
 									}
@@ -15099,55 +15111,36 @@ var _user$project$MyCss$css = function (_p0) {
 		}
 	});
 
-var _user$project$Main$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		switch (_p0.ctor) {
-			case 'UrlChange':
-				return {
+var _user$project$Main$encodeModel = function (model) {
+	return _elm_lang$core$Json_Encode$object(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: 'selectedMathType',
+				_1: _elm_lang$core$Json_Encode$string(
+					_elm_lang$core$Basics$toString(model.selectedMathType))
+			},
+			_1: {
+				ctor: '::',
+				_0: {
 					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{baseUrl: _p0._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'MouseChange':
-				var _p2 = _p0._1;
-				var _p1 = A2(_elm_lang$core$Debug$log, 'testing', _p2);
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{equationContainerTop: _p2}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			case 'SetTrackMousePointer':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{trackMousePointerBool: _p0._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-			default:
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{selectedMathEquation: _p0._0}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
-		}
-	});
-var _user$project$Main$_p3 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('main');
-var _user$project$Main$id = _user$project$Main$_p3.id;
-var _user$project$Main$class = _user$project$Main$_p3.$class;
-var _user$project$Main$classList = _user$project$Main$_p3.classList;
+					_0: 'mathEquation',
+					_1: _elm_lang$core$Json_Encode$string(model.mathEquation)
+				},
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Main$_p0 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('main');
+var _user$project$Main$id = _user$project$Main$_p0.id;
+var _user$project$Main$class = _user$project$Main$_p0.$class;
+var _user$project$Main$classList = _user$project$Main$_p0.classList;
 var _user$project$Main$navButtonClass = F2(
 	function (modelMathTypeSelect, mathType) {
 		var equal = _elm_lang$core$Native_Utils.eq(modelMathTypeSelect, mathType);
-		var _p4 = equal;
-		if (_p4 === true) {
+		var _p1 = equal;
+		if (_p1 === true) {
 			return _user$project$Main$class(
 				{
 					ctor: '::',
@@ -15168,18 +15161,92 @@ var _user$project$Main$navButtonClass = F2(
 		}
 	});
 var _user$project$Main$updatingBaseUrl = _elm_lang$core$Native_Platform.incomingPort('updatingBaseUrl', _elm_lang$core$Json_Decode$string);
-var _user$project$Main$Model = F4(
-	function (a, b, c, d) {
-		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathEquation: d};
+var _user$project$Main$reloadEquation = _elm_lang$core$Native_Platform.outgoingPort(
+	'reloadEquation',
+	function (v) {
+		return v;
+	});
+var _user$project$Main$updateEquation = _elm_lang$core$Native_Platform.outgoingPort(
+	'updateEquation',
+	function (v) {
+		return v;
+	});
+var _user$project$Main$sumitEquation = _elm_lang$core$Native_Platform.outgoingPort(
+	'sumitEquation',
+	function (v) {
+		return v;
+	});
+var _user$project$Main$Model = F5(
+	function (a, b, c, d, e) {
+		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathType: d, mathEquation: e};
+	});
+var _user$project$Main$NoMathType = {ctor: 'NoMathType'};
+var _user$project$Main$update = F2(
+	function (msg, model) {
+		var _p2 = msg;
+		switch (_p2.ctor) {
+			case 'UrlChange':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{baseUrl: _p2._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'MouseChange':
+				var _p4 = _p2._1;
+				var _p3 = A2(_elm_lang$core$Debug$log, 'testing', _p4);
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{equationContainerTop: _p4}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'SetTrackMousePointer':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{trackMousePointerBool: _p2._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ChangeMathType':
+				var _p5 = _p2._0;
+				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p5) ? _user$project$Main$NoMathType : _p5;
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{selectedMathType: newMathType}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{mathEquation: _p2._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$updateEquation(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(newModel)))
+				};
+		}
 	});
 var _user$project$Main$Tex = {ctor: 'Tex'};
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: A4(_user$project$Main$Model, '', false, 800, _user$project$Main$Tex),
+	_0: A5(_user$project$Main$Model, '', false, 800, _user$project$Main$Tex, ''),
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _user$project$Main$AsciiMath = {ctor: 'AsciiMath'};
 var _user$project$Main$MathML = {ctor: 'MathML'};
+var _user$project$Main$UpdateEquation = function (a) {
+	return {ctor: 'UpdateEquation', _0: a};
+};
 var _user$project$Main$ChangeMathType = function (a) {
 	return {ctor: 'ChangeMathType', _0: a};
 };
@@ -15265,11 +15332,19 @@ var _user$project$Main$view = function (model) {
 									_elm_lang$html$Html$textarea,
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$placeholder('equation location'),
+										_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$UpdateEquation),
 										_1: {
 											ctor: '::',
-											_0: _user$project$Main$id(_user$project$MyCss$MathEquationText),
-											_1: {ctor: '[]'}
+											_0: _elm_lang$html$Html_Attributes$value(model.mathEquation),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$placeholder('equation location'),
+												_1: {
+													ctor: '::',
+													_0: _user$project$Main$id(_user$project$MyCss$MathEquationText),
+													_1: {ctor: '[]'}
+												}
+											}
 										}
 									},
 									{
@@ -15277,7 +15352,96 @@ var _user$project$Main$view = function (model) {
 										_0: _elm_lang$html$Html$text(''),
 										_1: {ctor: '[]'}
 									}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$div,
+										{
+											ctor: '::',
+											_0: _user$project$Main$id(_user$project$MyCss$SvgContainer),
+											_1: {ctor: '[]'}
+										},
+										{
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$p,
+												{
+													ctor: '::',
+													_0: _user$project$Main$id('AsciiMathEquation'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$hidden(
+															!_elm_lang$core$Native_Utils.eq(_user$project$Main$AsciiMath, model.selectedMathType)),
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('Ascii `` '),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$p,
+													{
+														ctor: '::',
+														_0: _user$project$Main$id('TexEquation'),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$hidden(
+																!_elm_lang$core$Native_Utils.eq(_user$project$Main$Tex, model.selectedMathType)),
+															_1: {ctor: '[]'}
+														}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('Tex ${ }$ '),
+														_1: {ctor: '[]'}
+													}),
+												_1: {
+													ctor: '::',
+													_0: A2(
+														_elm_lang$html$Html$div,
+														{
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$hidden(
+																!_elm_lang$core$Native_Utils.eq(_user$project$Main$MathML, model.selectedMathType)),
+															_1: {ctor: '[]'}
+														},
+														{
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$p,
+																{ctor: '[]'},
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html$text('MathML'),
+																	_1: {ctor: '[]'}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$p,
+																	{
+																		ctor: '::',
+																		_0: _user$project$Main$id('MathMLEquation'),
+																		_1: {ctor: '[]'}
+																	},
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$html$Html$text(''),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														}),
+													_1: {ctor: '[]'}
+												}
+											}
+										}),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {ctor: '[]'}
 					}
@@ -15325,7 +15489,7 @@ var _user$project$Main$view = function (model) {
 										_user$project$Main$ChangeMathType(_user$project$Main$Tex)),
 									_1: {
 										ctor: '::',
-										_0: A2(_user$project$Main$navButtonClass, model.selectedMathEquation, _user$project$Main$Tex),
+										_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$Tex),
 										_1: {ctor: '[]'}
 									}
 								},
@@ -15356,7 +15520,7 @@ var _user$project$Main$view = function (model) {
 											_user$project$Main$ChangeMathType(_user$project$Main$AsciiMath)),
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$navButtonClass, model.selectedMathEquation, _user$project$Main$AsciiMath),
+											_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$AsciiMath),
 											_1: {ctor: '[]'}
 										}
 									},
@@ -15375,7 +15539,7 @@ var _user$project$Main$view = function (model) {
 												_user$project$Main$ChangeMathType(_user$project$Main$MathML)),
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$navButtonClass, model.selectedMathEquation, _user$project$Main$MathML),
+												_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$MathML),
 												_1: {ctor: '[]'}
 											}
 										},
@@ -15398,14 +15562,14 @@ var _user$project$Main$MouseChange = F2(
 		return {ctor: 'MouseChange', _0: a, _1: b};
 	});
 var _user$project$Main$trackMousePointer = function (trackMouse) {
-	var _p5 = trackMouse;
-	if (_p5 === true) {
+	var _p6 = trackMouse;
+	if (_p6 === true) {
 		return {
 			ctor: '::',
 			_0: _elm_lang$mouse$Mouse$moves(
-				function (_p6) {
-					var _p7 = _p6;
-					return A2(_user$project$Main$MouseChange, _p7.x, _p7.y);
+				function (_p7) {
+					var _p8 = _p7;
+					return A2(_user$project$Main$MouseChange, _p8.x, _p8.y);
 				}),
 			_1: {ctor: '[]'}
 		};
@@ -15427,8 +15591,8 @@ var _user$project$Main$subscriptions = function (model) {
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$mouse$Mouse$ups(
-						function (_p8) {
-							var _p9 = _p8;
+						function (_p9) {
+							var _p10 = _p9;
 							return _user$project$Main$SetTrackMousePointer(false);
 						}),
 					_1: {ctor: '[]'}

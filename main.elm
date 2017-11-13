@@ -12,8 +12,15 @@ import MyCss
 import Debug exposing (log)
 import Mouse exposing (..)
 
+{--------------JsToElm----------------------------------------}
 port updatingBaseUrl : (String -> msg) -> Sub msg
+{--------------JsToElm----------------------------------------}
 
+{--------------ElmToJS----------------------------------------}
+port reloadEquation : String -> Cmd msg
+port updateEquation : String -> Cmd msg
+port sumitEquation : String -> Cmd msg
+{--------------ElmToJS----------------------------------------}
 
 main =
   Html.program
@@ -25,7 +32,7 @@ main =
 
 init : (Model, Cmd Msg)
 init  =
-  ( Model "" False 800 Tex, Cmd.none
+  ( Model "" False 800 Tex "", Cmd.none
   )
 
 { id, class, classList } =
@@ -35,20 +42,32 @@ type  MathType =
          MathML
         | AsciiMath
         | Tex
+        | NoMathType
 
 type alias Model =
   { 
     baseUrl: String,
     trackMousePointerBool: Bool,
     equationContainerTop: Int,
-    selectedMathEquation: MathType
+    selectedMathType: MathType,
+    mathEquation: String
   }
+
+
+encodeModel : Model -> Value
+encodeModel model =
+  Json.Encode.object
+    [ ("selectedMathType",Json.Encode.string  (toString model.selectedMathType) )
+    , ("mathEquation", Json.Encode.string model.mathEquation)
+    ]
+
 
 type Msg
   = UrlChange String
   | MouseChange Int Int
   | SetTrackMousePointer Bool
   | ChangeMathType MathType
+  | UpdateEquation String
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -65,9 +84,16 @@ update msg model =
 
     
     ChangeMathType mathType ->
-      ({model | selectedMathEquation = mathType}, Cmd.none)
-    
-    
+      let
+        newMathType = if(model.selectedMathType == mathType)then NoMathType else mathType  
+      in 
+      ({model | selectedMathType = newMathType}, Cmd.none)
+   
+    UpdateEquation str->
+        let
+          newModel = { model |  mathEquation = str }
+        in
+          (newModel, updateEquation  (encode 0 (encodeModel newModel) ) ) 
 
 view : Model -> Html Msg
 view model =
@@ -77,16 +103,24 @@ view model =
             img [draggable "False",id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src ( model.baseUrl ++ "images/resizeIcon.svg") ] []
           ],
           div [id MyCss.MathTextEquationContainer] [
-            textarea [placeholder "equation location", id MyCss.MathEquationText] [text ""]
+            textarea [onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText] [text ""],
+            div[id MyCss.SvgContainer] [
+              p [id "AsciiMathEquation",hidden (AsciiMath /= model.selectedMathType) ] [text "Ascii `` "], 
+              p [id "TexEquation",hidden (Tex /= model.selectedMathType)] [text "Tex ${ }$ " ], 
+              div[hidden (MathML /= model.selectedMathType)][
+                p [] [text "MathML"],
+                p [id "MathMLEquation"] [text ""] 
+              ]
+            ]
           ]
         ],
         div [id MyCss.NavContainer]  [ 
            img [id "logo", class [MyCss.NavLogo] , src ( model.baseUrl ++ "images/logoClearBackground.svg") ] [],
-           button [onClick (ChangeMathType Tex), (navButtonClass model.selectedMathEquation Tex )] [
+           button [onClick (ChangeMathType Tex), (navButtonClass model.selectedMathType Tex )] [
              img [id MyCss.LatexImage, src ( model.baseUrl ++ "images/latex.svg")] []
            ],
-           button [onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathEquation AsciiMath ) ] [text "AsciiMath"],
-           button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathEquation MathML )] [text "MathML"]
+           button [onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath ) ] [text "AsciiMath"],
+           button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML )] [text "MathML"]
         ]
     ]
 {--------------ViewHelperFunc----------------------------------------}

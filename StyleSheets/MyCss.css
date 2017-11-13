@@ -53,15 +53,28 @@
 
 #MathTextEquationContainer {
     flex: 1;
-}
-
-#MathEquationText {
-    height: 100%;
-    border-width: 0px;
+    display: flex;
+    flex-direction: row;
 }
 
 #SvgContainer {
-    float: right;
+    border-left-style: solid;
+    border-left-width: 1px;
+}
+
+#HiddenCanvas {
+    width: 800px;
+    position: fixed;
+    top: 0px;
+}
+
+.mainItemsEquationContainer {
+    height: 100%;
+    width: 50%;
+    border-width: 0px;
+    resize: none;
+    box-sizing: border-box;
+    padding: 20px;
 }
 
 .mainNavBar {
@@ -83,6 +96,8 @@
     border-width: 0px;
     background-color: #ffdc78;
     font-family: Times New Roman;
+    color: #000000;
+    box-shadow: none;
 }
 
 .mainNavButton:hover {
@@ -91,4 +106,28 @@
 
 .mainNavButtonSelected {
     background-color: #aaaa78;
+}
+
+@media screen and ( max-width: 1000px ) {
+    #MathTextEquationContainer {
+        flex-direction: column;
+    }
+}
+
+@media screen and ( max-width: 1000px ) {
+    #MathEquationText {
+        width: 100%;
+    height: 100%;
+    border-width: 0px;
+    }
+}
+
+@media screen and ( max-width: 1000px ) {
+    #SvgContainer {
+        width: 100%;
+    height: 100%;
+    border: 0px;
+    border-top-style: solid;
+    border-top-width: 1px;
+    }
 }

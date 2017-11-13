@@ -9348,6 +9348,128 @@ var _elm_lang$mouse$Mouse$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Mouse'] = {pkg: 'elm-lang/mouse', init: _elm_lang$mouse$Mouse$init, onEffects: _elm_lang$mouse$Mouse$onEffects, onSelfMsg: _elm_lang$mouse$Mouse$onSelfMsg, tag: 'sub', subMap: _elm_lang$mouse$Mouse$subMap};
 
+var _elm_lang$window$Native_Window = function()
+{
+
+var size = _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)	{
+	callback(_elm_lang$core$Native_Scheduler.succeed({
+		width: window.innerWidth,
+		height: window.innerHeight
+	}));
+});
+
+return {
+	size: size
+};
+
+}();
+var _elm_lang$window$Window_ops = _elm_lang$window$Window_ops || {};
+_elm_lang$window$Window_ops['&>'] = F2(
+	function (task1, task2) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (_p0) {
+				return task2;
+			},
+			task1);
+	});
+var _elm_lang$window$Window$onSelfMsg = F3(
+	function (router, dimensions, state) {
+		var _p1 = state;
+		if (_p1.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var send = function (_p2) {
+				var _p3 = _p2;
+				return A2(
+					_elm_lang$core$Platform$sendToApp,
+					router,
+					_p3._0(dimensions));
+			};
+			return A2(
+				_elm_lang$window$Window_ops['&>'],
+				_elm_lang$core$Task$sequence(
+					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
+				_elm_lang$core$Task$succeed(state));
+		}
+	});
+var _elm_lang$window$Window$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+var _elm_lang$window$Window$size = _elm_lang$window$Native_Window.size;
+var _elm_lang$window$Window$width = A2(
+	_elm_lang$core$Task$map,
+	function (_) {
+		return _.width;
+	},
+	_elm_lang$window$Window$size);
+var _elm_lang$window$Window$height = A2(
+	_elm_lang$core$Task$map,
+	function (_) {
+		return _.height;
+	},
+	_elm_lang$window$Window$size);
+var _elm_lang$window$Window$onEffects = F3(
+	function (router, newSubs, oldState) {
+		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
+		if (_p4._0.ctor === 'Nothing') {
+			if (_p4._1.ctor === '[]') {
+				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
+			} else {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (pid) {
+						return _elm_lang$core$Task$succeed(
+							_elm_lang$core$Maybe$Just(
+								{subs: newSubs, pid: pid}));
+					},
+					_elm_lang$core$Process$spawn(
+						A3(
+							_elm_lang$dom$Dom_LowLevel$onWindow,
+							'resize',
+							_elm_lang$core$Json_Decode$succeed(
+								{ctor: '_Tuple0'}),
+							function (_p5) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									_elm_lang$core$Platform$sendToSelf(router),
+									_elm_lang$window$Window$size);
+							})));
+			}
+		} else {
+			if (_p4._1.ctor === '[]') {
+				return A2(
+					_elm_lang$window$Window_ops['&>'],
+					_elm_lang$core$Process$kill(_p4._0._0.pid),
+					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
+			} else {
+				return _elm_lang$core$Task$succeed(
+					_elm_lang$core$Maybe$Just(
+						{subs: newSubs, pid: _p4._0._0.pid}));
+			}
+		}
+	});
+var _elm_lang$window$Window$subscription = _elm_lang$core$Native_Platform.leaf('Window');
+var _elm_lang$window$Window$Size = F2(
+	function (a, b) {
+		return {width: a, height: b};
+	});
+var _elm_lang$window$Window$MySub = function (a) {
+	return {ctor: 'MySub', _0: a};
+};
+var _elm_lang$window$Window$resizes = function (tagger) {
+	return _elm_lang$window$Window$subscription(
+		_elm_lang$window$Window$MySub(tagger));
+};
+var _elm_lang$window$Window$subMap = F2(
+	function (func, _p6) {
+		var _p7 = _p6;
+		return _elm_lang$window$Window$MySub(
+			function (_p8) {
+				return func(
+					_p7._0(_p8));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
+
 var _rtfeldman$elm_css_util$Css_Helpers$toCssIdentifier = function (identifier) {
 	return A4(
 		_elm_lang$core$Regex$replace,
@@ -14418,6 +14540,351 @@ var _rtfeldman$elm_css$Css_Elements$line = _rtfeldman$elm_css$Css_Elements$typeS
 var _rtfeldman$elm_css$Css_Elements$polyline = _rtfeldman$elm_css$Css_Elements$typeSelector('polyline');
 var _rtfeldman$elm_css$Css_Elements$polygon = _rtfeldman$elm_css$Css_Elements$typeSelector('polygon');
 
+var _rtfeldman$elm_css$Css_Media$unparameterizedFeature = function (key) {
+	return {feature: key, value: _elm_lang$core$Maybe$Nothing};
+};
+var _rtfeldman$elm_css$Css_Media$feature = F2(
+	function (key, _p0) {
+		var _p1 = _p0;
+		return {
+			feature: key,
+			value: _elm_lang$core$Maybe$Just(_p1.value)
+		};
+	});
+var _rtfeldman$elm_css$Css_Media$scripting = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'scripting', value);
+};
+var _rtfeldman$elm_css$Css_Media$enabled = {value: 'enabled', scriptingSupport: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$initialOnly = {value: 'initial-only', scriptingSupport: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$anyHover = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'any-hover', value);
+};
+var _rtfeldman$elm_css$Css_Media$hover = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'hover', value);
+};
+var _rtfeldman$elm_css$Css_Media$canHover = {value: 'hover', hoverCapability: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$anyPointer = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'any-pointer', value);
+};
+var _rtfeldman$elm_css$Css_Media$pointer = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'pointer', value);
+};
+var _rtfeldman$elm_css$Css_Media$coarse = {value: 'coarse', pointerDevice: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$fine = {value: 'fine', pointerDevice: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$colorGamut = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'color-gamut', value);
+};
+var _rtfeldman$elm_css$Css_Media$rec2020 = {value: 'rec2020', colorGamut: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$p3 = {value: 'p3', colorGamut: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$srgb = {value: 'srgb', colorGamut: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$maxColorIndex = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-color-index', value);
+};
+var _rtfeldman$elm_css$Css_Media$minColorIndex = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-color-index', value);
+};
+var _rtfeldman$elm_css$Css_Media$colorIndex = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'color-index', value);
+};
+var _rtfeldman$elm_css$Css_Media$maxMonochrome = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-monochrome', value);
+};
+var _rtfeldman$elm_css$Css_Media$minMonochrome = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-monochrome', value);
+};
+var _rtfeldman$elm_css$Css_Media$monochrome = _rtfeldman$elm_css$Css_Media$unparameterizedFeature('monochrome');
+var _rtfeldman$elm_css$Css_Media$maxColor = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-color', value);
+};
+var _rtfeldman$elm_css$Css_Media$color = _rtfeldman$elm_css$Css_Media$unparameterizedFeature('color');
+var _rtfeldman$elm_css$Css_Media$minColor = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-color', value);
+};
+var _rtfeldman$elm_css$Css_Media$bits = function (value) {
+	return {
+		value: _elm_lang$core$Basics$toString(value),
+		bits: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$overflowInline = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'overflow-inline', value);
+};
+var _rtfeldman$elm_css$Css_Media$overflowBlock = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'overflow-block', value);
+};
+var _rtfeldman$elm_css$Css_Media$optionalPaged = {value: 'optional-paged', blockAxisOverflow: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$paged = {value: 'paged', blockAxisOverflow: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$update = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'update', value);
+};
+var _rtfeldman$elm_css$Css_Media$fast = {value: 'fast', updateFrequency: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$slow = {value: 'slow', updateFrequency: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$grid = _rtfeldman$elm_css$Css_Media$unparameterizedFeature('grid');
+var _rtfeldman$elm_css$Css_Media$scan = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'scan', value);
+};
+var _rtfeldman$elm_css$Css_Media$interlace = {value: 'interlace', scanningProcess: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$progressive = {value: 'progressive', scanningProcess: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$maxResolution = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-resolution', value);
+};
+var _rtfeldman$elm_css$Css_Media$resolution = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'resolution', value);
+};
+var _rtfeldman$elm_css$Css_Media$minResolution = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-resolution', value);
+};
+var _rtfeldman$elm_css$Css_Media$dppx = function (value) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(value),
+			'dppx'),
+		resolution: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$dpcm = function (value) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(value),
+			'dpcm'),
+		resolution: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$dpi = function (value) {
+	return {
+		value: A2(
+			_elm_lang$core$Basics_ops['++'],
+			_elm_lang$core$Basics$toString(value),
+			'dpi'),
+		resolution: _rtfeldman$elm_css$Css_Structure$Compatible
+	};
+};
+var _rtfeldman$elm_css$Css_Media$orientation = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'orientation', value);
+};
+var _rtfeldman$elm_css$Css_Media$portrait = {value: 'portrait', orientation: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$landscape = {value: 'landscape', orientation: _rtfeldman$elm_css$Css_Structure$Compatible};
+var _rtfeldman$elm_css$Css_Media$maxAspectRatio = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-aspect-ratio', value);
+};
+var _rtfeldman$elm_css$Css_Media$aspectRatio = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'aspect-ratio', value);
+};
+var _rtfeldman$elm_css$Css_Media$minAspectRatio = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-aspect-ratio', value);
+};
+var _rtfeldman$elm_css$Css_Media$ratio = F2(
+	function (numerator, denominator) {
+		return {
+			value: A2(
+				_elm_lang$core$Basics_ops['++'],
+				_elm_lang$core$Basics$toString(numerator),
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					'/',
+					_elm_lang$core$Basics$toString(denominator))),
+			ratio: _rtfeldman$elm_css$Css_Structure$Compatible
+		};
+	});
+var _rtfeldman$elm_css$Css_Media$maxHeight = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-height', value);
+};
+var _rtfeldman$elm_css$Css_Media$height = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'height', value);
+};
+var _rtfeldman$elm_css$Css_Media$minHeight = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-height', value);
+};
+var _rtfeldman$elm_css$Css_Media$maxWidth = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'max-width', value);
+};
+var _rtfeldman$elm_css$Css_Media$width = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'width', value);
+};
+var _rtfeldman$elm_css$Css_Media$minWidth = function (value) {
+	return A2(_rtfeldman$elm_css$Css_Media$feature, 'min-width', value);
+};
+var _rtfeldman$elm_css$Css_Media$speech = _rtfeldman$elm_css$Css_Structure$Speech;
+var _rtfeldman$elm_css$Css_Media$screen = _rtfeldman$elm_css$Css_Structure$Screen;
+var _rtfeldman$elm_css$Css_Media$print = _rtfeldman$elm_css$Css_Structure$Print;
+var _rtfeldman$elm_css$Css_Media$connectWith = F2(
+	function (connect, queries) {
+		var _p2 = queries;
+		if (_p2.ctor === '[]') {
+			return _elm_lang$core$Maybe$Nothing;
+		} else {
+			var _p4 = _p2._0;
+			var _p3 = A2(_rtfeldman$elm_css$Css_Media$connectWith, connect, _p2._1);
+			if (_p3.ctor === 'Nothing') {
+				return _elm_lang$core$Maybe$Just(_p4);
+			} else {
+				return _elm_lang$core$Maybe$Just(
+					A2(connect, _p4, _p3._0));
+			}
+		}
+	});
+var _rtfeldman$elm_css$Css_Media$not = _rtfeldman$elm_css$Css_Structure$NotQuery;
+var _rtfeldman$elm_css$Css_Media$only = _rtfeldman$elm_css$Css_Structure$OnlyQuery;
+var _rtfeldman$elm_css$Css_Media$all = _rtfeldman$elm_css$Css_Structure$AllQuery;
+var _rtfeldman$elm_css$Css_Media$withMediaQuery = function (queries) {
+	return _rtfeldman$elm_css$Css_Preprocess$WithMedia(
+		A2(_elm_lang$core$List$map, _rtfeldman$elm_css$Css_Structure$CustomQuery, queries));
+};
+var _rtfeldman$elm_css$Css_Media$withMedia = function (queries) {
+	return _rtfeldman$elm_css$Css_Preprocess$WithMedia(queries);
+};
+var _rtfeldman$elm_css$Css_Media$media = F2(
+	function (queries, snippets) {
+		var nestedMediaRules = function (declarations) {
+			nestedMediaRules:
+			while (true) {
+				var _p5 = declarations;
+				if (_p5.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					switch (_p5._0.ctor) {
+						case 'StyleBlockDeclaration':
+							var _v4 = _p5._1;
+							declarations = _v4;
+							continue nestedMediaRules;
+						case 'MediaRule':
+							return {
+								ctor: '::',
+								_0: A2(
+									_rtfeldman$elm_css$Css_Preprocess$MediaRule,
+									A2(_elm_lang$core$List$append, queries, _p5._0._0),
+									_p5._0._1),
+								_1: nestedMediaRules(_p5._1)
+							};
+						default:
+							return {
+								ctor: '::',
+								_0: _p5._0,
+								_1: nestedMediaRules(_p5._1)
+							};
+					}
+				}
+			}
+		};
+		var extractStyleBlocks = function (declarations) {
+			extractStyleBlocks:
+			while (true) {
+				var _p6 = declarations;
+				if (_p6.ctor === '[]') {
+					return {ctor: '[]'};
+				} else {
+					if (_p6._0.ctor === 'StyleBlockDeclaration') {
+						return {
+							ctor: '::',
+							_0: _p6._0._0,
+							_1: extractStyleBlocks(_p6._1)
+						};
+					} else {
+						var _v6 = _p6._1;
+						declarations = _v6;
+						continue extractStyleBlocks;
+					}
+				}
+			}
+		};
+		var snippetDeclarations = A2(_elm_lang$core$List$concatMap, _rtfeldman$elm_css$Css_Preprocess$unwrapSnippet, snippets);
+		var mediaRuleFromStyleBlocks = A2(
+			_rtfeldman$elm_css$Css_Preprocess$MediaRule,
+			queries,
+			extractStyleBlocks(snippetDeclarations));
+		return _rtfeldman$elm_css$Css_Preprocess$Snippet(
+			{
+				ctor: '::',
+				_0: mediaRuleFromStyleBlocks,
+				_1: nestedMediaRules(snippetDeclarations)
+			});
+	});
+var _rtfeldman$elm_css$Css_Media$mediaQuery = F2(
+	function (stringQueries, snippets) {
+		return A2(
+			_rtfeldman$elm_css$Css_Media$media,
+			A2(_elm_lang$core$List$map, _rtfeldman$elm_css$Css_Structure$CustomQuery, stringQueries),
+			snippets);
+	});
+var _rtfeldman$elm_css$Css_Media$Ratio = F2(
+	function (a, b) {
+		return {value: a, ratio: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Landscape = F2(
+	function (a, b) {
+		return {value: a, orientation: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Portrait = F2(
+	function (a, b) {
+		return {value: a, orientation: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Resolution = F2(
+	function (a, b) {
+		return {value: a, resolution: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Progressive = F2(
+	function (a, b) {
+		return {value: a, scanningProcess: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Interlace = F2(
+	function (a, b) {
+		return {value: a, scanningProcess: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Slow = F2(
+	function (a, b) {
+		return {value: a, updateFrequency: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Fast = F2(
+	function (a, b) {
+		return {value: a, updateFrequency: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Paged = F2(
+	function (a, b) {
+		return {value: a, blockAxisOverflow: b};
+	});
+var _rtfeldman$elm_css$Css_Media$OptionalPaged = F2(
+	function (a, b) {
+		return {value: a, blockAxisOverflow: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Bits = F2(
+	function (a, b) {
+		return {value: a, bits: b};
+	});
+var _rtfeldman$elm_css$Css_Media$SRGB = F2(
+	function (a, b) {
+		return {value: a, colorGamut: b};
+	});
+var _rtfeldman$elm_css$Css_Media$P3 = F2(
+	function (a, b) {
+		return {value: a, colorGamut: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Rec2020 = F2(
+	function (a, b) {
+		return {value: a, colorGamut: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Fine = F2(
+	function (a, b) {
+		return {value: a, pointerDevice: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Coarse = F2(
+	function (a, b) {
+		return {value: a, pointerDevice: b};
+	});
+var _rtfeldman$elm_css$Css_Media$CanHover = F2(
+	function (a, b) {
+		return {value: a, hoverCapability: b};
+	});
+var _rtfeldman$elm_css$Css_Media$InitialOnly = F2(
+	function (a, b) {
+		return {value: a, scriptingSupport: b};
+	});
+var _rtfeldman$elm_css$Css_Media$Enabled = F2(
+	function (a, b) {
+		return {value: a, scriptingSupport: b};
+	});
+
 var _rtfeldman$elm_css$Css_Namespace$applyNamespaceToProperty = F2(
 	function (name, property) {
 		var _p0 = property.key;
@@ -14748,10 +15215,13 @@ var _user$project$MyCss$heightNavContainer = 100;
 var _user$project$MyCss$userSelect = function (i) {
 	return A2(_rtfeldman$elm_css$Css$property, 'user-select', i);
 };
+var _user$project$MyCss$ItemsEquationContainer = {ctor: 'ItemsEquationContainer'};
 var _user$project$MyCss$NavButtonSelected = {ctor: 'NavButtonSelected'};
 var _user$project$MyCss$NavButton = {ctor: 'NavButton'};
 var _user$project$MyCss$NavLogo = {ctor: 'NavLogo'};
 var _user$project$MyCss$NavBar = {ctor: 'NavBar'};
+var _user$project$MyCss$NavSubmitButton = {ctor: 'NavSubmitButton'};
+var _user$project$MyCss$HiddenCanvas = {ctor: 'HiddenCanvas'};
 var _user$project$MyCss$SvgContainer = {ctor: 'SvgContainer'};
 var _user$project$MyCss$MathEquationText = {ctor: 'MathEquationText'};
 var _user$project$MyCss$MathTextEquationContainer = {ctor: 'MathTextEquationContainer'};
@@ -14966,21 +15436,28 @@ var _user$project$MyCss$css = function (_p0) {
 										ctor: '::',
 										_0: _rtfeldman$elm_css$Css$flex(
 											_rtfeldman$elm_css$Css$int(1)),
-										_1: {ctor: '[]'}
+										_1: {
+											ctor: '::',
+											_0: _rtfeldman$elm_css$Css$displayFlex,
+											_1: {
+												ctor: '::',
+												_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$row),
+												_1: {ctor: '[]'}
+											}
+										}
 									}),
 								_1: {
 									ctor: '::',
 									_0: A2(
 										_rtfeldman$elm_css$Css$id,
-										_user$project$MyCss$MathEquationText,
+										_user$project$MyCss$SvgContainer,
 										{
 											ctor: '::',
-											_0: _rtfeldman$elm_css$Css$height(
-												_rtfeldman$elm_css$Css$pct(100)),
+											_0: _rtfeldman$elm_css$Css$borderLeftStyle(_rtfeldman$elm_css$Css$solid),
 											_1: {
 												ctor: '::',
-												_0: _rtfeldman$elm_css$Css$borderWidth(
-													_rtfeldman$elm_css$Css$px(0)),
+												_0: _rtfeldman$elm_css$Css$borderLeftWidth(
+													_rtfeldman$elm_css$Css$px(1)),
 												_1: {ctor: '[]'}
 											}
 										}),
@@ -14988,42 +15465,53 @@ var _user$project$MyCss$css = function (_p0) {
 										ctor: '::',
 										_0: A2(
 											_rtfeldman$elm_css$Css$id,
-											_user$project$MyCss$SvgContainer,
+											_user$project$MyCss$HiddenCanvas,
 											{
 												ctor: '::',
-												_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$right),
-												_1: {ctor: '[]'}
+												_0: _rtfeldman$elm_css$Css$width(
+													_rtfeldman$elm_css$Css$px(800)),
+												_1: {
+													ctor: '::',
+													_0: _rtfeldman$elm_css$Css$position(_rtfeldman$elm_css$Css$fixed),
+													_1: {
+														ctor: '::',
+														_0: _rtfeldman$elm_css$Css$top(
+															_rtfeldman$elm_css$Css$px(0)),
+														_1: {ctor: '[]'}
+													}
+												}
 											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
 												_rtfeldman$elm_css$Css$class,
-												_user$project$MyCss$NavBar,
+												_user$project$MyCss$ItemsEquationContainer,
 												{
 													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
+													_0: _rtfeldman$elm_css$Css$height(
+														_rtfeldman$elm_css$Css$pct(100)),
 													_1: {
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
+														_0: _rtfeldman$elm_css$Css$width(
+															_rtfeldman$elm_css$Css$pct(50)),
 														_1: {
 															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$children(
-																{
+															_0: _rtfeldman$elm_css$Css$borderWidth(
+																_rtfeldman$elm_css$Css$px(0)),
+															_1: {
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$resize(_rtfeldman$elm_css$Css$none),
+																_1: {
 																	ctor: '::',
-																	_0: _rtfeldman$elm_css$Css_Elements$li(
-																		{
-																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$important(
-																				_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
-																			_1: {
-																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
-																				_1: {ctor: '[]'}
-																			}
-																		}),
-																	_1: {ctor: '[]'}
-																}),
-															_1: {ctor: '[]'}
+																	_0: _rtfeldman$elm_css$Css$boxSizing(_rtfeldman$elm_css$Css$borderBox),
+																	_1: {
+																		ctor: '::',
+																		_0: _rtfeldman$elm_css$Css$padding(
+																			_rtfeldman$elm_css$Css$px(20)),
+																		_1: {ctor: '[]'}
+																	}
+																}
+															}
 														}
 													}
 												}),
@@ -15031,58 +15519,32 @@ var _user$project$MyCss$css = function (_p0) {
 												ctor: '::',
 												_0: A2(
 													_rtfeldman$elm_css$Css$class,
-													_user$project$MyCss$NavButton,
+													_user$project$MyCss$NavBar,
 													{
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$height(
-															_rtfeldman$elm_css$Css$pct(100)),
+														_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
 														_1: {
 															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$paddingLeft(
-																_rtfeldman$elm_css$Css$px(10)),
+															_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
 															_1: {
 																ctor: '::',
-																_0: _rtfeldman$elm_css$Css$paddingRight(
-																	_rtfeldman$elm_css$Css$px(10)),
-																_1: {
-																	ctor: '::',
-																	_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left),
-																	_1: {
+																_0: _rtfeldman$elm_css$Css$children(
+																	{
 																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css$fontSize(
-																			_rtfeldman$elm_css$Css$px(30)),
-																		_1: {
-																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$borderWidth(
-																				_rtfeldman$elm_css$Css$px(0)),
-																			_1: {
+																		_0: _rtfeldman$elm_css$Css_Elements$li(
+																			{
 																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$backgroundColor(
-																					_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor)),
+																				_0: _rtfeldman$elm_css$Css$important(
+																					_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
 																				_1: {
 																					ctor: '::',
-																					_0: _rtfeldman$elm_css$Css$fontFamilies(
-																						{
-																							ctor: '::',
-																							_0: 'Times New Roman',
-																							_1: {ctor: '[]'}
-																						}),
-																					_1: {
-																						ctor: '::',
-																						_0: _rtfeldman$elm_css$Css$hover(
-																							{
-																								ctor: '::',
-																								_0: _rtfeldman$elm_css$Css$backgroundColor(
-																									_rtfeldman$elm_css$Css$hex('#aaaa78')),
-																								_1: {ctor: '[]'}
-																							}),
-																						_1: {ctor: '[]'}
-																					}
+																					_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
+																					_1: {ctor: '[]'}
 																				}
-																			}
-																		}
-																	}
-																}
+																			}),
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
 															}
 														}
 													}),
@@ -15090,14 +15552,158 @@ var _user$project$MyCss$css = function (_p0) {
 													ctor: '::',
 													_0: A2(
 														_rtfeldman$elm_css$Css$class,
-														_user$project$MyCss$NavButtonSelected,
+														_user$project$MyCss$NavButton,
 														{
 															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$backgroundColor(
-																_rtfeldman$elm_css$Css$hex('#aaaa78')),
-															_1: {ctor: '[]'}
+															_0: _rtfeldman$elm_css$Css$height(
+																_rtfeldman$elm_css$Css$pct(100)),
+															_1: {
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$paddingLeft(
+																	_rtfeldman$elm_css$Css$px(10)),
+																_1: {
+																	ctor: '::',
+																	_0: _rtfeldman$elm_css$Css$paddingRight(
+																		_rtfeldman$elm_css$Css$px(10)),
+																	_1: {
+																		ctor: '::',
+																		_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left),
+																		_1: {
+																			ctor: '::',
+																			_0: _rtfeldman$elm_css$Css$fontSize(
+																				_rtfeldman$elm_css$Css$px(30)),
+																			_1: {
+																				ctor: '::',
+																				_0: _rtfeldman$elm_css$Css$borderWidth(
+																					_rtfeldman$elm_css$Css$px(0)),
+																				_1: {
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$backgroundColor(
+																						_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor)),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$fontFamilies(
+																							{
+																								ctor: '::',
+																								_0: 'Times New Roman',
+																								_1: {ctor: '[]'}
+																							}),
+																						_1: {
+																							ctor: '::',
+																							_0: _rtfeldman$elm_css$Css$color(
+																								_rtfeldman$elm_css$Css$hex('#000000')),
+																							_1: {
+																								ctor: '::',
+																								_0: _rtfeldman$elm_css$Css$boxShadow(_rtfeldman$elm_css$Css$none),
+																								_1: {
+																									ctor: '::',
+																									_0: _rtfeldman$elm_css$Css$hover(
+																										{
+																											ctor: '::',
+																											_0: _rtfeldman$elm_css$Css$backgroundColor(
+																												_rtfeldman$elm_css$Css$hex('#aaaa78')),
+																											_1: {ctor: '[]'}
+																										}),
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																}
+															}
 														}),
-													_1: {ctor: '[]'}
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_rtfeldman$elm_css$Css$class,
+															_user$project$MyCss$NavButtonSelected,
+															{
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$backgroundColor(
+																	_rtfeldman$elm_css$Css$hex('#aaaa78')),
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_rtfeldman$elm_css$Css_Media$mediaQuery,
+																{
+																	ctor: '::',
+																	_0: 'screen and ( max-width: 1000px )',
+																	_1: {ctor: '[]'}
+																},
+																{
+																	ctor: '::',
+																	_0: A2(
+																		_rtfeldman$elm_css$Css$id,
+																		_user$project$MyCss$MathTextEquationContainer,
+																		{
+																			ctor: '::',
+																			_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_rtfeldman$elm_css$Css$id,
+																			_user$project$MyCss$MathEquationText,
+																			{
+																				ctor: '::',
+																				_0: _rtfeldman$elm_css$Css$width(
+																					_rtfeldman$elm_css$Css$pct(100)),
+																				_1: {
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$height(
+																						_rtfeldman$elm_css$Css$pct(100)),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$borderWidth(
+																							_rtfeldman$elm_css$Css$px(0)),
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_rtfeldman$elm_css$Css$id,
+																				_user$project$MyCss$SvgContainer,
+																				{
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$width(
+																						_rtfeldman$elm_css$Css$pct(100)),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$height(
+																							_rtfeldman$elm_css$Css$pct(100)),
+																						_1: {
+																							ctor: '::',
+																							_0: _rtfeldman$elm_css$Css$border(
+																								_rtfeldman$elm_css$Css$px(0)),
+																							_1: {
+																								ctor: '::',
+																								_0: _rtfeldman$elm_css$Css$borderTopStyle(_rtfeldman$elm_css$Css$solid),
+																								_1: {
+																									ctor: '::',
+																									_0: _rtfeldman$elm_css$Css$borderTopWidth(
+																										_rtfeldman$elm_css$Css$px(1)),
+																									_1: {ctor: '[]'}
+																								}
+																							}
+																						}
+																					}
+																				}),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}),
+															_1: {ctor: '[]'}
+														}
+													}
 												}
 											}
 										}
@@ -15161,6 +15767,7 @@ var _user$project$Main$navButtonClass = F2(
 		}
 	});
 var _user$project$Main$updatingBaseUrl = _elm_lang$core$Native_Platform.incomingPort('updatingBaseUrl', _elm_lang$core$Json_Decode$string);
+var _user$project$Main$returnBoundingClientRect = _elm_lang$core$Native_Platform.incomingPort('returnBoundingClientRect', _elm_lang$core$Json_Decode$string);
 var _user$project$Main$reloadEquation = _elm_lang$core$Native_Platform.outgoingPort(
 	'reloadEquation',
 	function (v) {
@@ -15176,9 +15783,14 @@ var _user$project$Main$sumitEquation = _elm_lang$core$Native_Platform.outgoingPo
 	function (v) {
 		return v;
 	});
-var _user$project$Main$Model = F5(
-	function (a, b, c, d, e) {
-		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathType: d, mathEquation: e};
+var _user$project$Main$getPageYOffset = _elm_lang$core$Native_Platform.outgoingPort(
+	'getPageYOffset',
+	function (v) {
+		return v;
+	});
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathType: d, mathEquation: e, mousePositionY: f};
 	});
 var _user$project$Main$NoMathType = {ctor: 'NoMathType'};
 var _user$project$Main$update = F2(
@@ -15194,14 +15806,13 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MouseChange':
-				var _p4 = _p2._1;
-				var _p3 = A2(_elm_lang$core$Debug$log, 'testing', _p4);
+				var _p3 = 1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{equationContainerTop: _p4}),
-					_1: _elm_lang$core$Platform_Cmd$none
+						{mousePositionY: _p2._1}),
+					_1: _user$project$Main$getPageYOffset('')
 				};
 			case 'SetTrackMousePointer':
 				return {
@@ -15212,8 +15823,8 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ChangeMathType':
-				var _p5 = _p2._0;
-				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p5) ? _user$project$Main$NoMathType : _p5;
+				var _p4 = _p2._0;
+				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p4) ? _user$project$Main$NoMathType : _p4;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
@@ -15221,7 +15832,7 @@ var _user$project$Main$update = F2(
 						{selectedMathType: newMathType}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'UpdateEquation':
 				var newModel = _elm_lang$core$Native_Utils.update(
 					model,
 					{mathEquation: _p2._0});
@@ -15234,16 +15845,47 @@ var _user$project$Main$update = F2(
 							0,
 							_user$project$Main$encodeModel(newModel)))
 				};
+			case 'SubmitEquation':
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$Main$sumitEquation(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(model)))
+				};
+			default:
+				var convert = _elm_lang$core$String$toInt(_p2._0);
+				var position = function () {
+					var _p5 = convert;
+					if (_p5.ctor === 'Ok') {
+						return model.mousePositionY - _p5._0;
+					} else {
+						return model.equationContainerTop;
+					}
+				}();
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{equationContainerTop: position}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$Main$Tex = {ctor: 'Tex'};
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: A5(_user$project$Main$Model, '', false, 800, _user$project$Main$Tex, ''),
+	_0: A6(_user$project$Main$Model, '', false, 800, _user$project$Main$Tex, '', 0),
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _user$project$Main$AsciiMath = {ctor: 'AsciiMath'};
 var _user$project$Main$MathML = {ctor: 'MathML'};
+var _user$project$Main$GotPageYOffset = function (a) {
+	return {ctor: 'GotPageYOffset', _0: a};
+};
+var _user$project$Main$SubmitEquation = {ctor: 'SubmitEquation'};
 var _user$project$Main$UpdateEquation = function (a) {
 	return {ctor: 'UpdateEquation', _0: a};
 };
@@ -15342,7 +15984,16 @@ var _user$project$Main$view = function (model) {
 												_1: {
 													ctor: '::',
 													_0: _user$project$Main$id(_user$project$MyCss$MathEquationText),
-													_1: {ctor: '[]'}
+													_1: {
+														ctor: '::',
+														_0: _user$project$Main$class(
+															{
+																ctor: '::',
+																_0: _user$project$MyCss$ItemsEquationContainer,
+																_1: {ctor: '[]'}
+															}),
+														_1: {ctor: '[]'}
+													}
 												}
 											}
 										}
@@ -15359,7 +16010,16 @@ var _user$project$Main$view = function (model) {
 										{
 											ctor: '::',
 											_0: _user$project$Main$id(_user$project$MyCss$SvgContainer),
-											_1: {ctor: '[]'}
+											_1: {
+												ctor: '::',
+												_0: _user$project$Main$class(
+													{
+														ctor: '::',
+														_0: _user$project$MyCss$ItemsEquationContainer,
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
 										},
 										{
 											ctor: '::',
@@ -15548,12 +16208,51 @@ var _user$project$Main$view = function (model) {
 											_0: _elm_lang$html$Html$text('MathML'),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$SubmitEquation),
+												_1: {
+													ctor: '::',
+													_0: _user$project$Main$class(
+														{
+															ctor: '::',
+															_0: _user$project$MyCss$NavButton,
+															_1: {ctor: '[]'}
+														}),
+													_1: {
+														ctor: '::',
+														_0: _user$project$Main$id(_user$project$MyCss$NavSubmitButton),
+														_1: {ctor: '[]'}
+													}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('upload image'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}
 							}
 						}
 					}),
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$canvas,
+						{
+							ctor: '::',
+							_0: _user$project$Main$id(_user$project$MyCss$HiddenCanvas),
+							_1: {ctor: '[]'}
+						},
+						{ctor: '[]'}),
+					_1: {ctor: '[]'}
+				}
 			}
 		});
 };
@@ -15590,12 +16289,16 @@ var _user$project$Main$subscriptions = function (model) {
 				_0: _user$project$Main$updatingBaseUrl(_user$project$Main$UrlChange),
 				_1: {
 					ctor: '::',
-					_0: _elm_lang$mouse$Mouse$ups(
-						function (_p9) {
-							var _p10 = _p9;
-							return _user$project$Main$SetTrackMousePointer(false);
-						}),
-					_1: {ctor: '[]'}
+					_0: _user$project$Main$returnBoundingClientRect(_user$project$Main$GotPageYOffset),
+					_1: {
+						ctor: '::',
+						_0: _elm_lang$mouse$Mouse$ups(
+							function (_p9) {
+								var _p10 = _p9;
+								return _user$project$Main$SetTrackMousePointer(false);
+							}),
+						_1: {ctor: '[]'}
+					}
 				}
 			}));
 };

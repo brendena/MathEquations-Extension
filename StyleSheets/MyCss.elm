@@ -3,13 +3,14 @@ module MyCss exposing (..)
 import Css exposing (..)
 import Css.Elements exposing (..)
 import Css.Namespace exposing (namespace)
-
+import Css.Media exposing (media, mediaQuery, only, print, withMedia)
 
 type CssClasses
     = NavBar
     | NavLogo
     | NavButton
     | NavButtonSelected
+    | ItemsEquationContainer
 
 
 type CssIds
@@ -21,6 +22,8 @@ type CssIds
     | MathTextEquationContainer
     | MathEquationText
     | SvgContainer
+    | HiddenCanvas
+    | NavSubmitButton
 
 userSelect : String -> Style
 userSelect i =
@@ -80,13 +83,28 @@ css =
         ]
     , id MathTextEquationContainer
         [ flex (int 1)
+        , displayFlex
+        , flexDirection row
         ]
-    , id MathEquationText
-        [ height (pct 100)
-        , borderWidth (px 0)
-        ]
+    
     , id SvgContainer
-        [ float right]
+        [ borderLeftStyle solid
+        , borderLeftWidth (px 1)
+        ]
+    , id HiddenCanvas
+        [ width (px 800)
+        --, display none
+        , position fixed
+        , top (px 0)
+        ]
+    , class ItemsEquationContainer
+        [ height (pct 100)
+        , width (pct 50)
+        , borderWidth (px 0)
+        , resize none
+        , boxSizing borderBox
+        , padding (px 20)
+        ]
     , class NavBar
         [ margin zero
         , padding zero
@@ -106,11 +124,30 @@ css =
         , borderWidth (px 0)
         , backgroundColor (hex navBackgroundColor)
         , fontFamilies ["Times New Roman"]
+        , color (hex "#000000")
+        , boxShadow none
         , hover
           [ backgroundColor (hex "#aaaa78") ]
         ]
     , class NavButtonSelected
         [ backgroundColor (hex "#aaaa78")    
+        ]
+    --resize mathTexEquation on smaller screen
+    , mediaQuery  ["screen and ( max-width: 1000px )"]
+        [ id MathTextEquationContainer
+            [ flexDirection column ]
+        , id MathEquationText
+            [ width (pct 100)
+            , height (pct 100)
+            , borderWidth (px 0)
+            ]
+        , id SvgContainer
+            [ width (pct 100)
+            , height (pct 100)
+            , border (px 0)
+            , borderTopStyle solid
+            , borderTopWidth (px 1)
+            ]
         ]
     ]
 

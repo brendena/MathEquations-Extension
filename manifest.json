@@ -15,7 +15,8 @@
       "css": ["./StyleSheets/MyCss.css"],
       "js": ["main.js",
              "content.js",
-             "ports.js"],
+             "ports.js",
+             "clipboard.min.js"],
       "run_at": "document_end"
     }
   ],

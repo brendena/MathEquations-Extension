@@ -127,7 +127,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div [ id "elmContainer"] [
-        div [id MyCss.EquationsContainer, style[ ("top",toString(model.equationContainerTop) ++"px")]  ] [ 
+        div [id MyCss.EquationsContainer, equationsContainerCss model.selectedMathType , equationsContainerStyles model.selectedMathType model.equationContainerTop  ] [ 
           div [] [
             img [draggable "False",id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src ( model.baseUrl ++ "images/resizeIcon.svg") ] []
           ],
@@ -152,7 +152,7 @@ view model =
            ],
            button [onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath ) ] [text "AsciiMath"],
            button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML )] [text "MathML"],
-           button [onClick SubmitEquation, class [MyCss.NavButton], id MyCss.NavSubmitButton] [text "copy image"]
+           button [hidden (NoMathType == model.selectedMathType), onClick SubmitEquation, class [MyCss.NavButton], id MyCss.NavSubmitButton] [text "copy image"]
         ]
         , 
         canvas [id MyCss.HiddenCanvas] []
@@ -172,6 +172,25 @@ navButtonClass modelMathTypeSelect mathType =
     case equal of
       True -> class [MyCss.NavButton, MyCss.NavButtonSelected]
       False -> class [MyCss.NavButton]
+
+equationsContainerCss : MathType -> Attribute Msg
+equationsContainerCss  modelMathTypeSelect =
+  let
+      equal = modelMathTypeSelect ==  NoMathType
+  in
+    case equal of
+      True -> class [MyCss.HideEquationsContainer]
+      False -> class []
+equationsContainerStyles : MathType -> Int -> Attribute Msg
+equationsContainerStyles  modelMathTypeSelect  y =
+  let 
+      isNotMathType = modelMathTypeSelect ==  NoMathType
+  in
+    case isNotMathType of
+        True -> style[ ("top","100%")]
+        False -> style[ ("top",toString(y) ++"px")]
+      
+
 {--------------ViewHelperFunc----------------------------------------}
 
 {--------------SubScriptions----------------------------------------}

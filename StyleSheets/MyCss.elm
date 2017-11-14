@@ -11,6 +11,7 @@ type CssClasses
     | NavButton
     | NavButtonSelected
     | ItemsEquationContainer
+    | HideEquationsContainer
 
 
 type CssIds
@@ -29,6 +30,10 @@ type CssIds
 userSelect : String -> Style
 userSelect i =
     property "user-select" i
+
+transition : String -> Style
+transition i =
+    property "transition" i
 
 
 heightNavContainer = 100
@@ -123,21 +128,24 @@ css =
             ]
         ]
     , class NavButton
-        [ height (pct 100) |> important
-        , paddingLeft (px 10) |> important
-        , paddingRight (px 10) |> important
-        , float left |> important
-        , fontSize (px 30) |> important
-        , borderWidth (px 0) |> important
-        , backgroundColor (hex navBackgroundColor) |> important
-        , fontFamilies ["Times New Roman"] |> important
-        , color (hex "#000000") |> important
-        , boxShadow none |> important
+        [ height (pct 100) 
+        , paddingLeft (px 10) 
+        , paddingRight (px 10) 
+        , float left 
+        , fontSize (px 30)
+        , borderWidth (px 0) 
+        , backgroundColor (hex navBackgroundColor) 
+        , fontFamilies ["Times New Roman"] 
+        , color (hex "#000000") 
+        , boxShadow none 
         , hover 
           [ backgroundColor (hex "#aaaa78") ]
         ]
     , class NavButtonSelected
         [ backgroundColor (hex "#aaaa78")    
+        ]
+    , class HideEquationsContainer
+        [ transition "1s"
         ]
     --resize mathTexEquation on smaller screen
     , mediaQuery  ["screen and ( max-width: 1000px )"]

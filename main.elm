@@ -152,10 +152,16 @@ view model =
            ],
            button [onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath ) ] [text "AsciiMath"],
            button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML )] [text "MathML"],
-           button [onClick SubmitEquation, class [MyCss.NavButton], id MyCss.NavSubmitButton] [text "upload image"]
+           button [onClick SubmitEquation, class [MyCss.NavButton], id MyCss.NavSubmitButton] [text "copy image"]
         ]
         , 
         canvas [id MyCss.HiddenCanvas] []
+        ,
+        div [id MyCss.CanvasImgContainer] [
+          img [id "CanvasImg"] []
+        ]
+        -- ,
+        -- button [id "testButton"][text "test"]
     ]
 {--------------ViewHelperFunc----------------------------------------}
 navButtonClass : MathType -> MathType  -> Attribute Msg

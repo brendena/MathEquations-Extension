@@ -64,8 +64,12 @@
 
 #HiddenCanvas {
     width: 800px;
+    display: none;
+}
+
+#CanvasImgContainer {
     position: fixed;
-    top: 0px;
+    bottom: -100%;
 }
 
 .mainItemsEquationContainer {
@@ -88,16 +92,16 @@
 }
 
 .mainNavButton {
-    height: 100%;
-    padding-left: 10px;
-    padding-right: 10px;
-    float: left;
-    font-size: 30px;
-    border-width: 0px;
-    background-color: #ffdc78;
-    font-family: Times New Roman;
-    color: #000000;
-    box-shadow: none;
+    height: 100% !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    float: left !important;
+    font-size: 30px !important;
+    border-width: 0px !important;
+    background-color: #ffdc78 !important;
+    font-family: Times New Roman !important;
+    color: #000000 !important;
+    box-shadow: none !important;
 }
 
 .mainNavButton:hover {

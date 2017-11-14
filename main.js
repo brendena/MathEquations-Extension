@@ -15220,6 +15220,7 @@ var _user$project$MyCss$NavButtonSelected = {ctor: 'NavButtonSelected'};
 var _user$project$MyCss$NavButton = {ctor: 'NavButton'};
 var _user$project$MyCss$NavLogo = {ctor: 'NavLogo'};
 var _user$project$MyCss$NavBar = {ctor: 'NavBar'};
+var _user$project$MyCss$CanvasImgContainer = {ctor: 'CanvasImgContainer'};
 var _user$project$MyCss$NavSubmitButton = {ctor: 'NavSubmitButton'};
 var _user$project$MyCss$HiddenCanvas = {ctor: 'HiddenCanvas'};
 var _user$project$MyCss$SvgContainer = {ctor: 'SvgContainer'};
@@ -15472,79 +15473,56 @@ var _user$project$MyCss$css = function (_p0) {
 													_rtfeldman$elm_css$Css$px(800)),
 												_1: {
 													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$position(_rtfeldman$elm_css$Css$fixed),
-													_1: {
-														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$top(
-															_rtfeldman$elm_css$Css$px(0)),
-														_1: {ctor: '[]'}
-													}
+													_0: _rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$none),
+													_1: {ctor: '[]'}
 												}
 											}),
 										_1: {
 											ctor: '::',
 											_0: A2(
-												_rtfeldman$elm_css$Css$class,
-												_user$project$MyCss$ItemsEquationContainer,
+												_rtfeldman$elm_css$Css$id,
+												_user$project$MyCss$CanvasImgContainer,
 												{
 													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$height(
-														_rtfeldman$elm_css$Css$pct(100)),
+													_0: _rtfeldman$elm_css$Css$position(_rtfeldman$elm_css$Css$fixed),
 													_1: {
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$width(
-															_rtfeldman$elm_css$Css$pct(50)),
-														_1: {
-															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$borderWidth(
-																_rtfeldman$elm_css$Css$px(0)),
-															_1: {
-																ctor: '::',
-																_0: _rtfeldman$elm_css$Css$resize(_rtfeldman$elm_css$Css$none),
-																_1: {
-																	ctor: '::',
-																	_0: _rtfeldman$elm_css$Css$boxSizing(_rtfeldman$elm_css$Css$borderBox),
-																	_1: {
-																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css$padding(
-																			_rtfeldman$elm_css$Css$px(20)),
-																		_1: {ctor: '[]'}
-																	}
-																}
-															}
-														}
+														_0: _rtfeldman$elm_css$Css$bottom(
+															_rtfeldman$elm_css$Css$pct(-100)),
+														_1: {ctor: '[]'}
 													}
 												}),
 											_1: {
 												ctor: '::',
 												_0: A2(
 													_rtfeldman$elm_css$Css$class,
-													_user$project$MyCss$NavBar,
+													_user$project$MyCss$ItemsEquationContainer,
 													{
 														ctor: '::',
-														_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
+														_0: _rtfeldman$elm_css$Css$height(
+															_rtfeldman$elm_css$Css$pct(100)),
 														_1: {
 															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
+															_0: _rtfeldman$elm_css$Css$width(
+																_rtfeldman$elm_css$Css$pct(50)),
 															_1: {
 																ctor: '::',
-																_0: _rtfeldman$elm_css$Css$children(
-																	{
+																_0: _rtfeldman$elm_css$Css$borderWidth(
+																	_rtfeldman$elm_css$Css$px(0)),
+																_1: {
+																	ctor: '::',
+																	_0: _rtfeldman$elm_css$Css$resize(_rtfeldman$elm_css$Css$none),
+																	_1: {
 																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css_Elements$li(
-																			{
-																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$important(
-																					_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
-																				_1: {
-																					ctor: '::',
-																					_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
-																					_1: {ctor: '[]'}
-																				}
-																			}),
-																		_1: {ctor: '[]'}
-																	}),
-																_1: {ctor: '[]'}
+																		_0: _rtfeldman$elm_css$Css$boxSizing(_rtfeldman$elm_css$Css$borderBox),
+																		_1: {
+																			ctor: '::',
+																			_0: _rtfeldman$elm_css$Css$padding(
+																				_rtfeldman$elm_css$Css$px(20)),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
 															}
 														}
 													}),
@@ -15552,59 +15530,103 @@ var _user$project$MyCss$css = function (_p0) {
 													ctor: '::',
 													_0: A2(
 														_rtfeldman$elm_css$Css$class,
-														_user$project$MyCss$NavButton,
+														_user$project$MyCss$NavBar,
 														{
 															ctor: '::',
-															_0: _rtfeldman$elm_css$Css$height(
-																_rtfeldman$elm_css$Css$pct(100)),
+															_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
 															_1: {
 																ctor: '::',
-																_0: _rtfeldman$elm_css$Css$paddingLeft(
-																	_rtfeldman$elm_css$Css$px(10)),
+																_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
 																_1: {
 																	ctor: '::',
-																	_0: _rtfeldman$elm_css$Css$paddingRight(
-																		_rtfeldman$elm_css$Css$px(10)),
-																	_1: {
-																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left),
-																		_1: {
+																	_0: _rtfeldman$elm_css$Css$children(
+																		{
 																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$fontSize(
-																				_rtfeldman$elm_css$Css$px(30)),
-																			_1: {
-																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$borderWidth(
-																					_rtfeldman$elm_css$Css$px(0)),
-																				_1: {
+																			_0: _rtfeldman$elm_css$Css_Elements$li(
+																				{
 																					ctor: '::',
-																					_0: _rtfeldman$elm_css$Css$backgroundColor(
-																						_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor)),
+																					_0: _rtfeldman$elm_css$Css$important(
+																						_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
 																					_1: {
 																						ctor: '::',
-																						_0: _rtfeldman$elm_css$Css$fontFamilies(
-																							{
-																								ctor: '::',
-																								_0: 'Times New Roman',
-																								_1: {ctor: '[]'}
-																							}),
+																						_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
+																						_1: {ctor: '[]'}
+																					}
+																				}),
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															}
+														}),
+													_1: {
+														ctor: '::',
+														_0: A2(
+															_rtfeldman$elm_css$Css$class,
+															_user$project$MyCss$NavButton,
+															{
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$important(
+																	_rtfeldman$elm_css$Css$height(
+																		_rtfeldman$elm_css$Css$pct(100))),
+																_1: {
+																	ctor: '::',
+																	_0: _rtfeldman$elm_css$Css$important(
+																		_rtfeldman$elm_css$Css$paddingLeft(
+																			_rtfeldman$elm_css$Css$px(10))),
+																	_1: {
+																		ctor: '::',
+																		_0: _rtfeldman$elm_css$Css$important(
+																			_rtfeldman$elm_css$Css$paddingRight(
+																				_rtfeldman$elm_css$Css$px(10))),
+																		_1: {
+																			ctor: '::',
+																			_0: _rtfeldman$elm_css$Css$important(
+																				_rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left)),
+																			_1: {
+																				ctor: '::',
+																				_0: _rtfeldman$elm_css$Css$important(
+																					_rtfeldman$elm_css$Css$fontSize(
+																						_rtfeldman$elm_css$Css$px(30))),
+																				_1: {
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$important(
+																						_rtfeldman$elm_css$Css$borderWidth(
+																							_rtfeldman$elm_css$Css$px(0))),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$important(
+																							_rtfeldman$elm_css$Css$backgroundColor(
+																								_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor))),
 																						_1: {
 																							ctor: '::',
-																							_0: _rtfeldman$elm_css$Css$color(
-																								_rtfeldman$elm_css$Css$hex('#000000')),
+																							_0: _rtfeldman$elm_css$Css$important(
+																								_rtfeldman$elm_css$Css$fontFamilies(
+																									{
+																										ctor: '::',
+																										_0: 'Times New Roman',
+																										_1: {ctor: '[]'}
+																									})),
 																							_1: {
 																								ctor: '::',
-																								_0: _rtfeldman$elm_css$Css$boxShadow(_rtfeldman$elm_css$Css$none),
+																								_0: _rtfeldman$elm_css$Css$important(
+																									_rtfeldman$elm_css$Css$color(
+																										_rtfeldman$elm_css$Css$hex('#000000'))),
 																								_1: {
 																									ctor: '::',
-																									_0: _rtfeldman$elm_css$Css$hover(
-																										{
-																											ctor: '::',
-																											_0: _rtfeldman$elm_css$Css$backgroundColor(
-																												_rtfeldman$elm_css$Css$hex('#aaaa78')),
-																											_1: {ctor: '[]'}
-																										}),
-																									_1: {ctor: '[]'}
+																									_0: _rtfeldman$elm_css$Css$important(
+																										_rtfeldman$elm_css$Css$boxShadow(_rtfeldman$elm_css$Css$none)),
+																									_1: {
+																										ctor: '::',
+																										_0: _rtfeldman$elm_css$Css$hover(
+																											{
+																												ctor: '::',
+																												_0: _rtfeldman$elm_css$Css$backgroundColor(
+																													_rtfeldman$elm_css$Css$hex('#aaaa78')),
+																												_1: {ctor: '[]'}
+																											}),
+																										_1: {ctor: '[]'}
+																									}
 																								}
 																							}
 																						}
@@ -15614,64 +15636,42 @@ var _user$project$MyCss$css = function (_p0) {
 																		}
 																	}
 																}
-															}
-														}),
-													_1: {
-														ctor: '::',
-														_0: A2(
-															_rtfeldman$elm_css$Css$class,
-															_user$project$MyCss$NavButtonSelected,
-															{
-																ctor: '::',
-																_0: _rtfeldman$elm_css$Css$backgroundColor(
-																	_rtfeldman$elm_css$Css$hex('#aaaa78')),
-																_1: {ctor: '[]'}
 															}),
 														_1: {
 															ctor: '::',
 															_0: A2(
-																_rtfeldman$elm_css$Css_Media$mediaQuery,
+																_rtfeldman$elm_css$Css$class,
+																_user$project$MyCss$NavButtonSelected,
 																{
 																	ctor: '::',
-																	_0: 'screen and ( max-width: 1000px )',
+																	_0: _rtfeldman$elm_css$Css$backgroundColor(
+																		_rtfeldman$elm_css$Css$hex('#aaaa78')),
 																	_1: {ctor: '[]'}
-																},
-																{
-																	ctor: '::',
-																	_0: A2(
-																		_rtfeldman$elm_css$Css$id,
-																		_user$project$MyCss$MathTextEquationContainer,
-																		{
-																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
-																			_1: {ctor: '[]'}
-																		}),
-																	_1: {
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_rtfeldman$elm_css$Css_Media$mediaQuery,
+																	{
+																		ctor: '::',
+																		_0: 'screen and ( max-width: 1000px )',
+																		_1: {ctor: '[]'}
+																	},
+																	{
 																		ctor: '::',
 																		_0: A2(
 																			_rtfeldman$elm_css$Css$id,
-																			_user$project$MyCss$MathEquationText,
+																			_user$project$MyCss$MathTextEquationContainer,
 																			{
 																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$width(
-																					_rtfeldman$elm_css$Css$pct(100)),
-																				_1: {
-																					ctor: '::',
-																					_0: _rtfeldman$elm_css$Css$height(
-																						_rtfeldman$elm_css$Css$pct(100)),
-																					_1: {
-																						ctor: '::',
-																						_0: _rtfeldman$elm_css$Css$borderWidth(
-																							_rtfeldman$elm_css$Css$px(0)),
-																						_1: {ctor: '[]'}
-																					}
-																				}
+																				_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
+																				_1: {ctor: '[]'}
 																			}),
 																		_1: {
 																			ctor: '::',
 																			_0: A2(
 																				_rtfeldman$elm_css$Css$id,
-																				_user$project$MyCss$SvgContainer,
+																				_user$project$MyCss$MathEquationText,
 																				{
 																					ctor: '::',
 																					_0: _rtfeldman$elm_css$Css$width(
@@ -15682,26 +15682,48 @@ var _user$project$MyCss$css = function (_p0) {
 																							_rtfeldman$elm_css$Css$pct(100)),
 																						_1: {
 																							ctor: '::',
-																							_0: _rtfeldman$elm_css$Css$border(
+																							_0: _rtfeldman$elm_css$Css$borderWidth(
 																								_rtfeldman$elm_css$Css$px(0)),
-																							_1: {
-																								ctor: '::',
-																								_0: _rtfeldman$elm_css$Css$borderTopStyle(_rtfeldman$elm_css$Css$solid),
-																								_1: {
-																									ctor: '::',
-																									_0: _rtfeldman$elm_css$Css$borderTopWidth(
-																										_rtfeldman$elm_css$Css$px(1)),
-																									_1: {ctor: '[]'}
-																								}
-																							}
+																							_1: {ctor: '[]'}
 																						}
 																					}
 																				}),
-																			_1: {ctor: '[]'}
+																			_1: {
+																				ctor: '::',
+																				_0: A2(
+																					_rtfeldman$elm_css$Css$id,
+																					_user$project$MyCss$SvgContainer,
+																					{
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$width(
+																							_rtfeldman$elm_css$Css$pct(100)),
+																						_1: {
+																							ctor: '::',
+																							_0: _rtfeldman$elm_css$Css$height(
+																								_rtfeldman$elm_css$Css$pct(100)),
+																							_1: {
+																								ctor: '::',
+																								_0: _rtfeldman$elm_css$Css$border(
+																									_rtfeldman$elm_css$Css$px(0)),
+																								_1: {
+																									ctor: '::',
+																									_0: _rtfeldman$elm_css$Css$borderTopStyle(_rtfeldman$elm_css$Css$solid),
+																									_1: {
+																										ctor: '::',
+																										_0: _rtfeldman$elm_css$Css$borderTopWidth(
+																											_rtfeldman$elm_css$Css$px(1)),
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}
+																					}),
+																				_1: {ctor: '[]'}
+																			}
 																		}
-																	}
-																}),
-															_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
 														}
 													}
 												}
@@ -16232,7 +16254,7 @@ var _user$project$Main$view = function (model) {
 											},
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html$text('upload image'),
+												_0: _elm_lang$html$Html$text('copy image'),
 												_1: {ctor: '[]'}
 											}),
 										_1: {ctor: '[]'}
@@ -16251,7 +16273,29 @@ var _user$project$Main$view = function (model) {
 							_1: {ctor: '[]'}
 						},
 						{ctor: '[]'}),
-					_1: {ctor: '[]'}
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _user$project$Main$id(_user$project$MyCss$CanvasImgContainer),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$img,
+									{
+										ctor: '::',
+										_0: _user$project$Main$id('CanvasImg'),
+										_1: {ctor: '[]'}
+									},
+									{ctor: '[]'}),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
 				}
 			}
 		});

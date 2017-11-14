@@ -24,6 +24,7 @@ type CssIds
     | SvgContainer
     | HiddenCanvas
     | NavSubmitButton
+    | CanvasImgContainer
 
 userSelect : String -> Style
 userSelect i =
@@ -93,10 +94,16 @@ css =
         ]
     , id HiddenCanvas
         [ width (px 800)
-        --, display none
-        , position fixed
-        , top (px 0)
+        , display none
         ]
+    , id CanvasImgContainer
+        [ position fixed
+        , bottom (pct -100)
+        ]
+    --, id CanvasImgContainer
+    --[ position fixed
+    --, bottom (pct -100)
+    --]
     , class ItemsEquationContainer
         [ height (pct 100)
         , width (pct 50)
@@ -116,17 +123,17 @@ css =
             ]
         ]
     , class NavButton
-        [ height (pct 100)
-        , paddingLeft (px 10)
-        , paddingRight (px 10)
-        , float left
-        , fontSize (px 30)
-        , borderWidth (px 0)
-        , backgroundColor (hex navBackgroundColor)
-        , fontFamilies ["Times New Roman"]
-        , color (hex "#000000")
-        , boxShadow none
-        , hover
+        [ height (pct 100) |> important
+        , paddingLeft (px 10) |> important
+        , paddingRight (px 10) |> important
+        , float left |> important
+        , fontSize (px 30) |> important
+        , borderWidth (px 0) |> important
+        , backgroundColor (hex navBackgroundColor) |> important
+        , fontFamilies ["Times New Roman"] |> important
+        , color (hex "#000000") |> important
+        , boxShadow none |> important
+        , hover 
           [ backgroundColor (hex "#aaaa78") ]
         ]
     , class NavButtonSelected

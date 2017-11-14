@@ -7,6 +7,7 @@ div.id = "test";
 div.style.width = "100%";
 div.style.position = "fixed"
 div.style.bottom = "0"
+div.style.left = "0"
 div.style.background = "white";
 div.style.zIndex = "2000"
 
@@ -35,4 +36,11 @@ var mathJaxEvent = document.createElement('script');
 mathJaxEvent.src = chrome.extension.getURL("MathJaxEvent.js")
 document.body.appendChild(mathJaxEvent);
 /*~~~~~~~~~~~~~~~~~MathJax~Event~~~~~~~~~~~~~~~~~~~~~~*/
+
+
+var style = document.createElement('link');
+style.rel = 'stylesheet';
+style.type = 'text/css';
+style.href = chrome.extension.getURL('StyleSheets/MyCss.css');
+(document.head||document.documentElement).appendChild(style);
 

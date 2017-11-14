@@ -2,11 +2,20 @@ window.onload = function(){
     var baseUrl = chrome.extension.getURL("");
     app.ports.updatingBaseUrl.send(baseUrl)
     var hiddenCanvasId = document.getElementById("HiddenCanvas")
-    var clipboard = new Clipboard('NavSubmitButton');
+    //var clipboard = new Clipboard('#NavSubmitButton');
+    //**
+    new Clipboard("#NavSubmitButton")
     var submitButton = document.getElementById("NavSubmitButton")
     submitButton.setAttribute("data-clipboard-action", "copy");
-    submitButton.setAttribute("data-clipboard-target", "#HiddenCanvas");
-    //data-clipboard-action="copy" data-clipboard-target="div"
+    submitButton.setAttribute("data-clipboard-target", "#CanvasImgContainer");
+    //*/
+    
+    /*
+    new Clipboard("#testButton")
+    var submitButton = document.getElementById("testButton")
+    submitButton.setAttribute("data-clipboard-action", "copy");
+    submitButton.setAttribute("data-clipboard-target", "#CanvasImgContainer");
+    */
 
 
     app.ports.updateEquation.subscribe(function (equationObject) {
@@ -27,9 +36,11 @@ window.onload = function(){
             var canvas = hiddenCanvasId;
             drawInlineSVG(svg, function(){
                 var image = canvas.toDataURL("image/png");
-                jsonElmRequest["image"] = image.split("base64,")[1]
+                document.getElementById("CanvasImg").src = image;
+                
             });    
         }
+        //submitButton.click();
     });
 
     app.ports.getPageYOffset.subscribe(function(){

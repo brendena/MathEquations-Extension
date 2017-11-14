@@ -5,7 +5,7 @@
 }
 
 #NavContainer {
-    height: 100px;
+    height: 75px;
     border-top-color: #000000;
     border-top-width: 3px;
     border-top-style: solid;
@@ -31,7 +31,7 @@
     position: fixed;
     display: flex;
     flex-direction: column;
-    bottom: 100px;
+    bottom: 75px;
     z-index: -1;
     background-color: #ffffff;
     border-top-style: solid;

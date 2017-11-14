@@ -5,10 +5,9 @@
 
 ## current status 
 * Bug takes two clicks to copy image
-* Bug changing the Mathtype brake Elm Script
 * Bug The main page's css screw the extension's styles
 * Style - The nav bar brakes when you move to a really small screen
-* need icons
+* Bug UnImportant - Chrome Grammerly causes a bug in the textarea that brakes how the app works
 
 ## goal
 Create a extension that can create math equation that you can copy onto any site.

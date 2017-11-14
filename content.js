@@ -15,9 +15,16 @@ var app = Elm.Main.embed(div);
 
 document.body.appendChild(div);
 
+
+var addScript = function(scriptName){
+    var scriptTag = document.createElement('script');
+    scriptTag.src = chrome.extension.getURL("MathJaxEvent" + ".js")
+    document.body.appendChild(scriptTag);
+}
+
 /*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
 var mathJax = document.createElement('script');
-mathJax.src ="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js" //chrome.extension.getURL("MathJax/MathJax.js")
+mathJax.src ="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js" 
 mathJax.async = true
 document.body.appendChild(mathJax);
 /*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
@@ -31,16 +38,13 @@ mathJaxConfig.innerHTML = "MathJax.Hub.Config( { jax: ['input/TeX','input/MathML
 document.body.appendChild(mathJaxConfig);
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
 
-/*~~~~~~~~~~~~~~~~~MathJax~Event~~~~~~~~~~~~~~~~~~~~~~*/
-var mathJaxEvent = document.createElement('script');
-mathJaxEvent.src = chrome.extension.getURL("MathJaxEvent.js")
-document.body.appendChild(mathJaxEvent);
-/*~~~~~~~~~~~~~~~~~MathJax~Event~~~~~~~~~~~~~~~~~~~~~~*/
+
+addScript("MathJaxEvent")
+
 
 
 var style = document.createElement('link');
 style.rel = 'stylesheet';
 style.type = 'text/css';
 style.href = chrome.extension.getURL('StyleSheets/MyCss.css');
-(document.head||document.documentElement).appendChild(style);
-
+document.head.appendChild(style);

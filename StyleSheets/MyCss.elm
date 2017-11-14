@@ -36,7 +36,7 @@ transition i =
     property "transition" i
 
 
-heightNavContainer = 100
+heightNavContainer = 75
 navBackgroundColor = "#ffdc78"
 primaryAccentColor =
     hex "ccffaa"

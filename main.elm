@@ -96,9 +96,10 @@ update msg model =
     
     ChangeMathType mathType ->
       let
-        newMathType = if(model.selectedMathType == mathType) then NoMathType else mathType  
+        newMathType = if(model.selectedMathType == mathType) then NoMathType else mathType 
+        newModel =  {model | selectedMathType = newMathType}
       in 
-      ({model | selectedMathType = newMathType}, Cmd.none)
+      (newModel, updateEquation  (encode 0 (encodeModel newModel) ))
    
     UpdateEquation str->
         let
@@ -189,7 +190,7 @@ equationsContainerStyles  modelMathTypeSelect  y =
     case isNotMathType of
         True -> style[ ("top","100%")]
         False -> style[ ("top",toString(y) ++"px")]
-      
+
 
 {--------------ViewHelperFunc----------------------------------------}
 

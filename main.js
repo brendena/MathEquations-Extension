@@ -15211,7 +15211,7 @@ var _rtfeldman$elm_css_helpers$Html_CssHelpers$Namespace = F4(
 
 var _user$project$MyCss$primaryAccentColor = _rtfeldman$elm_css$Css$hex('ccffaa');
 var _user$project$MyCss$navBackgroundColor = '#ffdc78';
-var _user$project$MyCss$heightNavContainer = 100;
+var _user$project$MyCss$heightNavContainer = 75;
 var _user$project$MyCss$transition = function (i) {
 	return A2(_rtfeldman$elm_css$Css$property, 'transition', i);
 };
@@ -15649,7 +15649,7 @@ var _user$project$MyCss$css = function (_p0) {
 																	_user$project$MyCss$HideEquationsContainer,
 																	{
 																		ctor: '::',
-																		_0: _user$project$MyCss$transition('2s'),
+																		_0: _user$project$MyCss$transition('1s'),
 																		_1: {ctor: '[]'}
 																	}),
 																_1: {
@@ -15852,12 +15852,17 @@ var _user$project$Main$update = F2(
 			case 'ChangeMathType':
 				var _p4 = _p2._0;
 				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p4) ? _user$project$Main$NoMathType : _p4;
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{selectedMathType: newMathType});
 				return {
 					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{selectedMathType: newMathType}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_0: newModel,
+					_1: _user$project$Main$updateEquation(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(newModel)))
 				};
 			case 'UpdateEquation':
 				var newModel = _elm_lang$core$Native_Utils.update(

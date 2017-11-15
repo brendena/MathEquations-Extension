@@ -1,3 +1,4 @@
+![logo for MathEquation Extension](https://github.com/brendena/MathEquations-Extension/blob/master/images/96x96.png?raw=true)
 # MathEquations-Extension - [Chrome](https://chrome.google.com/webstore/detail/math-equations/fkioioejambaepmmpepneigdadjpfamh?hl=en) [Firefox](https://addons.mozilla.org/en-US/firefox/addon/math-equations-anywhere)
 
 

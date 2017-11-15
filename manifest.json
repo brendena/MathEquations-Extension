@@ -21,10 +21,7 @@
     {
       "matches":["<all_urls>"],
       //"css": ["./StyleSheets/MyCss.css"],
-      "js": ["main.js",
-             "content.js",
-             "ports.js",
-             "clipboard.min.js"],
+      "js": ["content.js"],
       "run_at": "document_end"
     }
   ],
@@ -33,7 +30,10 @@
     "images/*.png",
     "images/*.svg",
     "MathJaxEvent.js",
-    "StyleSheets/MyCss.css"
+    "StyleSheets/MyCss.css",
+    "main.js",
+    "clipboard.min.js",
+    "ports.js"
   ],
   
   "permissions": [

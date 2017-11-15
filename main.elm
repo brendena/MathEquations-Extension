@@ -12,12 +12,9 @@ import Html.CssHelpers exposing (withNamespace)
 import MyCss
 import Debug exposing (log)
 import Mouse exposing (..)
-import Window 
-import Maybe exposing (Maybe)
 import Result 
 
 {--------------JsToElm----------------------------------------}
-port updatingBaseUrl : (String -> msg) -> Sub msg
 port returnBoundingClientRect : (String -> msg) -> Sub msg
 {--------------JsToElm----------------------------------------}
 
@@ -222,7 +219,6 @@ subscriptions : Model -> Sub Msg
 subscriptions model =
 
   Sub.batch (trackMousePointer(model.trackMousePointerBool) ++  [
-      updatingBaseUrl UrlChange,
       returnBoundingClientRect GotPageYOffset,
       Mouse.ups (\{x, y} -> SetTrackMousePointer(False)  )
     ])

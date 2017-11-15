@@ -34,3 +34,15 @@ document.addEventListener('build', function (e) {
 }, false);
 
 console.log("loaded TestJs")
+
+
+
+class MathEquationAnywhere extends HTMLElement{
+    constructor(){
+        super()
+        const shadowRoot = this.attachShadow({mode: 'open'});
+        
+    }
+}
+
+window.customElements.define('math-equation-anywhere', MathEquationAnywhere)

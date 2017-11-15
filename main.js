@@ -15815,6 +15815,9 @@ var _user$project$Main$getPageYOffset = _elm_lang$core$Native_Platform.outgoingP
 	function (v) {
 		return v;
 	});
+var _user$project$Main$Flags = function (a) {
+	return {baseUrl: a};
+};
 var _user$project$Main$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathType: d, mathEquation: e, mousePositionY: f};
@@ -15949,10 +15952,15 @@ var _user$project$Main$equationsContainerStyles = F2(
 		}
 	});
 var _user$project$Main$Tex = {ctor: 'Tex'};
-var _user$project$Main$init = {
-	ctor: '_Tuple2',
-	_0: A6(_user$project$Main$Model, '', false, 800, _user$project$Main$Tex, '', 0),
-	_1: _elm_lang$core$Platform_Cmd$none
+var _user$project$Main$initialModel = {baseUrl: '', trackMousePointerBool: false, equationContainerTop: 800, selectedMathType: _user$project$Main$Tex, mathEquation: '', mousePositionY: 0};
+var _user$project$Main$init = function (flags) {
+	return {
+		ctor: '_Tuple2',
+		_0: _elm_lang$core$Native_Utils.update(
+			_user$project$Main$initialModel,
+			{baseUrl: flags.baseUrl}),
+		_1: _elm_lang$core$Platform_Cmd$none
+	};
 };
 var _user$project$Main$AsciiMath = {ctor: 'AsciiMath'};
 var _user$project$Main$MathML = {ctor: 'MathML'};
@@ -16395,8 +16403,15 @@ var _user$project$Main$subscriptions = function (model) {
 				}
 			}));
 };
-var _user$project$Main$main = _elm_lang$html$Html$program(
-	{view: _user$project$Main$view, update: _user$project$Main$update, init: _user$project$Main$init, subscriptions: _user$project$Main$subscriptions})();
+var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
+	{view: _user$project$Main$view, update: _user$project$Main$update, init: _user$project$Main$init, subscriptions: _user$project$Main$subscriptions})(
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (baseUrl) {
+			return _elm_lang$core$Json_Decode$succeed(
+				{baseUrl: baseUrl});
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'baseUrl', _elm_lang$core$Json_Decode$string)));
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};

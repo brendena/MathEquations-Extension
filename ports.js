@@ -1,7 +1,5 @@
-var baseUrl = chrome.extension.getURL("");
-console.log("baseUrl")
-console.log(baseUrl)
-app.ports.updatingBaseUrl.send(baseUrl)
+window.onload = function(){
+
 console.log(app)
 var hiddenCanvasId = document.getElementById("HiddenCanvas")
 //var clipboard = new Clipboard('#NavSubmitButton');
@@ -63,3 +61,4 @@ function drawInlineSVG(svgElement, callback){
     img.src = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
 }
 
+}

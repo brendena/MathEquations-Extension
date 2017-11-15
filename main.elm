@@ -28,18 +28,41 @@ port sumitEquation : String -> Cmd msg
 port getPageYOffset : String -> Cmd msg --!!! i don't need to submit a String
 {--------------ElmToJS----------------------------------------}
 
+
+type alias Flags = 
+  {
+    baseUrl : String
+  }
+
+init : Flags -> ( Model, Cmd Msg )
+init flags =
+    ( { initialModel
+        | baseUrl = flags.baseUrl
+      }
+    , Cmd.none
+    )
+
+initialModel : Model
+initialModel =
+    { baseUrl = ""
+    , trackMousePointerBool = False
+    , equationContainerTop = 800
+    , selectedMathType = Tex
+    , mathEquation = ""
+    , mousePositionY = 0
+    }
+
+
+
 main =
-  Html.program
+  Html.programWithFlags
     { view = view
     , update = update
     , init = init
     , subscriptions = subscriptions
     }
 
-init : (Model, Cmd Msg)
-init  =
-  ( Model "" False 800 Tex "" 0, Cmd.none
-  )
+
 
 { id, class, classList } =
     withNamespace "main"

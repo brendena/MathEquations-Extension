@@ -16,7 +16,7 @@
     "default_title": "Math Equations",
     "default_popup": "popup.html"
   },
-  /*
+  //*
   "content_scripts": [
     {
       "matches":["<all_urls>"],
@@ -28,7 +28,7 @@
       "run_at": "document_end"
     }
   ],
-  */
+  //*/
   "web_accessible_resources": [
     "images/*.png",
     "images/*.svg",

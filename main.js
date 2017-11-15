@@ -9348,128 +9348,6 @@ var _elm_lang$mouse$Mouse$subMap = F2(
 	});
 _elm_lang$core$Native_Platform.effectManagers['Mouse'] = {pkg: 'elm-lang/mouse', init: _elm_lang$mouse$Mouse$init, onEffects: _elm_lang$mouse$Mouse$onEffects, onSelfMsg: _elm_lang$mouse$Mouse$onSelfMsg, tag: 'sub', subMap: _elm_lang$mouse$Mouse$subMap};
 
-var _elm_lang$window$Native_Window = function()
-{
-
-var size = _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)	{
-	callback(_elm_lang$core$Native_Scheduler.succeed({
-		width: window.innerWidth,
-		height: window.innerHeight
-	}));
-});
-
-return {
-	size: size
-};
-
-}();
-var _elm_lang$window$Window_ops = _elm_lang$window$Window_ops || {};
-_elm_lang$window$Window_ops['&>'] = F2(
-	function (task1, task2) {
-		return A2(
-			_elm_lang$core$Task$andThen,
-			function (_p0) {
-				return task2;
-			},
-			task1);
-	});
-var _elm_lang$window$Window$onSelfMsg = F3(
-	function (router, dimensions, state) {
-		var _p1 = state;
-		if (_p1.ctor === 'Nothing') {
-			return _elm_lang$core$Task$succeed(state);
-		} else {
-			var send = function (_p2) {
-				var _p3 = _p2;
-				return A2(
-					_elm_lang$core$Platform$sendToApp,
-					router,
-					_p3._0(dimensions));
-			};
-			return A2(
-				_elm_lang$window$Window_ops['&>'],
-				_elm_lang$core$Task$sequence(
-					A2(_elm_lang$core$List$map, send, _p1._0.subs)),
-				_elm_lang$core$Task$succeed(state));
-		}
-	});
-var _elm_lang$window$Window$init = _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-var _elm_lang$window$Window$size = _elm_lang$window$Native_Window.size;
-var _elm_lang$window$Window$width = A2(
-	_elm_lang$core$Task$map,
-	function (_) {
-		return _.width;
-	},
-	_elm_lang$window$Window$size);
-var _elm_lang$window$Window$height = A2(
-	_elm_lang$core$Task$map,
-	function (_) {
-		return _.height;
-	},
-	_elm_lang$window$Window$size);
-var _elm_lang$window$Window$onEffects = F3(
-	function (router, newSubs, oldState) {
-		var _p4 = {ctor: '_Tuple2', _0: oldState, _1: newSubs};
-		if (_p4._0.ctor === 'Nothing') {
-			if (_p4._1.ctor === '[]') {
-				return _elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing);
-			} else {
-				return A2(
-					_elm_lang$core$Task$andThen,
-					function (pid) {
-						return _elm_lang$core$Task$succeed(
-							_elm_lang$core$Maybe$Just(
-								{subs: newSubs, pid: pid}));
-					},
-					_elm_lang$core$Process$spawn(
-						A3(
-							_elm_lang$dom$Dom_LowLevel$onWindow,
-							'resize',
-							_elm_lang$core$Json_Decode$succeed(
-								{ctor: '_Tuple0'}),
-							function (_p5) {
-								return A2(
-									_elm_lang$core$Task$andThen,
-									_elm_lang$core$Platform$sendToSelf(router),
-									_elm_lang$window$Window$size);
-							})));
-			}
-		} else {
-			if (_p4._1.ctor === '[]') {
-				return A2(
-					_elm_lang$window$Window_ops['&>'],
-					_elm_lang$core$Process$kill(_p4._0._0.pid),
-					_elm_lang$core$Task$succeed(_elm_lang$core$Maybe$Nothing));
-			} else {
-				return _elm_lang$core$Task$succeed(
-					_elm_lang$core$Maybe$Just(
-						{subs: newSubs, pid: _p4._0._0.pid}));
-			}
-		}
-	});
-var _elm_lang$window$Window$subscription = _elm_lang$core$Native_Platform.leaf('Window');
-var _elm_lang$window$Window$Size = F2(
-	function (a, b) {
-		return {width: a, height: b};
-	});
-var _elm_lang$window$Window$MySub = function (a) {
-	return {ctor: 'MySub', _0: a};
-};
-var _elm_lang$window$Window$resizes = function (tagger) {
-	return _elm_lang$window$Window$subscription(
-		_elm_lang$window$Window$MySub(tagger));
-};
-var _elm_lang$window$Window$subMap = F2(
-	function (func, _p6) {
-		var _p7 = _p6;
-		return _elm_lang$window$Window$MySub(
-			function (_p8) {
-				return func(
-					_p7._0(_p8));
-			});
-	});
-_elm_lang$core$Native_Platform.effectManagers['Window'] = {pkg: 'elm-lang/window', init: _elm_lang$window$Window$init, onEffects: _elm_lang$window$Window$onEffects, onSelfMsg: _elm_lang$window$Window$onSelfMsg, tag: 'sub', subMap: _elm_lang$window$Window$subMap};
-
 var _rtfeldman$elm_css_util$Css_Helpers$toCssIdentifier = function (identifier) {
 	return A4(
 		_elm_lang$core$Regex$replace,
@@ -15793,7 +15671,6 @@ var _user$project$Main$navButtonClass = F2(
 				});
 		}
 	});
-var _user$project$Main$updatingBaseUrl = _elm_lang$core$Native_Platform.incomingPort('updatingBaseUrl', _elm_lang$core$Json_Decode$string);
 var _user$project$Main$returnBoundingClientRect = _elm_lang$core$Native_Platform.incomingPort('returnBoundingClientRect', _elm_lang$core$Json_Decode$string);
 var _user$project$Main$reloadEquation = _elm_lang$core$Native_Platform.outgoingPort(
 	'reloadEquation',
@@ -15836,13 +15713,15 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MouseChange':
+				var _p4 = _p2._1;
 				var _p3 = 1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{mousePositionY: _p2._1}),
-					_1: _user$project$Main$getPageYOffset('')
+						{mousePositionY: _p4}),
+					_1: _user$project$Main$getPageYOffset(
+						_elm_lang$core$Basics$toString(_p4))
 				};
 			case 'SetTrackMousePointer':
 				return {
@@ -15853,8 +15732,8 @@ var _user$project$Main$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ChangeMathType':
-				var _p4 = _p2._0;
-				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p4) ? _user$project$Main$NoMathType : _p4;
+				var _p5 = _p2._0;
+				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p5) ? _user$project$Main$NoMathType : _p5;
 				var newModel = _elm_lang$core$Native_Utils.update(
 					model,
 					{selectedMathType: newMathType});
@@ -15893,9 +15772,9 @@ var _user$project$Main$update = F2(
 			default:
 				var convert = _elm_lang$core$String$toInt(_p2._0);
 				var position = function () {
-					var _p5 = convert;
-					if (_p5.ctor === 'Ok') {
-						return model.mousePositionY - _p5._0;
+					var _p6 = convert;
+					if (_p6.ctor === 'Ok') {
+						return model.mousePositionY - _p6._0;
 					} else {
 						return model.equationContainerTop;
 					}
@@ -15911,8 +15790,8 @@ var _user$project$Main$update = F2(
 	});
 var _user$project$Main$equationsContainerCss = function (modelMathTypeSelect) {
 	var equal = _elm_lang$core$Native_Utils.eq(modelMathTypeSelect, _user$project$Main$NoMathType);
-	var _p6 = equal;
-	if (_p6 === true) {
+	var _p7 = equal;
+	if (_p7 === true) {
 		return _user$project$Main$class(
 			{
 				ctor: '::',
@@ -15927,8 +15806,8 @@ var _user$project$Main$equationsContainerCss = function (modelMathTypeSelect) {
 var _user$project$Main$equationsContainerStyles = F2(
 	function (modelMathTypeSelect, y) {
 		var isNotMathType = _elm_lang$core$Native_Utils.eq(modelMathTypeSelect, _user$project$Main$NoMathType);
-		var _p7 = isNotMathType;
-		if (_p7 === true) {
+		var _p8 = isNotMathType;
+		if (_p8 === true) {
 			return _elm_lang$html$Html_Attributes$style(
 				{
 					ctor: '::',
@@ -15939,14 +15818,7 @@ var _user$project$Main$equationsContainerStyles = F2(
 			return _elm_lang$html$Html_Attributes$style(
 				{
 					ctor: '::',
-					_0: {
-						ctor: '_Tuple2',
-						_0: 'top',
-						_1: A2(
-							_elm_lang$core$Basics_ops['++'],
-							_elm_lang$core$Basics$toString(y),
-							'px')
-					},
+					_0: {ctor: '_Tuple2', _0: 'top', _1: '0px'},
 					_1: {ctor: '[]'}
 				});
 		}
@@ -16362,23 +16234,20 @@ var _user$project$Main$MouseChange = F2(
 		return {ctor: 'MouseChange', _0: a, _1: b};
 	});
 var _user$project$Main$trackMousePointer = function (trackMouse) {
-	var _p8 = trackMouse;
-	if (_p8 === true) {
+	var _p9 = trackMouse;
+	if (_p9 === true) {
 		return {
 			ctor: '::',
 			_0: _elm_lang$mouse$Mouse$moves(
-				function (_p9) {
-					var _p10 = _p9;
-					return A2(_user$project$Main$MouseChange, _p10.x, _p10.y);
+				function (_p10) {
+					var _p11 = _p10;
+					return A2(_user$project$Main$MouseChange, _p11.x, _p11.y);
 				}),
 			_1: {ctor: '[]'}
 		};
 	} else {
 		return {ctor: '[]'};
 	}
-};
-var _user$project$Main$UrlChange = function (a) {
-	return {ctor: 'UrlChange', _0: a};
 };
 var _user$project$Main$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
@@ -16387,19 +16256,15 @@ var _user$project$Main$subscriptions = function (model) {
 			_user$project$Main$trackMousePointer(model.trackMousePointerBool),
 			{
 				ctor: '::',
-				_0: _user$project$Main$updatingBaseUrl(_user$project$Main$UrlChange),
+				_0: _user$project$Main$returnBoundingClientRect(_user$project$Main$GotPageYOffset),
 				_1: {
 					ctor: '::',
-					_0: _user$project$Main$returnBoundingClientRect(_user$project$Main$GotPageYOffset),
-					_1: {
-						ctor: '::',
-						_0: _elm_lang$mouse$Mouse$ups(
-							function (_p11) {
-								var _p12 = _p11;
-								return _user$project$Main$SetTrackMousePointer(false);
-							}),
-						_1: {ctor: '[]'}
-					}
+					_0: _elm_lang$mouse$Mouse$ups(
+						function (_p12) {
+							var _p13 = _p12;
+							return _user$project$Main$SetTrackMousePointer(false);
+						}),
+					_1: {ctor: '[]'}
 				}
 			}));
 };
@@ -16412,6 +16277,9 @@ var _user$project$Main$main = _elm_lang$html$Html$programWithFlags(
 				{baseUrl: baseUrl});
 		},
 		A2(_elm_lang$core$Json_Decode$field, 'baseUrl', _elm_lang$core$Json_Decode$string)));
+var _user$project$Main$UrlChange = function (a) {
+	return {ctor: 'UrlChange', _0: a};
+};
 
 var Elm = {};
 Elm['Main'] = Elm['Main'] || {};

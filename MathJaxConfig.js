@@ -37,8 +37,7 @@ MathJax.Hub.Config(
         fontCheckDelay: 500,
         fontCheckTimeout: 15 * 1000
     },
-    messageStyle: 'none',
-    elements: document.getElementById("MathEquationElement").shadowRoot
+    messageStyle: 'none'
 }
 );
 console.log('loaded config');

@@ -42,9 +42,11 @@ class MathEquationAnywhere extends HTMLElement{
         /*~~~~~~~~~~~~~~~~~Clipboard~~~~~~~~~~~~~~~~~~~~~*/
         this.clipboard = document.createElement('script');
         this.clipboard.onload = function(){
+            console.log("navSubmit started")
             new Clipboard("#NavSubmitButton")
-            var submitButton = this.shadowRoot.getElementById("NavSubmitButton")
+            var submitButton = document.getElementById("NavSubmitButton")
             submitButton.setAttribute("data-clipboard-action", "copy");
+            submitButton.setAttribute("data-clipboard-target", "#CanvasImgContainer");
         }.bind(this);
         /*~~~~~~~~~~~~~~~~~Clipboard~~~~~~~~~~~~~~~~~~~~~*/
 
@@ -61,20 +63,20 @@ class MathEquationAnywhere extends HTMLElement{
             this.app = Elm.Main.embed(this.container,{
                 "baseUrl": this.getAttribute("baseurl")
             });
-            this.shadowRoot.appendChild(this.clipboard);
+            document.body.appendChild(this.clipboard);
             this.portsJS.onload = function(){
                 console.log("this")
                 console.log(this)
                 portJsCode.bind(this)();
             }.bind(this)
-            this.shadowRoot.appendChild(this.portsJS);
+            document.body.appendChild(this.portsJS);
         }.bind(this)
         /**elm */
 
 
     }
     connectedCallback(){
-        this.shadowRoot.appendChild(this.container);
+        document.body.appendChild(this.container);
         document.body.appendChild(this.mathJaxConfig);
         document.body.appendChild(this.mathJax);
         //this.shadowRoot.appendChild(this.mathJaxConfig);
@@ -87,9 +89,9 @@ class MathEquationAnywhere extends HTMLElement{
         if(attr == "baseurl"){
             console.log("baseUrlChagned")
             this.shadowStyle.href = newValue + "StyleSheets/MyCss.css";
-            this.shadowRoot.appendChild(this.shadowStyle);
+            document.body.appendChild(this.shadowStyle);
             this.elmCode.src = newValue + "main.js";
-            this.shadowRoot.appendChild(this.elmCode);
+            document.body.appendChild(this.elmCode);
             this.clipboard.src = newValue + "clipboard.min.js";
             this.portsJS.src = newValue + "ports.js"
         }

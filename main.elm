@@ -108,7 +108,7 @@ update msg model =
       let _ = 1 --+ Debug.log "testing"  y
           --test = Debug.log "window height" Window.size
       in
-        ({model | mousePositionY = y } , getPageYOffset "")
+        ({model | mousePositionY = y } , getPageYOffset (toString(y)) )
 
     SetTrackMousePointer set -> 
       ({model | trackMousePointerBool = set}, Cmd.none)
@@ -209,8 +209,8 @@ equationsContainerStyles  modelMathTypeSelect  y =
   in
     case isNotMathType of
         True -> style[ ("top","100%")]
-        False -> style[ ("top",toString(y) ++"px")]
-
+        --False -> style[ ("top",toString(y) ++"px")]
+        False -> style[ ("top","0px")]
 
 {--------------ViewHelperFunc----------------------------------------}
 

@@ -1,31 +1,31 @@
 var portJsCode = function(){
     console.log(this)
     
-    var ConvertImageObject = function(root){
+    var ConvertImageObject = function(){
+        var canvas = document.getElementById("HiddenCanvas");
+        var canvasImage = document.getElementById("CanvasImg");
+        var _drawSvgImage = function(svgElement){
+            var svgURL = new XMLSerializer().serializeToString(svgElement);
+            var ratioSvg = svgElement.clientHeight/svgElement.clientWidth;
+            var heigthSvg =  canvas.width * ratioSvg;
+            canvas.style.height = Math.round(heigthSvg) + "px";
+            var img  = new Image();
+            img.onload = function(){                      //width // height
+                canvas.getContext('2d').drawImage(this, 0,0, canvas.width, canvas.height);
+                canvasImage.src = canvas.toDataURL("image/png");
+            }
+            img.src = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
+        }
         return {
-            "canvas" : root.getElementById("HiddenCanvas"),
-            "canvasImage" : root.getElementById("CanvasImg"),
-            "_drawSvgImage": function(svgElement){
-                var svgURL = new XMLSerializer().serializeToString(svgElement);
-                var ratioSvg = svgElement.clientHeight/svgElement.clientWidth;
-                var heigthSvg =  this.canvas.width * ratioSvg;
-                this.canvas.height = heigthSvg + "px";
-                var img  = new Image();
-                var that = this;
-                img.onload = function(){                      //width // height
-                    that.canvas.getContext('2d').drawImage(this, 0,0, that.canvas.width, that.canvas.height);
-                    that.canvasImage.src = canvas.toDataURL("image/png");
-                }
-                img.src = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
-            },
             "convertImage" : function (divSvgId){
-                var divSvg = root.getElementById(divSvgId);
+                var divSvg = document.getElementById(divSvgId);
                 if(divSvg != null){
                     var svg = divSvg.getElementsByTagName("svg");
                     if(svg.length >= 2 || svg.length == 0)
                         throw "to many or zero svg's - something wrong with mathjax";
                     else
-                        this._drawSvgImage(svg[0]);
+                        console.log(svg[0]);
+                        _drawSvgImage(svg[0]);
                 }
                 else    
                     throw "the elm container didn't load"
@@ -33,12 +33,18 @@ var portJsCode = function(){
         }
     }
 
-    this.convertImageObject = ConvertImageObject(this.shadowRoot);
+    this.convertImageObject = ConvertImageObject();
     
 
-    this.app.ports.getPageYOffset.subscribe(function(){
-        var offsetHeight = window.pageYOffset;
-        this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
+    this.app.ports.getPageYOffset.subscribe(function(elmEvent){
+        //var offsetHeight = window.pageYOffset;
+        //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
+
+        //var orgin = document.getElementById("originText").innerHTML;
+        //var topElement = document.getElementById("EquationsContainer").style.top;
+        console.log(elmEvent)
+        parent.postMessage(elmEvent,origin);
+
     }.bind(this));
 
     this.app.ports.sumitEquation.subscribe(function(str){
@@ -46,16 +52,15 @@ var portJsCode = function(){
         //console.log(jsonElmRequest);
     });
 
-    var convertImageTimer = undefined;
-    var submitTimer = undefined;
+    this.convertImageTimer = undefined;
+    this.submitTimer = undefined;
     this.app.ports.updateEquation.subscribe(function (equationObject) {
-        clearTimeout(submitTimer);
+        clearTimeout(this.submitTimer);
         
         var equationJson = JSON.parse(equationObject)
         var divIdEquation = equationJson["selectedMathType"] + "Equation";
-        MathJax.Hub.Queue(["Typeset",MathJax.Hub], divIdEquation);
-        submitTimer = setTimeout(function(){
-            var divEquation = this.shadowRoot.getElementById(divIdEquation)
+        this.submitTimer = setTimeout(function(){
+            var divEquation = document.getElementById(divIdEquation)
             console.log(divEquation)
             var math = MathJax.Hub.getAllJax(divIdEquation)[0];
             console.log(math)
@@ -80,8 +85,8 @@ var portJsCode = function(){
 
         }.bind(this),100);
 
-        clearTimeout(convertImageTimer);
-        convertImageTimer = submitTimer = setTimeout(function(){
+        clearTimeout(this.convertImageTimer);
+        this.convertImageTimer = submitTimer = setTimeout(function(){
             this.convertImageObject.convertImage(divIdEquation)
         }.bind(this),500);
     }.bind(this));

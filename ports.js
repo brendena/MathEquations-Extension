@@ -42,7 +42,6 @@ var portJsCode = function(){
 
         //var orgin = document.getElementById("originText").innerHTML;
         //var topElement = document.getElementById("EquationsContainer").style.top;
-        console.log(elmEvent)
         parent.postMessage(elmEvent,origin);
 
     }.bind(this));

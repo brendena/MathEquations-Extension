@@ -15897,7 +15897,15 @@ var _user$project$Main$view = function (model) {
 												ctor: '::',
 												_0: _elm_lang$html$Html_Attributes$src(
 													A2(_elm_lang$core$Basics_ops['++'], model.baseUrl, 'images/resizeIcon.svg')),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: A2(_elm_lang$html$Html_Attributes$attribute, 'ondragstart', 'return false'),
+													_1: {
+														ctor: '::',
+														_0: A2(_elm_lang$html$Html_Attributes$attribute, 'ondrop', 'return false'),
+														_1: {ctor: '[]'}
+													}
+												}
 											}
 										}
 									}

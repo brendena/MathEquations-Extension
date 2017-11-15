@@ -11,6 +11,7 @@ var portJsCode = function(){
             canvas.style.height = Math.round(heigthSvg) + "px";
             var img  = new Image();
             img.onload = function(){                      //width // height
+                canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
                 canvas.getContext('2d').drawImage(this, 0,0, canvas.width, canvas.height);
                 canvasImage.src = canvas.toDataURL("image/png");
             }
@@ -37,11 +38,11 @@ var portJsCode = function(){
     
 
     this.app.ports.getPageYOffset.subscribe(function(elmEvent){
+        /*code for when this is not in a iframe */
         //var offsetHeight = window.pageYOffset;
         //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
 
-        //var orgin = document.getElementById("originText").innerHTML;
-        //var topElement = document.getElementById("EquationsContainer").style.top;
+        var orgin = document.getElementById("originText").innerHTML;
         parent.postMessage(elmEvent,origin);
 
     }.bind(this));

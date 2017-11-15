@@ -150,7 +150,7 @@ view model =
     div [ id "elmContainer"] [
         div [id MyCss.EquationsContainer, equationsContainerCss model.selectedMathType , equationsContainerStyles model.selectedMathType model.equationContainerTop  ] [ 
           div [] [
-            img [draggable "False",id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src ( model.baseUrl ++ "images/resizeIcon.svg") ] []
+            img [draggable "False",id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src ( model.baseUrl ++ "images/resizeIcon.svg"), attribute "ondragstart" "return false", attribute "ondrop" "return false"] []
           ],
           div [id MyCss.MathTextEquationContainer] [
             textarea [onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText, class [MyCss.ItemsEquationContainer]] [text ""],

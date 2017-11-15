@@ -2,6 +2,7 @@ console.log("base url");
 console.log(chrome.extension.getURL(""))
 
 var MathEquationTag = document.createElement("math-equation-anywhere");
+MathEquationTag.id ="MathEquationElement"
 MathEquationTag.setAttribute("baseurl", chrome.extension.getURL(""));
 document.body.appendChild(MathEquationTag)
 

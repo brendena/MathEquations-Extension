@@ -1,4 +1,3 @@
-//used
 MathJax.Hub.Config(
     {
     jax: ['input/TeX','input/MathML','input/AsciiMath','output/SVG'],
@@ -38,7 +37,8 @@ MathJax.Hub.Config(
         fontCheckDelay: 500,
         fontCheckTimeout: 15 * 1000
     },
-    messageStyle: 'none'
+    messageStyle: 'none',
+    elements: document.getElementById("MathEquationElement").shadowRoot
 }
 );
 console.log('loaded config');

@@ -37,7 +37,7 @@ module.exports = {
   },
   plugins: [
     new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']}),
-    //new WebpackShellPlugin({onBuildStart: ['elm-css src/Stylesheets/StylesheetCompiler.elm --output src/Stylesheets/']})
+    new WebpackShellPlugin({onBuildStart: ['elm-css src/MathEquation/Stylesheets/StylesheetCompiler.elm --output src/MathEquation/Stylesheets/']}),
     new CopyWebpackPlugin([
       { from: "./src/manifest.json" },
       { from: "./src/PopUpMenu/Html/popUp.html" },
@@ -51,27 +51,35 @@ module.exports = {
         exclude: /node_modules/,
         loader:  'file-loader?name=[name].[ext]',
       },
+      //*
       {
         test:    /\.elm$/,
-        exclude: [/elm-stuff/, /node_modules/,/StyleSheets/],
+        exclude: [/elm-stuff/, /node_modules/,"/src/MathEquation/Stylesheets/StylesheetCompiler.elm"],
         loader:  'elm-webpack-loader?verbose=true&warn=true',
       },
+      ///*
       {
         test: /\.(css|scss)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: "css-loader"
-        })
-      }
-      ,
+        use: [
+          'style-loader',
+          'css-loader',
+        ]
+      },
+      //*/
+      /*
       {
-        test: /StylesheetsCompiler\.elm$/,
+        //test: /StylesheetsCompiler\.elm$/,
+        //include: "/src/MathEquation/Elm",
+        test:    /\.elm$/,
+        exclude:["/src/MathEquation/Elm","/elm-stuff"],
+        include: "/src/MathEquation/Stylesheets/StylesheetCompiler.elm",
         use: [
           'style-loader',
           'css-loader',
           'elm-css-webpack-loader'
         ]
       },
+      //*/
       {
         test:    /\.(html|json)$/,
         exclude: /node_modules/,
@@ -93,6 +101,7 @@ module.exports = {
         loader: 'ts-loader'
       }
     ],
-    noParse: /\.elm$/
+    noParse: /^((?!StylesheetCompiler).)*\.elm.*$/,
+    //noParse: [/.elm$/]
   }
 };

@@ -150,7 +150,7 @@ view model =
     div [ id "elmContainer"] [
         div [id MyCss.EquationsContainer, equationsContainerCss model.selectedMathType , equationsContainerStyles model.selectedMathType model.equationContainerTop  ] [ 
           div [] [
-            img [draggable "False",id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src ( model.baseUrl ++ "images/resizeIcon.svg"), attribute "ondragstart" "return false", attribute "ondrop" "return false"] []
+            img [draggable "False",id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src ( model.baseUrl ++ "Img/resizeIcon.svg"), attribute "ondragstart" "return false", attribute "ondrop" "return false"] []
           ],
           div [id MyCss.MathTextEquationContainer] [
             textarea [onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText, class [MyCss.ItemsEquationContainer]] [text ""],
@@ -167,9 +167,9 @@ view model =
 
 
         div [id MyCss.NavContainer]  [ 
-           img [id "logo", class [MyCss.NavLogo] , src ( model.baseUrl ++ "images/logoClearBackground.svg") ] [],
+           img [id "logo", class [MyCss.NavLogo] , src ( model.baseUrl ++ "Img/logoClearBackground.svg") ] [],
            button [onClick (ChangeMathType Tex), (navButtonClass model.selectedMathType Tex )] [
-             img [id MyCss.LatexImage, src ( model.baseUrl ++ "images/latex.svg")] []
+             img [id MyCss.LatexImage, src ( model.baseUrl ++ "Img/latex.svg")] []
            ],
            button [onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath ) ] [text "AsciiMath"],
            button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML )] [text "MathML"],

@@ -10,7 +10,8 @@ var constructUi = function(){
     iframe.style.width = "100%";
     iframe.style.height = "300px";
     iframe.allowtransparency="true";
-    iframe.style.maxHeight = "80%"
+    iframe.style.maxHeight = "80%";
+    iframe.style.minHeight = "100px";
     
     setTimeout(function(){
         iframe = document.getElementById("mathEquationIframe");

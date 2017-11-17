@@ -60,23 +60,23 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 6:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-var contentJS = __webpack_require__(7);
+var contentJS = __webpack_require__(20);
 
 /***/ }),
 
-/***/ 7:
+/***/ 20:
 /***/ (function(module, exports) {
 
 console.log("got content.js")
@@ -91,7 +91,8 @@ var constructUi = function(){
     iframe.style.width = "100%";
     iframe.style.height = "300px";
     iframe.allowtransparency="true";
-    iframe.style.maxHeight = "80%"
+    iframe.style.maxHeight = "80%";
+    iframe.style.minHeight = "100px";
     
     setTimeout(function(){
         iframe = document.getElementById("mathEquationIframe");

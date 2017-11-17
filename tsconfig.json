@@ -8,9 +8,13 @@
     "strictNullChecks": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
-    "sourceMap": false,
+    "sourceMap": true,
     "lib": ["es2017", "dom"],
-    "typeRoots": ["types"]
+    "types": ["node"],
+    "typeRoots": [
+      "types",
+      "node_modules/@types"
+    ]
   },
   "include": [
     "src/**/*"

@@ -8,6 +8,7 @@
     "ts-custom-elements": "^1.0.0"
   },
   "devDependencies": {
+    "@types/node": "^8.0.53",
     "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.7",
     "elm-css-webpack-loader": "^3.3.0",

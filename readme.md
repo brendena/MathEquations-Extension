@@ -1,10 +1,10 @@
-![logo for MathEquation Extension](https://github.com/brendena/MathEquations-Extension/blob/master/images/96x96.png?raw=true)
+![logo for MathEquation Extension](https://github.com/brendena/MathEquations-Extension/blob/master/Img/96x96.png?raw=true)
 # MathEquations-Extension - [Chrome](https://chrome.google.com/webstore/detail/math-equations/fkioioejambaepmmpepneigdadjpfamh?hl=en) [Firefox](https://addons.mozilla.org/en-US/firefox/addon/math-equations-anywhere)
 
 
 
 
-![example](https://github.com/brendena/MathEquations-Extension/blob/master/images/ReadMeExample.png?raw=true)
+![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/exampleScreenShotGoogleDocs.png?raw=true)
 
 ## current status 
 * Style - The nav bar brakes when you move to a really small screen

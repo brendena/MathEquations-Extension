@@ -2,3 +2,5 @@
 /StyleSheets/elm-stuff
 *.log
 /bower_components
+/node_modules
+/.vscode

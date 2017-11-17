@@ -1,6 +1,7 @@
+console.log("got content.js")
 var constructUi = function(){
     var iframe = document.createElement("iframe")
-    iframe.id="test";
+    iframe.id="mathEquationIframe";
     iframe.style.position = "fixed"
     iframe.style.bottom = "0";
     iframe.style.left = "0";
@@ -12,7 +13,9 @@ var constructUi = function(){
     iframe.style.maxHeight = "80%"
     
     setTimeout(function(){
-        iframe = document.getElementById("test");
+        iframe = document.getElementById("mathEquationIframe");
+        
+        
         var MathEquationTag = document.createElement("math-equation-anywhere");
         MathEquationTag.id ="MathEquationElement"
         MathEquationTag.setAttribute("baseurl", chrome.extension.getURL(""));
@@ -40,10 +43,9 @@ var constructUi = function(){
             //document.body.appendChild(scriptTag);
             iframe.contentDocument.head.appendChild(scriptTag)
         }
-        addScript("bower_components/webcomponentsjs/webcomponents-loader")
-        addScript("MathJaxEvent")
+        addScript("mathEquationComponent")
     },100);
-
+    console.log(iframe)
     document.body.appendChild(iframe)
 }
 

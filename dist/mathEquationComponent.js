@@ -919,7 +919,6 @@ class ElmPort {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConvertMathTypes; });
 let ConvertMathTypes = function (mathTypesString) {
     let returnType;
-    console.log(mathTypesString);
     switch (mathTypesString) {
         case "MathML":
             returnType = "MathML" /* MathML */;

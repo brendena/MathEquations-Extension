@@ -19,3 +19,9 @@ Create a extension that can create math equation that you can copy onto any site
 * Download Image
 
 
+
+## Getting started
+* npm install -g elm bower webpack
+* npm install
+* bower install
+* elm-package install

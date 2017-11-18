@@ -60,29 +60,30 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 18:
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-var contentJS = __webpack_require__(19);
+var contentJS = __webpack_require__(31);
 
 /***/ }),
 
-/***/ 19:
+/***/ 31:
 /***/ (function(module, exports) {
 
 console.log("got content.js")
+var iframeId = "mathEquationIframe";
 var constructUi = function(){
     var iframe = document.createElement("iframe")
-    iframe.id="mathEquationIframe";
+    iframe.id= iframeId;
     iframe.style.position = "fixed"
     iframe.style.bottom = "0";
     iframe.style.left = "0";
@@ -92,7 +93,7 @@ var constructUi = function(){
     iframe.style.height = "300px";
     iframe.allowtransparency="true";
     iframe.style.maxHeight = "80%";
-    iframe.style.minHeight = "100px";
+    //iframe.style.minHeight = "100px";
     
     setTimeout(function(){
         iframe = document.getElementById("mathEquationIframe");
@@ -105,9 +106,42 @@ var constructUi = function(){
         iframe.contentDocument.body.appendChild(MathEquationTag)
     
         /*veryMuchHack*/
+            /*orgin is know added in the web component itself */
+            var timeOut = 500;
+            var lastPositionY = undefined;
+            var minPositionY = 100;
             window.addEventListener("message", function(event){
-                var height = iframe.style.height;
-                iframe.style.height = (parseInt(height, 10) - event.data) + "px";
+                let messageData = event.data 
+                console.log(messageData)
+                if(messageData != undefined && messageData["messageType"] != undefined){
+                    switch (messageData["messageType"]){
+                        case "MouseResize":
+                            var height = iframe.style.height;
+                            var positionY = (parseInt(height, 10) - messageData.value);
+                            if (positionY >= minPositionY){
+                                lastPositionY = positionY;
+                                iframe.style.height = lastPositionY + "px";
+                            }
+                            break;
+                        case "CloseMenu":
+                            console.log("close")
+                            if (iframe.parentNode) {
+                                iframe.parentNode.removeChild(iframe);
+                            }
+                            break;
+                        case "MinimizeTextInput":
+                            if(messageData.value == true){
+                                setTimeout(function(){iframe.style.height =  "100px";},timeOut);
+                            }
+                            else{
+                                if(lastPositionY != undefined)
+                                    iframe.style.height =  lastPositionY + "px";;
+                            }
+                            break;
+                    }
+                }
+                
+                
                 //console.log(iframe.style.height)
 
             }, false);
@@ -133,13 +167,18 @@ var constructUi = function(){
 
 
 
-var called = false
+
 var runtimeFunction = function(request, sender) {
+    var iframe = document.getElementById(iframeId);
 	if(request.hasOwnProperty('openMenu')){
-        console.log("got call");
-        if(called == false){
-            constructUi();
-            called = true;
+        if(iframe == undefined){
+
+            if (document.readyState != 'complete'){
+                window.addEventListener("load",constructUi);
+            }
+            else{
+                constructUi();
+            }
         }
 	}
 }
@@ -149,6 +188,8 @@ var runtimeFunction = function(request, sender) {
 chrome.runtime.onMessage.addListener(
 	runtimeFunction
 );
+
+//constructUi();
 
 /***/ })
 

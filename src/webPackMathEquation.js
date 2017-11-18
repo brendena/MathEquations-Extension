@@ -8,7 +8,9 @@ console.log("mathEquationLoader")
 //require("../bower_components/webcomponentsjs/");
 
 import styles from './MathEquation/Stylesheets/MyCss.css'
-
+import styles from './MathEquation/Stylesheets/fontello/css/animation.css'
+import styles from './MathEquation/Stylesheets/fontello/css/fontello-codes.css'
+import styles from './MathEquation/Stylesheets/fontello/css/fontello.css'
 
 /*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
 var mathJax = document.createElement('script');

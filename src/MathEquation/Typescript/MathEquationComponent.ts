@@ -2,6 +2,7 @@ import { CustomElement, OnConnected, OnDisconnected, OnAttributeChanged } from '
 import { ElmPort } from './ElmPort.ts'
 import { MathJaxConvert } from './MathJaxConvert.ts'
 import { MathTypes } from './MathTypes.ts'
+import { PostMessageHandler } from './PostMessageHandler.ts'
 import { setTimeout } from 'timers';
 
 var Elm :any = require('../Elm/Main.elm');
@@ -17,6 +18,7 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
     container: HTMLElement;
     app:any;
     mathJaxConvert = new MathJaxConvert();
+    postMessageHandler: PostMessageHandler;
     constructor(){
         super();
         const shadowRoot = this.attachShadow({mode: 'open'});
@@ -36,30 +38,41 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
         document.body.appendChild(this.container);
         var event = new CustomEvent('MathEquationAdded');
         document.dispatchEvent(event);
+        var origin = this.getAttribute("originurl");
+        if(origin == null)
+            throw("didn't url");
+        this.postMessageHandler = new PostMessageHandler(origin);
+        console.log("making elm")
+        console.log(Elm)
+        /**********************setting-elm-up************************************/
         this.app = Elm.Main.embed(this.container,{
             "baseUrl": this.getAttribute("baseurl")
         });
-        this.app.ports.getPageYOffset.subscribe((elmEvent :string)=>{
+        this.app.ports.getPageYOffset.subscribe((elmMousePositon :number)=>{
             /*code for when this is not in a iframe */
             //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
-            var origin = this.getAttribute("originurl");
-            if(origin != null){
-                parent.postMessage(elmEvent,origin);
-            }
+            this.postMessageHandler.mouseResize(elmMousePositon);
         });
 
         this.app.ports.sumitEquation.subscribe((elmString:string)=>{
             var elmObject = new ElmPort(elmString);
-
         });
         this.app.ports.updateEquation.subscribe((elmString:string)=> {
             var elmObject = new ElmPort(elmString);
             if(elmObject.selectedMathType != MathTypes.NoMathType){
                 this.mathJaxConvert.queueEquation(elmObject);
+                this.postMessageHandler.MinimizeTextInput(false);
             }
-            
+            else{
+                this.postMessageHandler.MinimizeTextInput(true);
+            }
         });
 
+        this.app.ports.closePage.subscribe((elmString:string)=> {
+            this.postMessageHandler.closeMenu();
+        });
+        /**********************setting-elm-up************************************/
+        
         //wait untill elm load to load the clipboard element
         setTimeout(()=>{
             new Clipboard("#NavSubmitButton")

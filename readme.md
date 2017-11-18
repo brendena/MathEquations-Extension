@@ -26,6 +26,9 @@ Then you can load it into whatever browser that you are currently working on.
 * **/src/ContentScripts/** - background script that will append MathEquation upon a request from the PopUpMenu.
 * **/src/MathEquation/** - Bulk of the code.  This hold all the code for the ui that convert the equations into images.
 
+## Testing Locally
+In **/src/ContentScripts/Js/content.js** you can add this line **constructUi();** and it will load the extensions when the page loads. 
+
 ### Firefox
 At **about:debugging** you can add extension locally.
 

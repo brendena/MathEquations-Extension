@@ -9,7 +9,7 @@ import List exposing (..)
 import Json.Decode exposing (decodeString, field)
 import Json.Encode exposing (encode, Value, string, int, float, bool, list, object)
 import Html.CssHelpers exposing (withNamespace)
-import MyCss
+import MyCss exposing (..)
 import Debug exposing (log)
 import Mouse exposing (..)
 import Result 
@@ -23,6 +23,7 @@ port reloadEquation : String -> Cmd msg
 port updateEquation : String -> Cmd msg
 port sumitEquation : String -> Cmd msg
 port getPageYOffset : String -> Cmd msg --!!! i don't need to submit a String
+port closePage : String -> Cmd msg
 {--------------ElmToJS----------------------------------------}
 
 
@@ -47,9 +48,19 @@ initialModel =
     , selectedMathType = Tex
     , mathEquation = ""
     , mousePositionY = 0
+    , minimizeMenuState = False
     }
 
-
+type alias Model =
+  { 
+    baseUrl: String,
+    trackMousePointerBool: Bool,
+    equationContainerTop: Int,
+    selectedMathType: MathType,
+    mathEquation: String,
+    mousePositionY: Int,
+    minimizeMenuState: Bool
+  }
 
 main =
   Html.programWithFlags
@@ -64,21 +75,13 @@ main =
 { id, class, classList } =
     withNamespace "main"
 
-type  MathType =
-         MathML
+type  MathType 
+        = MathML
         | AsciiMath
         | Tex
         | NoMathType
 
-type alias Model =
-  { 
-    baseUrl: String,
-    trackMousePointerBool: Bool,
-    equationContainerTop: Int,
-    selectedMathType: MathType,
-    mathEquation: String,
-    mousePositionY: Int
-  }
+
 
 
 encodeModel : Model -> Value
@@ -98,6 +101,7 @@ type Msg
   | UpdateEquation String
   | SubmitEquation
   | GotPageYOffset String
+  | ClosePage
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -138,11 +142,11 @@ update msg model =
              position = case convert of  
                         Ok offset-> model.mousePositionY - offset
                         Err error-> model.equationContainerTop
-
-
         in
           ({model | equationContainerTop = position }, Cmd.none)
-    
+
+    ClosePage ->
+      (model , closePage "True")
 
 
 view : Model -> Html Msg
@@ -154,14 +158,20 @@ view model =
           ],
           div [id MyCss.MathTextEquationContainer] [
             textarea [onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText, class [MyCss.ItemsEquationContainer]] [text ""],
-            div[id MyCss.SvgContainer,class [MyCss.ItemsEquationContainer]] [
-              p [id "AsciiMathEquation",hidden (AsciiMath /= model.selectedMathType) ] [text "Ascii `` "], 
-              p [id "TexEquation",hidden (Tex /= model.selectedMathType)] [text "Tex ${ }$ " ], 
-              div[hidden (MathML /= model.selectedMathType)][
-                p [] [text "MathML"],
-                p [id "MathMLEquation"] [text ""] 
+            div [id MyCss.MathOutputContainer,class [MyCss.ItemsEquationContainer]] [
+                div[id MyCss.SvgContainer] [
+                p [id "AsciiMathEquation",hidden (AsciiMath /= model.selectedMathType) ] [text "Ascii `` "], 
+                p [id "TexEquation",hidden (Tex /= model.selectedMathType)] [text "Tex ${ }$ " ], 
+                div[hidden (MathML /= model.selectedMathType)][
+                  p [] [text "MathML"],
+                  p [id "MathMLEquation"] [text ""] 
+                ]
+              ],
+              div [id MyCss.MathOutputMenu] [
+                button [onClick SubmitEquation, class [], id MyCss.NavSubmitButton] [text "copy image"]
               ]
             ]
+
           ]
         ],
 
@@ -173,7 +183,11 @@ view model =
            ],
            button [onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath ) ] [text "AsciiMath"],
            button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML )] [text "MathML"],
-           button [hidden (NoMathType == model.selectedMathType), onClick SubmitEquation, class [MyCss.NavButton], id MyCss.NavSubmitButton] [text "copy image"]
+           button [onClick ClosePage, style[ ("float","right")], class [MyCss.NavButton], Html.Attributes.classList [(stringFontClasses MyCss.IconCancel1, True)]][],
+           a [style[ ("float","right")],href "https://github.com/brendena/MathEquations-Extension", target "blank"] [
+             button [Html.Attributes.classList [(stringFontClasses MyCss.IconGithubCircled, True)], (navButtonClass model.selectedMathType MathML )] []
+           ]
+           
         ]
         , 
         canvas [id MyCss.HiddenCanvas] []

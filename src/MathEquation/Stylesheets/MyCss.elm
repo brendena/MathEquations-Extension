@@ -26,6 +26,27 @@ type CssIds
     | HiddenCanvas
     | NavSubmitButton
     | CanvasImgContainer
+    | MathOutputContainer
+    | MathOutputMenu
+
+type FontClasses
+    = IconUpOpen
+    | IconGithubCircled
+    | IconDownload
+    | IconUpload
+    | IconDownOpen
+    | IconCancel1
+
+stringFontClasses : FontClasses -> String
+stringFontClasses fontClass=
+    case fontClass of
+        IconUpOpen -> "icon-up-open"
+        IconGithubCircled -> "icon-github-circled"
+        IconDownload -> "icon-download"
+        IconUpload -> "icon-upload"
+        IconDownOpen -> "icon-down-open"
+        IconCancel1 -> "icon-cancel-1"
+
 
 userSelect : String -> Style
 userSelect i =
@@ -94,8 +115,8 @@ css =
         ]
     
     , id SvgContainer
-        [ borderLeftStyle solid
-        , borderLeftWidth (px 1)
+        [ flex (int 1)
+        , padding (px 20)
         ]
     , id HiddenCanvas
         [ width (px 800)
@@ -103,15 +124,37 @@ css =
         ]
     , id CanvasImgContainer
         [ position fixed
-        , bottom (pct -100)
+        , bottom (pct -200)
+        , zIndex (int -20)
         ]
-    --, id CanvasImgContainer
-    --[ position fixed
-    --, bottom (pct -100)
-    --]
-    , class ItemsEquationContainer
-        [ height (pct 100)
+    , id MathOutputContainer
+        [ displayFlex
+        , flexDirection column
         , width (pct 50)
+        , borderLeftStyle solid
+        , borderLeftWidth (px 1)
+        , padding (px 0)
+        , paddingBottom (px 5)
+        ]
+    , id MathOutputMenu
+        [ height (px 30)
+        ]
+    , id NavSubmitButton
+        [ backgroundColor (hex "#FFFFFF")
+        , borderWidth (px 0)
+        , float left
+        , fontSize (px 20)
+        , boxSizing borderBox
+        , transition "0.5s"
+        , hover 
+          [ backgroundColor (hex "#b9b9b942")
+          , borderStyle solid
+          , borderWidth (px 1)
+          , borderColor (hex "#000000")
+          ]
+        ]
+    , class ItemsEquationContainer
+        [ width (pct 50)
         , borderWidth (px 0)
         , resize none
         , boxSizing borderBox
@@ -153,15 +196,17 @@ css =
             [ flexDirection column ]
         , id MathEquationText
             [ width (pct 100)
-            , height (pct 100)
             , borderWidth (px 0)
             ]
-        , id SvgContainer
+        , id MathOutputContainer
             [ width (pct 100)
-            , height (pct 100)
+            , flex (int 1)
             , border (px 0)
             , borderTopStyle solid
             , borderTopWidth (px 1)
+            ]
+        , class ItemsEquationContainer
+            [ height (pct 50)
             ]
         ]
     ]

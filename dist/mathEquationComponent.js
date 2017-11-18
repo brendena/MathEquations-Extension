@@ -69,17 +69,17 @@
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__);
 
 /*
 new clipboard api 
 https://github.com/lgarron/clipboard-polyfill
 */
-//var loaded = require("../bower_components/webcomponentsjs/custom-elements-es5-adapter.js");
+
 console.log("mathEquationLoader")
-__webpack_require__(1);
-//var test = require('./MathEquation/Stylesheets/StylesheetCompiler.elm');
+//require("../bower_components/webcomponentsjs/");
+
 
 
 
@@ -102,98 +102,18 @@ document.body.appendChild(mathJaxConfig)
 
 window.addEventListener('WebComponentsReady', function() {
     console.log("loaded the webComponents")
-    __webpack_require__(7)
+    __webpack_require__(6)
 });
 
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
-
-/**
- * @license
- * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
- * This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
- * The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
- * The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
- * Code distributed by Google as part of the polymer project is also
- * subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
- */
-
-(function() {
-  'use strict';
-  // global for (1) existence means `WebComponentsReady` will file,
-  // (2) WebComponents.ready == true means event has fired.
-  window.WebComponents = window.WebComponents || {};
-  var name = 'webcomponents-loader.js';
-  // Feature detect which polyfill needs to be imported.
-  var polyfills = [];
-  if (!('import' in document.createElement('link'))) {
-    polyfills.push('hi');
-  }
-  if (!('attachShadow' in Element.prototype && 'getRootNode' in Element.prototype) ||
-    (window.ShadyDOM && window.ShadyDOM.force)) {
-    polyfills.push('sd');
-  }
-  if (!window.customElements || window.customElements.forcePolyfill) {
-    polyfills.push('ce');
-  }
-  // NOTE: any browser that does not have template or ES6 features
-  // must load the full suite (called `lite` for legacy reasons) of polyfills.
-  if (!('content' in document.createElement('template')) || !window.Promise || !Array.from ||
-    // Edge has broken fragment cloning which means you cannot clone template.content
-    !(document.createDocumentFragment().cloneNode() instanceof DocumentFragment)) {
-    polyfills = ['lite'];
-  }
-
-  if (polyfills.length) {
-    var script = document.querySelector('script[src*="' + name +'"]');
-    var newScript = document.createElement('script');
-    // Load it from the right place.
-    var replacement = 'webcomponents-' + polyfills.join('-') + '.js';
-    var url = script.src.replace(name, replacement);
-    newScript.src = url;
-    // NOTE: this is required to ensure the polyfills are loaded before
-    // *native* html imports load on older Chrome versions. This *is* CSP
-    // compliant since CSP rules must have allowed this script to run.
-    // In all other cases, this can be async.
-    if (document.readyState === 'loading' && ('import' in document.createElement('link'))) {
-      document.write(newScript.outerHTML);
-    } else {
-      document.head.appendChild(newScript);
-    }
-  } else {
-    // Ensure `WebComponentsReady` is fired also when there are no polyfills loaded.
-    // however, we have to wait for the document to be in 'interactive' state,
-    // otherwise a rAF may fire before scripts in <body>
-
-    var fire = function() {
-      requestAnimationFrame(function() {
-        window.WebComponents.ready = true;
-        document.dispatchEvent(new CustomEvent('WebComponentsReady', {bubbles: true}));
-      });
-    };
-
-    if (document.readyState !== 'loading') {
-      fire();
-    } else {
-      document.addEventListener('readystatechange', function wait() {
-        fire();
-        document.removeEventListener('readystatechange', wait);
-      });
-    }
-  }
-})();
-
-
-/***/ }),
-/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(3);
+var content = __webpack_require__(2);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -201,7 +121,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(5)(content, options);
+var update = __webpack_require__(4)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -218,10 +138,10 @@ if(false) {
 }
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(4)(undefined);
+exports = module.exports = __webpack_require__(3)(undefined);
 // imports
 
 
@@ -232,7 +152,7 @@ exports.push([module.i, ".mainNavLogo {\n    height: 100%;\n    background-color
 
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 /*
@@ -314,7 +234,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -370,7 +290,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(6);
+var	fixUrls = __webpack_require__(5);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -686,7 +606,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports) {
 
 
@@ -781,17 +701,17 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathEquationAnywhere", function() { return MathEquationAnywhere; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__custom_elements__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathJaxConvert_ts__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_timers__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathJaxConvert_ts__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_timers__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_timers__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -806,8 +726,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var Elm = __webpack_require__(17);
-var Clipboard = __webpack_require__(18);
+var Elm = __webpack_require__(16);
+var Clipboard = __webpack_require__(17);
 let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
     constructor() {
         super();
@@ -835,11 +755,10 @@ let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
         this.app.ports.getPageYOffset.subscribe((elmEvent) => {
             /*code for when this is not in a iframe */
             //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
-            var originTextObject = document.getElementById("originText");
-            if (originTextObject == null)
-                throw ("didn't set the origin text string in html");
-            var origin = originTextObject.innerHTML;
-            parent.postMessage(elmEvent, origin);
+            var origin = this.getAttribute("originurl");
+            if (origin != null) {
+                parent.postMessage(elmEvent, origin);
+            }
         });
         this.app.ports.sumitEquation.subscribe((elmString) => {
             var elmObject = new __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__["a" /* ElmPort */](elmString);
@@ -879,7 +798,7 @@ MathEquationAnywhere = __decorate([
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -893,11 +812,11 @@ exports.CustomElement = (config) => {
 //# sourceMappingURL=custom-elements.js.map
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathTypes_ts__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathTypes_ts__ = __webpack_require__(9);
 
 class ElmPort {
     constructor(elmRequest) {
@@ -912,7 +831,7 @@ class ElmPort {
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -941,11 +860,11 @@ let ConvertMathTypes = function (mathTypesString) {
 
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(11);
 
 class MathJaxConvert {
     constructor() {
@@ -998,7 +917,7 @@ class MathJaxConvert {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1040,7 +959,7 @@ class CanvasToImage {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -1093,13 +1012,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(14);
+__webpack_require__(13);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -1289,10 +1208,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(15), __webpack_require__(16)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(14), __webpack_require__(15)))
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1319,7 +1238,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1509,7 +1428,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports) {
 
 
@@ -17842,7 +17761,7 @@ for (var publicModule in Elm)
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var require;var require;/*!

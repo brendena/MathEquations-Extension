@@ -42,11 +42,10 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
         this.app.ports.getPageYOffset.subscribe((elmEvent :string)=>{
             /*code for when this is not in a iframe */
             //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
-            var originTextObject = document.getElementById("originText");
-            if (originTextObject == null)
-                throw("didn't set the origin text string in html");
-            var origin :string = originTextObject.innerHTML;
-            parent.postMessage(elmEvent,origin);
+            var origin = this.getAttribute("originurl");
+            if(origin != null){
+                parent.postMessage(elmEvent,origin);
+            }
         });
 
         this.app.ports.sumitEquation.subscribe((elmString:string)=>{

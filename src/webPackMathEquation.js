@@ -3,12 +3,12 @@
 new clipboard api 
 https://github.com/lgarron/clipboard-polyfill
 */
-//var loaded = require("../bower_components/webcomponentsjs/custom-elements-es5-adapter.js");
+
 console.log("mathEquationLoader")
-require("../bower_components/webcomponentsjs/webcomponents-loader.js");
-//var test = require('./MathEquation/Stylesheets/StylesheetCompiler.elm');
+//require("../bower_components/webcomponentsjs/");
 
 import styles from './MathEquation/Stylesheets/MyCss.css'
+
 
 /*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
 var mathJax = document.createElement('script');

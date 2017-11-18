@@ -41,7 +41,9 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: "./src/manifest.json" },
       { from: "./src/PopUpMenu/Html/popUp.html" },
-      { from: "./src/MathEquation/Img", to: "./Img" }
+      { from: "./src/MathEquation/Img", to: "./Img" },
+      { from: "./bower_components/webcomponentsjs/webcomponents-loader.js"},
+      { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"}
     ])
   ],
   module: {
@@ -101,7 +103,6 @@ module.exports = {
         loader: 'ts-loader'
       }
     ],
-    noParse: /^((?!StylesheetCompiler).)*\.elm.*$/,
-    //noParse: [/.elm$/]
+    noParse: /^((?!StylesheetCompiler).)*\.elm.*$/
   }
 };

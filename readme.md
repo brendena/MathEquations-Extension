@@ -3,7 +3,7 @@
 
 
 
-![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/exampleScreenShotGoogleDocs.png?raw=true)
+![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/readmeExample.png?raw=true)
 
 
 
@@ -26,10 +26,14 @@ Then you can load it into whatever browser that you are currently working on.
 * **/src/ContentScripts/** - background script that will append MathEquation upon a request from the PopUpMenu.
 * **/src/MathEquation/** - Bulk of the code.  This hold all the code for the ui that convert the equations into images.
 
+### Firefox
+At **about:debugging** you can add extension locally.
 
 
-
-## current status 
+## current features to implement 
+* Close the menu
+* Minimize menu
+* resize the iframe on the above actions and on text section close
 * Style - The nav bar brakes when you move to a really small screen
 * Bug UnImportant - Chrome Grammerly causes a bug in the textarea that brakes how the app works
 

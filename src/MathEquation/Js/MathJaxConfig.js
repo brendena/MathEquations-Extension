@@ -1,5 +1,5 @@
-var mathJaxConfig = 
-    {
+var mathJaxConfig = function(fontType){
+    return {
         jax: ['input/TeX','input/MathML','input/AsciiMath','output/SVG'],
         extensions: ['tex2jax.js','mml2jax.js','MathEvents.js','asciimath2jax.js','MathZoom.js','AssistiveMML.js'],
         MathML: {
@@ -21,11 +21,14 @@ var mathJaxConfig =
             displaystyle: false,
             decimalsign: '.'
         },
+        //svg config
+        //http://docs.mathjax.org/en/latest/options/output-processors/SVG.html
         SVG: {
             mtextFontInherit: true,
             blacker: 1,
             linebreaks: { automatic: true },
-            useFontCache: false
+            useFontCache: false,
+            font: fontType
         },
         menuSettings: {
             zoom: 'Click'
@@ -37,11 +40,11 @@ var mathJaxConfig =
             fontCheckDelay: 500,
             fontCheckTimeout: 15 * 1000
         },
-        messageStyle: 'none'
+        messageStyle: 'none',
+        imageFont: null //http://docs.mathjax.org/en/latest/misc/faq.html?highlight=imagefont
     }
+}
 
-
-
-exports.MathJaxString = function(){
-    return "MathJax.Hub.Config(" + JSON.stringify(mathJaxConfig)  + ")"
+exports.MathJaxString = function(fontType){
+    return "MathJax.Hub.Config(" + JSON.stringify(mathJaxConfig(fontType))  + ")"
 }

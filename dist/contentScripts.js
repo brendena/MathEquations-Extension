@@ -81,7 +81,7 @@ var contentJS = __webpack_require__(32);
 
 console.log("got content.js")
 var iframeId = "mathEquationIframe";
-var constructUi = function(){
+var constructUi = function(configOptions){
     var iframe = document.createElement("iframe")
     iframe.id= iframeId;
     iframe.style.position = "fixed"
@@ -100,11 +100,11 @@ var constructUi = function(){
         
         
         var MathEquationTag = document.createElement("math-equation-anywhere");
-        MathEquationTag.id ="MathEquationElement"
+        MathEquationTag.id = "MathEquationElement"
         MathEquationTag.setAttribute("baseurl", chrome.extension.getURL(""));
         MathEquationTag.setAttribute("originurl", window.location.href);
         iframe.contentDocument.body.appendChild(MathEquationTag)
-    
+        
         /*veryMuchHack*/
             /*orgin is know added in the web component itself */
             var timeOut = 500;
@@ -140,9 +140,6 @@ var constructUi = function(){
                             break;
                     }
                 }
-                
-                
-                //console.log(iframe.style.height)
 
             }, false);
         /*veryMuchHack*/
@@ -150,10 +147,10 @@ var constructUi = function(){
         var addScript = function(scriptName){
             var scriptTag = document.createElement('script');
             scriptTag.src = chrome.extension.getURL(scriptName + ".js")
-            //document.body.appendChild(scriptTag);
-            iframe.contentDocument.head.appendChild(scriptTag)
+            return iframe.contentDocument.head.appendChild(scriptTag)
         }
-        addScript("mathEquationComponent");
+        var mathEuationComponent = addScript("mathEquationComponent");
+        mathEuationComponent.setAttribute('math-jax-font', configOptions["fontStyles"])
         /*need to loader the webcomponets-loader here because this code uses the url
         to load other files.*/
         addScript('webcomponents-loader');
@@ -172,15 +169,20 @@ var runtimeFunction = function(request, sender) {
     var iframe = document.getElementById(iframeId);
 	if(request.hasOwnProperty('openMenu')){
         if(iframe == undefined){
-
             if (document.readyState != 'complete'){
                 window.addEventListener("load",constructUi);
             }
             else{
-                constructUi();
+                constructUi(request["openMenu"]);
             }
         }
-	}
+    }
+    else if(request.hasOwnProperty('resetUI')){
+        if(iframe != undefined){
+            iframe.parentNode.removeChild(iframe);
+        }
+        constructUi(request["resetUI"]);
+    };
 }
 
 

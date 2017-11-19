@@ -2,6 +2,9 @@ var path = require("path");
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackShellPlugin = require('webpack-shell-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+//const ChromeExtensionReloader  = require('webpack-chrome-extension-reloader');
+
+
 /*webpack optimization tips
 https://www.youtube.com/watch?v=zFoBYfMLUCM
 */ 
@@ -45,6 +48,16 @@ module.exports = {
       { from: "./bower_components/webcomponentsjs/webcomponents-loader.js"},
       { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"}
     ])
+    /*,
+    new ChromeExtensionReloader({
+      port: 9090, // Which port use to create the server
+      reloadPage: true, // Force the reload of the page also
+      entries: { //The entries used for the content/background scripts
+        contentScript: 'contentScripts', //Use the entry names, not the file name or the path
+        background: 'popUp'
+      }
+    })
+    */
   ],
   module: {
     rules: [

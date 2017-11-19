@@ -1,4 +1,5 @@
 'use strict'
 
 
-var popUpMenuJs = require('./PopUpMenu/Js/popUp.js');
+require('./PopUpMenu/Js/popUp.js');
+//require('./PopUpMenu/Js/htmlEvents.js')

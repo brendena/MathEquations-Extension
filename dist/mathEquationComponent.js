@@ -562,11 +562,13 @@ document.head.appendChild(mathJax)
 var configMathJax = __webpack_require__ (17)
 var mathJaxConfig = document.createElement('script');
 mathJaxConfig.type = "text/x-mathjax-config";
-//remove the newlines
-//https://www.textfixer.com/tools/remove-line-breaks.php
-//mathJaxConfig.innerHTML = "MathJax.Hub.Config( { jax: ['input/TeX','input/MathML','input/AsciiMath','output/SVG'], extensions: ['tex2jax.js','mml2jax.js','MathEvents.js','asciimath2jax.js','MathZoom.js','AssistiveMML.js'], MathML: { extensions: ['content-mathml.js'] }, TeX: { Macros: { RR: '{\\bf R}', bold: ['{\\bf #1}', 1] } }, tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true }, AsciiMath: { fixphi: true, useMathMLspacing: true, displaystyle: false, decimalsign: '.' }, SVG: { mtextFontInherit: true, blacker: 1, linebreaks: { automatic: true }, useFontCache: false }, menuSettings: { zoom: 'Click' }, MatchWebFonts: { matchFor: { SVG: {useFontCache: false} }, fontCheckDelay: 500, fontCheckTimeout: 15 * 1000 }, messageStyle: 'none' } ); console.log('loaded config');";
-console.log(configMathJax.MathJaxString())
-mathJaxConfig.innerHTML = configMathJax.MathJaxString();
+//load in fonts
+var currentScript = document.currentScript
+var fontType = currentScript.getAttribute("math-jax-font");
+if(fontType == null || fontType == undefined)
+    fontType = "STIX-Web";
+console.log("fontType " + fontType);
+mathJaxConfig.innerHTML = configMathJax.MathJaxString(fontType);
 document.body.appendChild(mathJaxConfig)
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
 
@@ -880,8 +882,8 @@ module.exports = __webpack_require__.p + "Img/fontello.svg";
 /* 17 */
 /***/ (function(module, exports) {
 
-var mathJaxConfig = 
-    {
+var mathJaxConfig = function(fontType){
+    return {
         jax: ['input/TeX','input/MathML','input/AsciiMath','output/SVG'],
         extensions: ['tex2jax.js','mml2jax.js','MathEvents.js','asciimath2jax.js','MathZoom.js','AssistiveMML.js'],
         MathML: {
@@ -903,11 +905,14 @@ var mathJaxConfig =
             displaystyle: false,
             decimalsign: '.'
         },
+        //svg config
+        //http://docs.mathjax.org/en/latest/options/output-processors/SVG.html
         SVG: {
             mtextFontInherit: true,
             blacker: 1,
             linebreaks: { automatic: true },
-            useFontCache: false
+            useFontCache: false,
+            font: fontType
         },
         menuSettings: {
             zoom: 'Click'
@@ -919,13 +924,13 @@ var mathJaxConfig =
             fontCheckDelay: 500,
             fontCheckTimeout: 15 * 1000
         },
-        messageStyle: 'none'
+        messageStyle: 'none',
+        imageFont: null //http://docs.mathjax.org/en/latest/misc/faq.html?highlight=imagefont
     }
+}
 
-
-
-exports.MathJaxString = function(){
-    return "MathJax.Hub.Config(" + JSON.stringify(mathJaxConfig)  + ")"
+exports.MathJaxString = function(fontType){
+    return "MathJax.Hub.Config(" + JSON.stringify(mathJaxConfig(fontType))  + ")"
 }
 
 /***/ }),

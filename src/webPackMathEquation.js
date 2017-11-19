@@ -23,7 +23,13 @@ document.head.appendChild(mathJax)
 var configMathJax = require ('./MathEquation/Js/MathJaxConfig.js')
 var mathJaxConfig = document.createElement('script');
 mathJaxConfig.type = "text/x-mathjax-config";
-mathJaxConfig.innerHTML = configMathJax.MathJaxString();
+//load in fonts
+var currentScript = document.currentScript
+var fontType = currentScript.getAttribute("math-jax-font");
+if(fontType == null || fontType == undefined)
+    fontType = "STIX-Web";
+console.log("fontType " + fontType);
+mathJaxConfig.innerHTML = configMathJax.MathJaxString(fontType);
 document.body.appendChild(mathJaxConfig)
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
 

@@ -30,10 +30,23 @@
       -
       - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
     -->
-    <script src="./popUp.js"></script>
+    
   </head>
 
   <body>
-    <h1>Currently No Options</h1>
+    <div>
+      <p>Selected Font</p>
+      <select name="select" id="selectedFont"> <!--Supplement an id here instead of using 'name'-->
+        <option value="STIX-Web" selected>STIX-Web</option>
+        <option value="TeX">TeX</option> 
+        <option value="Asana-Math">Asana-Math</option>
+        <option value="Neo-Euler">Neo-Euler</option>
+        <option value="Gyre-Pagella">Gyre-Pagella</option>
+        <option value="Gyre-Termes">Gyre-Termes</option>
+        <option value="Latin-Modern">Latin-Modern</option>
+      </select>
+    </div>
+    <button id="resetUIButton">reset UI</button>
+    <script src="./popUp.js"></script>
   </body>
 </html>

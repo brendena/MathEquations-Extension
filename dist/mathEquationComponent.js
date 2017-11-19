@@ -559,18 +559,21 @@ document.head.appendChild(mathJax)
 /*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
 
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
+var configMathJax = __webpack_require__ (17)
 var mathJaxConfig = document.createElement('script');
 mathJaxConfig.type = "text/x-mathjax-config";
 //remove the newlines
 //https://www.textfixer.com/tools/remove-line-breaks.php
-mathJaxConfig.innerHTML = "MathJax.Hub.Config( { jax: ['input/TeX','input/MathML','input/AsciiMath','output/SVG'], extensions: ['tex2jax.js','mml2jax.js','MathEvents.js','asciimath2jax.js','MathZoom.js','AssistiveMML.js'], MathML: { extensions: ['content-mathml.js'] }, TeX: { Macros: { RR: '{\\bf R}', bold: ['{\\bf #1}', 1] } }, tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true }, AsciiMath: { fixphi: true, useMathMLspacing: true, displaystyle: false, decimalsign: '.' }, SVG: { mtextFontInherit: true, blacker: 1, linebreaks: { automatic: true }, useFontCache: false }, menuSettings: { zoom: 'Click' }, MatchWebFonts: { matchFor: { SVG: {useFontCache: false} }, fontCheckDelay: 500, fontCheckTimeout: 15 * 1000 }, messageStyle: 'none' } ); console.log('loaded config');";
+//mathJaxConfig.innerHTML = "MathJax.Hub.Config( { jax: ['input/TeX','input/MathML','input/AsciiMath','output/SVG'], extensions: ['tex2jax.js','mml2jax.js','MathEvents.js','asciimath2jax.js','MathZoom.js','AssistiveMML.js'], MathML: { extensions: ['content-mathml.js'] }, TeX: { Macros: { RR: '{\\bf R}', bold: ['{\\bf #1}', 1] } }, tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']], processEscapes: true }, AsciiMath: { fixphi: true, useMathMLspacing: true, displaystyle: false, decimalsign: '.' }, SVG: { mtextFontInherit: true, blacker: 1, linebreaks: { automatic: true }, useFontCache: false }, menuSettings: { zoom: 'Click' }, MatchWebFonts: { matchFor: { SVG: {useFontCache: false} }, fontCheckDelay: 500, fontCheckTimeout: 15 * 1000 }, messageStyle: 'none' } ); console.log('loaded config');";
+console.log(configMathJax.MathJaxString())
+mathJaxConfig.innerHTML = configMathJax.MathJaxString();
 document.body.appendChild(mathJaxConfig)
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
 
 
 window.addEventListener('WebComponentsReady', function() {
     console.log("loaded the webComponents")
-    __webpack_require__(17)
+    __webpack_require__(18)
 });
 
 
@@ -875,17 +878,69 @@ module.exports = __webpack_require__.p + "Img/fontello.svg";
 
 /***/ }),
 /* 17 */
+/***/ (function(module, exports) {
+
+var mathJaxConfig = 
+    {
+        jax: ['input/TeX','input/MathML','input/AsciiMath','output/SVG'],
+        extensions: ['tex2jax.js','mml2jax.js','MathEvents.js','asciimath2jax.js','MathZoom.js','AssistiveMML.js'],
+        MathML: {
+            extensions: ['content-mathml.js']
+        },
+        TeX: {
+            Macros: {
+                RR: '{\\bf R}',
+                bold: ['{\\bf #1}', 1]
+            }
+        },
+        tex2jax: {
+            inlineMath: [['$','$'], ['\\(','\\)']],
+            processEscapes: true
+        },
+        AsciiMath: {
+            fixphi: true,
+            useMathMLspacing: true,
+            displaystyle: false,
+            decimalsign: '.'
+        },
+        SVG: {
+            mtextFontInherit: true,
+            blacker: 1,
+            linebreaks: { automatic: true },
+            useFontCache: false
+        },
+        menuSettings: {
+            zoom: 'Click'
+        },
+        MatchWebFonts: {
+            matchFor: {
+                SVG: {useFontCache: false}
+            },
+            fontCheckDelay: 500,
+            fontCheckTimeout: 15 * 1000
+        },
+        messageStyle: 'none'
+    }
+
+
+
+exports.MathJaxString = function(){
+    return "MathJax.Hub.Config(" + JSON.stringify(mathJaxConfig)  + ")"
+}
+
+/***/ }),
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathEquationAnywhere", function() { return MathEquationAnywhere; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__custom_elements__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathJaxConvert_ts__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PostMessageHandler_ts__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_timers__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathJaxConvert_ts__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PostMessageHandler_ts__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_timers__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_timers__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -901,8 +956,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var Elm = __webpack_require__(28);
-var Clipboard = __webpack_require__(29);
+var Elm = __webpack_require__(29);
+var Clipboard = __webpack_require__(30);
 let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
     constructor() {
         super();
@@ -985,7 +1040,7 @@ MathEquationAnywhere = __decorate([
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -999,11 +1054,11 @@ exports.CustomElement = (config) => {
 //# sourceMappingURL=custom-elements.js.map
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathTypes_ts__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathTypes_ts__ = __webpack_require__(21);
 
 class ElmPort {
     constructor(elmRequest) {
@@ -1018,7 +1073,7 @@ class ElmPort {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1047,11 +1102,11 @@ let ConvertMathTypes = function (mathTypesString) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(23);
 
 class MathJaxConvert {
     constructor() {
@@ -1104,7 +1159,7 @@ class MathJaxConvert {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1146,7 +1201,7 @@ class CanvasToImage {
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1184,7 +1239,7 @@ class PostMessageHandler {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -1237,13 +1292,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(25);
+__webpack_require__(26);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -1433,10 +1488,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(26), __webpack_require__(27)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27), __webpack_require__(28)))
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1463,7 +1518,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1653,7 +1708,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 
@@ -18243,7 +18298,7 @@ for (var publicModule in Elm)
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var require;var require;/*!

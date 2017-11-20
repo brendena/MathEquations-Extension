@@ -60,24 +60,24 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 33:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-__webpack_require__(34);
+__webpack_require__(35);
 //require('./PopUpMenu/Js/htmlEvents.js')
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /***/ (function(module, exports) {
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(result["fontStyles"] == undefined || result["fontStyles"] == null)
       result["fontStyles"] = defaultFont;
     fontContainer.value = result["fontStyles"]
-
+    selectImage(result["fontStyles"]);
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {openMenu: result});
     });
@@ -98,13 +98,17 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 });
 
+var selectImage = function(imgName){
+  var imgExampleFont = document.getElementById("imgExampleFontSelected");
+  imgExampleFont.src = "/Img/" + imgName +".svg"
+}
 
 var onSelectFont = function(){
   chrome.storage.sync.set({"fontStyles": this.value}, function() {
   });
+  selectImage(this.value);
 }
 var resetUI = function(){
-  console.log("reset the ui")
   chrome.storage.sync.get(["fontStyles"], function (result) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {resetUI: result});

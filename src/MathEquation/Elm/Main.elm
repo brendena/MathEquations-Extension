@@ -5,8 +5,6 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (onInput, on, onClick, onMouseDown,onMouseUp)
 import String
 import Basics exposing (..)
-import List exposing (..)
-import Json.Decode exposing (decodeString, field)
 import Json.Encode exposing (encode, Value, string, int, float, bool, list, object)
 import Html.CssHelpers exposing (withNamespace)
 import MyCss exposing (..)
@@ -24,6 +22,7 @@ port updateEquation : String -> Cmd msg
 port sumitEquation : String -> Cmd msg
 port getPageYOffset : String -> Cmd msg --!!! i don't need to submit a String
 port closePage : String -> Cmd msg
+port downloadImage : String -> Cmd msg
 {--------------ElmToJS----------------------------------------}
 
 
@@ -49,6 +48,12 @@ initialModel =
     , mathEquation = ""
     , mousePositionY = 0
     , minimizeMenuState = False
+    , mathEquationColor = "#000000"
+    , imagePreset = MediumImage
+    , userDefinedSize = 0
+    , downloadFileName = "fileName"
+    , downloadFileType = ImageSvg
+    , slideMenuOpen = False
     }
 
 type alias Model =
@@ -59,9 +64,16 @@ type alias Model =
     selectedMathType: MathType,
     mathEquation: String,
     mousePositionY: Int,
-    minimizeMenuState: Bool
+    minimizeMenuState: Bool,
+    mathEquationColor: String,
+    imagePreset : ImageSizePresets,
+    userDefinedSize : Int,
+    downloadFileName : String,
+    downloadFileType : ImageFileType,
+    slideMenuOpen : Bool
   }
 
+main : Program Flags Model Msg
 main =
   Html.programWithFlags
     { view = view
@@ -75,23 +87,38 @@ main =
 { id, class, classList } =
     withNamespace "main"
 
+encodeModel : Model -> Value
+encodeModel model =
+  Json.Encode.object
+    [ ("selectedMathType",Json.Encode.string  (toString model.selectedMathType) )
+    , ("mathEquation", Json.Encode.string model.mathEquation)
+    , ("mathEquationColor", Json.Encode.string model.mathEquationColor)
+    , ("downloadFileType", Json.Encode.string (stringImageFileType model.downloadFileType))
+    ]
+
+
 type  MathType 
         = MathML
         | AsciiMath
         | Tex
         | NoMathType
 
+type  ImageSizePresets
+        = SmallImage
+        | MediumImage
+        | LargeImage
+        | UserDefined
 
+type ImageFileType
+        = ImagePng
+        | ImageSvg
 
+stringImageFileType : ImageFileType -> String
+stringImageFileType imageFileType = 
+  case imageFileType of
+      ImagePng -> "png"
+      ImageSvg -> "svg"
 
-encodeModel : Model -> Value
-encodeModel model =
-  Json.Encode.object
-    [ ("selectedMathType",Json.Encode.string  (toString model.selectedMathType) )
-    , ("mathEquation", Json.Encode.string model.mathEquation)
-    ]
-
---decodeBoundingClientRect : String
 
 type Msg
   = UrlChange String
@@ -102,6 +129,13 @@ type Msg
   | SubmitEquation
   | GotPageYOffset String
   | ClosePage
+  | OnColorChange String
+  | SetSizeImagePresets ImageSizePresets
+  | UserDefinedSize Int
+  | ChangeDownloadFileType ImageFileType
+  | UpdateDownloadFileName String
+  | DownloadImage
+  | SetSlideMenuTrueOpen Bool
 
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
@@ -127,7 +161,7 @@ update msg model =
    
     UpdateEquation str->
         let
-          newModel = { model |  mathEquation = str }
+          newModel = { model |  mathEquation = str,  slideMenuOpen = False}
         in
           (newModel, updateEquation  (encode 0 (encodeModel newModel) ) ) 
 
@@ -148,6 +182,38 @@ update msg model =
     ClosePage ->
       (model , closePage "True")
 
+    OnColorChange newColor->
+       let
+          newModel = { model |  mathEquationColor = newColor }
+        in
+          (newModel, updateEquation  (encode 0 (encodeModel newModel) ) ) 
+
+    SetSizeImagePresets imagePreset ->
+        let
+          newModel = {model | imagePreset = imagePreset }
+        in
+          (newModel, updateEquation  (encode 0 (encodeModel newModel) ) )
+    
+    UserDefinedSize sizeInt ->
+       let
+          newModel = {model | userDefinedSize = sizeInt }
+        in
+          (newModel, updateEquation  (encode 0 (encodeModel newModel) ) )
+    
+    ChangeDownloadFileType fileType->
+        let
+          newModel = {model | downloadFileType = fileType }
+        in
+          (newModel, downloadImage  (encode 0 (encodeModel newModel) ) )
+
+    UpdateDownloadFileName fileName->
+        ({model | downloadFileName = fileName } , Cmd.none)
+
+    DownloadImage ->
+      ({model | slideMenuOpen = True }, downloadImage (encode 0 (encodeModel model) ) )
+    
+    SetSlideMenuTrueOpen position->
+      ({model | slideMenuOpen = position } , Cmd.none)
 
 view : Model -> Html Msg
 view model =
@@ -167,14 +233,29 @@ view model =
                   p [id "MathMLEquation"] [text ""] 
                 ]
               ],
+
               div [id MyCss.MathOutputMenu] [
-                button [onClick SubmitEquation, class [], id MyCss.NavSubmitButton] [text "copy image"]
+                button [onClick SubmitEquation, style[ ("height", "100%") ], id MyCss.NavSubmitButton] [text "copy image"],
+                input[onInput OnColorChange, style[ ("background","none"), ("border","none")] , type_ "color"][],
+                button [class [MyCss.ImageSizePresetButton],onClick DownloadImage,id MyCss.OpenDownloadMenu, Html.Attributes.classList [(stringFontClasses MyCss.IconDownload, True)] ] [],
+                button [sizeButtonClass model.imagePreset SmallImage,style[("font-size","10px")] , iconClass IconPicture, onClick (SetSizeImagePresets SmallImage)] [],
+                button [sizeButtonClass model.imagePreset MediumImage,style[("font-size","20px")], iconClass IconPicture,onClick (SetSizeImagePresets MediumImage)] [],
+                button [sizeButtonClass model.imagePreset LargeImage,style[("font-size","30px")], iconClass IconPicture, onClick (SetSizeImagePresets LargeImage)] []
               ]
             ]
 
           ]
         ],
+        div [id MyCss.OptionsSlideMenu, positionOptionsSlideMenu model.slideMenuOpen] [
+          div [onClick (SetSlideMenuTrueOpen False) ,style[("position", "absolute"),("top","0px"),("right","0px")], iconClass MyCss.IconCancel1 ][],
 
+          div [  class [ MyCss.FlexBoxHorizontalCenter  ]][
+            input[onInput UpdateDownloadFileName, value model.downloadFileName, placeholder "fileName", pattern "[a-zA-Z0-9-]+"][],
+            button[fileTypeClass model.downloadFileType ImageSvg, onClick (ChangeDownloadFileType ImageSvg) ][text(".svg")],
+            button[fileTypeClass model.downloadFileType ImagePng, onClick (ChangeDownloadFileType ImagePng) ][text(".png")],
+            a[id MyCss.DownloadButton, downloadFilesName model.downloadFileName model.downloadFileType, Html.Attributes.classList [(stringFontClasses MyCss.IconDownload, True)] ] [text "download image"]
+          ]
+        ],
 
         div [id MyCss.NavContainer]  [ 
            img [id "logo", class [MyCss.NavLogo] , src ( model.baseUrl ++ "Img/logoClearBackground.svg") ] [],
@@ -185,18 +266,16 @@ view model =
            button [onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML )] [text "MathML"],
            button [onClick ClosePage, style[ ("float","right")], class [MyCss.NavButton], Html.Attributes.classList [(stringFontClasses MyCss.IconCancel1, True)]][],
            a [style[ ("float","right")],href "https://github.com/brendena/MathEquations-Extension", target "blank"] [
-             button [Html.Attributes.classList [(stringFontClasses MyCss.IconGithubCircled, True)], (navButtonClass model.selectedMathType MathML )] []
+             button [iconClass MyCss.IconGithubCircled, class [MyCss.NavButton]] []
            ]
            
         ]
-        , 
-        canvas [id MyCss.HiddenCanvas] []
+        
         ,
         div [id MyCss.CanvasImgContainer] [
-          img [id "CanvasImg"] []
+          img [id "CanvasImg"] [],
+          canvas [id MyCss.HiddenCanvas, sizeCanvas model.imagePreset model.userDefinedSize] []
         ]
-        -- ,
-        -- button [id "testButton"][text "test"]
     ]
 {--------------ViewHelperFunc----------------------------------------}
 navButtonClass : MathType -> MathType  -> Attribute Msg
@@ -208,6 +287,24 @@ navButtonClass modelMathTypeSelect mathType =
       True -> class [MyCss.NavButton, MyCss.NavButtonSelected]
       False -> class [MyCss.NavButton]
 
+sizeButtonClass : ImageSizePresets -> ImageSizePresets -> Attribute Msg
+sizeButtonClass modelImageSizePreset imageSizePreset = 
+  let
+      equal = modelImageSizePreset ==  imageSizePreset
+  in
+    case equal of
+      True -> class [MyCss.ImageSizePresetButton, MyCss.SelectedImageSizePresetButton]
+      False -> class [MyCss.ImageSizePresetButton]
+
+fileTypeClass : ImageFileType -> ImageFileType -> Attribute Msg
+fileTypeClass modelImageSizePreset imageSizePreset = 
+  let
+      equal = modelImageSizePreset ==  imageSizePreset
+  in
+    case equal of
+      True -> class [MyCss.ImageSizePresetButton, MyCss.SelectedImageSizePresetButton]
+      False -> class [MyCss.ImageSizePresetButton]
+
 equationsContainerCss : MathType -> Attribute Msg
 equationsContainerCss  modelMathTypeSelect =
   let
@@ -216,6 +313,7 @@ equationsContainerCss  modelMathTypeSelect =
     case equal of
       True -> class [MyCss.HideEquationsContainer]
       False -> class []
+
 equationsContainerStyles : MathType -> Int -> Attribute Msg
 equationsContainerStyles  modelMathTypeSelect  y =
   let 
@@ -226,6 +324,36 @@ equationsContainerStyles  modelMathTypeSelect  y =
         --False -> style[ ("top",toString(y) ++"px")]
         False -> style[ ("top","0px")]
 
+sizeCanvas : ImageSizePresets -> Int -> Attribute Msg
+sizeCanvas imageSizePreset userDefinedSize = 
+  let
+      sizeCanvas = case imageSizePreset of
+                        SmallImage -> "200px"
+                        MediumImage -> "400px"
+                        LargeImage -> "1000px"
+                        UserDefined -> ((toString userDefinedSize) ++ "px")
+  in
+      attribute "width" sizeCanvas
+
+iconClass : FontClasses -> Attribute Msg
+iconClass font = 
+  Html.Attributes.classList [(stringFontClasses font, True)]
+
+
+downloadFilesName : String -> ImageFileType -> Attribute Msg
+downloadFilesName fileName imageFileType = 
+  let 
+    fileTypeString = stringImageFileType imageFileType
+    newFileName = if(fileName == "") then "fileName" else fileName
+  in
+    attribute "download" (newFileName ++ "." ++ fileTypeString)
+
+positionOptionsSlideMenu : Bool -> Attribute Msg
+positionOptionsSlideMenu open = 
+  case open of
+    True -> style[ ("transform","translateY(0)")]
+    False ->  style[ ("transform","translateY(100%)") ] 
+      
 {--------------ViewHelperFunc----------------------------------------}
 
 {--------------SubScriptions----------------------------------------}

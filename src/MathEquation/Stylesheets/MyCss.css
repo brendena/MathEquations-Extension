@@ -60,10 +60,10 @@
 #SvgContainer {
     flex: 1;
     padding: 20px;
+    padding-bottom: 0px;
 }
 
 #HiddenCanvas {
-    width: 800px;
     display: none;
 }
 
@@ -84,7 +84,9 @@
 }
 
 #MathOutputMenu {
-    height: 30px;
+    height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 #NavSubmitButton {
@@ -101,6 +103,23 @@
     border-style: solid;
     border-width: 1px;
     border-color: #000000;
+}
+
+#OptionsSlideMenu {
+    position: fixed;
+    background-color: #FFFFFF;
+    bottom: 0px;
+    width: 50%;
+    left: 25%;
+    padding: 25px;
+    padding-bottom: 0px;
+    border-style: solid;
+    border-width: 3px;
+    border-bottom-width: 0px;
+    min-height: 90px;
+    box-sizing: border-box;
+    max-height: 90%;
+    transition: .5s;
 }
 
 .mainItemsEquationContainer {
@@ -144,6 +163,23 @@
 
 .mainHideEquationsContainer {
     transition: 1s;
+}
+
+.mainImageSizePresetButton {
+    height: 100%;
+    background-color: #FFFFFF;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+.mainSelectedImageSizePresetButton {
+    border: 1px;
+    border-style: solid;
+}
+
+.mainFlexBoxHorizontalCenter {
+    display: flex;
+    justify-content: center;
 }
 
 @media screen and ( max-width: 1000px ) {

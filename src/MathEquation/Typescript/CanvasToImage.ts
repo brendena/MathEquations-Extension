@@ -1,9 +1,11 @@
+import { ImageTypesEnum } from './ImageTypes.ts'
+
 export class CanvasToImage {
     canvas:HTMLCanvasElement;
     canvasImage:HTMLImageElement;
     constructor(){
     }
-    convertSvg(divSvgId:string){
+    private getSvg(divSvgId:string){
         this.canvas = <HTMLCanvasElement>document.getElementById("HiddenCanvas");
         this.canvasImage = <HTMLImageElement>document.getElementById("CanvasImg");
         var divSvg = document.getElementById(divSvgId);
@@ -13,23 +15,55 @@ export class CanvasToImage {
         if(svg.length >= 2 || svg.length == 0 || svg == null )
             throw "to many or zero svg's - something wrong with mathjax";
         else
-            console.log(svg[0]);
-            this.drawSvgImage(svg[0]);
+            return svg[0];
     }
-    drawSvgImage(svgElement: SVGSVGElement){
-        let svgURL = new XMLSerializer().serializeToString(svgElement);
+    convertSvg(divSvgId:string,color:string){
+        var svg = this.getSvg(divSvgId);
+        this.drawSvgImage(svg,color);
+    }
+    drawSvgImage(svgElement: SVGSVGElement,color:string){
+        var svgClone = <SVGSVGElement>svgElement.cloneNode(true);
+        svgClone.style.color = color;
+        let svgURL = new XMLSerializer().serializeToString(svgClone);
+
         let ratioSvg = svgElement.clientHeight/svgElement.clientWidth;
+        
         let heigthSvg =  this.canvas.width * ratioSvg;
-        this.canvas.style.height = Math.round(heigthSvg) + "px";
+        let canvasHeightNumber = Math.round(heigthSvg);
+        this.canvas.height = Math.round(heigthSvg);
+
         let img  = new Image();
         img.onload = ()=>{                     
             let context = this.canvas.getContext('2d');
             if(context == null)
                 throw("can't get context");
+            
             context.clearRect(0, 0, this.canvas.width, this.canvas.height);
             context.drawImage(img, 0,0, this.canvas.width, this.canvas.height);
             this.canvasImage.src = this.canvas.toDataURL("image/png");
         }
-        img.src = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
+        
+        let svgData = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
+        img.src = svgData;
+    }
+    downloadImage(divSvgId:string,imageType:ImageTypesEnum){
+        this.getSvg(divSvgId);
+        var imageData = "";
+        if(imageType == ImageTypesEnum.Png){
+            console.log("download")
+            var imageData = this.canvasImage.src;
+        }
+        else if(imageType == ImageTypesEnum.Svg){
+            var svg = this.getSvg(divSvgId);
+            let svgURL = new XMLSerializer().serializeToString(svg);
+            imageData = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
+        }
+        var downloadButton = document.getElementById("DownloadButton");
+        if(downloadButton != null){
+            downloadButton.setAttribute("href", imageData);
+        }
+        else{
+            throw "couldn't find downloadButton";
+        }
     }
 }

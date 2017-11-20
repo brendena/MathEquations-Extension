@@ -12,7 +12,9 @@ type CssClasses
     | NavButtonSelected
     | ItemsEquationContainer
     | HideEquationsContainer
-
+    | ImageSizePresetButton
+    | SelectedImageSizePresetButton
+    | FlexBoxHorizontalCenter
 
 type CssIds
     = Page
@@ -28,6 +30,9 @@ type CssIds
     | CanvasImgContainer
     | MathOutputContainer
     | MathOutputMenu
+    | DownloadButton
+    | OpenDownloadMenu
+    | OptionsSlideMenu
 
 type FontClasses
     = IconUpOpen
@@ -36,16 +41,20 @@ type FontClasses
     | IconUpload
     | IconDownOpen
     | IconCancel1
+    | IconPicture
+    | IconDocText
 
 stringFontClasses : FontClasses -> String
 stringFontClasses fontClass=
     case fontClass of
         IconUpOpen -> "icon-up-open"
         IconGithubCircled -> "icon-github-circled"
-        IconDownload -> "icon-download"
+        IconDownload -> "icon-download-1"
         IconUpload -> "icon-upload"
         IconDownOpen -> "icon-down-open"
         IconCancel1 -> "icon-cancel-1"
+        IconPicture -> "icon-picture"
+        IconDocText -> "icon-doc-test-inv"
 
 
 userSelect : String -> Style
@@ -117,10 +126,10 @@ css =
     , id SvgContainer
         [ flex (int 1)
         , padding (px 20)
+        , paddingBottom (px 0)
         ]
     , id HiddenCanvas
-        [ width (px 800)
-        , display none
+        [ display none
         ]
     , id CanvasImgContainer
         [ position fixed
@@ -137,7 +146,9 @@ css =
         , paddingBottom (px 5)
         ]
     , id MathOutputMenu
-        [ height (px 30)
+        [ height (px 40)
+        , displayFlex
+        , alignItems center
         ]
     , id NavSubmitButton
         [ backgroundColor (hex "#FFFFFF")
@@ -152,6 +163,22 @@ css =
           , borderWidth (px 1)
           , borderColor (hex "#000000")
           ]
+        ]
+    , id OptionsSlideMenu
+        [ position  fixed
+        , backgroundColor (hex "#FFFFFF")
+        , bottom (px 0)
+        , width (pct 50)
+        , left (pct 25)
+        , padding (px 25)
+        , paddingBottom (px 0)
+        , borderStyle solid
+        , borderWidth (px 3)
+        , borderBottomWidth (px 0)
+        , minHeight (px 90)
+        , boxSizing borderBox
+        , maxHeight (pct 90)
+        , transition ".5s"
         ]
     , class ItemsEquationContainer
         [ width (pct 50)
@@ -189,6 +216,20 @@ css =
         ]
     , class HideEquationsContainer
         [ transition "1s"
+        ]
+    , class ImageSizePresetButton
+        [ height (pct 100)
+        , backgroundColor (hex "#FFFFFF")
+        , border (px 0)
+        , boxSizing borderBox
+        ]
+    , class SelectedImageSizePresetButton
+        [ border (px 1)
+        , borderStyle solid
+        ]
+    , class FlexBoxHorizontalCenter
+        [ displayFlex
+        , justifyContent center
         ]
     --resize mathTexEquation on smaller screen
     , mediaQuery  ["screen and ( max-width: 1000px )"]

@@ -60,23 +60,23 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 31:
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 
-var contentJS = __webpack_require__(32);
+var contentJS = __webpack_require__(33);
 
 /***/ }),
 
-/***/ 32:
+/***/ 33:
 /***/ (function(module, exports) {
 
 console.log("got content.js")
@@ -112,7 +112,7 @@ var constructUi = function(configOptions){
             var minPositionY = 100;
             window.addEventListener("message", function(event){
                 let messageData = event.data 
-                console.log(messageData)
+                //console.log(messageData)
                 if(messageData != undefined && messageData["messageType"] != undefined){
                     switch (messageData["messageType"]){
                         case "MouseResize":
@@ -124,7 +124,7 @@ var constructUi = function(configOptions){
                             }
                             break;
                         case "CloseMenu":
-                            console.log("close")
+                            //console.log("close")
                             if (iframe.parentNode) {
                                 iframe.parentNode.removeChild(iframe);
                             }
@@ -150,12 +150,12 @@ var constructUi = function(configOptions){
             return iframe.contentDocument.head.appendChild(scriptTag)
         }
         var mathEuationComponent = addScript("mathEquationComponent");
-        mathEuationComponent.setAttribute('math-jax-font', configOptions["fontStyles"])
+        if( configOptions["fontStyles"] != undefined)
+            mathEuationComponent.setAttribute('math-jax-font', configOptions["fontStyles"])
         /*need to loader the webcomponets-loader here because this code uses the url
         to load other files.*/
         addScript('webcomponents-loader');
     },100);
-    console.log(iframe)
     document.body.appendChild(iframe)
 }
 
@@ -191,7 +191,7 @@ chrome.runtime.onMessage.addListener(
 	runtimeFunction
 );
 
-//constructUi();
+constructUi({"fontStyles":"STIX-Web"});
 
 /***/ })
 

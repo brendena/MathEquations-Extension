@@ -33,18 +33,29 @@
     
   </head>
 
-  <body>
-    <div>
-      <p>Selected Font</p>
-      <select name="select" id="selectedFont"> <!--Supplement an id here instead of using 'name'-->
-        <option value="STIX-Web" selected>STIX-Web</option>
-        <option value="TeX">TeX</option> 
-        <option value="Asana-Math">Asana-Math</option>
-        <option value="Neo-Euler">Neo-Euler</option>
-        <option value="Gyre-Pagella">Gyre-Pagella</option>
-        <option value="Gyre-Termes">Gyre-Termes</option>
-        <option value="Latin-Modern">Latin-Modern</option>
-      </select>
+  <body style="max-width: 200px; width: 200px; margin: 0">
+    <div style="background:#c2b6e7;">
+      <img src="./Img/24x24.png" style="float:left">
+      <p style="margin:0; padding:6px; text-align: center;">Math Equations</p>
+    </div>
+    <div style="margin:10px;">
+      <div>
+          <img id="imgExampleFontSelected" style="width:100%;">
+      </div>
+      <div>
+        <p style="display:inline">Selected Font: </p>
+        <select name="select" id="selectedFont"> <!--Supplement an id here instead of using 'name'-->
+          <option value="STIX-Web" selected>STIX-Web</option>
+          <option value="TeX">TeX</option> 
+          <option value="Asana-Math">Asana-Math</option>
+          <option value="Neo-Euler">Neo-Euler</option>
+          <option value="Gyre-Pagella">Gyre-Pagella</option>
+          <option value="Gyre-Termes">Gyre-Termes</option>
+          <option value="Latin-Modern">Latin-Modern</option>
+        </select>
+      </div>
+      
+      
     </div>
     <button id="resetUIButton">reset UI</button>
     <script src="./popUp.js"></script>

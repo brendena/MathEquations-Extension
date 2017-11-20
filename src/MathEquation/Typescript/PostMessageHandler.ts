@@ -2,25 +2,30 @@ export class PostMessageHandler {
     origin: string;
     prevStateMinimizeTextInput = true;
     prevStateMinimizeMenu = false;
-    lastPosition = 100;
+    prevMouseResize = 0;
+    marginErrorResize = 10;
+    resizeAmount = 20;
     constructor(origin: string){
         this.origin = origin;
     }
     closeMenu(){
-        console.log("closeMenu")
         parent.postMessage({"messageType": PostMessagesTypes.CloseMenu},this.origin);
     }
     mouseResize(directionMove:number){
-        console.log("MouseResize")
+        if( directionMove > this.resizeAmount ){
+            directionMove = this.resizeAmount
+        }
+        else if (directionMove < -(this.resizeAmount) ) {
+            directionMove = -(this.resizeAmount)
+        }
+        
         parent.postMessage({"messageType": PostMessagesTypes.MouseResize, "value": directionMove},this.origin);
-        this.lastPosition = directionMove;
+
     }
     MinimizeMenu(minimize:boolean){
-        console.log("MinimizeMenu")
         parent.postMessage({"messageType": PostMessagesTypes.MinimizeMenu, "value": minimize},this.origin);
     }
     MinimizeTextInput(minimize:boolean){
-        console.log("MinimizeTextInput")
         //if previous the text box was and 
         if(minimize != this.prevStateMinimizeTextInput){
             parent.postMessage({"messageType": PostMessagesTypes.MinimizeTextInput, "value": minimize},this.origin);

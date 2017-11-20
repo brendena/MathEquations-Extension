@@ -1,11 +1,5 @@
 'use strict'
-/*
-new clipboard api 
-https://github.com/lgarron/clipboard-polyfill
-*/
 
-console.log("mathEquationLoader")
-//require("../bower_components/webcomponentsjs/");
 
 import styles from './MathEquation/Stylesheets/MyCss.css'
 import styles from './MathEquation/Stylesheets/fontello/css/animation.css'
@@ -28,13 +22,11 @@ var currentScript = document.currentScript
 var fontType = currentScript.getAttribute("math-jax-font");
 if(fontType == null || fontType == undefined)
     fontType = "STIX-Web";
-console.log("fontType " + fontType);
 mathJaxConfig.innerHTML = configMathJax.MathJaxString(fontType);
 document.body.appendChild(mathJaxConfig)
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
 
 
 window.addEventListener('WebComponentsReady', function() {
-    console.log("loaded the webComponents")
     require('./MathEquation/Typescript/MathEquationComponent.ts')
 });

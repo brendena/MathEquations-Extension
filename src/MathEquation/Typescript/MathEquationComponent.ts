@@ -1,8 +1,10 @@
-import { CustomElement, OnConnected, OnDisconnected, OnAttributeChanged } from './custom-elements';
+import { CustomElement, OnConnected, OnDisconnected, OnAttributeChanged } from './custom-elements.ts';
 import { ElmPort } from './ElmPort.ts'
 import { MathJaxConvert } from './MathJaxConvert.ts'
 import { MathTypes } from './MathTypes.ts'
 import { PostMessageHandler } from './PostMessageHandler.ts'
+import { ImageTypesEnum} from './ImageTypes.ts'
+import { CanvasToImage } from './CanvasToImage.ts'
 import { setTimeout } from 'timers';
 
 var Elm :any = require('../Elm/Main.elm');
@@ -55,10 +57,10 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
         });
 
         this.app.ports.sumitEquation.subscribe((elmString:string)=>{
-            var elmObject = new ElmPort(elmString);
+            //var elmObject = new ElmPort(elmString);
         });
-        this.app.ports.updateEquation.subscribe((elmString:string)=> {
-            var elmObject = new ElmPort(elmString);
+        this.app.ports.updateEquation.subscribe((elmJsonString:string)=> {
+            var elmObject = new ElmPort(elmJsonString);
             if(elmObject.selectedMathType != MathTypes.NoMathType){
                 this.mathJaxConvert.queueEquation(elmObject);
                 this.postMessageHandler.MinimizeTextInput(false);
@@ -71,6 +73,12 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
         this.app.ports.closePage.subscribe((elmString:string)=> {
             this.postMessageHandler.closeMenu();
         });
+
+        this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
+            var elmObject = new ElmPort(elmJsonString);
+            new CanvasToImage().downloadImage(elmObject.selectedMathType + "Equation",elmObject.downloadImageType);
+
+        });
         /**********************setting-elm-up************************************/
         
         //wait untill elm load to load the clipboard element
@@ -81,6 +89,7 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
                 throw("can't add clipboard becuase elms still loading");
             submitButton.setAttribute("data-clipboard-action", "copy");
             submitButton.setAttribute("data-clipboard-target", "#CanvasImgContainer");
+
         },1000)
 
     }

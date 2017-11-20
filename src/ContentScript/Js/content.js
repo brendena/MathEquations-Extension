@@ -31,7 +31,7 @@ var constructUi = function(configOptions){
             var minPositionY = 100;
             window.addEventListener("message", function(event){
                 let messageData = event.data 
-                console.log(messageData)
+                //console.log(messageData)
                 if(messageData != undefined && messageData["messageType"] != undefined){
                     switch (messageData["messageType"]){
                         case "MouseResize":
@@ -43,7 +43,7 @@ var constructUi = function(configOptions){
                             }
                             break;
                         case "CloseMenu":
-                            console.log("close")
+                            //console.log("close")
                             if (iframe.parentNode) {
                                 iframe.parentNode.removeChild(iframe);
                             }
@@ -69,12 +69,12 @@ var constructUi = function(configOptions){
             return iframe.contentDocument.head.appendChild(scriptTag)
         }
         var mathEuationComponent = addScript("mathEquationComponent");
-        mathEuationComponent.setAttribute('math-jax-font', configOptions["fontStyles"])
+        if( configOptions["fontStyles"] != undefined)
+            mathEuationComponent.setAttribute('math-jax-font', configOptions["fontStyles"])
         /*need to loader the webcomponets-loader here because this code uses the url
         to load other files.*/
         addScript('webcomponents-loader');
     },100);
-    console.log(iframe)
     document.body.appendChild(iframe)
 }
 
@@ -110,4 +110,4 @@ chrome.runtime.onMessage.addListener(
 	runtimeFunction
 );
 
-//constructUi();
+constructUi({"fontStyles":"STIX-Web"});

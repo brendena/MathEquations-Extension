@@ -31,7 +31,7 @@ export class MathJaxConvert {
         clearTimeout(this.convertImageTimer);
         
         this.convertImageTimer = setTimeout(()=>{
-            this.canvasToImage.convertSvg(divIdEquation)
+            this.canvasToImage.convertSvg(divIdEquation,ElmObject.mathEquationColor)
         },500);
         
     }

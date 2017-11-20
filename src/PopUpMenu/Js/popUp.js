@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(result["fontStyles"] == undefined || result["fontStyles"] == null)
       result["fontStyles"] = defaultFont;
     fontContainer.value = result["fontStyles"]
-
+    selectImage(result["fontStyles"]);
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {openMenu: result});
     });
@@ -16,13 +16,17 @@ chrome.browserAction.onClicked.addListener(function(tab) {
 
 });
 
+var selectImage = function(imgName){
+  var imgExampleFont = document.getElementById("imgExampleFontSelected");
+  imgExampleFont.src = "/Img/" + imgName +".svg"
+}
 
 var onSelectFont = function(){
   chrome.storage.sync.set({"fontStyles": this.value}, function() {
   });
+  selectImage(this.value);
 }
 var resetUI = function(){
-  console.log("reset the ui")
   chrome.storage.sync.get(["fontStyles"], function (result) {
     chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
       chrome.tabs.sendMessage(tabs[0].id, {resetUI: result});

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 3);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -202,7 +202,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(6);
+var	fixUrls = __webpack_require__(7);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -528,23 +528,86 @@ module.exports = __webpack_require__.p + "Img/fontello.eot";
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+class CanvasToImage {
+    constructor() {
+    }
+    getSvg(divSvgId) {
+        this.canvas = document.getElementById("HiddenCanvas");
+        this.canvasImage = document.getElementById("CanvasImg");
+        var divSvg = document.getElementById(divSvgId);
+        if (divSvg == null)
+            throw "the elm container didn't load";
+        var svg = divSvg.getElementsByTagName("svg");
+        if (svg.length >= 2 || svg.length == 0 || svg == null)
+            throw "to many or zero svg's - something wrong with mathjax";
+        else
+            return svg[0];
+    }
+    convertSvg(divSvgId, color) {
+        var svg = this.getSvg(divSvgId);
+        this.drawSvgImage(svg, color);
+    }
+    drawSvgImage(svgElement, color) {
+        var svgClone = svgElement.cloneNode(true);
+        svgClone.style.color = color;
+        let svgURL = new XMLSerializer().serializeToString(svgClone);
+        let ratioSvg = svgElement.clientHeight / svgElement.clientWidth;
+        let heigthSvg = this.canvas.width * ratioSvg;
+        let canvasHeightNumber = Math.round(heigthSvg);
+        this.canvas.height = Math.round(heigthSvg);
+        let img = new Image();
+        img.onload = () => {
+            let context = this.canvas.getContext('2d');
+            if (context == null)
+                throw ("can't get context");
+            context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            context.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+            this.canvasImage.src = this.canvas.toDataURL("image/png");
+        };
+        let svgData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
+        img.src = svgData;
+    }
+    downloadImage(divSvgId, imageType) {
+        this.getSvg(divSvgId);
+        var imageData = "";
+        if (imageType == "png" /* Png */) {
+            console.log("download");
+            var imageData = this.canvasImage.src;
+        }
+        else if (imageType == "svg" /* Svg */) {
+            var svg = this.getSvg(divSvgId);
+            let svgURL = new XMLSerializer().serializeToString(svg);
+            imageData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
+        }
+        var downloadButton = document.getElementById("DownloadButton");
+        if (downloadButton != null) {
+            downloadButton.setAttribute("href", imageData);
+        }
+        else {
+            throw "couldn't find downloadButton";
+        }
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = CanvasToImage;
+
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css__);
 
-/*
-new clipboard api 
-https://github.com/lgarron/clipboard-polyfill
-*/
 
-console.log("mathEquationLoader")
-//require("../bower_components/webcomponentsjs/");
 
 
 
@@ -559,7 +622,7 @@ document.head.appendChild(mathJax)
 /*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
 
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
-var configMathJax = __webpack_require__ (17)
+var configMathJax = __webpack_require__ (18)
 var mathJaxConfig = document.createElement('script');
 mathJaxConfig.type = "text/x-mathjax-config";
 //load in fonts
@@ -567,26 +630,24 @@ var currentScript = document.currentScript
 var fontType = currentScript.getAttribute("math-jax-font");
 if(fontType == null || fontType == undefined)
     fontType = "STIX-Web";
-console.log("fontType " + fontType);
 mathJaxConfig.innerHTML = configMathJax.MathJaxString(fontType);
 document.body.appendChild(mathJaxConfig)
 /*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
 
 
 window.addEventListener('WebComponentsReady', function() {
-    console.log("loaded the webComponents")
-    __webpack_require__(18)
+    __webpack_require__(19)
 });
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(5);
+var content = __webpack_require__(6);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -611,7 +672,7 @@ if(false) {
 }
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -619,13 +680,13 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, ".mainNavLogo {\n    height: 100%;\n    background-color: #8064d6;\n    float: left;\n}\n\n#NavContainer {\n    height: 75px;\n    border-top-color: #000000;\n    border-top-width: 3px;\n    border-top-style: solid;\n    background-color: #ffdc78;\n}\n\n#Page {\n    background-color: rgb(200, 128, 64);\n    color: #CCFFFF;\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    padding: 8px;\n    margin: 0;\n}\n\n#LatexImage {\n    height: 40%;\n}\n\n#EquationsContainer {\n    width: 100%;\n    position: fixed;\n    display: flex;\n    flex-direction: column;\n    bottom: 75px;\n    z-index: -1;\n    background-color: #ffffff;\n    border-top-style: solid;\n    border-top-width: 1px;\n    box-shadow: 0px -2px 15px rgba(50, 50, 50, 0.35);\n}\n\n#ResizeIcon {\n    display: block;\n    margin: auto;\n    opacity: 0.5;\n    user-select: none;\n    cursor: ns-resize;\n}\n\n#ResizeIcon:hover {\n    opacity: 1;\n}\n\n#MathTextEquationContainer {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n}\n\n#SvgContainer {\n    flex: 1;\n    padding: 20px;\n}\n\n#HiddenCanvas {\n    width: 800px;\n    display: none;\n}\n\n#CanvasImgContainer {\n    position: fixed;\n    bottom: -200%;\n    z-index: -20;\n}\n\n#MathOutputContainer {\n    display: flex;\n    flex-direction: column;\n    width: 50%;\n    border-left-style: solid;\n    border-left-width: 1px;\n    padding: 0px;\n    padding-bottom: 5px;\n}\n\n#MathOutputMenu {\n    height: 30px;\n}\n\n#NavSubmitButton {\n    background-color: #FFFFFF;\n    border-width: 0px;\n    float: left;\n    font-size: 20px;\n    box-sizing: border-box;\n    transition: 0.5s;\n}\n\n#NavSubmitButton:hover {\n    background-color: #b9b9b942;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #000000;\n}\n\n.mainItemsEquationContainer {\n    width: 50%;\n    border-width: 0px;\n    resize: none;\n    box-sizing: border-box;\n    padding: 20px;\n}\n\n.mainNavBar {\n    margin: 0;\n    padding: 0;\n}\n\n.mainNavBar > li {\n    display: inline-block !important;\n    color: #ccffaa;\n}\n\n.mainNavButton {\n    height: 100%;\n    padding-left: 10px;\n    padding-right: 10px;\n    float: left;\n    font-size: 30px;\n    border-width: 0px;\n    background-color: #ffdc78;\n    font-family: Times New Roman;\n    color: #000000;\n    box-shadow: none;\n}\n\n.mainNavButton:hover {\n    background-color: #aaaa78;\n}\n\n.mainNavButtonSelected {\n    background-color: #aaaa78;\n}\n\n.mainHideEquationsContainer {\n    transition: 1s;\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathTextEquationContainer {\n        flex-direction: column;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathEquationText {\n        width: 100%;\n    border-width: 0px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathOutputContainer {\n        width: 100%;\n    flex: 1;\n    border: 0px;\n    border-top-style: solid;\n    border-top-width: 1px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    .mainItemsEquationContainer {\n        height: 50%;\n    }\n}\n", ""]);
+exports.push([module.i, ".mainNavLogo {\n    height: 100%;\n    background-color: #8064d6;\n    float: left;\n}\n\n#NavContainer {\n    height: 75px;\n    border-top-color: #000000;\n    border-top-width: 3px;\n    border-top-style: solid;\n    background-color: #ffdc78;\n}\n\n#Page {\n    background-color: rgb(200, 128, 64);\n    color: #CCFFFF;\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    padding: 8px;\n    margin: 0;\n}\n\n#LatexImage {\n    height: 40%;\n}\n\n#EquationsContainer {\n    width: 100%;\n    position: fixed;\n    display: flex;\n    flex-direction: column;\n    bottom: 75px;\n    z-index: -1;\n    background-color: #ffffff;\n    border-top-style: solid;\n    border-top-width: 1px;\n    box-shadow: 0px -2px 15px rgba(50, 50, 50, 0.35);\n}\n\n#ResizeIcon {\n    display: block;\n    margin: auto;\n    opacity: 0.5;\n    user-select: none;\n    cursor: ns-resize;\n}\n\n#ResizeIcon:hover {\n    opacity: 1;\n}\n\n#MathTextEquationContainer {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n}\n\n#SvgContainer {\n    flex: 1;\n    padding: 20px;\n    padding-bottom: 0px;\n}\n\n#HiddenCanvas {\n    display: none;\n}\n\n#CanvasImgContainer {\n    position: fixed;\n    bottom: -200%;\n    z-index: -20;\n}\n\n#MathOutputContainer {\n    display: flex;\n    flex-direction: column;\n    width: 50%;\n    border-left-style: solid;\n    border-left-width: 1px;\n    padding: 0px;\n    padding-bottom: 5px;\n}\n\n#MathOutputMenu {\n    height: 40px;\n    display: flex;\n    align-items: center;\n}\n\n#NavSubmitButton {\n    background-color: #FFFFFF;\n    border-width: 0px;\n    float: left;\n    font-size: 20px;\n    box-sizing: border-box;\n    transition: 0.5s;\n}\n\n#NavSubmitButton:hover {\n    background-color: #b9b9b942;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #000000;\n}\n\n#OptionsSlideMenu {\n    position: fixed;\n    background-color: #FFFFFF;\n    bottom: 0px;\n    width: 50%;\n    left: 25%;\n    padding: 25px;\n    padding-bottom: 0px;\n    border-style: solid;\n    border-width: 3px;\n    border-bottom-width: 0px;\n    min-height: 90px;\n    box-sizing: border-box;\n    max-height: 90%;\n    transition: .5s;\n}\n\n.mainItemsEquationContainer {\n    width: 50%;\n    border-width: 0px;\n    resize: none;\n    box-sizing: border-box;\n    padding: 20px;\n}\n\n.mainNavBar {\n    margin: 0;\n    padding: 0;\n}\n\n.mainNavBar > li {\n    display: inline-block !important;\n    color: #ccffaa;\n}\n\n.mainNavButton {\n    height: 100%;\n    padding-left: 10px;\n    padding-right: 10px;\n    float: left;\n    font-size: 30px;\n    border-width: 0px;\n    background-color: #ffdc78;\n    font-family: Times New Roman;\n    color: #000000;\n    box-shadow: none;\n}\n\n.mainNavButton:hover {\n    background-color: #aaaa78;\n}\n\n.mainNavButtonSelected {\n    background-color: #aaaa78;\n}\n\n.mainHideEquationsContainer {\n    transition: 1s;\n}\n\n.mainImageSizePresetButton {\n    height: 100%;\n    background-color: #FFFFFF;\n    border: 0px;\n    box-sizing: border-box;\n}\n\n.mainSelectedImageSizePresetButton {\n    border: 1px;\n    border-style: solid;\n}\n\n.mainFlexBoxHorizontalCenter {\n    display: flex;\n    justify-content: center;\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathTextEquationContainer {\n        flex-direction: column;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathEquationText {\n        width: 100%;\n    border-width: 0px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathOutputContainer {\n        width: 100%;\n    flex: 1;\n    border: 0px;\n    border-top-style: solid;\n    border-top-width: 1px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    .mainItemsEquationContainer {\n        height: 50%;\n    }\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -720,13 +781,13 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(8);
+var content = __webpack_require__(9);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -751,7 +812,7 @@ if(false) {
 }
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -765,13 +826,13 @@ exports.push([module.i, "/*\n   Animation example, for spinners\n*/\n.animate-sp
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(10);
+var content = __webpack_require__(11);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -796,7 +857,7 @@ if(false) {
 }
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -804,19 +865,19 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "\n.icon-download:before { content: '\\E800'; } /* '' */\n.icon-upload:before { content: '\\E801'; } /* '' */\n.icon-down-open:before { content: '\\E802'; } /* '' */\n.icon-cancel-1:before { content: '\\E803'; } /* '' */\n.icon-up-open:before { content: '\\E804'; } /* '' */\n.icon-github-circled:before { content: '\\F09B'; } /* '' */", ""]);
+exports.push([module.i, "\n.icon-upload:before { content: '\\E800'; } /* '' */\n.icon-down-open:before { content: '\\E802'; } /* '' */\n.icon-cancel-1:before { content: '\\E803'; } /* '' */\n.icon-up-open:before { content: '\\E804'; } /* '' */\n.icon-picture:before { content: '\\E805'; } /* '' */\n.icon-download-1:before { content: '\\E806'; } /* '' */\n.icon-github-circled:before { content: '\\F09B'; } /* '' */\n.icon-doc-text-inv:before { content: '\\F15C'; } /* '' */", ""]);
 
 // exports
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(12);
+var content = __webpack_require__(13);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // Prepare cssTransformation
 var transform;
@@ -841,7 +902,7 @@ if(false) {
 }
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(0)(undefined);
@@ -849,37 +910,37 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'fontello';\n  src: url(" + __webpack_require__(2) + ");\n  src: url(" + __webpack_require__(2) + "#iefix) format('embedded-opentype'),\n       url(" + __webpack_require__(13) + ") format('woff2'),\n       url(" + __webpack_require__(14) + ") format('woff'),\n       url(" + __webpack_require__(15) + ") format('truetype'),\n       url(" + __webpack_require__(16) + "#fontello) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */\n/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */\n/*\n@media screen and (-webkit-min-device-pixel-ratio:0) {\n  @font-face {\n    font-family: 'fontello';\n    src: url('../font/fontello.svg?95237755#fontello') format('svg');\n  }\n}\n*/\n \n [class^=\"icon-\"]:before, [class*=\" icon-\"]:before {\n  font-family: \"fontello\";\n  font-style: normal;\n  font-weight: normal;\n  speak: none;\n \n  display: inline-block;\n  text-decoration: inherit;\n  width: 1em;\n  margin-right: .2em;\n  text-align: center;\n  /* opacity: .8; */\n \n  /* For safety - reset parent styles, that can break glyph codes*/\n  font-variant: normal;\n  text-transform: none;\n \n  /* fix buttons height, for twitter bootstrap */\n  line-height: 1em;\n \n  /* Animation center compensation - margins should be symmetric */\n  /* remove if not needed */\n  margin-left: .2em;\n \n  /* you can be more comfortable with increased icons size */\n  /* font-size: 120%; */\n \n  /* Font smoothing. That was taken from TWBS */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n \n  /* Uncomment for 3D effect */\n  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */\n}\n \n.icon-download:before { content: '\\E800'; } /* '' */\n.icon-upload:before { content: '\\E801'; } /* '' */\n.icon-down-open:before { content: '\\E802'; } /* '' */\n.icon-cancel-1:before { content: '\\E803'; } /* '' */\n.icon-up-open:before { content: '\\E804'; } /* '' */\n.icon-github-circled:before { content: '\\F09B'; } /* '' */", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'fontello';\n  src: url(" + __webpack_require__(2) + ");\n  src: url(" + __webpack_require__(2) + "#iefix) format('embedded-opentype'),\n       url(" + __webpack_require__(14) + ") format('woff2'),\n       url(" + __webpack_require__(15) + ") format('woff'),\n       url(" + __webpack_require__(16) + ") format('truetype'),\n       url(" + __webpack_require__(17) + "#fontello) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */\n/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */\n/*\n@media screen and (-webkit-min-device-pixel-ratio:0) {\n  @font-face {\n    font-family: 'fontello';\n    src: url('../font/fontello.svg?20341323#fontello') format('svg');\n  }\n}\n*/\n \n [class^=\"icon-\"]:before, [class*=\" icon-\"]:before {\n  font-family: \"fontello\";\n  font-style: normal;\n  font-weight: normal;\n  speak: none;\n \n  display: inline-block;\n  text-decoration: inherit;\n  width: 1em;\n  margin-right: .2em;\n  text-align: center;\n  /* opacity: .8; */\n \n  /* For safety - reset parent styles, that can break glyph codes*/\n  font-variant: normal;\n  text-transform: none;\n \n  /* fix buttons height, for twitter bootstrap */\n  line-height: 1em;\n \n  /* Animation center compensation - margins should be symmetric */\n  /* remove if not needed */\n  margin-left: .2em;\n \n  /* you can be more comfortable with increased icons size */\n  /* font-size: 120%; */\n \n  /* Font smoothing. That was taken from TWBS */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n \n  /* Uncomment for 3D effect */\n  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */\n}\n \n.icon-upload:before { content: '\\E800'; } /* '' */\n.icon-down-open:before { content: '\\E802'; } /* '' */\n.icon-cancel-1:before { content: '\\E803'; } /* '' */\n.icon-up-open:before { content: '\\E804'; } /* '' */\n.icon-picture:before { content: '\\E805'; } /* '' */\n.icon-download-1:before { content: '\\E806'; } /* '' */\n.icon-github-circled:before { content: '\\F09B'; } /* '' */\n.icon-doc-text-inv:before { content: '\\F15C'; } /* '' */", ""]);
 
 // exports
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, exports) {
-
-module.exports = "data:application/font-woff;base64,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"
-
-/***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
-module.exports = "data:application/font-woff;base64,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"
+module.exports = "data:application/font-woff;base64,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"
 
 /***/ }),
 /* 15 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-module.exports = __webpack_require__.p + "Img/fontello.ttf";
+module.exports = "data:application/font-woff;base64,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"
 
 /***/ }),
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "Img/fontello.svg";
+module.exports = __webpack_require__.p + "Img/fontello.ttf";
 
 /***/ }),
 /* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "Img/fontello.svg";
+
+/***/ }),
+/* 18 */
 /***/ (function(module, exports) {
 
 var mathJaxConfig = function(fontType){
@@ -934,19 +995,19 @@ exports.MathJaxString = function(fontType){
 }
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathEquationAnywhere", function() { return MathEquationAnywhere; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__custom_elements__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathJaxConvert_ts__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PostMessageHandler_ts__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_timers__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_timers__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__custom_elements_ts__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathJaxConvert_ts__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PostMessageHandler_ts__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CanvasToImage_ts__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_timers__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_timers__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -961,8 +1022,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var Elm = __webpack_require__(29);
-var Clipboard = __webpack_require__(30);
+
+var Elm = __webpack_require__(30);
+var Clipboard = __webpack_require__(31);
 let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
     constructor() {
         super();
@@ -1000,10 +1062,10 @@ let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
             this.postMessageHandler.mouseResize(elmMousePositon);
         });
         this.app.ports.sumitEquation.subscribe((elmString) => {
-            var elmObject = new __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__["a" /* ElmPort */](elmString);
+            //var elmObject = new ElmPort(elmString);
         });
-        this.app.ports.updateEquation.subscribe((elmString) => {
-            var elmObject = new __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__["a" /* ElmPort */](elmString);
+        this.app.ports.updateEquation.subscribe((elmJsonString) => {
+            var elmObject = new __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__["a" /* ElmPort */](elmJsonString);
             if (elmObject.selectedMathType != "NoMathType" /* NoMathType */) {
                 this.mathJaxConvert.queueEquation(elmObject);
                 this.postMessageHandler.MinimizeTextInput(false);
@@ -1015,9 +1077,13 @@ let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
         this.app.ports.closePage.subscribe((elmString) => {
             this.postMessageHandler.closeMenu();
         });
+        this.app.ports.downloadImage.subscribe((elmJsonString) => {
+            var elmObject = new __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__["a" /* ElmPort */](elmJsonString);
+            new __WEBPACK_IMPORTED_MODULE_4__CanvasToImage_ts__["a" /* CanvasToImage */]().downloadImage(elmObject.selectedMathType + "Equation", elmObject.downloadImageType);
+        });
         /**********************setting-elm-up************************************/
         //wait untill elm load to load the clipboard element
-        Object(__WEBPACK_IMPORTED_MODULE_4_timers__["setTimeout"])(() => {
+        Object(__WEBPACK_IMPORTED_MODULE_5_timers__["setTimeout"])(() => {
             new Clipboard("#NavSubmitButton");
             var submitButton = document.getElementById("NavSubmitButton");
             if (submitButton == null)
@@ -1036,7 +1102,7 @@ let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
     }
 };
 MathEquationAnywhere = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__custom_elements__["CustomElement"])({
+    Object(__WEBPACK_IMPORTED_MODULE_0__custom_elements_ts__["a" /* CustomElement */])({
         tagName: 'math-equation-anywhere',
     }),
     __metadata("design:paramtypes", [])
@@ -1045,25 +1111,31 @@ MathEquationAnywhere = __decorate([
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CustomElement = (config) => {
-    return (Element) => {
-        window['customElements'].define(config.tagName, Element, config.options);
-    };
-};
-//# sourceMappingURL=custom-elements.js.map
-
-/***/ }),
 /* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathTypes_ts__ = __webpack_require__(21);
+const CustomElement = (config) => {
+    return (Element) => {
+        console.log(Element);
+        console.log("testing");
+        //var test = new Element();
+        //console.log(test);
+        window['customElements'].define(config.tagName, Element, config.options);
+    };
+};
+/* harmony export (immutable) */ __webpack_exports__["a"] = CustomElement;
+
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathTypes_ts__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ImageTypes_ts__ = __webpack_require__(23);
+
 
 class ElmPort {
     constructor(elmRequest) {
@@ -1071,6 +1143,8 @@ class ElmPort {
         let elmRequestJson = JSON.parse(elmRequest);
         this.selectedMathType = Object(__WEBPACK_IMPORTED_MODULE_0__MathTypes_ts__["a" /* ConvertMathTypes */])(elmRequestJson["selectedMathType"]);
         this.mathEquation = elmRequestJson["mathEquation"];
+        this.mathEquationColor = elmRequestJson["mathEquationColor"];
+        this.downloadImageType = Object(__WEBPACK_IMPORTED_MODULE_1__ImageTypes_ts__["a" /* ImageTypesConstructor */])(elmRequestJson["downloadFileType"]);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = ElmPort;
@@ -1078,7 +1152,7 @@ class ElmPort {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1107,11 +1181,33 @@ let ConvertMathTypes = function (mathTypesString) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(23);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ImageTypesConstructor; });
+let ImageTypesConstructor = function (imageType) {
+    let returnImageType = "png" /* Png */;
+    if (imageType == "svg") {
+        returnImageType = "svg" /* Svg */;
+    }
+    else if (imageType == "png") {
+        returnImageType = "png" /* Png */;
+    }
+    else {
+        throw ("there was no proper image selected");
+    }
+    return returnImageType;
+};
+
+
+
+/***/ }),
+/* 24 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(3);
 
 class MathJaxConvert {
     constructor() {
@@ -1136,7 +1232,7 @@ class MathJaxConvert {
         }, 100);
         clearTimeout(this.convertImageTimer);
         this.convertImageTimer = setTimeout(() => {
-            this.canvasToImage.convertSvg(divIdEquation);
+            this.canvasToImage.convertSvg(divIdEquation, ElmObject.mathEquationColor);
         }, 500);
     }
     convertMathTypeOutput(ElmObject) {
@@ -1164,49 +1260,7 @@ class MathJaxConvert {
 
 
 /***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class CanvasToImage {
-    constructor() {
-    }
-    convertSvg(divSvgId) {
-        this.canvas = document.getElementById("HiddenCanvas");
-        this.canvasImage = document.getElementById("CanvasImg");
-        var divSvg = document.getElementById(divSvgId);
-        if (divSvg == null)
-            throw "the elm container didn't load";
-        var svg = divSvg.getElementsByTagName("svg");
-        if (svg.length >= 2 || svg.length == 0 || svg == null)
-            throw "to many or zero svg's - something wrong with mathjax";
-        else
-            console.log(svg[0]);
-        this.drawSvgImage(svg[0]);
-    }
-    drawSvgImage(svgElement) {
-        let svgURL = new XMLSerializer().serializeToString(svgElement);
-        let ratioSvg = svgElement.clientHeight / svgElement.clientWidth;
-        let heigthSvg = this.canvas.width * ratioSvg;
-        this.canvas.style.height = Math.round(heigthSvg) + "px";
-        let img = new Image();
-        img.onload = () => {
-            let context = this.canvas.getContext('2d');
-            if (context == null)
-                throw ("can't get context");
-            context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            context.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
-            this.canvasImage.src = this.canvas.toDataURL("image/png");
-        };
-        img.src = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = CanvasToImage;
-
-
-
-/***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1214,24 +1268,27 @@ class PostMessageHandler {
     constructor(origin) {
         this.prevStateMinimizeTextInput = true;
         this.prevStateMinimizeMenu = false;
-        this.lastPosition = 100;
+        this.prevMouseResize = 0;
+        this.marginErrorResize = 10;
+        this.resizeAmount = 20;
         this.origin = origin;
     }
     closeMenu() {
-        console.log("closeMenu");
         parent.postMessage({ "messageType": "CloseMenu" /* CloseMenu */ }, this.origin);
     }
     mouseResize(directionMove) {
-        console.log("MouseResize");
+        if (directionMove > this.resizeAmount) {
+            directionMove = this.resizeAmount;
+        }
+        else if (directionMove < -(this.resizeAmount)) {
+            directionMove = -(this.resizeAmount);
+        }
         parent.postMessage({ "messageType": "MouseResize" /* MouseResize */, "value": directionMove }, this.origin);
-        this.lastPosition = directionMove;
     }
     MinimizeMenu(minimize) {
-        console.log("MinimizeMenu");
         parent.postMessage({ "messageType": "MinimizeMenu" /* MinimizeMenu */, "value": minimize }, this.origin);
     }
     MinimizeTextInput(minimize) {
-        console.log("MinimizeTextInput");
         //if previous the text box was and 
         if (minimize != this.prevStateMinimizeTextInput) {
             parent.postMessage({ "messageType": "MinimizeTextInput" /* MinimizeTextInput */, "value": minimize }, this.origin);
@@ -1244,7 +1301,7 @@ class PostMessageHandler {
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var apply = Function.prototype.apply;
@@ -1297,13 +1354,13 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(26);
+__webpack_require__(27);
 exports.setImmediate = setImmediate;
 exports.clearImmediate = clearImmediate;
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -1493,10 +1550,10 @@ exports.clearImmediate = clearImmediate;
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(27), __webpack_require__(28)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(28), __webpack_require__(29)))
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 var g;
@@ -1523,7 +1580,7 @@ module.exports = g;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -1713,7 +1770,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 
@@ -16822,21 +16879,31 @@ var _user$project$MyCss$stringFontClasses = function (fontClass) {
 		case 'IconGithubCircled':
 			return 'icon-github-circled';
 		case 'IconDownload':
-			return 'icon-download';
+			return 'icon-download-1';
 		case 'IconUpload':
 			return 'icon-upload';
 		case 'IconDownOpen':
 			return 'icon-down-open';
-		default:
+		case 'IconCancel1':
 			return 'icon-cancel-1';
+		case 'IconPicture':
+			return 'icon-picture';
+		default:
+			return 'icon-doc-test-inv';
 	}
 };
+var _user$project$MyCss$FlexBoxHorizontalCenter = {ctor: 'FlexBoxHorizontalCenter'};
+var _user$project$MyCss$SelectedImageSizePresetButton = {ctor: 'SelectedImageSizePresetButton'};
+var _user$project$MyCss$ImageSizePresetButton = {ctor: 'ImageSizePresetButton'};
 var _user$project$MyCss$HideEquationsContainer = {ctor: 'HideEquationsContainer'};
 var _user$project$MyCss$ItemsEquationContainer = {ctor: 'ItemsEquationContainer'};
 var _user$project$MyCss$NavButtonSelected = {ctor: 'NavButtonSelected'};
 var _user$project$MyCss$NavButton = {ctor: 'NavButton'};
 var _user$project$MyCss$NavLogo = {ctor: 'NavLogo'};
 var _user$project$MyCss$NavBar = {ctor: 'NavBar'};
+var _user$project$MyCss$OptionsSlideMenu = {ctor: 'OptionsSlideMenu'};
+var _user$project$MyCss$OpenDownloadMenu = {ctor: 'OpenDownloadMenu'};
+var _user$project$MyCss$DownloadButton = {ctor: 'DownloadButton'};
 var _user$project$MyCss$MathOutputMenu = {ctor: 'MathOutputMenu'};
 var _user$project$MyCss$MathOutputContainer = {ctor: 'MathOutputContainer'};
 var _user$project$MyCss$CanvasImgContainer = {ctor: 'CanvasImgContainer'};
@@ -17079,7 +17146,12 @@ var _user$project$MyCss$css = function (_p1) {
 												ctor: '::',
 												_0: _rtfeldman$elm_css$Css$padding(
 													_rtfeldman$elm_css$Css$px(20)),
-												_1: {ctor: '[]'}
+												_1: {
+													ctor: '::',
+													_0: _rtfeldman$elm_css$Css$paddingBottom(
+														_rtfeldman$elm_css$Css$px(0)),
+													_1: {ctor: '[]'}
+												}
 											}
 										}),
 									_1: {
@@ -17089,13 +17161,8 @@ var _user$project$MyCss$css = function (_p1) {
 											_user$project$MyCss$HiddenCanvas,
 											{
 												ctor: '::',
-												_0: _rtfeldman$elm_css$Css$width(
-													_rtfeldman$elm_css$Css$px(800)),
-												_1: {
-													ctor: '::',
-													_0: _rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$none),
-													_1: {ctor: '[]'}
-												}
+												_0: _rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$none),
+												_1: {ctor: '[]'}
 											}),
 										_1: {
 											ctor: '::',
@@ -17163,8 +17230,16 @@ var _user$project$MyCss$css = function (_p1) {
 														{
 															ctor: '::',
 															_0: _rtfeldman$elm_css$Css$height(
-																_rtfeldman$elm_css$Css$px(30)),
-															_1: {ctor: '[]'}
+																_rtfeldman$elm_css$Css$px(40)),
+															_1: {
+																ctor: '::',
+																_0: _rtfeldman$elm_css$Css$displayFlex,
+																_1: {
+																	ctor: '::',
+																	_0: _rtfeldman$elm_css$Css$alignItems(_rtfeldman$elm_css$Css$center),
+																	_1: {ctor: '[]'}
+																}
+															}
 														}),
 													_1: {
 														ctor: '::',
@@ -17226,122 +17301,62 @@ var _user$project$MyCss$css = function (_p1) {
 														_1: {
 															ctor: '::',
 															_0: A2(
-																_rtfeldman$elm_css$Css$class,
-																_user$project$MyCss$ItemsEquationContainer,
+																_rtfeldman$elm_css$Css$id,
+																_user$project$MyCss$OptionsSlideMenu,
 																{
 																	ctor: '::',
-																	_0: _rtfeldman$elm_css$Css$width(
-																		_rtfeldman$elm_css$Css$pct(50)),
+																	_0: _rtfeldman$elm_css$Css$position(_rtfeldman$elm_css$Css$fixed),
 																	_1: {
 																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css$borderWidth(
-																			_rtfeldman$elm_css$Css$px(0)),
+																		_0: _rtfeldman$elm_css$Css$backgroundColor(
+																			_rtfeldman$elm_css$Css$hex('#FFFFFF')),
 																		_1: {
 																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$resize(_rtfeldman$elm_css$Css$none),
+																			_0: _rtfeldman$elm_css$Css$bottom(
+																				_rtfeldman$elm_css$Css$px(0)),
 																			_1: {
 																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$boxSizing(_rtfeldman$elm_css$Css$borderBox),
+																				_0: _rtfeldman$elm_css$Css$width(
+																					_rtfeldman$elm_css$Css$pct(50)),
 																				_1: {
 																					ctor: '::',
-																					_0: _rtfeldman$elm_css$Css$padding(
-																						_rtfeldman$elm_css$Css$px(20)),
-																					_1: {ctor: '[]'}
-																				}
-																			}
-																		}
-																	}
-																}),
-															_1: {
-																ctor: '::',
-																_0: A2(
-																	_rtfeldman$elm_css$Css$class,
-																	_user$project$MyCss$NavBar,
-																	{
-																		ctor: '::',
-																		_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
-																		_1: {
-																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
-																			_1: {
-																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$children(
-																					{
-																						ctor: '::',
-																						_0: _rtfeldman$elm_css$Css_Elements$li(
-																							{
-																								ctor: '::',
-																								_0: _rtfeldman$elm_css$Css$important(
-																									_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
-																								_1: {
-																									ctor: '::',
-																									_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
-																									_1: {ctor: '[]'}
-																								}
-																							}),
-																						_1: {ctor: '[]'}
-																					}),
-																				_1: {ctor: '[]'}
-																			}
-																		}
-																	}),
-																_1: {
-																	ctor: '::',
-																	_0: A2(
-																		_rtfeldman$elm_css$Css$class,
-																		_user$project$MyCss$NavButton,
-																		{
-																			ctor: '::',
-																			_0: _rtfeldman$elm_css$Css$height(
-																				_rtfeldman$elm_css$Css$pct(100)),
-																			_1: {
-																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$paddingLeft(
-																					_rtfeldman$elm_css$Css$px(10)),
-																				_1: {
-																					ctor: '::',
-																					_0: _rtfeldman$elm_css$Css$paddingRight(
-																						_rtfeldman$elm_css$Css$px(10)),
+																					_0: _rtfeldman$elm_css$Css$left(
+																						_rtfeldman$elm_css$Css$pct(25)),
 																					_1: {
 																						ctor: '::',
-																						_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left),
+																						_0: _rtfeldman$elm_css$Css$padding(
+																							_rtfeldman$elm_css$Css$px(25)),
 																						_1: {
 																							ctor: '::',
-																							_0: _rtfeldman$elm_css$Css$fontSize(
-																								_rtfeldman$elm_css$Css$px(30)),
+																							_0: _rtfeldman$elm_css$Css$paddingBottom(
+																								_rtfeldman$elm_css$Css$px(0)),
 																							_1: {
 																								ctor: '::',
-																								_0: _rtfeldman$elm_css$Css$borderWidth(
-																									_rtfeldman$elm_css$Css$px(0)),
+																								_0: _rtfeldman$elm_css$Css$borderStyle(_rtfeldman$elm_css$Css$solid),
 																								_1: {
 																									ctor: '::',
-																									_0: _rtfeldman$elm_css$Css$backgroundColor(
-																										_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor)),
+																									_0: _rtfeldman$elm_css$Css$borderWidth(
+																										_rtfeldman$elm_css$Css$px(3)),
 																									_1: {
 																										ctor: '::',
-																										_0: _rtfeldman$elm_css$Css$fontFamilies(
-																											{
-																												ctor: '::',
-																												_0: 'Times New Roman',
-																												_1: {ctor: '[]'}
-																											}),
+																										_0: _rtfeldman$elm_css$Css$borderBottomWidth(
+																											_rtfeldman$elm_css$Css$px(0)),
 																										_1: {
 																											ctor: '::',
-																											_0: _rtfeldman$elm_css$Css$color(
-																												_rtfeldman$elm_css$Css$hex('#000000')),
+																											_0: _rtfeldman$elm_css$Css$minHeight(
+																												_rtfeldman$elm_css$Css$px(90)),
 																											_1: {
 																												ctor: '::',
-																												_0: _rtfeldman$elm_css$Css$boxShadow(_rtfeldman$elm_css$Css$none),
+																												_0: _rtfeldman$elm_css$Css$boxSizing(_rtfeldman$elm_css$Css$borderBox),
 																												_1: {
 																													ctor: '::',
-																													_0: _rtfeldman$elm_css$Css$hover(
-																														{
-																															ctor: '::',
-																															_0: _rtfeldman$elm_css$Css$backgroundColor(
-																																_rtfeldman$elm_css$Css$hex('#aaaa78')),
-																															_1: {ctor: '[]'}
-																														}),
-																													_1: {ctor: '[]'}
+																													_0: _rtfeldman$elm_css$Css$maxHeight(
+																														_rtfeldman$elm_css$Css$pct(90)),
+																													_1: {
+																														ctor: '::',
+																														_0: _user$project$MyCss$transition('.5s'),
+																														_1: {ctor: '[]'}
+																													}
 																												}
 																											}
 																										}
@@ -17352,110 +17367,300 @@ var _user$project$MyCss$css = function (_p1) {
 																					}
 																				}
 																			}
+																		}
+																	}
+																}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_rtfeldman$elm_css$Css$class,
+																	_user$project$MyCss$ItemsEquationContainer,
+																	{
+																		ctor: '::',
+																		_0: _rtfeldman$elm_css$Css$width(
+																			_rtfeldman$elm_css$Css$pct(50)),
+																		_1: {
+																			ctor: '::',
+																			_0: _rtfeldman$elm_css$Css$borderWidth(
+																				_rtfeldman$elm_css$Css$px(0)),
+																			_1: {
+																				ctor: '::',
+																				_0: _rtfeldman$elm_css$Css$resize(_rtfeldman$elm_css$Css$none),
+																				_1: {
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$boxSizing(_rtfeldman$elm_css$Css$borderBox),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$padding(
+																							_rtfeldman$elm_css$Css$px(20)),
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		}
+																	}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_rtfeldman$elm_css$Css$class,
+																		_user$project$MyCss$NavBar,
+																		{
+																			ctor: '::',
+																			_0: _rtfeldman$elm_css$Css$margin(_rtfeldman$elm_css$Css$zero),
+																			_1: {
+																				ctor: '::',
+																				_0: _rtfeldman$elm_css$Css$padding(_rtfeldman$elm_css$Css$zero),
+																				_1: {
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$children(
+																						{
+																							ctor: '::',
+																							_0: _rtfeldman$elm_css$Css_Elements$li(
+																								{
+																									ctor: '::',
+																									_0: _rtfeldman$elm_css$Css$important(
+																										_rtfeldman$elm_css$Css$display(_rtfeldman$elm_css$Css$inlineBlock)),
+																									_1: {
+																										ctor: '::',
+																										_0: _rtfeldman$elm_css$Css$color(_user$project$MyCss$primaryAccentColor),
+																										_1: {ctor: '[]'}
+																									}
+																								}),
+																							_1: {ctor: '[]'}
+																						}),
+																					_1: {ctor: '[]'}
+																				}
+																			}
 																		}),
 																	_1: {
 																		ctor: '::',
 																		_0: A2(
 																			_rtfeldman$elm_css$Css$class,
-																			_user$project$MyCss$NavButtonSelected,
+																			_user$project$MyCss$NavButton,
 																			{
 																				ctor: '::',
-																				_0: _rtfeldman$elm_css$Css$backgroundColor(
-																					_rtfeldman$elm_css$Css$hex('#aaaa78')),
-																				_1: {ctor: '[]'}
+																				_0: _rtfeldman$elm_css$Css$height(
+																					_rtfeldman$elm_css$Css$pct(100)),
+																				_1: {
+																					ctor: '::',
+																					_0: _rtfeldman$elm_css$Css$paddingLeft(
+																						_rtfeldman$elm_css$Css$px(10)),
+																					_1: {
+																						ctor: '::',
+																						_0: _rtfeldman$elm_css$Css$paddingRight(
+																							_rtfeldman$elm_css$Css$px(10)),
+																						_1: {
+																							ctor: '::',
+																							_0: _rtfeldman$elm_css$Css$float(_rtfeldman$elm_css$Css$left),
+																							_1: {
+																								ctor: '::',
+																								_0: _rtfeldman$elm_css$Css$fontSize(
+																									_rtfeldman$elm_css$Css$px(30)),
+																								_1: {
+																									ctor: '::',
+																									_0: _rtfeldman$elm_css$Css$borderWidth(
+																										_rtfeldman$elm_css$Css$px(0)),
+																									_1: {
+																										ctor: '::',
+																										_0: _rtfeldman$elm_css$Css$backgroundColor(
+																											_rtfeldman$elm_css$Css$hex(_user$project$MyCss$navBackgroundColor)),
+																										_1: {
+																											ctor: '::',
+																											_0: _rtfeldman$elm_css$Css$fontFamilies(
+																												{
+																													ctor: '::',
+																													_0: 'Times New Roman',
+																													_1: {ctor: '[]'}
+																												}),
+																											_1: {
+																												ctor: '::',
+																												_0: _rtfeldman$elm_css$Css$color(
+																													_rtfeldman$elm_css$Css$hex('#000000')),
+																												_1: {
+																													ctor: '::',
+																													_0: _rtfeldman$elm_css$Css$boxShadow(_rtfeldman$elm_css$Css$none),
+																													_1: {
+																														ctor: '::',
+																														_0: _rtfeldman$elm_css$Css$hover(
+																															{
+																																ctor: '::',
+																																_0: _rtfeldman$elm_css$Css$backgroundColor(
+																																	_rtfeldman$elm_css$Css$hex('#aaaa78')),
+																																_1: {ctor: '[]'}
+																															}),
+																														_1: {ctor: '[]'}
+																													}
+																												}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
 																			}),
 																		_1: {
 																			ctor: '::',
 																			_0: A2(
 																				_rtfeldman$elm_css$Css$class,
-																				_user$project$MyCss$HideEquationsContainer,
+																				_user$project$MyCss$NavButtonSelected,
 																				{
 																					ctor: '::',
-																					_0: _user$project$MyCss$transition('1s'),
+																					_0: _rtfeldman$elm_css$Css$backgroundColor(
+																						_rtfeldman$elm_css$Css$hex('#aaaa78')),
 																					_1: {ctor: '[]'}
 																				}),
 																			_1: {
 																				ctor: '::',
 																				_0: A2(
-																					_rtfeldman$elm_css$Css_Media$mediaQuery,
+																					_rtfeldman$elm_css$Css$class,
+																					_user$project$MyCss$HideEquationsContainer,
 																					{
 																						ctor: '::',
-																						_0: 'screen and ( max-width: 1000px )',
+																						_0: _user$project$MyCss$transition('1s'),
 																						_1: {ctor: '[]'}
-																					},
-																					{
+																					}),
+																				_1: {
+																					ctor: '::',
+																					_0: A2(
+																						_rtfeldman$elm_css$Css$class,
+																						_user$project$MyCss$ImageSizePresetButton,
+																						{
+																							ctor: '::',
+																							_0: _rtfeldman$elm_css$Css$height(
+																								_rtfeldman$elm_css$Css$pct(100)),
+																							_1: {
+																								ctor: '::',
+																								_0: _rtfeldman$elm_css$Css$backgroundColor(
+																									_rtfeldman$elm_css$Css$hex('#FFFFFF')),
+																								_1: {
+																									ctor: '::',
+																									_0: _rtfeldman$elm_css$Css$border(
+																										_rtfeldman$elm_css$Css$px(0)),
+																									_1: {
+																										ctor: '::',
+																										_0: _rtfeldman$elm_css$Css$boxSizing(_rtfeldman$elm_css$Css$borderBox),
+																										_1: {ctor: '[]'}
+																									}
+																								}
+																							}
+																						}),
+																					_1: {
 																						ctor: '::',
 																						_0: A2(
-																							_rtfeldman$elm_css$Css$id,
-																							_user$project$MyCss$MathTextEquationContainer,
+																							_rtfeldman$elm_css$Css$class,
+																							_user$project$MyCss$SelectedImageSizePresetButton,
 																							{
 																								ctor: '::',
-																								_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
-																								_1: {ctor: '[]'}
+																								_0: _rtfeldman$elm_css$Css$border(
+																									_rtfeldman$elm_css$Css$px(1)),
+																								_1: {
+																									ctor: '::',
+																									_0: _rtfeldman$elm_css$Css$borderStyle(_rtfeldman$elm_css$Css$solid),
+																									_1: {ctor: '[]'}
+																								}
 																							}),
 																						_1: {
 																							ctor: '::',
 																							_0: A2(
-																								_rtfeldman$elm_css$Css$id,
-																								_user$project$MyCss$MathEquationText,
+																								_rtfeldman$elm_css$Css$class,
+																								_user$project$MyCss$FlexBoxHorizontalCenter,
 																								{
 																									ctor: '::',
-																									_0: _rtfeldman$elm_css$Css$width(
-																										_rtfeldman$elm_css$Css$pct(100)),
+																									_0: _rtfeldman$elm_css$Css$displayFlex,
 																									_1: {
 																										ctor: '::',
-																										_0: _rtfeldman$elm_css$Css$borderWidth(
-																											_rtfeldman$elm_css$Css$px(0)),
+																										_0: _rtfeldman$elm_css$Css$justifyContent(_rtfeldman$elm_css$Css$center),
 																										_1: {ctor: '[]'}
 																									}
 																								}),
 																							_1: {
 																								ctor: '::',
 																								_0: A2(
-																									_rtfeldman$elm_css$Css$id,
-																									_user$project$MyCss$MathOutputContainer,
+																									_rtfeldman$elm_css$Css_Media$mediaQuery,
 																									{
 																										ctor: '::',
-																										_0: _rtfeldman$elm_css$Css$width(
-																											_rtfeldman$elm_css$Css$pct(100)),
+																										_0: 'screen and ( max-width: 1000px )',
+																										_1: {ctor: '[]'}
+																									},
+																									{
+																										ctor: '::',
+																										_0: A2(
+																											_rtfeldman$elm_css$Css$id,
+																											_user$project$MyCss$MathTextEquationContainer,
+																											{
+																												ctor: '::',
+																												_0: _rtfeldman$elm_css$Css$flexDirection(_rtfeldman$elm_css$Css$column),
+																												_1: {ctor: '[]'}
+																											}),
 																										_1: {
 																											ctor: '::',
-																											_0: _rtfeldman$elm_css$Css$flex(
-																												_rtfeldman$elm_css$Css$int(1)),
-																											_1: {
-																												ctor: '::',
-																												_0: _rtfeldman$elm_css$Css$border(
-																													_rtfeldman$elm_css$Css$px(0)),
-																												_1: {
+																											_0: A2(
+																												_rtfeldman$elm_css$Css$id,
+																												_user$project$MyCss$MathEquationText,
+																												{
 																													ctor: '::',
-																													_0: _rtfeldman$elm_css$Css$borderTopStyle(_rtfeldman$elm_css$Css$solid),
+																													_0: _rtfeldman$elm_css$Css$width(
+																														_rtfeldman$elm_css$Css$pct(100)),
 																													_1: {
 																														ctor: '::',
-																														_0: _rtfeldman$elm_css$Css$borderTopWidth(
-																															_rtfeldman$elm_css$Css$px(1)),
+																														_0: _rtfeldman$elm_css$Css$borderWidth(
+																															_rtfeldman$elm_css$Css$px(0)),
 																														_1: {ctor: '[]'}
 																													}
+																												}),
+																											_1: {
+																												ctor: '::',
+																												_0: A2(
+																													_rtfeldman$elm_css$Css$id,
+																													_user$project$MyCss$MathOutputContainer,
+																													{
+																														ctor: '::',
+																														_0: _rtfeldman$elm_css$Css$width(
+																															_rtfeldman$elm_css$Css$pct(100)),
+																														_1: {
+																															ctor: '::',
+																															_0: _rtfeldman$elm_css$Css$flex(
+																																_rtfeldman$elm_css$Css$int(1)),
+																															_1: {
+																																ctor: '::',
+																																_0: _rtfeldman$elm_css$Css$border(
+																																	_rtfeldman$elm_css$Css$px(0)),
+																																_1: {
+																																	ctor: '::',
+																																	_0: _rtfeldman$elm_css$Css$borderTopStyle(_rtfeldman$elm_css$Css$solid),
+																																	_1: {
+																																		ctor: '::',
+																																		_0: _rtfeldman$elm_css$Css$borderTopWidth(
+																																			_rtfeldman$elm_css$Css$px(1)),
+																																		_1: {ctor: '[]'}
+																																	}
+																																}
+																															}
+																														}
+																													}),
+																												_1: {
+																													ctor: '::',
+																													_0: A2(
+																														_rtfeldman$elm_css$Css$class,
+																														_user$project$MyCss$ItemsEquationContainer,
+																														{
+																															ctor: '::',
+																															_0: _rtfeldman$elm_css$Css$height(
+																																_rtfeldman$elm_css$Css$pct(50)),
+																															_1: {ctor: '[]'}
+																														}),
+																													_1: {ctor: '[]'}
 																												}
 																											}
 																										}
 																									}),
-																								_1: {
-																									ctor: '::',
-																									_0: A2(
-																										_rtfeldman$elm_css$Css$class,
-																										_user$project$MyCss$ItemsEquationContainer,
-																										{
-																											ctor: '::',
-																											_0: _rtfeldman$elm_css$Css$height(
-																												_rtfeldman$elm_css$Css$pct(50)),
-																											_1: {ctor: '[]'}
-																										}),
-																									_1: {ctor: '[]'}
-																								}
+																								_1: {ctor: '[]'}
 																							}
 																						}
-																					}),
-																				_1: {ctor: '[]'}
+																					}
+																				}
 																			}
 																		}
 																	}
@@ -17475,6 +17680,8 @@ var _user$project$MyCss$css = function (_p1) {
 			}
 		}
 	});
+var _user$project$MyCss$IconDocText = {ctor: 'IconDocText'};
+var _user$project$MyCss$IconPicture = {ctor: 'IconPicture'};
 var _user$project$MyCss$IconCancel1 = {ctor: 'IconCancel1'};
 var _user$project$MyCss$IconDownOpen = {ctor: 'IconDownOpen'};
 var _user$project$MyCss$IconUpload = {ctor: 'IconUpload'};
@@ -17482,6 +17689,76 @@ var _user$project$MyCss$IconDownload = {ctor: 'IconDownload'};
 var _user$project$MyCss$IconGithubCircled = {ctor: 'IconGithubCircled'};
 var _user$project$MyCss$IconUpOpen = {ctor: 'IconUpOpen'};
 
+var _user$project$Main$positionOptionsSlideMenu = function (open) {
+	var _p0 = open;
+	if (_p0 === true) {
+		return _elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'transform', _1: 'translateY(0)'},
+				_1: {ctor: '[]'}
+			});
+	} else {
+		return _elm_lang$html$Html_Attributes$style(
+			{
+				ctor: '::',
+				_0: {ctor: '_Tuple2', _0: 'transform', _1: 'translateY(100%)'},
+				_1: {ctor: '[]'}
+			});
+	}
+};
+var _user$project$Main$iconClass = function (font) {
+	return _elm_lang$html$Html_Attributes$classList(
+		{
+			ctor: '::',
+			_0: {
+				ctor: '_Tuple2',
+				_0: _user$project$MyCss$stringFontClasses(font),
+				_1: true
+			},
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Main$sizeCanvas = F2(
+	function (imageSizePreset, userDefinedSize) {
+		var sizeCanvas = function () {
+			var _p1 = imageSizePreset;
+			switch (_p1.ctor) {
+				case 'SmallImage':
+					return '200px';
+				case 'MediumImage':
+					return '400px';
+				case 'LargeImage':
+					return '1000px';
+				default:
+					return A2(
+						_elm_lang$core$Basics_ops['++'],
+						_elm_lang$core$Basics$toString(userDefinedSize),
+						'px');
+			}
+		}();
+		return A2(_elm_lang$html$Html_Attributes$attribute, 'width', sizeCanvas);
+	});
+var _user$project$Main$stringImageFileType = function (imageFileType) {
+	var _p2 = imageFileType;
+	if (_p2.ctor === 'ImagePng') {
+		return 'png';
+	} else {
+		return 'svg';
+	}
+};
+var _user$project$Main$downloadFilesName = F2(
+	function (fileName, imageFileType) {
+		var newFileName = _elm_lang$core$Native_Utils.eq(fileName, '') ? 'fileName' : fileName;
+		var fileTypeString = _user$project$Main$stringImageFileType(imageFileType);
+		return A2(
+			_elm_lang$html$Html_Attributes$attribute,
+			'download',
+			A2(
+				_elm_lang$core$Basics_ops['++'],
+				newFileName,
+				A2(_elm_lang$core$Basics_ops['++'], '.', fileTypeString)));
+	});
 var _user$project$Main$encodeModel = function (model) {
 	return _elm_lang$core$Json_Encode$object(
 		{
@@ -17499,19 +17776,36 @@ var _user$project$Main$encodeModel = function (model) {
 					_0: 'mathEquation',
 					_1: _elm_lang$core$Json_Encode$string(model.mathEquation)
 				},
-				_1: {ctor: '[]'}
+				_1: {
+					ctor: '::',
+					_0: {
+						ctor: '_Tuple2',
+						_0: 'mathEquationColor',
+						_1: _elm_lang$core$Json_Encode$string(model.mathEquationColor)
+					},
+					_1: {
+						ctor: '::',
+						_0: {
+							ctor: '_Tuple2',
+							_0: 'downloadFileType',
+							_1: _elm_lang$core$Json_Encode$string(
+								_user$project$Main$stringImageFileType(model.downloadFileType))
+						},
+						_1: {ctor: '[]'}
+					}
+				}
 			}
 		});
 };
-var _user$project$Main$_p0 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('main');
-var _user$project$Main$id = _user$project$Main$_p0.id;
-var _user$project$Main$class = _user$project$Main$_p0.$class;
-var _user$project$Main$classList = _user$project$Main$_p0.classList;
+var _user$project$Main$_p3 = _rtfeldman$elm_css_helpers$Html_CssHelpers$withNamespace('main');
+var _user$project$Main$id = _user$project$Main$_p3.id;
+var _user$project$Main$class = _user$project$Main$_p3.$class;
+var _user$project$Main$classList = _user$project$Main$_p3.classList;
 var _user$project$Main$navButtonClass = F2(
 	function (modelMathTypeSelect, mathType) {
 		var equal = _elm_lang$core$Native_Utils.eq(modelMathTypeSelect, mathType);
-		var _p1 = equal;
-		if (_p1 === true) {
+		var _p4 = equal;
+		if (_p4 === true) {
 			return _user$project$Main$class(
 				{
 					ctor: '::',
@@ -17527,6 +17821,54 @@ var _user$project$Main$navButtonClass = F2(
 				{
 					ctor: '::',
 					_0: _user$project$MyCss$NavButton,
+					_1: {ctor: '[]'}
+				});
+		}
+	});
+var _user$project$Main$sizeButtonClass = F2(
+	function (modelImageSizePreset, imageSizePreset) {
+		var equal = _elm_lang$core$Native_Utils.eq(modelImageSizePreset, imageSizePreset);
+		var _p5 = equal;
+		if (_p5 === true) {
+			return _user$project$Main$class(
+				{
+					ctor: '::',
+					_0: _user$project$MyCss$ImageSizePresetButton,
+					_1: {
+						ctor: '::',
+						_0: _user$project$MyCss$SelectedImageSizePresetButton,
+						_1: {ctor: '[]'}
+					}
+				});
+		} else {
+			return _user$project$Main$class(
+				{
+					ctor: '::',
+					_0: _user$project$MyCss$ImageSizePresetButton,
+					_1: {ctor: '[]'}
+				});
+		}
+	});
+var _user$project$Main$fileTypeClass = F2(
+	function (modelImageSizePreset, imageSizePreset) {
+		var equal = _elm_lang$core$Native_Utils.eq(modelImageSizePreset, imageSizePreset);
+		var _p6 = equal;
+		if (_p6 === true) {
+			return _user$project$Main$class(
+				{
+					ctor: '::',
+					_0: _user$project$MyCss$ImageSizePresetButton,
+					_1: {
+						ctor: '::',
+						_0: _user$project$MyCss$SelectedImageSizePresetButton,
+						_1: {ctor: '[]'}
+					}
+				});
+		} else {
+			return _user$project$Main$class(
+				{
+					ctor: '::',
+					_0: _user$project$MyCss$ImageSizePresetButton,
 					_1: {ctor: '[]'}
 				});
 		}
@@ -17557,48 +17899,76 @@ var _user$project$Main$closePage = _elm_lang$core$Native_Platform.outgoingPort(
 	function (v) {
 		return v;
 	});
+var _user$project$Main$downloadImage = _elm_lang$core$Native_Platform.outgoingPort(
+	'downloadImage',
+	function (v) {
+		return v;
+	});
 var _user$project$Main$Flags = function (a) {
 	return {baseUrl: a};
 };
-var _user$project$Main$Model = F7(
-	function (a, b, c, d, e, f, g) {
-		return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathType: d, mathEquation: e, mousePositionY: f, minimizeMenuState: g};
-	});
+var _user$project$Main$Model = function (a) {
+	return function (b) {
+		return function (c) {
+			return function (d) {
+				return function (e) {
+					return function (f) {
+						return function (g) {
+							return function (h) {
+								return function (i) {
+									return function (j) {
+										return function (k) {
+											return function (l) {
+												return function (m) {
+													return {baseUrl: a, trackMousePointerBool: b, equationContainerTop: c, selectedMathType: d, mathEquation: e, mousePositionY: f, minimizeMenuState: g, mathEquationColor: h, imagePreset: i, userDefinedSize: j, downloadFileName: k, downloadFileType: l, slideMenuOpen: m};
+												};
+											};
+										};
+									};
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+	};
+};
 var _user$project$Main$NoMathType = {ctor: 'NoMathType'};
 var _user$project$Main$update = F2(
 	function (msg, model) {
-		var _p2 = msg;
-		switch (_p2.ctor) {
+		var _p7 = msg;
+		switch (_p7.ctor) {
 			case 'UrlChange':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{baseUrl: _p2._0}),
+						{baseUrl: _p7._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'MouseChange':
-				var _p4 = _p2._1;
-				var _p3 = 1;
+				var _p9 = _p7._1;
+				var _p8 = 1;
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{mousePositionY: _p4}),
+						{mousePositionY: _p9}),
 					_1: _user$project$Main$getPageYOffset(
-						_elm_lang$core$Basics$toString(_p4))
+						_elm_lang$core$Basics$toString(_p9))
 				};
 			case 'SetTrackMousePointer':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{trackMousePointerBool: _p2._0}),
+						{trackMousePointerBool: _p7._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ChangeMathType':
-				var _p5 = _p2._0;
-				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p5) ? _user$project$Main$NoMathType : _p5;
+				var _p10 = _p7._0;
+				var newMathType = _elm_lang$core$Native_Utils.eq(model.selectedMathType, _p10) ? _user$project$Main$NoMathType : _p10;
 				var newModel = _elm_lang$core$Native_Utils.update(
 					model,
 					{selectedMathType: newMathType});
@@ -17614,7 +17984,7 @@ var _user$project$Main$update = F2(
 			case 'UpdateEquation':
 				var newModel = _elm_lang$core$Native_Utils.update(
 					model,
-					{mathEquation: _p2._0});
+					{mathEquation: _p7._0, slideMenuOpen: false});
 				return {
 					ctor: '_Tuple2',
 					_0: newModel,
@@ -17635,11 +18005,11 @@ var _user$project$Main$update = F2(
 							_user$project$Main$encodeModel(model)))
 				};
 			case 'GotPageYOffset':
-				var convert = _elm_lang$core$String$toInt(_p2._0);
+				var convert = _elm_lang$core$String$toInt(_p7._0);
 				var position = function () {
-					var _p6 = convert;
-					if (_p6.ctor === 'Ok') {
-						return model.mousePositionY - _p6._0;
+					var _p11 = convert;
+					if (_p11.ctor === 'Ok') {
+						return model.mousePositionY - _p11._0;
 					} else {
 						return model.equationContainerTop;
 					}
@@ -17651,18 +18021,98 @@ var _user$project$Main$update = F2(
 						{equationContainerTop: position}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'ClosePage':
 				return {
 					ctor: '_Tuple2',
 					_0: model,
 					_1: _user$project$Main$closePage('True')
 				};
+			case 'OnColorChange':
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{mathEquationColor: _p7._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$updateEquation(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(newModel)))
+				};
+			case 'SetSizeImagePresets':
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{imagePreset: _p7._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$updateEquation(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(newModel)))
+				};
+			case 'UserDefinedSize':
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{userDefinedSize: _p7._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$updateEquation(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(newModel)))
+				};
+			case 'ChangeDownloadFileType':
+				var newModel = _elm_lang$core$Native_Utils.update(
+					model,
+					{downloadFileType: _p7._0});
+				return {
+					ctor: '_Tuple2',
+					_0: newModel,
+					_1: _user$project$Main$downloadImage(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(newModel)))
+				};
+			case 'UpdateDownloadFileName':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{downloadFileName: _p7._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'DownloadImage':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{slideMenuOpen: true}),
+					_1: _user$project$Main$downloadImage(
+						A2(
+							_elm_lang$core$Json_Encode$encode,
+							0,
+							_user$project$Main$encodeModel(model)))
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{slideMenuOpen: _p7._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 		}
 	});
 var _user$project$Main$equationsContainerCss = function (modelMathTypeSelect) {
 	var equal = _elm_lang$core$Native_Utils.eq(modelMathTypeSelect, _user$project$Main$NoMathType);
-	var _p7 = equal;
-	if (_p7 === true) {
+	var _p12 = equal;
+	if (_p12 === true) {
 		return _user$project$Main$class(
 			{
 				ctor: '::',
@@ -17677,8 +18127,8 @@ var _user$project$Main$equationsContainerCss = function (modelMathTypeSelect) {
 var _user$project$Main$equationsContainerStyles = F2(
 	function (modelMathTypeSelect, y) {
 		var isNotMathType = _elm_lang$core$Native_Utils.eq(modelMathTypeSelect, _user$project$Main$NoMathType);
-		var _p8 = isNotMathType;
-		if (_p8 === true) {
+		var _p13 = isNotMathType;
+		if (_p13 === true) {
 			return _elm_lang$html$Html_Attributes$style(
 				{
 					ctor: '::',
@@ -17695,7 +18145,14 @@ var _user$project$Main$equationsContainerStyles = F2(
 		}
 	});
 var _user$project$Main$Tex = {ctor: 'Tex'};
-var _user$project$Main$initialModel = {baseUrl: '', trackMousePointerBool: false, equationContainerTop: 800, selectedMathType: _user$project$Main$Tex, mathEquation: '', mousePositionY: 0, minimizeMenuState: false};
+var _user$project$Main$AsciiMath = {ctor: 'AsciiMath'};
+var _user$project$Main$MathML = {ctor: 'MathML'};
+var _user$project$Main$UserDefined = {ctor: 'UserDefined'};
+var _user$project$Main$LargeImage = {ctor: 'LargeImage'};
+var _user$project$Main$MediumImage = {ctor: 'MediumImage'};
+var _user$project$Main$SmallImage = {ctor: 'SmallImage'};
+var _user$project$Main$ImageSvg = {ctor: 'ImageSvg'};
+var _user$project$Main$initialModel = {baseUrl: '', trackMousePointerBool: false, equationContainerTop: 800, selectedMathType: _user$project$Main$Tex, mathEquation: '', mousePositionY: 0, minimizeMenuState: false, mathEquationColor: '#000000', imagePreset: _user$project$Main$MediumImage, userDefinedSize: 0, downloadFileName: 'fileName', downloadFileType: _user$project$Main$ImageSvg, slideMenuOpen: false};
 var _user$project$Main$init = function (flags) {
 	return {
 		ctor: '_Tuple2',
@@ -17705,8 +18162,26 @@ var _user$project$Main$init = function (flags) {
 		_1: _elm_lang$core$Platform_Cmd$none
 	};
 };
-var _user$project$Main$AsciiMath = {ctor: 'AsciiMath'};
-var _user$project$Main$MathML = {ctor: 'MathML'};
+var _user$project$Main$ImagePng = {ctor: 'ImagePng'};
+var _user$project$Main$SetSlideMenuTrueOpen = function (a) {
+	return {ctor: 'SetSlideMenuTrueOpen', _0: a};
+};
+var _user$project$Main$DownloadImage = {ctor: 'DownloadImage'};
+var _user$project$Main$UpdateDownloadFileName = function (a) {
+	return {ctor: 'UpdateDownloadFileName', _0: a};
+};
+var _user$project$Main$ChangeDownloadFileType = function (a) {
+	return {ctor: 'ChangeDownloadFileType', _0: a};
+};
+var _user$project$Main$UserDefinedSize = function (a) {
+	return {ctor: 'UserDefinedSize', _0: a};
+};
+var _user$project$Main$SetSizeImagePresets = function (a) {
+	return {ctor: 'SetSizeImagePresets', _0: a};
+};
+var _user$project$Main$OnColorChange = function (a) {
+	return {ctor: 'OnColorChange', _0: a};
+};
 var _user$project$Main$ClosePage = {ctor: 'ClosePage'};
 var _user$project$Main$GotPageYOffset = function (a) {
 	return {ctor: 'GotPageYOffset', _0: a};
@@ -17953,8 +18428,12 @@ var _user$project$Main$view = function (model) {
 																_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$SubmitEquation),
 																_1: {
 																	ctor: '::',
-																	_0: _user$project$Main$class(
-																		{ctor: '[]'}),
+																	_0: _elm_lang$html$Html_Attributes$style(
+																		{
+																			ctor: '::',
+																			_0: {ctor: '_Tuple2', _0: 'height', _1: '100%'},
+																			_1: {ctor: '[]'}
+																		}),
 																	_1: {
 																		ctor: '::',
 																		_0: _user$project$Main$id(_user$project$MyCss$NavSubmitButton),
@@ -17967,7 +18446,159 @@ var _user$project$Main$view = function (model) {
 																_0: _elm_lang$html$Html$text('copy image'),
 																_1: {ctor: '[]'}
 															}),
-														_1: {ctor: '[]'}
+														_1: {
+															ctor: '::',
+															_0: A2(
+																_elm_lang$html$Html$input,
+																{
+																	ctor: '::',
+																	_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$OnColorChange),
+																	_1: {
+																		ctor: '::',
+																		_0: _elm_lang$html$Html_Attributes$style(
+																			{
+																				ctor: '::',
+																				_0: {ctor: '_Tuple2', _0: 'background', _1: 'none'},
+																				_1: {
+																					ctor: '::',
+																					_0: {ctor: '_Tuple2', _0: 'border', _1: 'none'},
+																					_1: {ctor: '[]'}
+																				}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Attributes$type_('color'),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																},
+																{ctor: '[]'}),
+															_1: {
+																ctor: '::',
+																_0: A2(
+																	_elm_lang$html$Html$button,
+																	{
+																		ctor: '::',
+																		_0: _user$project$Main$class(
+																			{
+																				ctor: '::',
+																				_0: _user$project$MyCss$ImageSizePresetButton,
+																				_1: {ctor: '[]'}
+																			}),
+																		_1: {
+																			ctor: '::',
+																			_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$DownloadImage),
+																			_1: {
+																				ctor: '::',
+																				_0: _user$project$Main$id(_user$project$MyCss$OpenDownloadMenu),
+																				_1: {
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$classList(
+																						{
+																							ctor: '::',
+																							_0: {
+																								ctor: '_Tuple2',
+																								_0: _user$project$MyCss$stringFontClasses(_user$project$MyCss$IconDownload),
+																								_1: true
+																							},
+																							_1: {ctor: '[]'}
+																						}),
+																					_1: {ctor: '[]'}
+																				}
+																			}
+																		}
+																	},
+																	{ctor: '[]'}),
+																_1: {
+																	ctor: '::',
+																	_0: A2(
+																		_elm_lang$html$Html$button,
+																		{
+																			ctor: '::',
+																			_0: A2(_user$project$Main$sizeButtonClass, model.imagePreset, _user$project$Main$SmallImage),
+																			_1: {
+																				ctor: '::',
+																				_0: _elm_lang$html$Html_Attributes$style(
+																					{
+																						ctor: '::',
+																						_0: {ctor: '_Tuple2', _0: 'font-size', _1: '10px'},
+																						_1: {ctor: '[]'}
+																					}),
+																				_1: {
+																					ctor: '::',
+																					_0: _user$project$Main$iconClass(_user$project$MyCss$IconPicture),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Events$onClick(
+																							_user$project$Main$SetSizeImagePresets(_user$project$Main$SmallImage)),
+																						_1: {ctor: '[]'}
+																					}
+																				}
+																			}
+																		},
+																		{ctor: '[]'}),
+																	_1: {
+																		ctor: '::',
+																		_0: A2(
+																			_elm_lang$html$Html$button,
+																			{
+																				ctor: '::',
+																				_0: A2(_user$project$Main$sizeButtonClass, model.imagePreset, _user$project$Main$MediumImage),
+																				_1: {
+																					ctor: '::',
+																					_0: _elm_lang$html$Html_Attributes$style(
+																						{
+																							ctor: '::',
+																							_0: {ctor: '_Tuple2', _0: 'font-size', _1: '20px'},
+																							_1: {ctor: '[]'}
+																						}),
+																					_1: {
+																						ctor: '::',
+																						_0: _user$project$Main$iconClass(_user$project$MyCss$IconPicture),
+																						_1: {
+																							ctor: '::',
+																							_0: _elm_lang$html$Html_Events$onClick(
+																								_user$project$Main$SetSizeImagePresets(_user$project$Main$MediumImage)),
+																							_1: {ctor: '[]'}
+																						}
+																					}
+																				}
+																			},
+																			{ctor: '[]'}),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(
+																				_elm_lang$html$Html$button,
+																				{
+																					ctor: '::',
+																					_0: A2(_user$project$Main$sizeButtonClass, model.imagePreset, _user$project$Main$LargeImage),
+																					_1: {
+																						ctor: '::',
+																						_0: _elm_lang$html$Html_Attributes$style(
+																							{
+																								ctor: '::',
+																								_0: {ctor: '_Tuple2', _0: 'font-size', _1: '30px'},
+																								_1: {ctor: '[]'}
+																							}),
+																						_1: {
+																							ctor: '::',
+																							_0: _user$project$Main$iconClass(_user$project$MyCss$IconPicture),
+																							_1: {
+																								ctor: '::',
+																								_0: _elm_lang$html$Html_Events$onClick(
+																									_user$project$Main$SetSizeImagePresets(_user$project$Main$LargeImage)),
+																								_1: {ctor: '[]'}
+																							}
+																						}
+																					}
+																				},
+																				{ctor: '[]'}),
+																			_1: {ctor: '[]'}
+																		}
+																	}
+																}
+															}
+														}
 													}),
 												_1: {ctor: '[]'}
 											}
@@ -17984,28 +18615,40 @@ var _user$project$Main$view = function (model) {
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _user$project$Main$id(_user$project$MyCss$NavContainer),
-						_1: {ctor: '[]'}
+						_0: _user$project$Main$id(_user$project$MyCss$OptionsSlideMenu),
+						_1: {
+							ctor: '::',
+							_0: _user$project$Main$positionOptionsSlideMenu(model.slideMenuOpen),
+							_1: {ctor: '[]'}
+						}
 					},
 					{
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$img,
+							_elm_lang$html$Html$div,
 							{
 								ctor: '::',
-								_0: _user$project$Main$id('logo'),
+								_0: _elm_lang$html$Html_Events$onClick(
+									_user$project$Main$SetSlideMenuTrueOpen(false)),
 								_1: {
 									ctor: '::',
-									_0: _user$project$Main$class(
+									_0: _elm_lang$html$Html_Attributes$style(
 										{
 											ctor: '::',
-											_0: _user$project$MyCss$NavLogo,
-											_1: {ctor: '[]'}
+											_0: {ctor: '_Tuple2', _0: 'position', _1: 'absolute'},
+											_1: {
+												ctor: '::',
+												_0: {ctor: '_Tuple2', _0: 'top', _1: '0px'},
+												_1: {
+													ctor: '::',
+													_0: {ctor: '_Tuple2', _0: 'right', _1: '0px'},
+													_1: {ctor: '[]'}
+												}
+											}
 										}),
 									_1: {
 										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$src(
-											A2(_elm_lang$core$Basics_ops['++'], model.baseUrl, 'Img/logoClearBackground.svg')),
+										_0: _user$project$Main$iconClass(_user$project$MyCss$IconCancel1),
 										_1: {ctor: '[]'}
 									}
 								}
@@ -18014,34 +18657,149 @@ var _user$project$Main$view = function (model) {
 						_1: {
 							ctor: '::',
 							_0: A2(
-								_elm_lang$html$Html$button,
+								_elm_lang$html$Html$div,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Events$onClick(
-										_user$project$Main$ChangeMathType(_user$project$Main$Tex)),
-									_1: {
-										ctor: '::',
-										_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$Tex),
-										_1: {ctor: '[]'}
-									}
+									_0: _user$project$Main$class(
+										{
+											ctor: '::',
+											_0: _user$project$MyCss$FlexBoxHorizontalCenter,
+											_1: {ctor: '[]'}
+										}),
+									_1: {ctor: '[]'}
 								},
 								{
 									ctor: '::',
 									_0: A2(
-										_elm_lang$html$Html$img,
+										_elm_lang$html$Html$input,
 										{
 											ctor: '::',
-											_0: _user$project$Main$id(_user$project$MyCss$LatexImage),
+											_0: _elm_lang$html$Html_Events$onInput(_user$project$Main$UpdateDownloadFileName),
 											_1: {
 												ctor: '::',
-												_0: _elm_lang$html$Html_Attributes$src(
-													A2(_elm_lang$core$Basics_ops['++'], model.baseUrl, 'Img/latex.svg')),
-												_1: {ctor: '[]'}
+												_0: _elm_lang$html$Html_Attributes$value(model.downloadFileName),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$placeholder('fileName'),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$pattern('[a-zA-Z0-9-]+'),
+														_1: {ctor: '[]'}
+													}
+												}
 											}
 										},
 										{ctor: '[]'}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$button,
+											{
+												ctor: '::',
+												_0: A2(_user$project$Main$fileTypeClass, model.downloadFileType, _user$project$Main$ImageSvg),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onClick(
+														_user$project$Main$ChangeDownloadFileType(_user$project$Main$ImageSvg)),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('.svg'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$button,
+												{
+													ctor: '::',
+													_0: A2(_user$project$Main$fileTypeClass, model.downloadFileType, _user$project$Main$ImagePng),
+													_1: {
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onClick(
+															_user$project$Main$ChangeDownloadFileType(_user$project$Main$ImagePng)),
+														_1: {ctor: '[]'}
+													}
+												},
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html$text('.png'),
+													_1: {ctor: '[]'}
+												}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$a,
+													{
+														ctor: '::',
+														_0: _user$project$Main$id(_user$project$MyCss$DownloadButton),
+														_1: {
+															ctor: '::',
+															_0: A2(_user$project$Main$downloadFilesName, model.downloadFileName, model.downloadFileType),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$classList(
+																	{
+																		ctor: '::',
+																		_0: {
+																			ctor: '_Tuple2',
+																			_0: _user$project$MyCss$stringFontClasses(_user$project$MyCss$IconDownload),
+																			_1: true
+																		},
+																		_1: {ctor: '[]'}
+																	}),
+																_1: {ctor: '[]'}
+															}
+														}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text('download image'),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
 								}),
+							_1: {ctor: '[]'}
+						}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _user$project$Main$id(_user$project$MyCss$NavContainer),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$img,
+								{
+									ctor: '::',
+									_0: _user$project$Main$id('logo'),
+									_1: {
+										ctor: '::',
+										_0: _user$project$Main$class(
+											{
+												ctor: '::',
+												_0: _user$project$MyCss$NavLogo,
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$src(
+												A2(_elm_lang$core$Basics_ops['++'], model.baseUrl, 'Img/logoClearBackground.svg')),
+											_1: {ctor: '[]'}
+										}
+									}
+								},
+								{ctor: '[]'}),
 							_1: {
 								ctor: '::',
 								_0: A2(
@@ -18049,16 +18807,28 @@ var _user$project$Main$view = function (model) {
 									{
 										ctor: '::',
 										_0: _elm_lang$html$Html_Events$onClick(
-											_user$project$Main$ChangeMathType(_user$project$Main$AsciiMath)),
+											_user$project$Main$ChangeMathType(_user$project$Main$Tex)),
 										_1: {
 											ctor: '::',
-											_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$AsciiMath),
+											_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$Tex),
 											_1: {ctor: '[]'}
 										}
 									},
 									{
 										ctor: '::',
-										_0: _elm_lang$html$Html$text('AsciiMath'),
+										_0: A2(
+											_elm_lang$html$Html$img,
+											{
+												ctor: '::',
+												_0: _user$project$Main$id(_user$project$MyCss$LatexImage),
+												_1: {
+													ctor: '::',
+													_0: _elm_lang$html$Html_Attributes$src(
+														A2(_elm_lang$core$Basics_ops['++'], model.baseUrl, 'Img/latex.svg')),
+													_1: {ctor: '[]'}
+												}
+											},
+											{ctor: '[]'}),
 										_1: {ctor: '[]'}
 									}),
 								_1: {
@@ -18068,16 +18838,16 @@ var _user$project$Main$view = function (model) {
 										{
 											ctor: '::',
 											_0: _elm_lang$html$Html_Events$onClick(
-												_user$project$Main$ChangeMathType(_user$project$Main$MathML)),
+												_user$project$Main$ChangeMathType(_user$project$Main$AsciiMath)),
 											_1: {
 												ctor: '::',
-												_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$MathML),
+												_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$AsciiMath),
 												_1: {ctor: '[]'}
 											}
 										},
 										{
 											ctor: '::',
-											_0: _elm_lang$html$Html$text('MathML'),
+											_0: _elm_lang$html$Html$text('AsciiMath'),
 											_1: {ctor: '[]'}
 										}),
 									_1: {
@@ -18086,105 +18856,110 @@ var _user$project$Main$view = function (model) {
 											_elm_lang$html$Html$button,
 											{
 												ctor: '::',
-												_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ClosePage),
+												_0: _elm_lang$html$Html_Events$onClick(
+													_user$project$Main$ChangeMathType(_user$project$Main$MathML)),
 												_1: {
 													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$style(
-														{
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
-															_1: {ctor: '[]'}
-														}),
+													_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$MathML),
+													_1: {ctor: '[]'}
+												}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('MathML'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$button,
+												{
+													ctor: '::',
+													_0: _elm_lang$html$Html_Events$onClick(_user$project$Main$ClosePage),
 													_1: {
 														ctor: '::',
-														_0: _user$project$Main$class(
+														_0: _elm_lang$html$Html_Attributes$style(
 															{
 																ctor: '::',
-																_0: _user$project$MyCss$NavButton,
+																_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
 																_1: {ctor: '[]'}
 															}),
 														_1: {
 															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$classList(
+															_0: _user$project$Main$class(
 																{
 																	ctor: '::',
-																	_0: {
-																		ctor: '_Tuple2',
-																		_0: _user$project$MyCss$stringFontClasses(_user$project$MyCss$IconCancel1),
-																		_1: true
-																	},
-																	_1: {ctor: '[]'}
-																}),
-															_1: {ctor: '[]'}
-														}
-													}
-												}
-											},
-											{ctor: '[]'}),
-										_1: {
-											ctor: '::',
-											_0: A2(
-												_elm_lang$html$Html$a,
-												{
-													ctor: '::',
-													_0: _elm_lang$html$Html_Attributes$style(
-														{
-															ctor: '::',
-															_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
-															_1: {ctor: '[]'}
-														}),
-													_1: {
-														ctor: '::',
-														_0: _elm_lang$html$Html_Attributes$href('https://github.com/brendena/MathEquations-Extension'),
-														_1: {
-															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$target('blank'),
-															_1: {ctor: '[]'}
-														}
-													}
-												},
-												{
-													ctor: '::',
-													_0: A2(
-														_elm_lang$html$Html$button,
-														{
-															ctor: '::',
-															_0: _elm_lang$html$Html_Attributes$classList(
-																{
-																	ctor: '::',
-																	_0: {
-																		ctor: '_Tuple2',
-																		_0: _user$project$MyCss$stringFontClasses(_user$project$MyCss$IconGithubCircled),
-																		_1: true
-																	},
+																	_0: _user$project$MyCss$NavButton,
 																	_1: {ctor: '[]'}
 																}),
 															_1: {
 																ctor: '::',
-																_0: A2(_user$project$Main$navButtonClass, model.selectedMathType, _user$project$Main$MathML),
+																_0: _elm_lang$html$Html_Attributes$classList(
+																	{
+																		ctor: '::',
+																		_0: {
+																			ctor: '_Tuple2',
+																			_0: _user$project$MyCss$stringFontClasses(_user$project$MyCss$IconCancel1),
+																			_1: true
+																		},
+																		_1: {ctor: '[]'}
+																	}),
 																_1: {ctor: '[]'}
 															}
-														},
-														{ctor: '[]'}),
-													_1: {ctor: '[]'}
-												}),
-											_1: {ctor: '[]'}
+														}
+													}
+												},
+												{ctor: '[]'}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$a,
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Attributes$style(
+															{
+																ctor: '::',
+																_0: {ctor: '_Tuple2', _0: 'float', _1: 'right'},
+																_1: {ctor: '[]'}
+															}),
+														_1: {
+															ctor: '::',
+															_0: _elm_lang$html$Html_Attributes$href('https://github.com/brendena/MathEquations-Extension'),
+															_1: {
+																ctor: '::',
+																_0: _elm_lang$html$Html_Attributes$target('blank'),
+																_1: {ctor: '[]'}
+															}
+														}
+													},
+													{
+														ctor: '::',
+														_0: A2(
+															_elm_lang$html$Html$button,
+															{
+																ctor: '::',
+																_0: _user$project$Main$iconClass(_user$project$MyCss$IconGithubCircled),
+																_1: {
+																	ctor: '::',
+																	_0: _user$project$Main$class(
+																		{
+																			ctor: '::',
+																			_0: _user$project$MyCss$NavButton,
+																			_1: {ctor: '[]'}
+																		}),
+																	_1: {ctor: '[]'}
+																}
+															},
+															{ctor: '[]'}),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
 										}
 									}
 								}
 							}
-						}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$canvas,
-						{
-							ctor: '::',
-							_0: _user$project$Main$id(_user$project$MyCss$HiddenCanvas),
-							_1: {ctor: '[]'}
-						},
-						{ctor: '[]'}),
+						}),
 					_1: {
 						ctor: '::',
 						_0: A2(
@@ -18204,7 +18979,22 @@ var _user$project$Main$view = function (model) {
 										_1: {ctor: '[]'}
 									},
 									{ctor: '[]'}),
-								_1: {ctor: '[]'}
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$canvas,
+										{
+											ctor: '::',
+											_0: _user$project$Main$id(_user$project$MyCss$HiddenCanvas),
+											_1: {
+												ctor: '::',
+												_0: A2(_user$project$Main$sizeCanvas, model.imagePreset, model.userDefinedSize),
+												_1: {ctor: '[]'}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}
 							}),
 						_1: {ctor: '[]'}
 					}
@@ -18217,14 +19007,14 @@ var _user$project$Main$MouseChange = F2(
 		return {ctor: 'MouseChange', _0: a, _1: b};
 	});
 var _user$project$Main$trackMousePointer = function (trackMouse) {
-	var _p9 = trackMouse;
-	if (_p9 === true) {
+	var _p14 = trackMouse;
+	if (_p14 === true) {
 		return {
 			ctor: '::',
 			_0: _elm_lang$mouse$Mouse$moves(
-				function (_p10) {
-					var _p11 = _p10;
-					return A2(_user$project$Main$MouseChange, _p11.x, _p11.y);
+				function (_p15) {
+					var _p16 = _p15;
+					return A2(_user$project$Main$MouseChange, _p16.x, _p16.y);
 				}),
 			_1: {ctor: '[]'}
 		};
@@ -18243,8 +19033,8 @@ var _user$project$Main$subscriptions = function (model) {
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$mouse$Mouse$ups(
-						function (_p12) {
-							var _p13 = _p12;
+						function (_p17) {
+							var _p18 = _p17;
 							return _user$project$Main$SetTrackMousePointer(false);
 						}),
 					_1: {ctor: '[]'}
@@ -18303,7 +19093,7 @@ for (var publicModule in Elm)
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var require;var require;/*!

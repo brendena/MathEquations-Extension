@@ -50,7 +50,7 @@ export class CanvasToImage {
         this.getSvg(divSvgId);
         var imageData = "";
         if(imageType == ImageTypesEnum.Png){
-            console.log("download")
+            console.log("downloading image")
             var imageData = this.canvasImage.src;
         }
         else if(imageType == ImageTypesEnum.Svg){

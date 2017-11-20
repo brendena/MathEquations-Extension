@@ -1,5 +1,4 @@
 'use strict'
 
-
+import styles from './PopUpMenu/Css/popUpStyles.css'
 require('./PopUpMenu/Js/popUp.js');
-//require('./PopUpMenu/Js/htmlEvents.js')

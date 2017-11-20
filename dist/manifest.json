@@ -36,6 +36,7 @@
     "name": "Brenden A",
     "url": "https://github.com/brendena"
   },
+  "homepage_url": "https://github.com/brendena/MathEquations-Extension",
   "web_accessible_resources": [
     "Img/*.png",
     "Img/*.svg",
@@ -48,5 +49,11 @@
     "tabs",
     "activeTab",
     "storage"
-  ]
+  ],
+  "applications": {
+    "gecko": {
+        "id": "math-equations@mozilla.org",
+        "strict_min_version": "48"
+    }
+}
 }

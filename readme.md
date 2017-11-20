@@ -31,6 +31,7 @@ In **/src/ContentScripts/Js/content.js** you can add this line **constructUi();*
 
 ### Firefox
 At **about:debugging** you can add extension locally.
+[Disabling popup auto hide](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Debugging#Debugging_popups)
 
 
 ## current features to implement 

@@ -24,27 +24,21 @@
       }
     </style>
 
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-    -->
-    
+
   </head>
 
-  <body style="max-width: 200px; width: 200px; margin: 0">
+  <body >
     <div style="background:#c2b6e7;">
-      <img src="./Img/24x24.png" style="float:left">
+      <img  src="./Img/24x24.png" style="float:left">
       <p style="margin:0; padding:6px; text-align: center;">Math Equations</p>
     </div>
     <div style="margin:10px;">
       <div>
-          <img id="imgExampleFontSelected" style="width:100%;">
+          <img id="imgExampleFontSelected">
       </div>
       <div>
         <p style="display:inline">Selected Font: </p>
-        <select name="select" id="selectedFont"> <!--Supplement an id here instead of using 'name'-->
+        <select name="select" id="selectedFont" class="uiLook"> <!--Supplement an id here instead of using 'name'-->
           <option value="STIX-Web" selected>STIX-Web</option>
           <option value="TeX">TeX</option> 
           <option value="Asana-Math">Asana-Math</option>
@@ -57,7 +51,7 @@
       
       
     </div>
-    <button id="resetUIButton">reset UI</button>
+    <button id="resetUIButton" class="uiLook">reset UI</button>
     <script src="./popUp.js"></script>
   </body>
 </html>

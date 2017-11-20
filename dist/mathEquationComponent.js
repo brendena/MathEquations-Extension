@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -202,7 +202,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(7);
+var	fixUrls = __webpack_require__(2);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -519,178 +519,6 @@ function updateLink (link, options, obj) {
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "Img/fontello.eot";
-
-/***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class CanvasToImage {
-    constructor() {
-    }
-    getSvg(divSvgId) {
-        this.canvas = document.getElementById("HiddenCanvas");
-        this.canvasImage = document.getElementById("CanvasImg");
-        var divSvg = document.getElementById(divSvgId);
-        if (divSvg == null)
-            throw "the elm container didn't load";
-        var svg = divSvg.getElementsByTagName("svg");
-        if (svg.length >= 2 || svg.length == 0 || svg == null)
-            throw "to many or zero svg's - something wrong with mathjax";
-        else
-            return svg[0];
-    }
-    convertSvg(divSvgId, color) {
-        var svg = this.getSvg(divSvgId);
-        this.drawSvgImage(svg, color);
-    }
-    drawSvgImage(svgElement, color) {
-        var svgClone = svgElement.cloneNode(true);
-        svgClone.style.color = color;
-        let svgURL = new XMLSerializer().serializeToString(svgClone);
-        let svgWidth = svgElement.width.baseVal.value;
-        let svgHeight = svgElement.height.baseVal.value;
-        let ratioSvg = svgHeight / svgWidth;
-        let heigthSvg = this.canvas.width * ratioSvg;
-        let canvasHeightNumber = Math.round(heigthSvg);
-        this.canvas.height = Math.round(heigthSvg);
-        let img = new Image();
-        img.onload = () => {
-            let context = this.canvas.getContext('2d');
-            if (context == null)
-                throw ("can't get context");
-            context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            context.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
-            this.canvasImage.src = this.canvas.toDataURL("image/png");
-        };
-        let svgData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
-        img.src = svgData;
-    }
-    downloadImage(divSvgId, imageType, color) {
-        this.getSvg(divSvgId);
-        var imageData = "";
-        if (imageType == "png" /* Png */) {
-            console.log("download");
-            var imageData = this.canvasImage.src;
-        }
-        else if (imageType == "svg" /* Svg */) {
-            var svg = this.getSvg(divSvgId);
-            var svgClone = svg.cloneNode(true);
-            svgClone.style.color = color;
-            let svgURL = new XMLSerializer().serializeToString(svgClone);
-            imageData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
-        }
-        var downloadButton = document.getElementById("DownloadButton");
-        if (downloadButton != null) {
-            downloadButton.setAttribute("href", imageData);
-        }
-        else {
-            throw "couldn't find downloadButton";
-        }
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = CanvasToImage;
-
-
-
-/***/ }),
-/* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css__);
-
-
-
-
-
-
-
-
-/*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
-var mathJax = document.createElement('script');
-mathJax.src ="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js" 
-mathJax.async = true
-document.head.appendChild(mathJax)
-/*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
-
-/*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
-var configMathJax = __webpack_require__ (18)
-var mathJaxConfig = document.createElement('script');
-mathJaxConfig.type = "text/x-mathjax-config";
-//load in fonts
-var currentScript = document.currentScript
-var fontType = currentScript.getAttribute("math-jax-font");
-if(fontType == null || fontType == undefined)
-    fontType = "STIX-Web";
-mathJaxConfig.innerHTML = configMathJax.MathJaxString(fontType);
-document.body.appendChild(mathJaxConfig)
-/*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
-
-
-window.addEventListener('WebComponentsReady', function() {
-    __webpack_require__(19)
-});
-
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(6);
-if(typeof content === 'string') content = [[module.i, content, '']];
-// Prepare cssTransformation
-var transform;
-
-var options = {"hmr":true}
-options.transform = transform
-// add the styles to the DOM
-var update = __webpack_require__(1)(content, options);
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(false) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("!!../../../node_modules/css-loader/index.js!./MyCss.css", function() {
-			var newContent = require("!!../../../node_modules/css-loader/index.js!./MyCss.css");
-			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(0)(undefined);
-// imports
-
-
-// module
-exports.push([module.i, ".mainNavLogo {\n    height: 100%;\n    background-color: #8064d6;\n    float: left;\n}\n\n#NavContainer {\n    height: 75px;\n    border-top-color: #000000;\n    border-top-width: 3px;\n    border-top-style: solid;\n    background-color: #ffdc78;\n}\n\n#Page {\n    background-color: rgb(200, 128, 64);\n    color: #CCFFFF;\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    padding: 8px;\n    margin: 0;\n}\n\n#LatexImage {\n    height: 40%;\n}\n\n#EquationsContainer {\n    width: 100%;\n    position: fixed;\n    display: flex;\n    flex-direction: column;\n    bottom: 75px;\n    z-index: -1;\n    background-color: #ffffff;\n    border-top-style: solid;\n    border-top-width: 1px;\n    box-shadow: 0px -2px 15px rgba(50, 50, 50, 0.35);\n}\n\n#ResizeIcon {\n    display: block;\n    margin: auto;\n    opacity: 0.5;\n    user-select: none;\n    cursor: ns-resize;\n}\n\n#ResizeIcon:hover {\n    opacity: 1;\n}\n\n#MathTextEquationContainer {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n}\n\n#SvgContainer {\n    flex: 1;\n    padding: 20px;\n    padding-bottom: 0px;\n}\n\n#HiddenCanvas {\n    display: none;\n}\n\n#CanvasImgContainer {\n    position: fixed;\n    bottom: -200%;\n    z-index: -20;\n}\n\n#MathOutputContainer {\n    display: flex;\n    flex-direction: column;\n    width: 50%;\n    border-left-style: solid;\n    border-left-width: 1px;\n    padding: 0px;\n    padding-bottom: 5px;\n}\n\n#MathOutputMenu {\n    height: 40px;\n    display: flex;\n    align-items: center;\n}\n\n#NavSubmitButton {\n    background-color: #FFFFFF;\n    border-width: 0px;\n    float: left;\n    font-size: 20px;\n    box-sizing: border-box;\n    transition: 0.5s;\n}\n\n#NavSubmitButton:hover {\n    background-color: #b9b9b942;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #000000;\n}\n\n#OptionsSlideMenu {\n    position: fixed;\n    background-color: #FFFFFF;\n    bottom: 0px;\n    width: 50%;\n    left: 25%;\n    padding: 25px;\n    padding-bottom: 0px;\n    border-style: solid;\n    border-width: 3px;\n    border-bottom-width: 0px;\n    min-height: 90px;\n    box-sizing: border-box;\n    max-height: 90%;\n    transition: .5s;\n}\n\n.mainItemsEquationContainer {\n    width: 50%;\n    border-width: 0px;\n    resize: none;\n    box-sizing: border-box;\n    padding: 20px;\n}\n\n.mainNavBar {\n    margin: 0;\n    padding: 0;\n}\n\n.mainNavBar > li {\n    display: inline-block !important;\n    color: #ccffaa;\n}\n\n.mainNavButton {\n    height: 100%;\n    padding-left: 10px;\n    padding-right: 10px;\n    float: left;\n    font-size: 30px;\n    border-width: 0px;\n    background-color: #ffdc78;\n    font-family: Times New Roman;\n    color: #000000;\n    box-shadow: none;\n}\n\n.mainNavButton:hover {\n    background-color: #aaaa78;\n}\n\n.mainNavButtonSelected {\n    background-color: #aaaa78;\n}\n\n.mainHideEquationsContainer {\n    transition: 1s;\n}\n\n.mainImageSizePresetButton {\n    height: 100%;\n    background-color: #FFFFFF;\n    border: 0px;\n    box-sizing: border-box;\n}\n\n.mainSelectedImageSizePresetButton {\n    border: 1px;\n    border-style: solid;\n}\n\n.mainFlexBoxHorizontalCenter {\n    display: flex;\n    justify-content: center;\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathTextEquationContainer {\n        flex-direction: column;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathEquationText {\n        width: 100%;\n    border-width: 0px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathOutputContainer {\n        width: 100%;\n    flex: 1;\n    border: 0px;\n    border-top-style: solid;\n    border-top-width: 1px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    .mainItemsEquationContainer {\n        height: 50%;\n    }\n}\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 7 */
 /***/ (function(module, exports) {
 
 
@@ -782,6 +610,178 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "Img/fontello.eot";
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class CanvasToImage {
+    constructor() {
+    }
+    getSvg(divSvgId) {
+        this.canvas = document.getElementById("HiddenCanvas");
+        this.canvasImage = document.getElementById("CanvasImg");
+        var divSvg = document.getElementById(divSvgId);
+        if (divSvg == null)
+            throw "the elm container didn't load";
+        var svg = divSvg.getElementsByTagName("svg");
+        if (svg.length >= 2 || svg.length == 0 || svg == null)
+            throw "to many or zero svg's - something wrong with mathjax";
+        else
+            return svg[0];
+    }
+    convertSvg(divSvgId, color) {
+        var svg = this.getSvg(divSvgId);
+        this.drawSvgImage(svg, color);
+    }
+    drawSvgImage(svgElement, color) {
+        var svgClone = svgElement.cloneNode(true);
+        svgClone.style.color = color;
+        let svgURL = new XMLSerializer().serializeToString(svgClone);
+        let svgWidth = svgElement.width.baseVal.value;
+        let svgHeight = svgElement.height.baseVal.value;
+        let ratioSvg = svgHeight / svgWidth;
+        let heigthSvg = this.canvas.width * ratioSvg;
+        let canvasHeightNumber = Math.round(heigthSvg);
+        this.canvas.height = Math.round(heigthSvg);
+        let img = new Image();
+        img.onload = () => {
+            let context = this.canvas.getContext('2d');
+            if (context == null)
+                throw ("can't get context");
+            context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            context.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+            this.canvasImage.src = this.canvas.toDataURL("image/png");
+        };
+        let svgData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
+        img.src = svgData;
+    }
+    downloadImage(divSvgId, imageType, color) {
+        this.getSvg(divSvgId);
+        var imageData = "";
+        if (imageType == "png" /* Png */) {
+            console.log("download");
+            var imageData = this.canvasImage.src;
+        }
+        else if (imageType == "svg" /* Svg */) {
+            var svg = this.getSvg(divSvgId);
+            var svgClone = svg.cloneNode(true);
+            svgClone.style.color = color;
+            let svgURL = new XMLSerializer().serializeToString(svgClone);
+            imageData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
+        }
+        var downloadButton = document.getElementById("DownloadButton");
+        if (downloadButton != null) {
+            downloadButton.setAttribute("href", imageData);
+        }
+        else {
+            throw "couldn't find downloadButton";
+        }
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = CanvasToImage;
+
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__MathEquation_Stylesheets_MyCss_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MathEquation_Stylesheets_fontello_css_animation_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MathEquation_Stylesheets_fontello_css_fontello_codes_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__MathEquation_Stylesheets_fontello_css_fontello_css__);
+
+
+
+
+
+
+
+
+/*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
+var mathJax = document.createElement('script');
+mathJax.src ="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js" 
+mathJax.async = true
+document.head.appendChild(mathJax)
+/*~~~~~~~~~~~~~~~~~MathJax~CDN~~~~~~~~~~~~~~~~~~~~~~*/
+
+/*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
+var configMathJax = __webpack_require__ (18)
+var mathJaxConfig = document.createElement('script');
+mathJaxConfig.type = "text/x-mathjax-config";
+//load in fonts
+var currentScript = document.currentScript
+var fontType = currentScript.getAttribute("math-jax-font");
+if(fontType == null || fontType == undefined)
+    fontType = "STIX-Web";
+mathJaxConfig.innerHTML = configMathJax.MathJaxString(fontType);
+document.body.appendChild(mathJaxConfig)
+/*~~~~~~~~~~~~~~~~~MathJaxConfig~~~~~~~~~~~~~~~~~*/
+
+
+window.addEventListener('WebComponentsReady', function() {
+    __webpack_require__(19)
+});
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(7);
+if(typeof content === 'string') content = [[module.i, content, '']];
+// Prepare cssTransformation
+var transform;
+
+var options = {"hmr":true}
+options.transform = transform
+// add the styles to the DOM
+var update = __webpack_require__(1)(content, options);
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(false) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("!!../../../node_modules/css-loader/index.js!./MyCss.css", function() {
+			var newContent = require("!!../../../node_modules/css-loader/index.js!./MyCss.css");
+			if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(0)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, ".mainNavLogo {\n    height: 100%;\n    background-color: #8064d6;\n    float: left;\n}\n\n#NavContainer {\n    height: 75px;\n    border-top-color: #000000;\n    border-top-width: 3px;\n    border-top-style: solid;\n    background-color: #ffdc78;\n}\n\n#Page {\n    background-color: rgb(200, 128, 64);\n    color: #CCFFFF;\n    width: 100%;\n    height: 100%;\n    box-sizing: border-box;\n    padding: 8px;\n    margin: 0;\n}\n\n#LatexImage {\n    height: 40%;\n}\n\n#EquationsContainer {\n    width: 100%;\n    position: fixed;\n    display: flex;\n    flex-direction: column;\n    bottom: 75px;\n    z-index: -1;\n    background-color: #ffffff;\n    border-top-style: solid;\n    border-top-width: 1px;\n    box-shadow: 0px -2px 15px rgba(50, 50, 50, 0.35);\n}\n\n#ResizeIcon {\n    display: block;\n    margin: auto;\n    opacity: 0.5;\n    user-select: none;\n    cursor: ns-resize;\n}\n\n#ResizeIcon:hover {\n    opacity: 1;\n}\n\n#MathTextEquationContainer {\n    flex: 1;\n    display: flex;\n    flex-direction: row;\n}\n\n#SvgContainer {\n    flex: 1;\n    padding: 20px;\n    padding-bottom: 0px;\n}\n\n#HiddenCanvas {\n    display: none;\n}\n\n#CanvasImgContainer {\n    position: fixed;\n    bottom: -200%;\n    z-index: -20;\n}\n\n#MathOutputContainer {\n    display: flex;\n    flex-direction: column;\n    width: 50%;\n    border-left-style: solid;\n    border-left-width: 1px;\n    padding: 0px;\n    padding-bottom: 5px;\n}\n\n#MathOutputMenu {\n    height: 40px;\n    display: flex;\n    align-items: center;\n}\n\n#NavSubmitButton {\n    background-color: #FFFFFF;\n    border-width: 0px;\n    float: left;\n    font-size: 20px;\n    box-sizing: border-box;\n    transition: 0.5s;\n}\n\n#NavSubmitButton:hover {\n    background-color: #b9b9b942;\n    border-style: solid;\n    border-width: 1px;\n    border-color: #000000;\n}\n\n#OptionsSlideMenu {\n    position: fixed;\n    background-color: #FFFFFF;\n    bottom: 0px;\n    width: 50%;\n    left: 25%;\n    padding: 25px;\n    padding-bottom: 0px;\n    border-style: solid;\n    border-width: 3px;\n    border-bottom-width: 0px;\n    min-height: 90px;\n    box-sizing: border-box;\n    max-height: 90%;\n    transition: .5s;\n}\n\n.mainItemsEquationContainer {\n    width: 50%;\n    border-width: 0px;\n    resize: none;\n    box-sizing: border-box;\n    padding: 20px;\n}\n\n.mainNavBar {\n    margin: 0;\n    padding: 0;\n}\n\n.mainNavBar > li {\n    display: inline-block !important;\n    color: #ccffaa;\n}\n\n.mainNavButton {\n    height: 100%;\n    padding-left: 10px;\n    padding-right: 10px;\n    float: left;\n    font-size: 30px;\n    border-width: 0px;\n    background-color: #ffdc78;\n    font-family: Times New Roman;\n    color: #000000;\n    box-shadow: none;\n}\n\n.mainNavButton:hover {\n    background-color: #aaaa78;\n}\n\n.mainNavButtonSelected {\n    background-color: #aaaa78;\n}\n\n.mainHideEquationsContainer {\n    transition: 1s;\n}\n\n.mainImageSizePresetButton {\n    height: 100%;\n    background-color: #FFFFFF;\n    border: 0px;\n    box-sizing: border-box;\n}\n\n.mainSelectedImageSizePresetButton {\n    border: 1px;\n    border-style: solid;\n}\n\n.mainFlexBoxHorizontalCenter {\n    display: flex;\n    justify-content: center;\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathTextEquationContainer {\n        flex-direction: column;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathEquationText {\n        width: 100%;\n    border-width: 0px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    #MathOutputContainer {\n        width: 100%;\n    flex: 1;\n    border: 0px;\n    border-top-style: solid;\n    border-top-width: 1px;\n    }\n}\n\n@media screen and ( max-width: 1000px ) {\n    .mainItemsEquationContainer {\n        height: 50%;\n    }\n}\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -914,7 +914,7 @@ exports = module.exports = __webpack_require__(0)(undefined);
 
 
 // module
-exports.push([module.i, "@font-face {\n  font-family: 'fontello';\n  src: url(" + __webpack_require__(2) + ");\n  src: url(" + __webpack_require__(2) + "#iefix) format('embedded-opentype'),\n       url(" + __webpack_require__(14) + ") format('woff2'),\n       url(" + __webpack_require__(15) + ") format('woff'),\n       url(" + __webpack_require__(16) + ") format('truetype'),\n       url(" + __webpack_require__(17) + "#fontello) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */\n/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */\n/*\n@media screen and (-webkit-min-device-pixel-ratio:0) {\n  @font-face {\n    font-family: 'fontello';\n    src: url('../font/fontello.svg?20341323#fontello') format('svg');\n  }\n}\n*/\n \n [class^=\"icon-\"]:before, [class*=\" icon-\"]:before {\n  font-family: \"fontello\";\n  font-style: normal;\n  font-weight: normal;\n  speak: none;\n \n  display: inline-block;\n  text-decoration: inherit;\n  width: 1em;\n  margin-right: .2em;\n  text-align: center;\n  /* opacity: .8; */\n \n  /* For safety - reset parent styles, that can break glyph codes*/\n  font-variant: normal;\n  text-transform: none;\n \n  /* fix buttons height, for twitter bootstrap */\n  line-height: 1em;\n \n  /* Animation center compensation - margins should be symmetric */\n  /* remove if not needed */\n  margin-left: .2em;\n \n  /* you can be more comfortable with increased icons size */\n  /* font-size: 120%; */\n \n  /* Font smoothing. That was taken from TWBS */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n \n  /* Uncomment for 3D effect */\n  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */\n}\n \n.icon-upload:before { content: '\\E800'; } /* '' */\n.icon-down-open:before { content: '\\E802'; } /* '' */\n.icon-cancel-1:before { content: '\\E803'; } /* '' */\n.icon-up-open:before { content: '\\E804'; } /* '' */\n.icon-picture:before { content: '\\E805'; } /* '' */\n.icon-download-1:before { content: '\\E806'; } /* '' */\n.icon-github-circled:before { content: '\\F09B'; } /* '' */\n.icon-doc-text-inv:before { content: '\\F15C'; } /* '' */", ""]);
+exports.push([module.i, "@font-face {\n  font-family: 'fontello';\n  src: url(" + __webpack_require__(3) + ");\n  src: url(" + __webpack_require__(3) + "#iefix) format('embedded-opentype'),\n       url(" + __webpack_require__(14) + ") format('woff2'),\n       url(" + __webpack_require__(15) + ") format('woff'),\n       url(" + __webpack_require__(16) + ") format('truetype'),\n       url(" + __webpack_require__(17) + "#fontello) format('svg');\n  font-weight: normal;\n  font-style: normal;\n}\n/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */\n/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */\n/*\n@media screen and (-webkit-min-device-pixel-ratio:0) {\n  @font-face {\n    font-family: 'fontello';\n    src: url('../font/fontello.svg?20341323#fontello') format('svg');\n  }\n}\n*/\n \n [class^=\"icon-\"]:before, [class*=\" icon-\"]:before {\n  font-family: \"fontello\";\n  font-style: normal;\n  font-weight: normal;\n  speak: none;\n \n  display: inline-block;\n  text-decoration: inherit;\n  width: 1em;\n  margin-right: .2em;\n  text-align: center;\n  /* opacity: .8; */\n \n  /* For safety - reset parent styles, that can break glyph codes*/\n  font-variant: normal;\n  text-transform: none;\n \n  /* fix buttons height, for twitter bootstrap */\n  line-height: 1em;\n \n  /* Animation center compensation - margins should be symmetric */\n  /* remove if not needed */\n  margin-left: .2em;\n \n  /* you can be more comfortable with increased icons size */\n  /* font-size: 120%; */\n \n  /* Font smoothing. That was taken from TWBS */\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n \n  /* Uncomment for 3D effect */\n  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */\n}\n \n.icon-upload:before { content: '\\E800'; } /* '' */\n.icon-down-open:before { content: '\\E802'; } /* '' */\n.icon-cancel-1:before { content: '\\E803'; } /* '' */\n.icon-up-open:before { content: '\\E804'; } /* '' */\n.icon-picture:before { content: '\\E805'; } /* '' */\n.icon-download-1:before { content: '\\E806'; } /* '' */\n.icon-github-circled:before { content: '\\F09B'; } /* '' */\n.icon-doc-text-inv:before { content: '\\F15C'; } /* '' */", ""]);
 
 // exports
 
@@ -1009,7 +1009,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MathJaxConvert_ts__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__PostMessageHandler_ts__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CanvasToImage_ts__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CanvasToImage_ts__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_timers__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_timers___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_timers__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1211,7 +1211,7 @@ let ImageTypesConstructor = function (imageType) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CanvasToImage_ts__ = __webpack_require__(4);
 
 class MathJaxConvert {
     constructor() {

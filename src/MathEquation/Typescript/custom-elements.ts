@@ -7,10 +7,6 @@ export interface CustomElementConfig {
 
 export const CustomElement = (config: CustomElementConfig) => {
   return (Element:any) => {
-    console.log(Element)
-    console.log("testing")
-    //var test = new Element();
-    //console.log(test);
     window['customElements'].define(config.tagName, Element, config.options);
   };
 };

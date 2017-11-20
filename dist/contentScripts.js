@@ -178,6 +178,8 @@ var runtimeFunction = function(request, sender) {
         }
     }
     else if(request.hasOwnProperty('resetUI')){
+        console.log("resetUI")
+        console.log(request)
         if(iframe != undefined){
             iframe.parentNode.removeChild(iframe);
         }

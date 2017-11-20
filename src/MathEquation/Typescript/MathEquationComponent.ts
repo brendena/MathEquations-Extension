@@ -76,7 +76,7 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
 
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
             var elmObject = new ElmPort(elmJsonString);
-            new CanvasToImage().downloadImage(elmObject.selectedMathType + "Equation",elmObject.downloadImageType);
+            new CanvasToImage().downloadImage(elmObject.selectedMathType + "Equation",elmObject.downloadImageType, elmObject.mathEquationColor);
 
         });
         /**********************setting-elm-up************************************/

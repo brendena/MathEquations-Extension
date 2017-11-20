@@ -328,10 +328,10 @@ sizeCanvas : ImageSizePresets -> Int -> Attribute Msg
 sizeCanvas imageSizePreset userDefinedSize = 
   let
       sizeCanvas = case imageSizePreset of
-                        SmallImage -> "200px"
-                        MediumImage -> "400px"
-                        LargeImage -> "1000px"
-                        UserDefined -> ((toString userDefinedSize) ++ "px")
+                        SmallImage -> "200"
+                        MediumImage -> "400"
+                        LargeImage -> "1000"
+                        UserDefined -> (toString userDefinedSize)
   in
       attribute "width" sizeCanvas
 

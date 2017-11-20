@@ -551,7 +551,9 @@ class CanvasToImage {
         var svgClone = svgElement.cloneNode(true);
         svgClone.style.color = color;
         let svgURL = new XMLSerializer().serializeToString(svgClone);
-        let ratioSvg = svgElement.clientHeight / svgElement.clientWidth;
+        let svgWidth = svgElement.width.baseVal.value;
+        let svgHeight = svgElement.height.baseVal.value;
+        let ratioSvg = svgHeight / svgWidth;
         let heigthSvg = this.canvas.width * ratioSvg;
         let canvasHeightNumber = Math.round(heigthSvg);
         this.canvas.height = Math.round(heigthSvg);
@@ -567,7 +569,7 @@ class CanvasToImage {
         let svgData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
         img.src = svgData;
     }
-    downloadImage(divSvgId, imageType) {
+    downloadImage(divSvgId, imageType, color) {
         this.getSvg(divSvgId);
         var imageData = "";
         if (imageType == "png" /* Png */) {
@@ -576,7 +578,9 @@ class CanvasToImage {
         }
         else if (imageType == "svg" /* Svg */) {
             var svg = this.getSvg(divSvgId);
-            let svgURL = new XMLSerializer().serializeToString(svg);
+            var svgClone = svg.cloneNode(true);
+            svgClone.style.color = color;
+            let svgURL = new XMLSerializer().serializeToString(svgClone);
             imageData = 'data:image/svg+xml; charset=utf8, ' + encodeURIComponent(svgURL);
         }
         var downloadButton = document.getElementById("DownloadButton");
@@ -1079,7 +1083,7 @@ let MathEquationAnywhere = class MathEquationAnywhere extends HTMLElement {
         });
         this.app.ports.downloadImage.subscribe((elmJsonString) => {
             var elmObject = new __WEBPACK_IMPORTED_MODULE_1__ElmPort_ts__["a" /* ElmPort */](elmJsonString);
-            new __WEBPACK_IMPORTED_MODULE_4__CanvasToImage_ts__["a" /* CanvasToImage */]().downloadImage(elmObject.selectedMathType + "Equation", elmObject.downloadImageType);
+            new __WEBPACK_IMPORTED_MODULE_4__CanvasToImage_ts__["a" /* CanvasToImage */]().downloadImage(elmObject.selectedMathType + "Equation", elmObject.downloadImageType, elmObject.mathEquationColor);
         });
         /**********************setting-elm-up************************************/
         //wait untill elm load to load the clipboard element
@@ -17725,16 +17729,13 @@ var _user$project$Main$sizeCanvas = F2(
 			var _p1 = imageSizePreset;
 			switch (_p1.ctor) {
 				case 'SmallImage':
-					return '200px';
+					return '200';
 				case 'MediumImage':
-					return '400px';
+					return '400';
 				case 'LargeImage':
-					return '1000px';
+					return '1000';
 				default:
-					return A2(
-						_elm_lang$core$Basics_ops['++'],
-						_elm_lang$core$Basics$toString(userDefinedSize),
-						'px');
+					return _elm_lang$core$Basics$toString(userDefinedSize);
 			}
 		}();
 		return A2(_elm_lang$html$Html_Attributes$attribute, 'width', sizeCanvas);

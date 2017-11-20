@@ -25,13 +25,13 @@ export class CanvasToImage {
         var svgClone = <SVGSVGElement>svgElement.cloneNode(true);
         svgClone.style.color = color;
         let svgURL = new XMLSerializer().serializeToString(svgClone);
+        let svgWidth = svgElement.width.baseVal.value
+        let svgHeight = svgElement.height.baseVal.value
 
-        let ratioSvg = svgElement.clientHeight/svgElement.clientWidth;
-        
+        let ratioSvg = svgHeight/svgWidth;
         let heigthSvg =  this.canvas.width * ratioSvg;
         let canvasHeightNumber = Math.round(heigthSvg);
         this.canvas.height = Math.round(heigthSvg);
-
         let img  = new Image();
         img.onload = ()=>{                     
             let context = this.canvas.getContext('2d');
@@ -46,7 +46,7 @@ export class CanvasToImage {
         let svgData = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
         img.src = svgData;
     }
-    downloadImage(divSvgId:string,imageType:ImageTypesEnum){
+    downloadImage(divSvgId:string,imageType:ImageTypesEnum,color:string){
         this.getSvg(divSvgId);
         var imageData = "";
         if(imageType == ImageTypesEnum.Png){
@@ -55,7 +55,9 @@ export class CanvasToImage {
         }
         else if(imageType == ImageTypesEnum.Svg){
             var svg = this.getSvg(divSvgId);
-            let svgURL = new XMLSerializer().serializeToString(svg);
+            var svgClone = <SVGSVGElement>svg.cloneNode(true);
+            svgClone.style.color = color;
+            let svgURL = new XMLSerializer().serializeToString(svgClone);
             imageData = 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
         }
         var downloadButton = document.getElementById("DownloadButton");

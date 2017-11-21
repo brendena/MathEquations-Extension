@@ -27,7 +27,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NODE_ENV=development webpack --config webpack/dev.config.js",
+    "start": "NODE_ENV=development webpack --watch --config webpack/dev.config.js",
+    "start:chrome": "NODE_ENV=development webpack --watch --config webpack/devChrome.config.js",
     "build": "NODE_ENV=production webpack --config webpack/prod.config.js",
     "watch": "echo \"Error: currently no watch\" && exit 1"
   },

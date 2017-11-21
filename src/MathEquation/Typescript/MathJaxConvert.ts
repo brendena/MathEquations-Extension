@@ -1,19 +1,19 @@
 import { CanvasToImage } from './CanvasToImage.ts'
 import { ElmPort } from './ElmPort.ts'
 import { MathTypes } from './MathTypes.ts'
-declare var MathJax: any;
 
+declare var MathJax: any;
 export class MathJaxConvert {
-    convertImageTimer:NodeJS.Timer;
-    submitTimer:NodeJS.Timer;
+    convertImageTimer:number;
+    submitTimer:number;
     canvasToImage = new CanvasToImage();
     constructor() {
         
     } 
     queueEquation(ElmObject: ElmPort){
-        clearTimeout(this.submitTimer);
+        window.clearTimeout(this.submitTimer);
         let divIdEquation = ElmObject.selectedMathType + "Equation";
-        this.submitTimer = setTimeout(()=>{
+        this.submitTimer = window.setTimeout(()=>{
             let divEquation = document.getElementById(divIdEquation)
             if(divEquation == null)
                 throw("Can't Find the equation id")
@@ -28,9 +28,9 @@ export class MathJaxConvert {
             }
         },100);
         
-        clearTimeout(this.convertImageTimer);
+        window.clearTimeout(this.convertImageTimer);
         
-        this.convertImageTimer = setTimeout(()=>{
+        this.convertImageTimer = window.setTimeout(()=>{
             this.canvasToImage.convertSvg(divIdEquation,ElmObject.mathEquationColor)
         },500);
         

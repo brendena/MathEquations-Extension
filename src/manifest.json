@@ -28,7 +28,7 @@
   "content_scripts": [
     {
       "matches":["<all_urls>"],
-      "js": ["contentScripts.js"],
+      "js": ["contentScript.js"],
       "run_at": "document_end"
     }
   ],
@@ -55,5 +55,10 @@
       "id": "{f7d3c7b6-861a-49b6-85d7-04ae3f260ab9}",
       "strict_min_version": "48.0"
     }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
   }
 }

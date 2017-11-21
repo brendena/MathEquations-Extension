@@ -4,6 +4,7 @@ const WebpackShellPlugin = require('webpack-shell-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
 //const ChromeExtensionReloader  = require('webpack-chrome-extension-reloader');
+//https://medium.com/front-end-hacking/hot-reloading-extensions-using-webpack-cdfa0e4d5a08
 
 //multiple configs
 //https://simonsmith.io/organising-webpack-config-environments/
@@ -34,8 +35,9 @@ https://medium.com/@bogdan_plieshka/loading-static-and-dynamic-images-with-webpa
 module.exports = {
   entry: {
     mathEquationComponent: "./src/webPackMathEquation.js",
-    contentScripts: "./src/webPackContentScripts.js",
-    popUp: "./src/webPackPopUp.js"
+    contentScript: "./src/webPackContentScript.js",
+    popUp: "./src/webPackPopUp.js",
+    background: "./src/webPackBackground.js"
   },
   output: {
     path: path.resolve(__dirname + '/../dist'),

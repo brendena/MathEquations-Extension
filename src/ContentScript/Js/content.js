@@ -81,8 +81,6 @@ var constructUi = function(configOptions){
 
 
 
-
-
 var runtimeFunction = function(request, sender) {
     var iframe = document.getElementById(iframeId);
 	if(request.hasOwnProperty('openMenu')){

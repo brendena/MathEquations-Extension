@@ -22,12 +22,13 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
     "webpack-chrome-extension-reloader": "^0.6.0",
+    "webpack-merge": "^4.1.1",
     "webpack-shell-plugin": "^0.5.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack",
-    "build:prod": "webpack -p",
+    "start": "NODE_ENV=development webpack --config webpack/dev.config.js",
+    "build": "NODE_ENV=production webpack --config webpack/prod.config.js",
     "watch": "echo \"Error: currently no watch\" && exit 1"
   },
   "repository": {

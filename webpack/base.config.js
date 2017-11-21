@@ -2,9 +2,11 @@ var path = require("path");
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackShellPlugin = require('webpack-shell-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 //const ChromeExtensionReloader  = require('webpack-chrome-extension-reloader');
 
+//multiple configs
+//https://simonsmith.io/organising-webpack-config-environments/
 
 /*webpack optimization tips
 https://www.youtube.com/watch?v=zFoBYfMLUCM
@@ -36,7 +38,7 @@ module.exports = {
     popUp: "./src/webPackPopUp.js"
   },
   output: {
-    path: path.resolve(__dirname + '/dist'),
+    path: path.resolve(__dirname + '/../dist'),
     filename: '[name].js',
   },
   plugins: [
@@ -49,7 +51,9 @@ module.exports = {
       { from: "./bower_components/webcomponentsjs/webcomponents-loader.js"},
       { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"}
     ]),
-    new UglifyJSPlugin()
+    new webpack.EnvironmentPlugin([
+      'NODE_ENV',
+    ])
     /*,
     new ChromeExtensionReloader({
       port: 9090, // Which port use to create the server

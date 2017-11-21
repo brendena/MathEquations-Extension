@@ -8,3 +8,4 @@
 *.zip
 /src/MathEquation/Typescript/*.js
 /dist
+/package-lock.json

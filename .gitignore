@@ -7,3 +7,4 @@
 *js.map
 *.zip
 /src/MathEquation/Typescript/*.js
+/dist

@@ -1,6 +1,7 @@
+export {CanvasToImage}
 import { ImageTypesEnum } from './ImageTypes.ts'
 
-export class CanvasToImage {
+class CanvasToImage {
     canvas:HTMLCanvasElement;
     canvasImage:HTMLImageElement;
     constructor(){

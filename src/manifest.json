@@ -52,8 +52,8 @@
   ],
   "applications": {
     "gecko": {
-        "id": "math-equations@mozilla.org",
-        "strict_min_version": "48"
+      "id": "{f7d3c7b6-861a-49b6-85d7-04ae3f260ab9}",
+      "strict_min_version": "48.0"
     }
-}
+  }
 }

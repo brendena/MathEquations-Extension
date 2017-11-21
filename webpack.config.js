@@ -2,6 +2,7 @@ var path = require("path");
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackShellPlugin = require('webpack-shell-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 //const ChromeExtensionReloader  = require('webpack-chrome-extension-reloader');
 
 
@@ -47,7 +48,8 @@ module.exports = {
       { from: "./src/Img", to: "./Img" },
       { from: "./bower_components/webcomponentsjs/webcomponents-loader.js"},
       { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"}
-    ])
+    ]),
+    new UglifyJSPlugin()
     /*,
     new ChromeExtensionReloader({
       port: 9090, // Which port use to create the server

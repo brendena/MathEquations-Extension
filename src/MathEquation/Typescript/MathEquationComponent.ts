@@ -16,11 +16,12 @@ var Clipboard :any = require('../../../node_modules/clipboard/dist/clipboard.min
     //    extends: "div"
     //}
 })
-export class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
+class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
     container: HTMLElement;
     app:any;
     mathJaxConvert = new MathJaxConvert();
     postMessageHandler: PostMessageHandler;
+    canvasToImage = new CanvasToImage();
     constructor(){
         super();
         const shadowRoot = this.attachShadow({mode: 'open'});
@@ -42,10 +43,8 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
         document.dispatchEvent(event);
         var origin = this.getAttribute("originurl");
         if(origin == null)
-            throw("didn't url");
+            throw("didn't get origin url");
         this.postMessageHandler = new PostMessageHandler(origin);
-        console.log("making elm")
-        console.log(Elm)
         /**********************setting-elm-up************************************/
         this.app = Elm.Main.embed(this.container,{
             "baseUrl": this.getAttribute("baseurl")
@@ -76,7 +75,7 @@ export class MathEquationAnywhere extends HTMLElement implements OnAttributeChan
 
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
             var elmObject = new ElmPort(elmJsonString);
-            new CanvasToImage().downloadImage(elmObject.selectedMathType + "Equation",elmObject.downloadImageType, elmObject.mathEquationColor);
+            this.canvasToImage.downloadImage(elmObject.selectedMathType + "Equation",elmObject.downloadImageType, elmObject.mathEquationColor);
 
         });
         /**********************setting-elm-up************************************/

@@ -1,4 +1,3 @@
-console.log("got content.js")
 var iframeId = "mathEquationIframe";
 var constructUi = function(configOptions){
     var iframe = document.createElement("iframe")
@@ -30,7 +29,7 @@ var constructUi = function(configOptions){
             var lastPositionY = undefined;
             var minPositionY = 100;
             window.addEventListener("message", function(event){
-                let messageData = event.data 
+                var messageData = event.data 
                 //console.log(messageData)
                 if(messageData != undefined && messageData["messageType"] != undefined){
                     switch (messageData["messageType"]){
@@ -110,4 +109,4 @@ chrome.runtime.onMessage.addListener(
 	runtimeFunction
 );
 
-constructUi({"fontStyles":"STIX-Web"});
+//constructUi({"fontStyles":"STIX-Web"});

@@ -5,6 +5,10 @@
 
 ![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/readmeExample.png?raw=true)
 
+## Branch Distinction
+* **Master** - Hold static reference to the build version of the code.
+* **Dev** - Hold new code for next Version.  Removes the **Dist** folder to make changes easier to find.
+* **gh-branch** - Holds a example page.
 
 
 ## Getting started
@@ -32,13 +36,15 @@ In **/src/ContentScripts/Js/content.js** you can add this line **constructUi();*
 
 ### Firefox
 At **about:debugging** you can add extension locally.
+
 [Disabling popup auto hide](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Debugging#Debugging_popups)
 
 
 ## current features to implement 
-* Close the menu
-* Minimize menu
-* resize the iframe on the above actions and on text section close
+* refactor code
+* Make CSS smoother
+* Mouse Touch
+* Bug - Loading Problems
 * Style - The nav bar brakes when you move to a really small screen
 * Bug UnImportant - Chrome Grammerly causes a bug in the textarea that brakes how the app works
 
@@ -48,4 +54,3 @@ Create a extension that can create math equation that you can copy onto any site
 ## Next Itteration
 * Ittergrate the equation into the image
 * Reload image
-* Download Image

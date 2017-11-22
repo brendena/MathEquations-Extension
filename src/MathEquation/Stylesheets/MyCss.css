@@ -64,13 +64,10 @@
 }
 
 #HiddenCanvas {
-    display: none;
-}
-
-#CanvasImgContainer {
     position: fixed;
-    bottom: -200%;
-    z-index: -20;
+    bottom: 0px;
+    right: 0px;
+    z-index: 5000;
 }
 
 #MathOutputContainer {

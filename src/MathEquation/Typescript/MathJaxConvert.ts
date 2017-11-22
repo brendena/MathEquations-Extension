@@ -4,15 +4,14 @@ import { MathTypes } from './MathTypes.ts'
 
 declare var MathJax: any;
 export class MathJaxConvert {
-    convertImageTimer:number;
     submitTimer:number;
-    canvasToImage = new CanvasToImage();
     constructor() {
         
     } 
     queueEquation(ElmObject: ElmPort){
+
         window.clearTimeout(this.submitTimer);
-        let divIdEquation = ElmObject.selectedMathType + "Equation";
+        let divIdEquation = ElmObject.GetMathEquationId();
         this.submitTimer = window.setTimeout(()=>{
             let divEquation = document.getElementById(divIdEquation)
             if(divEquation == null)
@@ -28,13 +27,10 @@ export class MathJaxConvert {
             }
         },100);
         
-        window.clearTimeout(this.convertImageTimer);
         
-        this.convertImageTimer = window.setTimeout(()=>{
-            this.canvasToImage.convertSvg(divIdEquation,ElmObject.mathEquationColor)
-        },500);
         
     }
+    
     convertMathTypeOutput(ElmObject: ElmPort):string{
         let returnEquationString:string = "";
 

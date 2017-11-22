@@ -84,6 +84,7 @@ var constructUi = function(configOptions){
 var runtimeFunction = function(request, sender) {
     var iframe = document.getElementById(iframeId);
 	if(request.hasOwnProperty('openMenu')){
+        console.log(iframe)
         if(iframe == undefined){
             if (document.readyState != 'complete'){
                 window.addEventListener("load",constructUi);
@@ -107,4 +108,4 @@ chrome.runtime.onMessage.addListener(
 	runtimeFunction
 );
 
-//constructUi({"fontStyles":"STIX-Web"});
+constructUi({"fontStyles":"STIX-Web"});

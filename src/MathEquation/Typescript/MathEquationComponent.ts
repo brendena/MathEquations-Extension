@@ -75,20 +75,37 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
 
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
             var elmObject = new ElmPort(elmJsonString);
-            this.canvasToImage.downloadImage(elmObject.selectedMathType + "Equation",elmObject.downloadImageType, elmObject.mathEquationColor);
+            this.canvasToImage.downloadImage(elmObject.GetMathEquationId(),elmObject.downloadImageType, elmObject.mathEquationColor);
 
         });
         /**********************setting-elm-up************************************/
         
         //wait untill elm load to load the clipboard element
         setTimeout(()=>{
-            new Clipboard("#NavSubmitButton")
+
             var submitButton = document.getElementById("NavSubmitButton")
             if(submitButton == null)
                 throw("can't add clipboard becuase elms still loading");
-            submitButton.setAttribute("data-clipboard-action", "copy");
-            submitButton.setAttribute("data-clipboard-target", "#CanvasImgContainer");
 
+            submitButton.onclick = function(){
+                console.log(document.execCommand("copy"));
+            }
+            document.addEventListener("copy", (event:ClipboardEvent)=>{
+                event.preventDefault();
+
+                console.log("clipboard copy")
+                
+                if (event.clipboardData) {
+                    this.canvasToImage.convertSvg("TexEquation", "#444444",event.clipboardData)
+                    //event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ imageData +'">');
+
+                  
+                }
+                else{
+                    throw("your browser does not support clipboardData.")
+                }
+            });
+                        
         },1000)
 
     }

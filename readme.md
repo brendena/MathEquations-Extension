@@ -16,7 +16,7 @@
 
 ## Building
 * **npm run start** - for a minified version
-* **npm run start:chrome** - allows for live reloading of the extension on chrome
+* **npm run start:chrome** - allows for live reloading of the extension on chrome.
 * **npm run build** - build production script
 Then you can load it into whatever browser that you are currently working on.
 

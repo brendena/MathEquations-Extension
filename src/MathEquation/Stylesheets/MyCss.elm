@@ -129,16 +129,7 @@ css =
         , paddingBottom (px 0)
         ]
     , id HiddenCanvas
-        [ --display none
-          position fixed,
-          bottom (px 0),
-          right (px 0),
-          zIndex (int 5000)
-        ]
-    , id CanvasImgContainer
-        [ --position fixed
-        --, bottom (pct -200)
-        --, zIndex (int -20)
+        [ display none
         ]
     , id MathOutputContainer
         [ displayFlex

@@ -2,9 +2,13 @@ export class SvgToCanvas {
     viewBox: ViewBox;
     canvas : HTMLCanvasElement;
     ctx    : CanvasRenderingContext2D;
-    constructor(svgElement:SVGSVGElement,canvas:HTMLCanvasElement ){
+    color  : string;
+    constructor(svgElement:SVGSVGElement,canvas:HTMLCanvasElement,color:string ){
         console.log(svgElement)
         this.canvas = canvas;
+        this.color = color;
+        console.log("color");
+        console.log(this.color);
         let ctx = this.canvas.getContext('2d');
         if(ctx == null)
             throw("can't get context");
@@ -32,9 +36,10 @@ export class SvgToCanvas {
         this.ctx.translate(-(this.viewBox.minX),-(this.viewBox.minY));
         
         this.recursiveLoopTags(svgElement.childNodes);
-        
     }
-
+    public getPng64(){
+        return this.canvas.toDataURL("image/png");
+    }
 
 
     private recursiveLoopTags(childNodes:NodeList){
@@ -54,9 +59,9 @@ export class SvgToCanvas {
                     break;
                 case "path":
                     if("d" in tag.attributes){
-                        console.log(tag)
                         var d = <any>tag.attributes.getNamedItem("d").value;
                         var path = <any>new Path2D(d);
+                        this.ctx.fillStyle = this.color;
                         if("transform" in tag.attributes){
                             var transformString = tag.attributes.getNamedItem("transform").value;
                             var t = this.splitString(transformString)
@@ -68,8 +73,6 @@ export class SvgToCanvas {
                                 this.ctx.transform(t[0],t[1],t[2],t[3],-(t[4]),-(t[5]));
                             }
                             else if(transformString.match(/scale/g) != null){
-                                console.log("scale")
-                                
                                 this.ctx.transform(1/t[0],t[1],t[2],1/t[3],(t[4]),(t[5]));
                             }
                         }
@@ -101,9 +104,6 @@ export class SvgToCanvas {
                     throw("can't use translate without y")
                 break;
             case TransformTypes.Scaling:
-                console.log("getting scaled")
-                console.log(x)
-                console.log(y)
                 if(y != undefined || y != null)
                     returnTransform = [x,0,0,y,0,0];
                 else
@@ -131,7 +131,6 @@ export class SvgToCanvas {
             stringArray = attribute.split(" ")
         }
         
-        console.log(stringArray)
         var returnIntArray:number[] = new Array(stringArray.length);
         for(var i = 0; i < stringArray.length; i++){
             returnIntArray[i] = parseFloat(stringArray[i]);
@@ -142,7 +141,6 @@ export class SvgToCanvas {
             return this.expandTransformTypes(TransformTypes.Translate, returnIntArray[0],returnIntArray[1])
         }
         else if(attribute.match(/scale/g) != null){
-            console.log(returnIntArray);
             if(returnIntArray.length == 1)
                 return this.expandTransformTypes(TransformTypes.Scaling, returnIntArray[0])
             else

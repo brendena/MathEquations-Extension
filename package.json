@@ -4,7 +4,6 @@
   "description": "Makes ",
   "main": "webpack.config.js",
   "dependencies": {
-    "clipboard": "^1.7.1",
     "ts-custom-elements": "^1.0.0"
   },
   "devDependencies": {

@@ -1,14 +1,13 @@
 import { CustomElement, OnConnected, OnDisconnected, OnAttributeChanged } from './custom-elements.ts';
 import { ElmPort } from './ElmPort.ts'
 import { MathJaxConvert } from './MathJaxConvert.ts'
-import { MathTypes } from './MathTypes.ts'
+import { MathTypes,ConvertMathTypes } from './MathTypes.ts'
 import { PostMessageHandler } from './PostMessageHandler.ts'
 import { ImageTypesEnum} from './ImageTypes.ts'
 import { CanvasToImage } from './CanvasToImage.ts'
 import { setTimeout } from 'timers';
 
 var Elm :any = require('../Elm/Main.elm');
-var Clipboard :any = require('../../../node_modules/clipboard/dist/clipboard.min.js')
 
 @CustomElement({
     tagName: 'math-equation-anywhere',
@@ -22,6 +21,9 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
     mathJaxConvert = new MathJaxConvert();
     postMessageHandler: PostMessageHandler;
     canvasToImage = new CanvasToImage();
+
+    color: string = "#000000";
+    mathType: MathTypes = MathTypes.NoMathType;
     constructor(){
         super();
         const shadowRoot = this.attachShadow({mode: 'open'});
@@ -35,7 +37,10 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.container.style.zIndex = "2000"
     }
     static get observedAttributes(){
-        return ["baseurl"]
+        return [MathCompAttributes.baseurl,
+                MathCompAttributes.color,
+                MathCompAttributes.mathtype,
+                MathCompAttributes.origin]
     }
     connectedCallback() {
         document.body.appendChild(this.container);
@@ -50,7 +55,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
             "baseUrl": this.getAttribute("baseurl")
         });
         this.app.ports.getPageYOffset.subscribe((elmMousePositon :number)=>{
-            /*code for when this is not in a iframe */
+            /*code for when this is not in a iframe */ 
             //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
             this.postMessageHandler.mouseResize(elmMousePositon);
         });
@@ -60,6 +65,13 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         });
         this.app.ports.updateEquation.subscribe((elmJsonString:string)=> {
             var elmObject = new ElmPort(elmJsonString);
+            
+            if(this.color !== elmObject.mathEquationColor)
+                this.setAttribute(MathCompAttributes.color,elmObject.mathEquationColor)
+            if(this.mathType !== elmObject.selectedMathType)
+                this.setAttribute(MathCompAttributes.mathtype,elmObject.selectedMathType)
+
+
             if(elmObject.selectedMathType != MathTypes.NoMathType){
                 this.mathJaxConvert.queueEquation(elmObject);
                 this.postMessageHandler.MinimizeTextInput(false);
@@ -96,8 +108,8 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 console.log("clipboard copy")
                 
                 if (event.clipboardData) {
-                    this.canvasToImage.convertSvg("TexEquation", "#444444",event.clipboardData)
-                    //event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ imageData +'">');
+                    var png64 = this.canvasToImage.convertSvg(this.mathType + "Equation", this.color)
+                    event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ png64 +'">');
 
                   
                 }
@@ -115,9 +127,31 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
     }
     attributeChangedCallback(attrName?: string, oldVal?: string, newVal?: string){
         console.log("attributeChange");
-        
-        if(attrName == "baseurl"){
-            console.log("baseUrlChagned")
+        console.log(newVal)
+        if(newVal != null || newVal != undefined){
+            switch(attrName){
+                case MathCompAttributes.baseurl:
+                    
+                    break;
+                case MathCompAttributes.color:
+                    this.color = newVal;
+                    break;
+                case MathCompAttributes.mathtype:
+                    this.mathType =  ConvertMathTypes(newVal);
+                    break;
+                case MathCompAttributes.origin:
+                    break;
+    
+            }
         }
+
     }
+}
+
+
+const enum MathCompAttributes {
+    baseurl = "baseurl",
+    color = "equationcolor",
+    mathtype = "mathtype",
+    origin = "origin"
 }

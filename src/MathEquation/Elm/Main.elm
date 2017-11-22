@@ -272,10 +272,9 @@ view model =
         ]
         
         ,
-        div [id MyCss.CanvasImgContainer] [
-          img [id "CanvasImg"] [],
-          canvas [id MyCss.HiddenCanvas, sizeCanvas model.imagePreset model.userDefinedSize] []
-        ]
+
+        canvas [id MyCss.HiddenCanvas, sizeCanvas model.imagePreset model.userDefinedSize] []
+        
     ]
 {--------------ViewHelperFunc----------------------------------------}
 navButtonClass : MathType -> MathType  -> Attribute Msg

@@ -79,6 +79,7 @@ initialModel =
     , downloadFileName = "fileName"
     , downloadFileType = ImageSvg
     , slideMenuOpen = False
+    , smallSelect = False
     }
 
 
@@ -96,6 +97,7 @@ type alias Model =
     , downloadFileName : String
     , downloadFileType : ImageFileType
     , slideMenuOpen : Bool
+    , smallSelect : Bool
     }
 
 
@@ -168,6 +170,7 @@ type Msg
     | UpdateDownloadFileName String
     | DownloadImage
     | SetSlideMenuTrueOpen Bool
+    | ToggleEnableSmallSelect
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -198,7 +201,7 @@ update msg model =
                         mathType
 
                 newModel =
-                    { model | selectedMathType = newMathType }
+                    { model | selectedMathType = newMathType, smallSelect = False }
             in
                 ( newModel, updateEquation (encode 0 (encodeModel newModel)) )
 
@@ -268,6 +271,17 @@ update msg model =
         SetSlideMenuTrueOpen position ->
             ( { model | slideMenuOpen = position }, Cmd.none )
 
+        ToggleEnableSmallSelect ->
+            ( { model
+                | smallSelect =
+                    if (model.smallSelect) then
+                        False
+                    else
+                        True
+              }
+            , Cmd.none
+            )
+
 
 view : Model -> Html Msg
 view model =
@@ -309,12 +323,20 @@ view model =
             ]
         , div [ id MyCss.NavContainer ]
             [ img [ id "logo", class [ MyCss.NavLogo ], src (model.baseUrl ++ "Img/logoClearBackground.svg") ] []
-            , button [ onClick (ChangeMathType Tex), (navButtonClass model.selectedMathType Tex) ]
-                [ img [ id MyCss.LatexImage, src (model.baseUrl ++ "Img/latex.svg") ] []
+            , div [ id MyCss.ContainerMathEquationSelectors, mathEquationSelectorsStyles model ]
+                [ button
+                    [ id HiddenSmall
+                    , class [ MyCss.NavButton ]
+                    , onClick ToggleEnableSmallSelect
+                    ]
+                    [ text (toString model.selectedMathType) ]
+                , button [ onClick (ChangeMathType Tex), (navButtonClass model.selectedMathType Tex) ]
+                    [ img [ id MyCss.LatexImage, src (model.baseUrl ++ "Img/latex.svg") ] []
+                    ]
+                , button [ onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath) ] [ text "AsciiMath" ]
+                , button [ onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML) ] [ text "MathML" ]
                 ]
-            , button [ onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath) ] [ text "AsciiMath" ]
-            , button [ onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML) ] [ text "MathML" ]
-            , div [ style [ ( "margin-left", "auto" ) ] ]
+            , div [ id "NavActionsButtonsContainer" ]
                 [ a [ href "https://github.com/brendena/MathEquations-Extension", target "blank" ]
                     [ button [ iconClass MyCss.IconGithubCircled, class [ MyCss.NavButton ] ] []
                     ]
@@ -329,6 +351,14 @@ view model =
 {--------------ViewHelperFunc----------------------------------------}
 
 
+mathEquationSelectorsStyles : Model -> Attribute Msg
+mathEquationSelectorsStyles model =
+    if (model.smallSelect) then
+        class [ MyCss.MathEquationSelectorsOpen ]
+    else
+        class []
+
+
 navButtonClass : MathType -> MathType -> Attribute Msg
 navButtonClass modelMathTypeSelect mathType =
     let
@@ -337,7 +367,7 @@ navButtonClass modelMathTypeSelect mathType =
     in
         case equal of
             True ->
-                class [ MyCss.NavButton, MyCss.NavButtonSelected ]
+                class [ MyCss.NavButton, MyCss.NavButtonSelected, MyCss.LastOrderNavBar ]
 
             False ->
                 class [ MyCss.NavButton ]

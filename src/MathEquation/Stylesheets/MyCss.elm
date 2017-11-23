@@ -16,6 +16,8 @@ type CssClasses
     | ImageSizePresetButton
     | SelectedImageSizePresetButton
     | FlexBoxHorizontalCenter
+    | MathEquationSelectorsOpen
+    | LastOrderNavBar
 
 
 type CssIds
@@ -35,6 +37,9 @@ type CssIds
     | DownloadButton
     | OpenDownloadMenu
     | OptionsSlideMenu
+    | ContainerMathEquationSelectors
+    | HiddenSmall
+    | NavActionsButtonsContainer
 
 
 type FontClasses
@@ -86,6 +91,7 @@ transition i =
     property "transition" i
 
 
+heightNavContainer : Float
 heightNavContainer =
     75
 
@@ -270,4 +276,46 @@ css =
                 [ height (pct 50)
                 ]
             ]
+        , mediaQuery [ "screen and ( max-width: 800px )" ]
+            [ id ContainerMathEquationSelectors
+                [ flexDirection column
+                , height (px (heightNavContainer * 4))
+                , flex (int 1)
+                ]
+            , class LastOrderNavBar
+                [ Css.order (int 99)
+                ]
+            , class MathEquationSelectorsOpen
+                [ transform (translateY (px (heightNavContainer * -2)))
+                , children
+                    [ id HiddenSmall [ Css.order (int 50) ]
+                    ]
+                ]
+            , id NavContainer
+                [ justifyContent spaceBetween
+                ]
+            ]
+        , mediaQuery [ "screen and ( min-width: 800px )" ]
+            [ id ContainerMathEquationSelectors
+                [ flexDirection row
+                ]
+            , id HiddenSmall [ display none ]
+            , id NavActionsButtonsContainer
+                [ marginLeft auto
+                ]
+            ]
+        , id ContainerMathEquationSelectors
+            [ displayFlex
+            ]
         ]
+
+
+
+{-
+
+   (calc () plus () )
+
+      height: 300%;
+      transform: translateY(calc(-100% + 75px));
+      border: 1px solid;
+-}

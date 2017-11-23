@@ -79,7 +79,7 @@ css =
         ]
     , id NavContainer
         [ height (px heightNavContainer)
-        , borderTopColor (hex "#000000")
+        , borderTopColor (hex "#ffffff")
         , borderTopWidth (px 3)
         , borderTopStyle (solid)
         , backgroundColor (hex navBackgroundColor)
@@ -164,7 +164,6 @@ css =
         , backgroundColor (hex "#FFFFFF")
         , bottom (px 0)
         , width (pct 50)
-        , left (pct 25)
         , padding (px 25)
         , paddingBottom (px 0)
         , borderStyle solid
@@ -210,7 +209,7 @@ css =
         [ backgroundColor (hex "#aaaa78")    
         ]
     , class HideEquationsContainer
-        [ transition "1s"
+        [ transition ".5s"
         ]
     , class ImageSizePresetButton
         [ height (pct 100)

@@ -1,7 +1,9 @@
 'use strict'
 
 
-import styles from './MathEquation/Stylesheets/MyCss.css'
+require('./MathEquation/Stylesheets/StylesheetCompiler.elm');
+
+//import styles from './MathEquation/Stylesheets/MyCss.css'
 import styles from './MathEquation/Stylesheets/fontello/css/animation.css'
 import styles from './MathEquation/Stylesheets/fontello/css/fontello-codes.css'
 import styles from './MathEquation/Stylesheets/fontello/css/fontello.css'

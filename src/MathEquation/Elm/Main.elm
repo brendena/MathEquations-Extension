@@ -319,9 +319,8 @@ equationsContainerStyles  modelMathTypeSelect  y =
       isNotMathType = modelMathTypeSelect ==  NoMathType
   in
     case isNotMathType of
-        True -> style[ ("top","100%")]
-        --False -> style[ ("top",toString(y) ++"px")]
-        False -> style[ ("top","0px")]
+        True -> style[("top","0"), ("transform","translateY(100%)")]
+        False -> style[ ("top","0")]
 
 sizeCanvas : ImageSizePresets -> Int -> Attribute Msg
 sizeCanvas imageSizePreset userDefinedSize = 
@@ -350,8 +349,8 @@ downloadFilesName fileName imageFileType =
 positionOptionsSlideMenu : Bool -> Attribute Msg
 positionOptionsSlideMenu open = 
   case open of
-    True -> style[ ("transform","translateY(0)")]
-    False ->  style[ ("transform","translateY(100%)") ] 
+    True -> style[ ("transform","translateY(0) translateX(50%)")]
+    False ->  style[ ("transform","translateY(100%) translateX(50%)") ] 
       
 {--------------ViewHelperFunc----------------------------------------}
 

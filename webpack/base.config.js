@@ -32,6 +32,8 @@ https://medium.com/@bogdan_plieshka/loading-static-and-dynamic-images-with-webpa
  https://github.com/TypeStrong/ts-loader
 
  */
+
+
 module.exports = {
   entry: {
     mathEquationComponent: "./src/webPackMathEquation.js",
@@ -45,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']}),
-    new WebpackShellPlugin({onBuildStart: ['elm-css src/MathEquation/Stylesheets/StylesheetCompiler.elm --output src/MathEquation/Stylesheets/']}),
+    //new WebpackShellPlugin({onBuildStart: ['elm-css src/MathEquation/Stylesheets/StylesheetCompiler.elm --output src/MathEquation/Stylesheets/']}),
     new CopyWebpackPlugin([
       { from: "./src/manifest.json" },
       { from: "./src/PopUpMenu/Html/popUp.html" },
@@ -60,7 +62,7 @@ module.exports = {
     new ChromeExtensionReloader({
       port: 9090, // Which port use to create the server
       reloadPage: true, // Force the reload of the page also
-      entries: { //The entries used for the content/background scripts
+      entries: { //The entries used for the content/backgrodeepund scripts
         contentScript: 'contentScripts', //Use the entry names, not the file name or the path
         background: 'popUp'
       }
@@ -77,7 +79,7 @@ module.exports = {
       //*
       {
         test:    /\.elm$/,
-        exclude: [/elm-stuff/, /node_modules/,"/src/MathEquation/Stylesheets/StylesheetCompiler.elm"],
+        exclude: [/elm-stuff/, /node_modules/, /StylesheetCompiler\.elm/],
         loader:  'elm-webpack-loader?verbose=true&warn=true',
       },
       ///*
@@ -89,13 +91,11 @@ module.exports = {
         ]
       },
       //*/
-      /*
+      ///*
       {
         //test: /StylesheetsCompiler\.elm$/,
         //include: "/src/MathEquation/Elm",
-        test:    /\.elm$/,
-        exclude:["/src/MathEquation/Elm","/elm-stuff"],
-        include: "/src/MathEquation/Stylesheets/StylesheetCompiler.elm",
+        test: /StylesheetCompiler\.elm$/,
         use: [
           'style-loader',
           'css-loader',
@@ -127,7 +127,7 @@ module.exports = {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'url-loader?limit=10000&mimetype=application/font-woff',
       }
-    ],
-    noParse: /^((?!StylesheetCompiler).)*\.elm.*$/
+    ]
+    ,noParse: /^((?!StylesheetCompiler).)*\.elm.*$/
   }
 };

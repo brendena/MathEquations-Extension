@@ -12,7 +12,7 @@
 
 
 ## Getting started
-* npm install -g elm bower webpack
+* npm install -g elm elm-format bower webpack 
 * npm install
 * bower install
 * elm-package install
@@ -38,6 +38,10 @@ In **/src/ContentScripts/Js/content.js** you can add this line **constructUi();*
 At **about:debugging** you can add extension locally.
 
 [Disabling popup auto hide](https://developer.mozilla.org/en-US/Add-ons/WebExtensions/Debugging#Debugging_popups)
+
+## Formating
+### Elm
+I use the default elm-format.  For visual studio code the extension is [vscode-elm](https://github.com/Krzysztof-Cieslak/vscode-elm).  
 
 
 ## current features to implement 

@@ -54,15 +54,13 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.app = Elm.Main.embed(this.container,{
             "baseUrl": this.getAttribute("baseurl")
         });
+        /*
         this.app.ports.getPageYOffset.subscribe((elmMousePositon :number)=>{
             /*code for when this is not in a iframe */ 
             //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
-            this.postMessageHandler.mouseResize(elmMousePositon);
-        });
+        //    this.postMessageHandler.mouseResize(elmMousePositon);
+        //});
 
-        this.app.ports.sumitEquation.subscribe((elmString:string)=>{
-            //var elmObject = new ElmPort(elmString);
-        });
         this.app.ports.updateEquation.subscribe((elmJsonString:string)=> {
             var elmObject = new ElmPort(elmJsonString);
             
@@ -71,9 +69,11 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
             if(this.mathType !== elmObject.selectedMathType)
                 this.setAttribute(MathCompAttributes.mathtype,elmObject.selectedMathType)
 
+            this.postMessageHandler.MinimizeTextInput(false);
+        });
 
-            if(elmObject.selectedMathType != MathTypes.NoMathType){
-                this.mathJaxConvert.queueEquation(elmObject);
+        this.app.ports.setEquationContainerOpen.subscribe((elmBool:boolean)=> {
+            if(elmBool == true){
                 this.postMessageHandler.MinimizeTextInput(false);
             }
             else{
@@ -96,8 +96,9 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         setTimeout(()=>{
 
             var submitButton = document.getElementById("NavSubmitButton")
-            if(submitButton == null)
-                throw("can't add clipboard becuase elms still loading");
+            var resizeIcon = document.getElementById("ResizeIcon");
+            if(submitButton == null || resizeIcon == null)
+                throw("can't add event handlers becuase elms still loading");
 
             submitButton.onclick = function(){
                 console.log(document.execCommand("copy"));
@@ -110,14 +111,38 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 if (event.clipboardData) {
                     var png64 = this.canvasToImage.convertSvg(this.mathType + "Equation", this.color)
                     event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ png64 +'">');
-
-                  
                 }
                 else{
                     throw("your browser does not support clipboardData.")
                 }
             });
-                        
+
+            resizeIcon.addEventListener("touchstart", (event)=>{
+                let sourceElement = event.srcElement;
+                if (sourceElement == null)
+                    throw "no source element"
+                sourceElement.addEventListener("touchmove", (event)=>{
+                   this.postMessageHandler.mouseResize(event.changedTouches[0].clientY);
+                   
+                   event.preventDefault();
+                })
+                sourceElement.addEventListener("touchend", function(event){
+                    //console.log(event)
+                    let sourceElement = event.srcElement;
+                    if (sourceElement == null)
+                        throw "no source element"
+                    sourceElement.removeEventListener("touchmove", function(){}, false);
+                    sourceElement.removeEventListener("touchend", function(){}, false);
+                    event.preventDefault();
+                });
+                event.preventDefault();
+            });
+            
+            resizeIcon.addEventListener("mousedown", (event)=>{
+                this.postMessageHandler.enableMouseResize();
+                event.preventDefault();
+            });
+            
         },1000)
 
     }

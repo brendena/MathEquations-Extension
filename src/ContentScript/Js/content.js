@@ -26,7 +26,7 @@ var constructUi = function(configOptions){
         /*veryMuchHack*/
             /*orgin is know added in the web component itself */
             var timeOut = 500;
-            var lastPositionY = undefined;
+            var lastPositionY = 400;
             var minPositionY = 100;
             window.addEventListener("message", function(event){
                 var messageData = event.data 
@@ -52,14 +52,31 @@ var constructUi = function(configOptions){
                                 setTimeout(function(){iframe.style.height =  "100px";},timeOut);
                             }
                             else{
-                                if(lastPositionY != undefined)
-                                    iframe.style.height =  lastPositionY + "px";;
+                                iframe.style.height =  lastPositionY + "px";;
                             }
+                            break;
+                        case "EnableMouseResize":
+                            iframe.style.pointerEvents = 'none';
+                            console.log("enabling mouse resize")
+                            var moveHeight = function(event){
+                                var height = document.body.clientHeight - event.clientY;
+                                iframe.style.height = height + "px";
+                            }
+                            var removeEventListeners = function(event){
+                                console.log("removed event listeners")
+                                document.removeEventListener("mousemove",moveHeight,false);
+                                document.removeEventListener("mouseup", removeEventListener,false);
+                                iframe.style.pointerEvents = 'initial';
+                            }
+                            document.addEventListener("mousemove",moveHeight,false);
+                            document.addEventListener("mouseup", removeEventListeners,false);
                             break;
                     }
                 }
 
             }, false);
+            //https://www.gyrocode.com/articles/how-to-detect-mousemove-event-over-iframe-element/
+            
         /*veryMuchHack*/
         
         var addScript = function(scriptName){

@@ -9,14 +9,13 @@ import Json.Encode exposing (encode, Value, string, int, float, bool, list, obje
 import Html.CssHelpers exposing (withNamespace)
 import MyCss exposing (..)
 import Debug exposing (log)
-import Mouse exposing (..)
 import Result
 
 
 {--------------JsToElm----------------------------------------}
 
 
-port returnBoundingClientRect : (String -> msg) -> Sub msg
+--port returnBoundingClientRect : (String -> msg) -> Sub msg
 
 
 
@@ -24,26 +23,15 @@ port returnBoundingClientRect : (String -> msg) -> Sub msg
 {--------------ElmToJS----------------------------------------}
 
 
-port reloadEquation : String -> Cmd msg
-
-
 port updateEquation : String -> Cmd msg
-
-
-port sumitEquation : String -> Cmd msg
-
-
-
---!!! i don't need to submit a String
-
-
-port getPageYOffset : String -> Cmd msg
 
 
 port closePage : String -> Cmd msg
 
 
 port downloadImage : String -> Cmd msg
+
+port setEquationContainerOpen : String -> Cmd msg
 
 
 
@@ -71,8 +59,6 @@ initialModel =
     , equationContainerTop = 800
     , selectedMathType = Tex
     , mathEquation = ""
-    , mousePositionY = 0
-    , minimizeMenuState = False
     , mathEquationColor = "#000000"
     , imagePreset = MediumImage
     , userDefinedSize = 0
@@ -80,6 +66,7 @@ initialModel =
     , downloadFileType = ImageSvg
     , slideMenuOpen = False
     , smallSelect = False
+    , equationContainerOpen = True
     }
 
 
@@ -89,8 +76,6 @@ type alias Model =
     , equationContainerTop : Int
     , selectedMathType : MathType
     , mathEquation : String
-    , mousePositionY : Int
-    , minimizeMenuState : Bool
     , mathEquationColor : String
     , imagePreset : ImageSizePresets
     , userDefinedSize : Int
@@ -98,6 +83,7 @@ type alias Model =
     , downloadFileType : ImageFileType
     , slideMenuOpen : Bool
     , smallSelect : Bool
+    , equationContainerOpen: Bool
     }
 
 
@@ -122,6 +108,7 @@ encodeModel model =
         , ( "mathEquation", Json.Encode.string model.mathEquation )
         , ( "mathEquationColor", Json.Encode.string model.mathEquationColor )
         , ( "downloadFileType", Json.Encode.string (stringImageFileType model.downloadFileType) )
+        , ( "equationContainerOpen",  Json.Encode.string (toString model.equationContainerOpen))
         ]
 
 
@@ -129,7 +116,6 @@ type MathType
     = MathML
     | AsciiMath
     | Tex
-    | NoMathType
 
 
 type ImageSizePresets
@@ -156,12 +142,8 @@ stringImageFileType imageFileType =
 
 type Msg
     = UrlChange String
-    | MouseChange Int Int
-    | SetTrackMousePointer Bool
     | ChangeMathType MathType
     | UpdateEquation String
-    | SubmitEquation
-    | GotPageYOffset String
     | ClosePage
     | OnColorChange String
     | SetSizeImagePresets ImageSizePresets
@@ -171,6 +153,7 @@ type Msg
     | DownloadImage
     | SetSlideMenuTrueOpen Bool
     | ToggleEnableSmallSelect
+    | ToggleEquationContainerVisible
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -179,29 +162,10 @@ update msg model =
         UrlChange urlChange ->
             ( { model | baseUrl = urlChange }, Cmd.none )
 
-        MouseChange x y ->
-            let
-                _ =
-                    1
-
-                --+ Debug.log "testing"  y
-                --test = Debug.log "window height" Window.size
-            in
-                ( { model | mousePositionY = y }, getPageYOffset (toString (y)) )
-
-        SetTrackMousePointer set ->
-            ( { model | trackMousePointerBool = set }, Cmd.none )
-
         ChangeMathType mathType ->
             let
-                newMathType =
-                    if (model.selectedMathType == mathType) then
-                        NoMathType
-                    else
-                        mathType
-
                 newModel =
-                    { model | selectedMathType = newMathType, smallSelect = False }
+                    { model | selectedMathType = mathType, smallSelect = False, equationContainerOpen = True }
             in
                 ( newModel, updateEquation (encode 0 (encodeModel newModel)) )
 
@@ -212,24 +176,6 @@ update msg model =
             in
                 ( newModel, updateEquation (encode 0 (encodeModel newModel)) )
 
-        SubmitEquation ->
-            ( model, sumitEquation (encode 0 (encodeModel model)) )
-
-        GotPageYOffset offsetString ->
-            let
-                --test = decodeString (field "name" string) "{ \"name\": \"tom\" }"
-                convert =
-                    String.toInt offsetString
-
-                position =
-                    case convert of
-                        Ok offset ->
-                            model.mousePositionY - offset
-
-                        Err error ->
-                            model.equationContainerTop
-            in
-                ( { model | equationContainerTop = position }, Cmd.none )
 
         ClosePage ->
             ( model, closePage "True" )
@@ -281,14 +227,24 @@ update msg model =
               }
             , Cmd.none
             )
+        ToggleEquationContainerVisible ->
+            ( { model
+                | equationContainerOpen =
+                    if (model.equationContainerOpen) then
+                        False
+                    else
+                        True
+              }
+            , setEquationContainerOpen (toString model.equationContainerOpen)
+            )
 
 
 view : Model -> Html Msg
 view model =
     div [ id "elmContainer" ]
-        [ div [ id MyCss.EquationsContainer, equationsContainerCss model.selectedMathType, equationsContainerStyles model.selectedMathType model.equationContainerTop ]
+        [ div [ id MyCss.EquationsContainer, equationsContainerStyles model.equationContainerOpen ]
             [ div []
-                [ img [ draggable "False", id MyCss.ResizeIcon, onMouseDown (SetTrackMousePointer True), src (model.baseUrl ++ "Img/resizeIcon.svg"), attribute "ondragstart" "return false", attribute "ondrop" "return false" ] []
+                [ img [ draggable "False", id MyCss.ResizeIcon, src (model.baseUrl ++ "Img/resizeIcon.svg"), attribute "ondragstart" "return false", attribute "ondrop" "return false" ] []
                 ]
             , div [ id MyCss.MathTextEquationContainer ]
                 [ textarea [ onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText, class [ MyCss.ItemsEquationContainer ] ] [ text "" ]
@@ -302,7 +258,7 @@ view model =
                             ]
                         ]
                     , div [ id MyCss.MathOutputMenu ]
-                        [ button [ onClick SubmitEquation, style [ ( "height", "100%" ) ], id MyCss.NavSubmitButton ] [ text "copy image" ]
+                        [ button [ style [ ( "height", "100%" ) ], id MyCss.NavSubmitButton ] [ text "copy image" ]
                         , input [ onInput OnColorChange, style [ ( "background", "none" ), ( "border", "none" ) ], type_ "color" ] []
                         , button [ class [ MyCss.ImageSizePresetButton ], onClick DownloadImage, id MyCss.OpenDownloadMenu, Html.Attributes.classList [ ( stringFontClasses MyCss.IconDownload, True ) ] ] []
                         , button [ sizeButtonClass model.imagePreset SmallImage, style [ ( "font-size", "10px" ) ], iconClass IconPicture, onClick (SetSizeImagePresets SmallImage) ] []
@@ -337,7 +293,8 @@ view model =
                 , button [ onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML) ] [ text "MathML" ]
                 ]
             , div [ id "NavActionsButtonsContainer" ]
-                [ a [ href "https://github.com/brendena/MathEquations-Extension", target "blank" ]
+                [ button [onClick ToggleEquationContainerVisible, iconClass MyCss.IconUpOpen, class [ MyCss.NavButton ], equationContainerToggleStyles model.equationContainerOpen] []
+                ,    a [ href "https://github.com/brendena/MathEquations-Extension", target "blank" ]
                     [ button [ iconClass MyCss.IconGithubCircled, class [ MyCss.NavButton ] ] []
                     ]
                 , button [ onClick ClosePage, class [ MyCss.NavButton ], Html.Attributes.classList [ ( stringFontClasses MyCss.IconCancel1, True ) ] ] []
@@ -349,6 +306,15 @@ view model =
 
 
 {--------------ViewHelperFunc----------------------------------------}
+
+equationContainerToggleStyles : Bool -> Attribute Msg
+equationContainerToggleStyles open =
+    case open of
+        True ->
+            style [ ( "transform", " rotate(180deg)" ), ("transition", "0.5s") ]
+
+        False ->
+            style [ ( "transform", " rotate(0deg)" ) , ("transition", "0.5s") ]
 
 
 mathEquationSelectorsStyles : Model -> Attribute Msg
@@ -401,32 +367,16 @@ fileTypeClass modelImageSizePreset imageSizePreset =
                 class [ MyCss.ImageSizePresetButton ]
 
 
-equationsContainerCss : MathType -> Attribute Msg
-equationsContainerCss modelMathTypeSelect =
-    let
-        equal =
-            modelMathTypeSelect == NoMathType
-    in
-        case equal of
-            True ->
-                class [ MyCss.HideEquationsContainer ]
-
-            False ->
-                class []
 
 
-equationsContainerStyles : MathType -> Int -> Attribute Msg
-equationsContainerStyles modelMathTypeSelect y =
-    let
-        isNotMathType =
-            modelMathTypeSelect == NoMathType
-    in
-        case isNotMathType of
-            True ->
-                style [ ( "top", "0" ), ( "transform", "translateY(100%)" ) ]
+equationsContainerStyles : Bool -> Attribute Msg
+equationsContainerStyles equationContainerOpen =
+    case equationContainerOpen of
+        True ->
+            style [ ("transition", ".5s"), ( "top", "0" ) ]
 
-            False ->
-                style [ ( "top", "0" ) ]
+        False ->
+            style [ ("transition", ".5s"),( "top", "0" ),( "transform", "translateY(100%)" )]
 
 
 sizeCanvas : ImageSizePresets -> Int -> Attribute Msg
@@ -473,11 +423,11 @@ positionOptionsSlideMenu : Bool -> Attribute Msg
 positionOptionsSlideMenu open =
     case open of
         True ->
-            style [ ( "transform", "translateY(0) translateX(50%)" ) ]
-
+           -- style [ ( "transform", "translateY(0) translateX(50%)" ) ]
+            class [ MyCss.OptionsSlideMenuTransitionOpen ]
         False ->
-            style [ ( "transform", "translateY(100%) translateX(50%)" ) ]
-
+           -- style [ ( "transform", "translateY(100%) translateX(50%)" ) ]
+            class [ MyCss.OptionsSlideMenuTransitionClose ]
 
 
 {--------------ViewHelperFunc----------------------------------------}
@@ -487,21 +437,11 @@ positionOptionsSlideMenu open =
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.batch
-        (trackMousePointer (model.trackMousePointerBool)
-            ++ [ returnBoundingClientRect GotPageYOffset
-               , Mouse.ups (\{ x, y } -> SetTrackMousePointer (False))
-               ]
+        ([ 
+        ]
         )
 
 
-trackMousePointer : Bool -> List (Sub Msg)
-trackMousePointer trackMouse =
-    case trackMouse of
-        True ->
-            [ Mouse.moves (\{ x, y } -> MouseChange x y) ]
-
-        False ->
-            []
 
 
 

@@ -40,6 +40,8 @@ type CssIds
     | ContainerMathEquationSelectors
     | HiddenSmall
     | NavActionsButtonsContainer
+    | OptionsSlideMenuTransitionOpen
+    | OptionsSlideMenuTransitionClose
 
 
 type FontClasses
@@ -80,6 +82,9 @@ stringFontClasses fontClass =
         IconDocText ->
             "icon-doc-test-inv"
 
+transformString : String -> Style
+transformString i =
+    property "transform" i
 
 userSelect : String -> Style
 userSelect i =
@@ -195,7 +200,6 @@ css =
             [ position fixed
             , backgroundColor (hex "#FFFFFF")
             , bottom (px 0)
-            , width (pct 50)
             , padding (px 25)
             , paddingBottom (px 0)
             , borderStyle solid
@@ -256,6 +260,12 @@ css =
             [ displayFlex
             , justifyContent center
             ]
+        ,class OptionsSlideMenuTransitionClose
+            [ 
+            ]
+        , class OptionsSlideMenuTransitionOpen
+            [transformString "translateY(0) translateX(50%)"
+            ]
 
         --resize mathTexEquation on smaller screen
         , mediaQuery [ "screen and ( max-width: 1000px )" ]
@@ -294,6 +304,14 @@ css =
             , id NavContainer
                 [ justifyContent spaceBetween
                 ]
+            , class OptionsSlideMenuTransitionOpen
+                [ transformString "translateY(0) translateX(5%)"
+                , width (pct 90)
+                ]
+            ,class OptionsSlideMenuTransitionClose
+                [ transformString "translateY(100%) translateX(5%)"
+                , width (pct 90)
+                ]
             ]
         , mediaQuery [ "screen and ( min-width: 800px )" ]
             [ id ContainerMathEquationSelectors
@@ -302,6 +320,14 @@ css =
             , id HiddenSmall [ display none ]
             , id NavActionsButtonsContainer
                 [ marginLeft auto
+                ]
+            , class OptionsSlideMenuTransitionOpen
+                [ transformString "translateY(0) translateX(50%)" 
+                , width (pct 50)
+                ]
+            ,class OptionsSlideMenuTransitionClose
+                [ transformString "translateY(100%) translateX(50%)"
+                , width (pct 50)
                 ]
             ]
         , id ContainerMathEquationSelectors
@@ -312,6 +338,8 @@ css =
 
 
 {-
+
+
 
    (calc () plus () )
 

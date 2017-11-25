@@ -1,7 +1,6 @@
 export class PostMessageHandler {
     origin: string;
     prevStateMinimizeTextInput = true;
-    prevStateMinimizeMenu = false;
     prevMouseResize = 0;
     marginErrorResize = 10;
     resizeAmount = 20;
@@ -32,6 +31,9 @@ export class PostMessageHandler {
         }
         this.prevStateMinimizeTextInput = minimize;
     }
+    enableMouseResize(){
+        parent.postMessage({"messageType": PostMessagesTypes.EnableMouseResize, "value": true},this.origin);
+    }
 }
 
 
@@ -39,5 +41,6 @@ export const enum PostMessagesTypes {
     MouseResize = "MouseResize",
     CloseMenu = "CloseMenu",
     MinimizeMenu = "MinimizeMenu",
-    MinimizeTextInput = "MinimizeTextInput"
+    MinimizeTextInput = "MinimizeTextInput",
+    EnableMouseResize = "EnableMouseResize"
 }

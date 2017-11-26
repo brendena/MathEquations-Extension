@@ -54,9 +54,8 @@
       "strict_min_version": "48.0"
     }
   },
-  "background": {
-    "scripts": [
-      "background.js"
-    ]
+  "-ms-preload": {
+      "backgroundScript": "backgroundScriptsAPIBridge.js",
+      "contentScript": "contentScriptsAPIBridge.js"
   }
 }

@@ -134,6 +134,7 @@ css =
             ]
         , id LatexImage
             [ height (pct 40)
+            , width (px 150)
             ]
         , id EquationsContainer
             [ width (pct 100)

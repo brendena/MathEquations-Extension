@@ -35,6 +35,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.container.style.left = "0"
         this.container.style.background = "white";
         this.container.style.zIndex = "2000"
+
     }
     static get observedAttributes(){
         return [MathCompAttributes.baseurl,
@@ -43,6 +44,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 MathCompAttributes.origin]
     }
     connectedCallback() {
+        console.log("connected Callback")
         document.body.appendChild(this.container);
         var event = new CustomEvent('MathEquationAdded');
         document.dispatchEvent(event);
@@ -50,16 +52,11 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         if(origin == null)
             throw("didn't get origin url");
         this.postMessageHandler = new PostMessageHandler(origin);
+
         /**********************setting-elm-up************************************/
         this.app = Elm.Main.embed(this.container,{
             "baseUrl": this.getAttribute("baseurl")
         });
-        /*
-        this.app.ports.getPageYOffset.subscribe((elmMousePositon :number)=>{
-            /*code for when this is not in a iframe */ 
-            //this.app.ports.returnBoundingClientRect.send(offsetHeight.toString());
-        //    this.postMessageHandler.mouseResize(elmMousePositon);
-        //});
 
         this.app.ports.updateEquation.subscribe((elmJsonString:string)=> {
             var elmObject = new ElmPort(elmJsonString);
@@ -69,15 +66,16 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
             if(this.mathType !== elmObject.selectedMathType)
                 this.setAttribute(MathCompAttributes.mathtype,elmObject.selectedMathType)
 
+            this.mathJaxConvert.queueEquation(elmObject);
             this.postMessageHandler.MinimizeTextInput(false);
         });
 
-        this.app.ports.setEquationContainerOpen.subscribe((elmBool:boolean)=> {
-            if(elmBool == true){
-                this.postMessageHandler.MinimizeTextInput(false);
+        this.app.ports.setEquationContainerOpen.subscribe((elmStringBool:string)=> {
+            if(elmStringBool == "true" || elmStringBool == "True"){             
+                this.postMessageHandler.MinimizeTextInput(true);
             }
             else{
-                this.postMessageHandler.MinimizeTextInput(true);
+                this.postMessageHandler.MinimizeTextInput(false);
             }
         });
 
@@ -101,12 +99,11 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 throw("can't add event handlers becuase elms still loading");
 
             submitButton.onclick = function(){
-                console.log(document.execCommand("copy"));
+                document.execCommand("copy");
             }
             document.addEventListener("copy", (event:ClipboardEvent)=>{
                 event.preventDefault();
 
-                console.log("clipboard copy")
                 
                 if (event.clipboardData) {
                     var png64 = this.canvasToImage.convertSvg(this.mathType + "Equation", this.color)
@@ -118,23 +115,27 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
             });
 
             resizeIcon.addEventListener("touchstart", (event)=>{
+
                 let sourceElement = event.srcElement;
                 if (sourceElement == null)
                     throw "no source element"
-                sourceElement.addEventListener("touchmove", (event)=>{
-                   this.postMessageHandler.mouseResize(event.changedTouches[0].clientY);
-                   
-                   event.preventDefault();
-                })
-                sourceElement.addEventListener("touchend", function(event){
-                    //console.log(event)
+
+                let touchMoveFunc = (event:TouchEvent)=>{
+                    this.postMessageHandler.mouseResize(event.changedTouches[0].clientY);
+                    event.preventDefault();
+                }
+                let touchEndFunc = (event:TouchEvent)=>{
                     let sourceElement = event.srcElement;
                     if (sourceElement == null)
                         throw "no source element"
-                    sourceElement.removeEventListener("touchmove", function(){}, false);
-                    sourceElement.removeEventListener("touchend", function(){}, false);
+                    sourceElement.removeEventListener("touchmove", touchMoveFunc, false);
+                    sourceElement.removeEventListener("touchend", touchEndFunc, false);
                     event.preventDefault();
-                });
+                }
+                sourceElement.addEventListener("touchmove",touchMoveFunc)
+                //<HACK> to allow the options in addEventListener
+                //https://stackoverflow.com/questions/46844639/addeventlistener-error-with-options-in-typescript
+                sourceElement.addEventListener("touchend", touchEndFunc,<any>{"once": true});
                 event.preventDefault();
             });
             
@@ -142,6 +143,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 this.postMessageHandler.enableMouseResize();
                 event.preventDefault();
             });
+
             
         },1000)
 
@@ -151,8 +153,8 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
 
     }
     attributeChangedCallback(attrName?: string, oldVal?: string, newVal?: string){
-        console.log("attributeChange");
-        console.log(newVal)
+        //console.log("attributeChange");
+        //console.log(newVal)
         if(newVal != null || newVal != undefined){
             switch(attrName){
                 case MathCompAttributes.baseurl:

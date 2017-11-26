@@ -1,17 +1,9 @@
 var iframeId = "mathEquationIframe";
 var constructUi = function(configOptions){
+    console.log("constructing ui")
     var iframe = document.createElement("iframe")
     iframe.id= iframeId;
-    iframe.style.position = "fixed"
-    iframe.style.bottom = "0";
-    iframe.style.left = "0";
-    iframe.style.zIndex = "4000";
-    iframe.style.border = "0";
-    iframe.style.width = "100%";
-    iframe.style.height = "300px";
     iframe.allowtransparency="true";
-    iframe.style.maxHeight = "80%";
-    //iframe.style.minHeight = "100px";
     
     setTimeout(function(){
         iframe = document.getElementById("mathEquationIframe");
@@ -30,7 +22,7 @@ var constructUi = function(configOptions){
             var minPositionY = 100;
             window.addEventListener("message", function(event){
                 var messageData = event.data 
-                //console.log(messageData)
+                console.log(messageData)
                 if(messageData != undefined && messageData["messageType"] != undefined){
                     switch (messageData["messageType"]){
                         case "MouseResize":
@@ -55,36 +47,44 @@ var constructUi = function(configOptions){
                                 iframe.style.height =  lastPositionY + "px";;
                             }
                             break;
+
                         case "EnableMouseResize":
+                            //console.log("testing")
                             iframe.style.pointerEvents = 'none';
-                            console.log("enabling mouse resize")
                             var moveHeight = function(event){
+                                //console.log("mouse moved")
                                 var height = document.body.clientHeight - event.clientY;
                                 iframe.style.height = height + "px";
                             }
                             var removeEventListeners = function(event){
-                                console.log("removed event listeners")
+                                //console.log("removed")
                                 document.removeEventListener("mousemove",moveHeight,false);
                                 document.removeEventListener("mouseup", removeEventListener,false);
                                 iframe.style.pointerEvents = 'initial';
                             }
-                            document.addEventListener("mousemove",moveHeight,false);
-                            document.addEventListener("mouseup", removeEventListeners,false);
+                            document.addEventListener("mousemove",moveHeight);
+
+                            document.addEventListener("mouseup", removeEventListeners,{"once": true}); //,<any>{"once": true}
                             break;
+
                     }
                 }
 
             }, false);
+            
             //https://www.gyrocode.com/articles/how-to-detect-mousemove-event-over-iframe-element/
             
+
+
         /*veryMuchHack*/
         
         var addScript = function(scriptName){
-            var scriptTag = document.createElement('script');
+            let scriptTag = document.createElement('script');
             scriptTag.src = chrome.extension.getURL(scriptName + ".js")
             return iframe.contentDocument.head.appendChild(scriptTag)
         }
         var mathEuationComponent = addScript("mathEquationComponent");
+
         if( configOptions["fontStyles"] != undefined)
             mathEuationComponent.setAttribute('math-jax-font', configOptions["fontStyles"])
         /*need to loader the webcomponets-loader here because this code uses the url
@@ -99,10 +99,10 @@ var constructUi = function(configOptions){
 
 
 var runtimeFunction = function(request, sender) {
+    console.log(request)
     var iframe = document.getElementById(iframeId);
 	if(request.hasOwnProperty('openMenu')){
-        console.log(iframe)
-        if(iframe == undefined){
+        if(iframe == undefined || iframe == null){
             if (document.readyState != 'complete'){
                 window.addEventListener("load",constructUi);
             }
@@ -112,7 +112,7 @@ var runtimeFunction = function(request, sender) {
         }
     }
     else if(request.hasOwnProperty('resetUI')){
-        if(iframe != undefined){
+        if(iframe != undefined || iframe != null){
             iframe.parentNode.removeChild(iframe);
         }
         constructUi(request["resetUI"]);
@@ -125,4 +125,4 @@ chrome.runtime.onMessage.addListener(
 	runtimeFunction
 );
 
-constructUi({"fontStyles":"STIX-Web"});
+//constructUi({"fontStyles":"STIX-Web"});

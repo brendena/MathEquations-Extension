@@ -46,8 +46,6 @@
   ],
   
   "permissions": [
-    "tabs",
-    "activeTab",
     "storage"
   ],
   "applications": {

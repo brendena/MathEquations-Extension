@@ -1,6 +1,6 @@
 export class PostMessageHandler {
     origin: string;
-    prevStateMinimizeTextInput = true;
+    prevStateMinimizeTextInput = false;
     prevMouseResize = 0;
     marginErrorResize = 10;
     resizeAmount = 20;

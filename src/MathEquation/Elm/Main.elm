@@ -108,7 +108,6 @@ encodeModel model =
         , ( "mathEquation", Json.Encode.string model.mathEquation )
         , ( "mathEquationColor", Json.Encode.string model.mathEquationColor )
         , ( "downloadFileType", Json.Encode.string (stringImageFileType model.downloadFileType) )
-        , ( "equationContainerOpen",  Json.Encode.string (toString model.equationContainerOpen))
         ]
 
 
@@ -218,6 +217,10 @@ update msg model =
             ( { model | slideMenuOpen = position }, Cmd.none )
 
         ToggleEnableSmallSelect ->
+            --let
+            --    position = if(model.smallSelect) then False else model.equationContainerOpen
+            --in
+                
             ( { model
                 | smallSelect =
                     if (model.smallSelect) then
@@ -225,12 +228,12 @@ update msg model =
                     else
                         True
               }
-            , Cmd.none
+            ,Cmd.none   -- setEquationContainerOpen (toString position)
             )
         ToggleEquationContainerVisible ->
             ( { model
                 | equationContainerOpen =
-                    if (model.equationContainerOpen) then
+                    if (model.equationContainerOpen) then 
                         False
                     else
                         True

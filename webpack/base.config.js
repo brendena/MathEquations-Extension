@@ -51,9 +51,12 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: "./src/manifest.json" },
       { from: "./src/PopUpMenu/Html/popUp.html" },
-      { from: "./src/Img", to: "./Img" },
+      { from: "./src/StaticFiles/Img", to: "./Img" },
       { from: "./bower_components/webcomponentsjs/webcomponents-loader.js"},
-      { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"}
+      { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"},
+      { from: "./src/Background/Html/background.html" },
+      { from: "./src/Background/Js/background.js" },
+      { from: "./src/StaticFiles/Edge" }
     ]),
     new webpack.EnvironmentPlugin([
       'NODE_ENV',

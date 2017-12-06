@@ -1,22 +1,17 @@
-var iframeId = "mathEquationIframe";
+var mathEquationEditorId = "MathEquationElement";
 var constructUi = function(configOptions){
     console.log("constructing ui")
-    var iframe = document.createElement("iframe")
-    iframe.id= iframeId;
-    iframe.allowtransparency="true";
     
     setTimeout(function(){
-        iframe = document.getElementById("mathEquationIframe");
-        
-        
+
         var MathEquationTag = document.createElement("math-equation-anywhere");
-        MathEquationTag.id = "MathEquationElement"
+        MathEquationTag.id = mathEquationEditorId
         MathEquationTag.setAttribute("baseurl", chrome.extension.getURL(""));
         MathEquationTag.setAttribute("originurl", window.location.href);
-        iframe.contentDocument.body.appendChild(MathEquationTag)
         
         /*veryMuchHack*/
             /*orgin is know added in the web component itself */
+            /*
             var timeOut = 500;
             var lastPositionY = 400;
             var minPositionY = 100;
@@ -100,9 +95,9 @@ var constructUi = function(configOptions){
 
 var runtimeFunction = function(request, sender) {
     console.log(request)
-    var iframe = document.getElementById(iframeId);
+    var mathEquationEditor = document.getElementById(mathEquationEditorId);
 	if(request.hasOwnProperty('openMenu')){
-        if(iframe == undefined || iframe == null){
+        if(mathEquationEditor == undefined || mathEquationEditor == null){
             if (document.readyState != 'complete'){
                 window.addEventListener("load",constructUi);
             }
@@ -112,8 +107,8 @@ var runtimeFunction = function(request, sender) {
         }
     }
     else if(request.hasOwnProperty('resetUI')){
-        if(iframe != undefined || iframe != null){
-            iframe.parentNode.removeChild(iframe);
+        if(mathEquationEditor != undefined || mathEquationEditor != null){
+            mathEquationEditor.parentNode.removeChild(mathEquationEditor);
         }
         constructUi(request["resetUI"]);
     };

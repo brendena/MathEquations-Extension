@@ -34,12 +34,15 @@ https://medium.com/@bogdan_plieshka/loading-static-and-dynamic-images-with-webpa
  */
 
 
+const extractCSSElm = new ExtractTextPlugin({ filename: 'css/mathEquationComponentElm.css' })
+const extractCSSOther = new ExtractTextPlugin({ filename: 'css/mathEquationComponent.css' })
 module.exports = {
   entry: {
     mathEquationComponent: "./src/webPackMathEquation.js",
     contentScript: "./src/webPackContentScript.js",
     popUp: "./src/webPackPopUp.js",
-    background: "./src/webPackBackground.js"
+    background: "./src/webPackBackground.js",
+    mathEquationComponentOnload: "./src/webPackMathEquationOnload.js"
   },
   output: {
     path: path.resolve(__dirname + '/../dist'),
@@ -54,23 +57,20 @@ module.exports = {
       { from: "./src/StaticFiles/Img", to: "./Img" },
       { from: "./bower_components/webcomponentsjs/webcomponents-loader.js"},
       { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"},
+
       { from: "./src/Background/Html/background.html" },
       { from: "./src/Background/Js/background.js" },
-      { from: "./src/StaticFiles/Edge" }
+      { from: "./src/StaticFiles/Edge" },
+
+      { from: "./src/MathEquation/Stylesheets/fontello/font", to :"./font"}
     ]),
     new webpack.EnvironmentPlugin([
       'NODE_ENV',
-    ])
-    /*,
-    new ChromeExtensionReloader({
-      port: 9090, // Which port use to create the server
-      reloadPage: true, // Force the reload of the page also
-      entries: { //The entries used for the content/backgrodeepund scripts
-        contentScript: 'contentScripts', //Use the entry names, not the file name or the path
-        background: 'popUp'
-      }
-    })
-    */
+    ]),
+    extractCSSElm,
+    extractCSSOther
+    
+
   ],
   module: {
     rules: [
@@ -88,22 +88,35 @@ module.exports = {
       ///*
       {
         test: /\.(css|scss)$/,
+        exclude : [/MathEquation/],
         use: [
           'style-loader',
           'css-loader',
         ]
       },
+      ///*
+      {
+        test: /\.(css|scss)$/,
+        include : [/MathEquation/],
+        use: extractCSSOther.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+          ]
+        })
+      },
       //*/
       ///*
       {
-        //test: /StylesheetsCompiler\.elm$/,
-        //include: "/src/MathEquation/Elm",
         test: /StylesheetCompiler\.elm$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'elm-css-webpack-loader'
-        ]
+        use: extractCSSElm.extract({
+          fallback: 'style-loader',
+          use: [
+            'css-loader',
+            'elm-css-webpack-loader'
+          ]
+        })
+       
       },
       //*/
       {
@@ -128,7 +141,7 @@ module.exports = {
       },
       {  //loading font data
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&mimetype=application/font-woff',
+        loader: 'url-loader'//?limit=10000&mimetype=application/font-woff',
       }
     ]
     ,noParse: /^((?!StylesheetCompiler).)*\.elm.*$/

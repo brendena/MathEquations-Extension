@@ -8,6 +8,7 @@ import { CanvasToImage } from './CanvasToImage.ts'
 import { setTimeout } from 'timers';
 
 var Elm :any = require('../Elm/Main.elm');
+var chrome : any;
 
 @CustomElement({
     tagName: 'math-equation-anywhere',
@@ -16,17 +17,23 @@ var Elm :any = require('../Elm/Main.elm');
     //}
 })
 class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
-    container: HTMLElement;
+    private shadowDom : ShadowRoot;
+    container: HTMLDivElement;
     app:any;
     mathJaxConvert = new MathJaxConvert();
     postMessageHandler: PostMessageHandler;
     canvasToImage = new CanvasToImage();
+    baseUrl: string;
 
+
+    
     color: string = "#000000";
     mathType: MathTypes = MathTypes.NoMathType;
     constructor(){
         super();
-        const shadowRoot = this.attachShadow({mode: 'open'});
+
+        this.shadowDom = this.attachShadow({mode: 'closed'});
+
         this.container = document.createElement("div");
         this.container.id = "MathEquationContainer";
         this.container.style.width = "100%";
@@ -35,23 +42,42 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.container.style.left = "0"
         this.container.style.background = "white";
         this.container.style.zIndex = "2000"
+        this.shadowDom.appendChild(this.container);
 
+;
+
+        
     }
     static get observedAttributes(){
         return [MathCompAttributes.baseurl,
                 MathCompAttributes.color,
-                MathCompAttributes.mathtype,
-                MathCompAttributes.origin]
+                MathCompAttributes.mathtype]
     }
     connectedCallback() {
         console.log("connected Callback")
-        document.body.appendChild(this.container);
+
         var event = new CustomEvent('MathEquationAdded');
         document.dispatchEvent(event);
         var origin = this.getAttribute("originurl");
-        if(origin == null)
-            throw("didn't get origin url");
-        this.postMessageHandler = new PostMessageHandler(origin);
+
+        let script = document.createElement("script");
+        script.src = this.getAttribute("baseurl") + "mathEquationComponentOnload.js"
+        this.shadowDom.appendChild(script);
+
+
+        let styleLinkElm = document.createElement("link");
+        styleLinkElm.href = this.getAttribute("baseurl") + "css/mathEquationComponentElm.css" 
+        styleLinkElm.rel = "stylesheet";
+        styleLinkElm.type = "text/css";
+        this.shadowDom.appendChild(styleLinkElm);
+
+
+        let styleLink = document.createElement("link");
+        styleLink.href = this.getAttribute("baseurl") + "css/mathEquationComponent.css" 
+        styleLink.rel = "stylesheet";
+        styleLink.type = "text/css";
+        this.shadowDom.appendChild(styleLink);
+
 
         /**********************setting-elm-up************************************/
         this.app = Elm.Main.embed(this.container,{
@@ -67,20 +93,16 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 this.setAttribute(MathCompAttributes.mathtype,elmObject.selectedMathType)
 
             this.mathJaxConvert.queueEquation(elmObject);
-            this.postMessageHandler.MinimizeTextInput(false);
         });
 
         this.app.ports.setEquationContainerOpen.subscribe((elmStringBool:string)=> {
-            if(elmStringBool == "true" || elmStringBool == "True"){             
-                this.postMessageHandler.MinimizeTextInput(true);
-            }
-            else{
-                this.postMessageHandler.MinimizeTextInput(false);
-            }
         });
 
         this.app.ports.closePage.subscribe((elmString:string)=> {
-            this.postMessageHandler.closeMenu();
+            var parentNode = this.parentNode;
+            if(parentNode != null){
+                parentNode.removeChild(this);
+            }
         });
 
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
@@ -93,9 +115,10 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         //wait untill elm load to load the clipboard element
         setTimeout(()=>{
 
-            var submitButton = document.getElementById("NavSubmitButton")
-            var resizeIcon = document.getElementById("ResizeIcon");
-            if(submitButton == null || resizeIcon == null)
+            var submitButton = this.shadowDom.getElementById("NavSubmitButton")
+            var resizeIcon = this.shadowDom.getElementById("ResizeIcon");
+            var EquationsContainer = this.shadowDom.getElementById("EquationsContainer");
+            if(submitButton == null || resizeIcon == null || EquationsContainer == null)
                 throw("can't add event handlers becuase elms still loading");
 
             submitButton.onclick = function(){
@@ -121,7 +144,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                     throw "no source element"
 
                 let touchMoveFunc = (event:TouchEvent)=>{
-                    this.postMessageHandler.mouseResize(event.changedTouches[0].clientY);
+                    //this.postMessageHandler.mouseResize(event.changedTouches[0].clientY);
                     event.preventDefault();
                 }
                 let touchEndFunc = (event:TouchEvent)=>{
@@ -139,11 +162,32 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 event.preventDefault();
             });
             
+            var moveHeight = function(event:MouseEvent){
+                //console.log("mouse moved")
+                var height = event.clientY;
+                if(EquationsContainer != null){
+                    EquationsContainer.style.top = height + "px";
+                    EquationsContainer.style.transitionDuration = "0s";
+                }
+                
+            }
+
+            var removeEventListeners = function(event:MouseEvent){
+                //console.log("removed")
+                document.removeEventListener("mousemove",moveHeight,false);
+                if(EquationsContainer != null){
+                    EquationsContainer.style.transitionDuration = "0.5s";
+                }
+            }
+
             resizeIcon.addEventListener("mousedown", (event)=>{
-                this.postMessageHandler.enableMouseResize();
+                document.addEventListener("mousemove",moveHeight);
+                document.addEventListener("mouseup", removeEventListeners,<any>{"once": true}); //,<any>{"once": true}
                 event.preventDefault();
             });
 
+            
+            
             
         },1000)
 
@@ -157,16 +201,11 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         //console.log(newVal)
         if(newVal != null || newVal != undefined){
             switch(attrName){
-                case MathCompAttributes.baseurl:
-                    
-                    break;
                 case MathCompAttributes.color:
                     this.color = newVal;
                     break;
                 case MathCompAttributes.mathtype:
                     this.mathType =  ConvertMathTypes(newVal);
-                    break;
-                case MathCompAttributes.origin:
                     break;
     
             }
@@ -179,6 +218,5 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
 const enum MathCompAttributes {
     baseurl = "baseurl",
     color = "equationcolor",
-    mathtype = "mathtype",
-    origin = "origin"
+    mathtype = "mathtype"
 }

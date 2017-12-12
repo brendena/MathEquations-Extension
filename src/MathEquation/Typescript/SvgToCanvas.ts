@@ -60,6 +60,7 @@ export class SvgToCanvas {
                 case "path":
                     if("d" in tag.attributes){
                         var d = <any>tag.attributes.getNamedItem("d").value;
+                        //this is where i would have path is undefined
                         var path = <any>new Path2D(d);
                         this.ctx.fillStyle = this.color;
                         if("transform" in tag.attributes){
@@ -168,5 +169,74 @@ class ViewBox{
         this.minY = numbArray[1];
         this.width = numbArray[2];
         this.height = numbArray[3];
+    }
+}
+
+
+
+//https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+
+class SVGPathToPath2d{
+    path2D: Path2D;
+    svgPath: string;
+    x: number = 0;
+    y: number = 0;
+    constructor(svgPath: string ){
+        this.path2D = new Path2D;
+        this.svgPath = svgPath;
+        let splittPathOperators = this.svgPath.split(/(?=[a-zA-Z]+)/g);
+
+        console.log(splittPathOperators)
+        for(var i=0; i < splittPathOperators.length; i++){
+            let svgPathType = splittPathOperators[i].slice(0,1);
+            let pathVariables = splittPathOperators[i].slice(1).split(" ");
+            if(pathVariables[0] == "")
+                pathVariables = pathVariables.slice(1);
+            if(pathVariables[pathVariables.length -1] == "")
+                pathVariables.pop();
+
+
+            var pathVariablesInt:number[] = new Array(pathVariables.length);
+            for(var j = 0; j < pathVariables.length; j++){
+                pathVariablesInt[j] = parseFloat(pathVariables[j]);
+            }
+            //these are absoulte references not relative
+            console.log(pathVariables)
+            switch (svgPathType){
+                case ("M"):
+                    this.path2D.moveTo(pathVariablesInt[0],pathVariablesInt[1]);
+                    this.x = pathVariablesInt[0];
+                    this.y = pathVariablesInt[1];
+                    break;
+                case ("c"):
+                    
+                    this.path2D.bezierCurveTo(this.x + pathVariablesInt[0],this.y + pathVariablesInt[1],this.x + pathVariablesInt[2],this.y + pathVariablesInt[3],this.x + pathVariablesInt[4], this.y  + pathVariablesInt[5])
+                    this.x += pathVariablesInt[4]
+                    this.y += pathVariablesInt[5]
+                    break;
+                case ("l"):
+                    this.x += pathVariablesInt[0]
+                    this.y += pathVariablesInt[1]
+                    this.path2D.lineTo(this.x,this.y)
+                    break;
+                case ("h"):
+                    this.x += pathVariablesInt[0]
+                    this.path2D.lineTo(this.x,this.y)
+                    break;
+                case ("v"):
+                    this.y += pathVariablesInt[0]
+                    this.path2D.lineTo(this.x, this.y)
+                    break;
+                case ("Z"):
+                    this.path2D.closePath();
+                    break;
+                default:
+                    throw ("don't support '" + svgPathType +"' path type yet");
+            }
+        }
+        console.log(this.path2D)
+    }
+    getPath():Path2D{
+        return this.path2D;
     }
 }

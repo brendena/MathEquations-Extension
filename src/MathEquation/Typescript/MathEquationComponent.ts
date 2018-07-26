@@ -1,6 +1,5 @@
 import { CustomElement, OnConnected, OnDisconnected, OnAttributeChanged } from './custom-elements.ts';
 import { ElmPort } from './ElmPort.ts'
-import { MathJaxConvert } from './MathJaxConvert.ts'
 import { MathTypes,ConvertMathTypes } from './MathTypes.ts'
 import { PostMessageHandler } from './PostMessageHandler.ts'
 import { ImageTypesEnum} from './ImageTypes.ts'
@@ -8,8 +7,7 @@ import { CanvasToImage } from './CanvasToImage.ts'
 import { setTimeout } from 'timers';
 
 var Elm :any = require('../Elm/Main.elm');
-var chrome : any;
-
+declare var katex: any;
 @CustomElement({
     tagName: 'math-equation-anywhere',
     //options:{
@@ -20,7 +18,6 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
     private shadowDom : ShadowRoot;
     container: HTMLDivElement;
     app:any;
-    mathJaxConvert = new MathJaxConvert();
     postMessageHandler: PostMessageHandler;
     canvasToImage = new CanvasToImage();
     baseUrl: string;
@@ -64,6 +61,18 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         script.src = this.getAttribute("baseurl") + "mathEquationComponentOnload.js"
         this.shadowDom.appendChild(script);
 
+        let styleLinkKatex = document.createElement("link");
+        styleLinkKatex.href = this.getAttribute("baseurl") + "katex.min.css" 
+        styleLinkKatex.rel = "stylesheet";
+        styleLinkKatex.type = "text/css";
+        this.shadowDom.appendChild(styleLinkKatex);
+
+
+
+        let scriptKatex = document.createElement("script");
+        scriptKatex.src = this.getAttribute("baseurl") + "katex.min.js"
+        this.shadowDom.appendChild(scriptKatex);
+
 
         let styleLinkElm = document.createElement("link");
         styleLinkElm.href = this.getAttribute("baseurl") + "css/mathEquationComponentElm.css" 
@@ -92,7 +101,12 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
             if(this.mathType !== elmObject.selectedMathType)
                 this.setAttribute(MathCompAttributes.mathtype,elmObject.selectedMathType)
 
-            this.mathJaxConvert.queueEquation(elmObject);
+            try{
+                katex.render(elmObject.mathEquation, this.shadowDom.getElementById("SvgContainer"));
+            }
+            catch(errorCantConvertEquation){
+                console.log(errorCantConvertEquation);
+            }
         });
 
         this.app.ports.setEquationContainerOpen.subscribe((elmStringBool:string)=> {

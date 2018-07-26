@@ -62,6 +62,10 @@ module.exports = {
       { from: "./src/Background/Js/background.js" },
       { from: "./src/StaticFiles/Edge" },
 
+      { from: "./node_modules/katex/dist/katex.min.js"},
+      { from: "./node_modules/katex/dist/katex.min.css"},
+      { from: "./node_modules/katex/dist/fonts", to :"./fonts"},
+
       { from: "./src/MathEquation/Stylesheets/fontello/font", to :"./font"}
     ]),
     new webpack.EnvironmentPlugin([

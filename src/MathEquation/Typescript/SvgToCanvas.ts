@@ -43,13 +43,16 @@ export class SvgToCanvas {
 
 
     private recursiveLoopTags(childNodes:NodeList){
+        /*
+        Look into what the (<any>tag) should actually be
+        */
         let tag:Node;
         for(var i = 0; i < childNodes.length; i++){
             tag = childNodes[i];
             switch(tag.nodeName){
                 case "g":
-                    if("transform" in tag.attributes){
-                        var t = this.splitString(tag.attributes.getNamedItem("transform").value)
+                    if("transform" in (<any>tag).attributes){
+                        var t = this.splitString((<any>tag).attributes.getNamedItem("transform").value)
                         this.ctx.transform(t[0],t[1],t[2],t[3],t[4],t[5]);
                         this.recursiveLoopTags(tag.childNodes);
                         //remove the last transform
@@ -58,13 +61,13 @@ export class SvgToCanvas {
                     
                     break;
                 case "path":
-                    if("d" in tag.attributes){
-                        var d = <any>tag.attributes.getNamedItem("d").value;
+                    if("d" in (<any>tag).attributes){
+                        var d = (<any>tag).attributes.getNamedItem("d").value;
                         //this is where i would have path is undefined
                         var path = <any>new Path2D(d);
                         this.ctx.fillStyle = this.color;
-                        if("transform" in tag.attributes){
-                            var transformString = tag.attributes.getNamedItem("transform").value;
+                        if("transform" in (<any>tag).attributes){
+                            var transformString = (<any>tag).attributes.getNamedItem("transform").value;
                             var t = this.splitString(transformString)
                             this.ctx.transform(t[0],t[1],t[2],t[3],t[4],t[5]);
                             this.ctx.fill(path);

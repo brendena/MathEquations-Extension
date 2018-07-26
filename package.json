@@ -4,7 +4,7 @@
   "description": "Makes ",
   "main": "webpack.config.js",
   "dependencies": {
-    "katex": "^0.9.0-alpha2",
+    "katex": "0.9.0",
     "ts-custom-elements": "^1.0.0"
   },
   "devDependencies": {

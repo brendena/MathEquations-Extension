@@ -1,6 +1,8 @@
 'use strict'
 
 require('./MathEquation/Stylesheets/StylesheetCompiler.elm');
+//require('../node_modules/katex/dist/katex.min.js')
+
 
 
 

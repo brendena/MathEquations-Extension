@@ -61,10 +61,14 @@
     "css/*.css",
     "font/*.woff",
     "font/*.woff2",
+    "fonts/*.woff",
+    "fonts/*.woff2",
+    "katex.min.css",
     "mathEquationComponent.js",
     "mathEquationComponentOnload.js",
     "webcomponents-loader.js",
-    "webcomponents-hi-sd-ce.js"
+    "webcomponents-hi-sd-ce.js",
+    "katex.min.js"
   ],
   
   "permissions": [

@@ -34,6 +34,9 @@ Then you can load it into whatever browser that you are currently working on.
 ## Testing Locally
 In **/src/ContentScripts/Js/content.js** you can add this line **constructUi();** and it will load the extensions when the page loads. 
 
+### Chrome
+Go to extensions page and hit "LOAD UNPACKED" and you should be able to input the dist folder.  
+
 ### Firefox
 At **about:debugging** you can add extension locally.
 
@@ -58,3 +61,6 @@ Create a extension that can create math equation that you can copy onto any site
 ## Next Itteration
 * Ittergrate the equation into the image
 * Reload image
+
+## Node links
+* [Meaning package.json](https://stackoverflow.com/questions/22343224/whats-the-difference-between-tilde-and-caret-in-package-json)

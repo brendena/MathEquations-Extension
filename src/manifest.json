@@ -66,6 +66,7 @@
     "katex.min.css",
     "mathEquationComponent.js",
     "mathEquationComponentOnload.js",
+    "html2canvas.min.js",
     "webcomponents-loader.js",
     "webcomponents-hi-sd-ce.js",
     "katex.min.js"

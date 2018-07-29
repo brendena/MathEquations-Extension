@@ -38,7 +38,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.container.style.bottom = "0"
         this.container.style.left = "0"
         this.container.style.background = "white";
-        this.container.style.zIndex = "2000"
+        this.container.style.zIndex = "500000"
         this.shadowDom.appendChild(this.container);
 
 ;
@@ -73,6 +73,9 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         scriptKatex.src = this.getAttribute("baseurl") + "katex.min.js"
         this.shadowDom.appendChild(scriptKatex);
 
+        let scriptHtmlCanvas = document.createElement("script");
+        scriptHtmlCanvas.src = this.getAttribute("baseurl") + "html2canvas.min.js"
+        this.shadowDom.appendChild(scriptHtmlCanvas);
 
         let styleLinkElm = document.createElement("link");
         styleLinkElm.href = this.getAttribute("baseurl") + "css/mathEquationComponentElm.css" 

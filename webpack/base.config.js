@@ -66,6 +66,8 @@ module.exports = {
       { from: "./node_modules/katex/dist/katex.min.css"},
       { from: "./node_modules/katex/dist/fonts", to :"./fonts"},
 
+      { from: "./lib/html2canvas.min.js"},
+
       { from: "./src/MathEquation/Stylesheets/fontello/font", to :"./font"}
     ]),
     new webpack.EnvironmentPlugin([

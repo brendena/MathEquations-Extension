@@ -6,8 +6,12 @@ import { ImageTypesEnum} from './ImageTypes.ts'
 import { CanvasToImage } from './CanvasToImage.ts'
 import { setTimeout } from 'timers';
 
-var Elm :any = require('../Elm/Main.elm');
-declare var katex: any;
+const katex: any = require('katex');
+const html2canvas: any = require('../../../lib/html2canvas.min.js');
+const Elm :any = require('../Elm/Main.elm');
+
+
+//declare var katex: any;
 @CustomElement({
     tagName: 'math-equation-anywhere',
     //options:{
@@ -59,23 +63,15 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
 
         let script = document.createElement("script");
         script.src = this.getAttribute("baseurl") + "mathEquationComponentOnload.js"
+        
         this.shadowDom.appendChild(script);
+        
+        script.addEventListener("load", function(){
+            console.log("testtest");
+            console.log(katex);
+            console.log(html2canvas)
+        });
 
-        let styleLinkKatex = document.createElement("link");
-        styleLinkKatex.href = this.getAttribute("baseurl") + "katex.min.css" 
-        styleLinkKatex.rel = "stylesheet";
-        styleLinkKatex.type = "text/css";
-        this.shadowDom.appendChild(styleLinkKatex);
-
-
-
-        let scriptKatex = document.createElement("script");
-        scriptKatex.src = this.getAttribute("baseurl") + "katex.min.js"
-        this.shadowDom.appendChild(scriptKatex);
-
-        let scriptHtmlCanvas = document.createElement("script");
-        scriptHtmlCanvas.src = this.getAttribute("baseurl") + "html2canvas.min.js"
-        this.shadowDom.appendChild(scriptHtmlCanvas);
 
         let styleLinkElm = document.createElement("link");
         styleLinkElm.href = this.getAttribute("baseurl") + "css/mathEquationComponentElm.css" 

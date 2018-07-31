@@ -4,12 +4,12 @@ import { MathTypes,ConvertMathTypes } from './MathTypes.ts'
 import { PostMessageHandler } from './PostMessageHandler.ts'
 import { ImageTypesEnum} from './ImageTypes.ts'
 import { CanvasToImage } from './CanvasToImage.ts'
+import { Html2CanvasHelper } from './Html2CanvasHelper.ts'
 import { setTimeout } from 'timers';
 
-const katex: any = require('katex');
-const html2canvas: any = require('../../../lib/html2canvas.min.js');
-const Elm :any = require('../Elm/Main.elm');
 
+const katex : any = require('katex');
+const Elm : any = require('../Elm/Main.elm');
 
 //declare var katex: any;
 @CustomElement({
@@ -21,9 +21,13 @@ const Elm :any = require('../Elm/Main.elm');
 class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
     private shadowDom : ShadowRoot;
     container: HTMLDivElement;
+    slotLightDom : HTMLElement;
+    tmpImageContainer: HTMLDivElement;
+
     app:any;
     postMessageHandler: PostMessageHandler;
     canvasToImage = new CanvasToImage();
+    html2CanvasHelper = new Html2CanvasHelper();
     baseUrl: string;
 
 
@@ -44,8 +48,21 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.container.style.background = "white";
         this.container.style.zIndex = "500000"
         this.shadowDom.appendChild(this.container);
+        
+        this.slotLightDom = document.createElement("slot");
+        this.slotLightDom.id = "mathEquationSlotLightDom";
+        this.appendChild(this.slotLightDom); 
 
-;
+        this.tmpImageContainer = document.createElement("div");
+        this.tmpImageContainer.id = "tmpImageContainer";
+        this.appendChild(this.tmpImageContainer); 
+
+
+        let styleLinkKatex = document.createElement("link");
+        styleLinkKatex.href = this.getAttribute("baseurl") + "katex.min.css" 
+        styleLinkKatex.rel = "stylesheet";
+        styleLinkKatex.type = "text/css";
+        this.appendChild(styleLinkKatex);
 
         
     }
@@ -67,9 +84,9 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.shadowDom.appendChild(script);
         
         script.addEventListener("load", function(){
-            console.log("testtest");
             console.log(katex);
-            console.log(html2canvas)
+            console.log(Elm);
+
         });
 
 
@@ -101,7 +118,8 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 this.setAttribute(MathCompAttributes.mathtype,elmObject.selectedMathType)
 
             try{
-                katex.render(elmObject.mathEquation, this.shadowDom.getElementById("SvgContainer"));
+                console.log(document.getElementById("mathEquationSlotLightDom"));
+                katex.render(elmObject.mathEquation, document.getElementById("mathEquationSlotLightDom"));
             }
             catch(errorCantConvertEquation){
                 console.log(errorCantConvertEquation);
@@ -120,8 +138,8 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
 
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
             var elmObject = new ElmPort(elmJsonString);
-            this.canvasToImage.downloadImage(elmObject.GetMathEquationId(),elmObject.downloadImageType, elmObject.mathEquationColor);
-
+            //this.canvasToImage.downloadImage(elmObject.GetMathEquationId(),elmObject.downloadImageType, elmObject.mathEquationColor);
+            this.html2CanvasHelper.downloadImage(this.shadowDom);
         });
         /**********************setting-elm-up************************************/
         

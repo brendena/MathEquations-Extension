@@ -242,6 +242,10 @@ update msg model =
             )
 
 
+slot : List (Attribute msg) -> List (Html msg) -> Html msg
+slot attributes children =
+    node "slot" attributes children
+
 view : Model -> Html Msg
 view model =
     div [ id "elmContainer" ]
@@ -252,7 +256,7 @@ view model =
             , div [ id MyCss.MathTextEquationContainer ]
                 [ textarea [ onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText, class [ MyCss.ItemsEquationContainer ] ] [ text "" ]
                 , div [ id MyCss.MathOutputContainer, class [ MyCss.ItemsEquationContainer ] ]
-                    [ div [ id MyCss.SvgContainer ]
+                    [slot [id "mathEquationSlotShadowDom"] [div [ id MyCss.SvgContainer ]
                         [ p [ id "AsciiMathEquation", hidden (AsciiMath /= model.selectedMathType) ] [ text "Ascii `` " ]
                         , p [ id "TexEquation", hidden (Tex /= model.selectedMathType) ] [ text "Tex ${ }$ " ]
                         , div [ hidden (MathML /= model.selectedMathType) ]
@@ -260,6 +264,7 @@ view model =
                             , p [ id "MathMLEquation" ] [ text "" ]
                             ]
                         ]
+                    ] 
                     , div [ id MyCss.MathOutputMenu ]
                         [ button [ style [ ( "height", "100%" ) ], id MyCss.NavSubmitButton ] [ text "copy image" ]
                         , input [ onInput OnColorChange, style [ ( "background", "none" ), ( "border", "none" ) ], type_ "color" ] []

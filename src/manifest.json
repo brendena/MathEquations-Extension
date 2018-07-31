@@ -63,13 +63,12 @@
     "font/*.woff2",
     "fonts/*.woff",
     "fonts/*.woff2",
+    "fonts/*.ttf",
     "katex.min.css",
     "mathEquationComponent.js",
     "mathEquationComponentOnload.js",
-    "html2canvas.min.js",
     "webcomponents-loader.js",
-    "webcomponents-hi-sd-ce.js",
-    "katex.min.js"
+    "webcomponents-hi-sd-ce.js"
   ],
   
   "permissions": [

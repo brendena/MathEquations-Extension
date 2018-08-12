@@ -7,6 +7,9 @@ let ImageTypesConstructor = function(imageType: string){
     else if(imageType == "png"){
         returnImageType = ImageTypesEnum.Png
     }
+    else if(imageType = "jpg"){
+        returnImageType = ImageTypesEnum.Jpg
+    }
     else{
         throw("there was no proper image selected")
     }
@@ -18,6 +21,7 @@ let ImageTypesConstructor = function(imageType: string){
 const enum ImageTypesEnum {
     Png = "png",
     Svg = "svg",
+    Jpg = "jpg"
 }
 
 export { ImageTypesEnum, ImageTypesConstructor}

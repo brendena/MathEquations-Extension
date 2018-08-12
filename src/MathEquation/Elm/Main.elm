@@ -8,7 +8,7 @@ import Basics exposing (..)
 import Json.Encode exposing (encode, Value, string, int, float, bool, list, object)
 import Html.CssHelpers exposing (withNamespace)
 import MyCss exposing (..)
-import Debug exposing (log)
+--import Debug exposing (log)
 import Result
 
 
@@ -60,8 +60,7 @@ initialModel =
     , selectedMathType = Tex
     , mathEquation = ""
     , mathEquationColor = "#000000"
-    , imagePreset = MediumImage
-    , userDefinedSize = 0
+    , mathEquationFontSize = intEquationFontSize ImageSizeMedium 
     , downloadFileName = "fileName"
     , downloadFileType = ImageSvg
     , slideMenuOpen = False
@@ -77,8 +76,7 @@ type alias Model =
     , selectedMathType : MathType
     , mathEquation : String
     , mathEquationColor : String
-    , imagePreset : ImageSizePresets
-    , userDefinedSize : Int
+    , mathEquationFontSize : Int
     , downloadFileName : String
     , downloadFileType : ImageFileType
     , slideMenuOpen : Bool
@@ -108,6 +106,7 @@ encodeModel model =
         , ( "mathEquation", Json.Encode.string model.mathEquation )
         , ( "mathEquationColor", Json.Encode.string model.mathEquationColor )
         , ( "downloadFileType", Json.Encode.string (stringImageFileType model.downloadFileType) )
+        , ( "mathEquationFonstSize", Json.Encode.string ( toString model.mathEquationFontSize ) )
         ]
 
 
@@ -117,16 +116,10 @@ type MathType
     | Tex
 
 
-type ImageSizePresets
-    = SmallImage
-    | MediumImage
-    | LargeImage
-    | UserDefined
-
-
 type ImageFileType
     = ImagePng
     | ImageSvg
+    | ImageJpg
 
 
 stringImageFileType : ImageFileType -> String
@@ -138,6 +131,32 @@ stringImageFileType imageFileType =
         ImageSvg ->
             "svg"
 
+        ImageJpg ->
+            "jpg"
+
+type EquationSize
+    = ImageSizeSmall
+    | ImageSizeMedium
+    | ImageSizeLarge
+    | ImageUserDefined
+
+
+intEquationFontSize : EquationSize -> Int
+intEquationFontSize equationSize =
+    case equationSize of
+        ImageSizeSmall ->
+            15
+
+        ImageSizeMedium ->
+            40
+
+        ImageSizeLarge ->
+            80
+
+        ImageUserDefined ->
+            0
+            
+
 
 type Msg
     = UrlChange String
@@ -145,8 +164,8 @@ type Msg
     | UpdateEquation String
     | ClosePage
     | OnColorChange String
-    | SetSizeImagePresets ImageSizePresets
-    | UserDefinedSize Int
+    | SetImageSize Int
+    | SetImageSizeInput String
     | ChangeDownloadFileType ImageFileType
     | UpdateDownloadFileName String
     | DownloadImage
@@ -186,20 +205,20 @@ update msg model =
             in
                 ( newModel, updateEquation (encode 0 (encodeModel newModel)) )
 
-        SetSizeImagePresets imagePreset ->
+        SetImageSize imageSize ->
             let
                 newModel =
-                    { model | imagePreset = imagePreset }
+                    { model | mathEquationFontSize = imageSize }
             in
                 ( newModel, updateEquation (encode 0 (encodeModel newModel)) )
 
-        UserDefinedSize sizeInt ->
+                
+        SetImageSizeInput imageSizeString->
             let
                 newModel =
-                    { model | userDefinedSize = sizeInt }
+                    { model | mathEquationFontSize = Result.withDefault model.mathEquationFontSize ( String.toInt imageSizeString ) }
             in
                 ( newModel, updateEquation (encode 0 (encodeModel newModel)) )
-
         ChangeDownloadFileType fileType ->
             let
                 newModel =
@@ -217,10 +236,6 @@ update msg model =
             ( { model | slideMenuOpen = position }, Cmd.none )
 
         ToggleEnableSmallSelect ->
-            --let
-            --    position = if(model.smallSelect) then False else model.equationContainerOpen
-            --in
-                
             ( { model
                 | smallSelect =
                     if (model.smallSelect) then
@@ -246,6 +261,10 @@ slot : List (Attribute msg) -> List (Html msg) -> Html msg
 slot attributes children =
     node "slot" attributes children
 
+slotName : String -> Attribute msg
+slotName name =
+  attribute "name" name
+
 view : Model -> Html Msg
 view model =
     div [ id "elmContainer" ]
@@ -256,22 +275,15 @@ view model =
             , div [ id MyCss.MathTextEquationContainer ]
                 [ textarea [ onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText, class [ MyCss.ItemsEquationContainer ] ] [ text "" ]
                 , div [ id MyCss.MathOutputContainer, class [ MyCss.ItemsEquationContainer ] ]
-                    [slot [id "mathEquationSlotShadowDom"] [div [ id MyCss.SvgContainer ]
-                        [ p [ id "AsciiMathEquation", hidden (AsciiMath /= model.selectedMathType) ] [ text "Ascii `` " ]
-                        , p [ id "TexEquation", hidden (Tex /= model.selectedMathType) ] [ text "Tex ${ }$ " ]
-                        , div [ hidden (MathML /= model.selectedMathType) ]
-                            [ p [] [ text "MathML" ]
-                            , p [ id "MathMLEquation" ] [ text "" ]
-                            ]
-                        ]
-                    ] 
+                    [slot [id MyCss.SlotShadowDomEquation, slotName "EquationDisplay"] [] 
                     , div [ id MyCss.MathOutputMenu ]
                         [ button [ style [ ( "height", "100%" ) ], id MyCss.NavSubmitButton ] [ text "copy image" ]
                         , input [ onInput OnColorChange, style [ ( "background", "none" ), ( "border", "none" ) ], type_ "color" ] []
                         , button [ class [ MyCss.ImageSizePresetButton ], onClick DownloadImage, id MyCss.OpenDownloadMenu, Html.Attributes.classList [ ( stringFontClasses MyCss.IconDownload, True ) ] ] []
-                        , button [ sizeButtonClass model.imagePreset SmallImage, style [ ( "font-size", "10px" ) ], iconClass IconPicture, onClick (SetSizeImagePresets SmallImage) ] []
-                        , button [ sizeButtonClass model.imagePreset MediumImage, style [ ( "font-size", "20px" ) ], iconClass IconPicture, onClick (SetSizeImagePresets MediumImage) ] []
-                        , button [ sizeButtonClass model.imagePreset LargeImage, style [ ( "font-size", "30px" ) ], iconClass IconPicture, onClick (SetSizeImagePresets LargeImage) ] []
+                        , button [ sizeButtonClass model.mathEquationFontSize ImageSizeSmall, style [ ( "font-size", "10px" ) ], iconClass IconPicture, onClick (SetImageSize (intEquationFontSize ImageSizeSmall)) ] []
+                        , button [ sizeButtonClass model.mathEquationFontSize ImageSizeMedium, style [ ( "font-size", "20px" ) ], iconClass IconPicture, onClick (SetImageSize (intEquationFontSize ImageSizeMedium)) ] []
+                        , button [ sizeButtonClass model.mathEquationFontSize ImageSizeLarge, style [ ( "font-size", "30px" ) ], iconClass IconPicture, onClick (SetImageSize (intEquationFontSize ImageSizeLarge)) ] []
+                        , input [id MyCss.MathEquationTextSizeInput, onInput SetImageSizeInput, type_  "number",Html.Attributes.min "1", value <| toString model.mathEquationFontSize ] []
                         ]
                     ]
                 ]
@@ -280,8 +292,9 @@ view model =
             [ div [ onClick (SetSlideMenuTrueOpen False), style [ ( "position", "absolute" ), ( "top", "0px" ), ( "right", "0px" ) ], iconClass MyCss.IconCancel1 ] []
             , div [ class [ MyCss.FlexBoxHorizontalCenter ] ]
                 [ input [ onInput UpdateDownloadFileName, value model.downloadFileName, placeholder "fileName", pattern "[a-zA-Z0-9-]+" ] []
-                , button [ fileTypeClass model.downloadFileType ImageSvg, onClick (ChangeDownloadFileType ImageSvg) ] [ text (".svg") ]
+                --, button [ fileTypeClass model.downloadFileType ImageSvg, onClick (ChangeDownloadFileType ImageSvg) ] [ text (".svg") ]
                 , button [ fileTypeClass model.downloadFileType ImagePng, onClick (ChangeDownloadFileType ImagePng) ] [ text (".png") ]
+                , button [ fileTypeClass model.downloadFileType ImageJpg, onClick (ChangeDownloadFileType ImageJpg) ] [ text (".jpg") ]
                 , a [ id MyCss.DownloadButton, downloadFilesName model.downloadFileName model.downloadFileType, Html.Attributes.classList [ ( stringFontClasses MyCss.IconDownload, True ) ] ] [ text "download image" ]
                 ]
             ]
@@ -308,7 +321,6 @@ view model =
                 , button [ onClick ClosePage, class [ MyCss.NavButton ], Html.Attributes.classList [ ( stringFontClasses MyCss.IconCancel1, True ) ] ] []
                 ]
             ]
-        , canvas [ id MyCss.HiddenCanvas, sizeCanvas model.imagePreset model.userDefinedSize ] []
         ]
 
 
@@ -347,11 +359,11 @@ navButtonClass modelMathTypeSelect mathType =
                 class [ MyCss.NavButton ]
 
 
-sizeButtonClass : ImageSizePresets -> ImageSizePresets -> Attribute Msg
-sizeButtonClass modelImageSizePreset imageSizePreset =
+sizeButtonClass : Int -> EquationSize -> Attribute Msg
+sizeButtonClass modelEquationSize buttonEquationSize =
     let
         equal =
-            modelImageSizePreset == imageSizePreset
+            modelEquationSize ==  intEquationFontSize buttonEquationSize
     in
         case equal of
             True ->
@@ -387,24 +399,6 @@ equationsContainerStyles equationContainerOpen =
             style [ ("transition", ".5s"),( "top", "0" ),( "transform", "translateY(100%)" )]
 
 
-sizeCanvas : ImageSizePresets -> Int -> Attribute Msg
-sizeCanvas imageSizePreset userDefinedSize =
-    let
-        sizeCanvas =
-            case imageSizePreset of
-                SmallImage ->
-                    "200"
-
-                MediumImage ->
-                    "400"
-
-                LargeImage ->
-                    "1000"
-
-                UserDefined ->
-                    (toString userDefinedSize)
-    in
-        attribute "width" sizeCanvas
 
 
 iconClass : FontClasses -> Attribute Msg

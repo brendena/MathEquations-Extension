@@ -4,6 +4,7 @@
   "description": "Makes ",
   "main": "webpack.config.js",
   "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.0.3",
     "katex": "0.9.0",
     "ts-custom-elements": "^1.0.0"
   },
@@ -28,7 +29,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "NODE_ENV=development webpack --watch --config webpack/dev.config.js",
-    "start:edge": "webpack --watch --config webpack/dev.config.js", 
+    "start:edge": "webpack --watch --config webpack/dev.config.js",
     "start:noWatch": "NODE_ENV=development webpack --config webpack/dev.config.js",
     "start:chrome": "NODE_ENV=development webpack --watch --config webpack/devChrome.config.js",
     "build": "NODE_ENV=production webpack --config webpack/prod.config.js"

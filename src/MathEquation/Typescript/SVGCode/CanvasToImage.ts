@@ -1,7 +1,11 @@
 export {CanvasToImage}
-import { ImageTypesEnum } from './ImageTypes.ts'
+import { ImageTypesEnum } from '../ImageTypes.ts'
 import { SvgToCanvas } from './SvgToCanvas.ts'
+/*
+These whered used when the projects was using mathjax that 
+used svg images
 
+*/
 class CanvasToImage {
     canvas:HTMLCanvasElement;
     canvasImage:HTMLImageElement;

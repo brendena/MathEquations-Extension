@@ -7,6 +7,7 @@ export class ElmPort {
         this.mathEquation = elmRequestJson["mathEquation"]
         this.mathEquationColor = elmRequestJson["mathEquationColor"]
         this.downloadImageType = ImageTypesConstructor(elmRequestJson["downloadFileType"])
+        this.mathEquationFontSize = parseInt(elmRequestJson["mathEquationFonstSize"])
     }
     public GetMathEquationId():string{
         return this.selectedMathType + "Equation"
@@ -15,6 +16,6 @@ export class ElmPort {
     public mathEquation: string;
     public mathEquationColor: string;
     public downloadImageType: ImageTypesEnum;
-
+    public mathEquationFontSize: number;
 
 }

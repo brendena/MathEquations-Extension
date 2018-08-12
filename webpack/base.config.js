@@ -55,18 +55,17 @@ module.exports = {
       { from: "./src/manifest.json" },
       { from: "./src/PopUpMenu/Html/popUp.html" },
       { from: "./src/StaticFiles/Img", to: "./Img" },
-      { from: "./bower_components/webcomponentsjs/webcomponents-loader.js"},
-      { from: "./bower_components/webcomponentsjs/webcomponents-hi-sd-ce.js"},
+      { from: "./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"},
+      { from: "./node_modules/@webcomponents/webcomponentsjs/bundles", to : "bundles"},
 
       { from: "./src/Background/Html/background.html" },
       { from: "./src/Background/Js/background.js" },
       { from: "./src/StaticFiles/Edge" },
 
-      { from: "./node_modules/katex/dist/katex.min.js"},
       { from: "./node_modules/katex/dist/katex.min.css"},
-      { from: "./node_modules/katex/dist/fonts", to :"./fonts"},
+      { from: "./src/MathEquation/Stylesheets/Css/MathEquationStyles.css"},
 
-      { from: "./lib/html2canvas.min.js"},
+      { from: "./node_modules/katex/dist/fonts", to :"./fonts"},
 
       { from: "./src/MathEquation/Stylesheets/fontello/font", to :"./font"}
     ]),

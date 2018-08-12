@@ -28,10 +28,8 @@ type CssIds
     | ResizeIcon
     | MathTextEquationContainer
     | MathEquationText
-    | SvgContainer
-    | HiddenCanvas
+    | SlotShadowDomEquation
     | NavSubmitButton
-    | CanvasImgContainer
     | MathOutputContainer
     | MathOutputMenu
     | DownloadButton
@@ -42,6 +40,7 @@ type CssIds
     | NavActionsButtonsContainer
     | OptionsSlideMenuTransitionOpen
     | OptionsSlideMenuTransitionClose
+    | MathEquationTextSizeInput
 
 
 type FontClasses
@@ -162,14 +161,6 @@ css =
             , displayFlex
             , flexDirection row
             ]
-        , id SvgContainer
-            [ flex (int 1)
-            , padding (px 20)
-            , paddingBottom (px 0)
-            ]
-        , id HiddenCanvas
-            [ display none
-            ]
         , id MathOutputContainer
             [ displayFlex
             , flexDirection column
@@ -210,6 +201,7 @@ css =
             , boxSizing borderBox
             , maxHeight (pct 90)
             , transition ".5s"
+            , zIndex (int 2)
             ]
         , class ItemsEquationContainer
             [ width (pct 50)
@@ -334,7 +326,10 @@ css =
         , id ContainerMathEquationSelectors
             [ displayFlex
             ]
+        , id MathEquationTextSizeInput
+            [ width (px 50)]
         ]
+        
 
 
 

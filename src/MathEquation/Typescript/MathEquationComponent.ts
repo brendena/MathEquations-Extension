@@ -3,7 +3,6 @@ import { ElmPort } from './ElmPort.ts'
 import { MathTypes,ConvertMathTypes } from './MathTypes.ts'
 import { PostMessageHandler } from './PostMessageHandler.ts'
 import { ImageTypesEnum} from './ImageTypes.ts'
-import { CanvasToImage } from './CanvasToImage.ts'
 import { Html2CanvasHelper } from './Html2CanvasHelper.ts'
 import { setTimeout } from 'timers';
 
@@ -23,11 +22,13 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
     container: HTMLDivElement;
     slotLightDom : HTMLElement;
     tmpImageContainer: HTMLDivElement;
+    offScreenItemDiv: HTMLElement;
 
     app:any;
     postMessageHandler: PostMessageHandler;
-    canvasToImage = new CanvasToImage();
     html2CanvasHelper = new Html2CanvasHelper();
+    createBase64ImageTimerId : number = -1 ;
+    pngBase64Image : string = "";
     baseUrl: string;
 
 
@@ -49,20 +50,37 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.container.style.zIndex = "500000"
         this.shadowDom.appendChild(this.container);
         
-        this.slotLightDom = document.createElement("slot");
+        
+        this.slotLightDom = document.createElement("div");
         this.slotLightDom.id = "mathEquationSlotLightDom";
+        this.slotLightDom.style.flex = "1";
+        this.slotLightDom.style.padding = "20px";
+        this.slotLightDom.style.paddingBottom = "0px";
+        this.slotLightDom.style.display = "flex";
+        this.slotLightDom.setAttribute("slot","EquationDisplay"); 
         this.appendChild(this.slotLightDom); 
+
+        /*load certain items off screen on the actuall dom.
+          This pervents them from being slotted into the main program
+          which is needed for the html rendering library.*/
+
+        this.offScreenItemDiv = document.createElement("div");
+        this.offScreenItemDiv.id = "MathEquationsOffscreenItems";
+        document.body.appendChild(this.offScreenItemDiv);
 
         this.tmpImageContainer = document.createElement("div");
         this.tmpImageContainer.id = "tmpImageContainer";
-        this.appendChild(this.tmpImageContainer); 
-
+        this.tmpImageContainer.style.position = "fixed";
+        this.tmpImageContainer.style.left = "-100%";
+        this.tmpImageContainer.style.top = "-100%";
+        this.offScreenItemDiv.appendChild(this.tmpImageContainer); 
 
         let styleLinkKatex = document.createElement("link");
         styleLinkKatex.href = this.getAttribute("baseurl") + "katex.min.css" 
         styleLinkKatex.rel = "stylesheet";
         styleLinkKatex.type = "text/css";
-        this.appendChild(styleLinkKatex);
+        this.offScreenItemDiv.appendChild(styleLinkKatex);
+
 
         
     }
@@ -72,7 +90,6 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 MathCompAttributes.mathtype]
     }
     connectedCallback() {
-        console.log("connected Callback")
 
         var event = new CustomEvent('MathEquationAdded');
         document.dispatchEvent(event);
@@ -84,8 +101,6 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.shadowDom.appendChild(script);
         
         script.addEventListener("load", function(){
-            console.log(katex);
-            console.log(Elm);
 
         });
 
@@ -118,11 +133,17 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 this.setAttribute(MathCompAttributes.mathtype,elmObject.selectedMathType)
 
             try{
-                console.log(document.getElementById("mathEquationSlotLightDom"));
                 katex.render(elmObject.mathEquation, document.getElementById("mathEquationSlotLightDom"));
+                window.clearTimeout(this.createBase64ImageTimerId);
+                this.createBase64ImageTimerId = window.setTimeout(() => {
+                    this.html2CanvasHelper.downloadImagePromise(ImageTypesEnum.Png, elmObject.mathEquationFontSize, this.color).then((canvasData :any)=>{
+                        console.log(canvasData)
+                        this.pngBase64Image = canvasData;
+                    }).catch(()=>{console.error("failed to get image")});
+                }, 500);
             }
             catch(errorCantConvertEquation){
-                console.log(errorCantConvertEquation);
+                console.error(errorCantConvertEquation);
             }
         });
 
@@ -138,12 +159,22 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
 
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
             var elmObject = new ElmPort(elmJsonString);
+            console.log("download iamge")
             //this.canvasToImage.downloadImage(elmObject.GetMathEquationId(),elmObject.downloadImageType, elmObject.mathEquationColor);
-            this.html2CanvasHelper.downloadImage(this.shadowDom);
+            this.html2CanvasHelper.downloadImagePromise(elmObject.downloadImageType, elmObject.mathEquationFontSize, elmObject.mathEquationColor).then((dataImage:string)=>{
+                var downloadButton = this.shadowDom.getElementById("DownloadButton");
+                if(downloadButton != null){
+                    downloadButton.setAttribute("href", dataImage);
+                }
+            });
         });
         /**********************setting-elm-up************************************/
         
         //wait untill elm load to load the clipboard element
+
+        //This uses the older clipboard events that support on all browsers
+        //Newer one support in chrome 66-
+        //https://medium.com/@harrisrobin/an-introduction-to-the-new-async-clipboard-api-7e6567685a05
         setTimeout(()=>{
 
             var submitButton = this.shadowDom.getElementById("NavSubmitButton")
@@ -153,15 +184,21 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 throw("can't add event handlers becuase elms still loading");
 
             submitButton.onclick = function(){
-                document.execCommand("copy");
+                document.execCommand("cut");
+                console.log("going to cut Button");
             }
-            document.addEventListener("copy", (event:ClipboardEvent)=>{
+            /*
+            For some reason copy doesn't work on firefox
+            */
+            document.addEventListener("cut", (event:ClipboardEvent)=>{
                 event.preventDefault();
-
+                console.log("started copying");
                 
                 if (event.clipboardData) {
-                    var png64 = this.canvasToImage.convertSvg(this.mathType + "Equation", this.color)
-                    event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ png64 +'">');
+                    if(this.pngBase64Image != ""){
+                        console.log("setting the clipboard")
+                        event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ this.pngBase64Image +'">');
+                    }
                 }
                 else{
                     throw("your browser does not support clipboardData.")
@@ -238,9 +275,11 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 case MathCompAttributes.mathtype:
                     this.mathType =  ConvertMathTypes(newVal);
                     break;
-    
             }
         }
+    }
+
+    updateCopyImageBase(){
 
     }
 }

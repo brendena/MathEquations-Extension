@@ -6,3 +6,11 @@ math-equation-anywhere{
     background:"white";
     z-index: 2000;
 }
+
+
+#mathEquationSlotLightDom {
+    flex: 1;
+    padding: 20px;
+    padding-bottom: 0px;
+    display: flex;
+}

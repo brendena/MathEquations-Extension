@@ -278,6 +278,7 @@ view model =
                     [slot [id MyCss.SlotShadowDomEquation, slotName "EquationDisplay"] [] 
                     , div [ id MyCss.MathOutputMenu ]
                         [ button [ style [ ( "height", "100%" ) ], id MyCss.NavSubmitButton ] [ text "copy image" ]
+                        , span [ id "TestDrag"] [ text "Drag me" ]
                         , input [ onInput OnColorChange, style [ ( "background", "none" ), ( "border", "none" ) ], type_ "color" ] []
                         , button [ class [ MyCss.ImageSizePresetButton ], onClick DownloadImage, id MyCss.OpenDownloadMenu, Html.Attributes.classList [ ( stringFontClasses MyCss.IconDownload, True ) ] ] []
                         , button [ sizeButtonClass model.mathEquationFontSize ImageSizeSmall, style [ ( "font-size", "10px" ) ], iconClass IconPicture, onClick (SetImageSize (intEquationFontSize ImageSizeSmall)) ] []

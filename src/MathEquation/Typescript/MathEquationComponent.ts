@@ -100,9 +100,6 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         
         this.shadowDom.appendChild(script);
         
-        script.addEventListener("load", function(){
-
-        });
 
 
         let styleLinkElm = document.createElement("link");
@@ -180,19 +177,41 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
             var submitButton = this.shadowDom.getElementById("NavSubmitButton")
             var resizeIcon = this.shadowDom.getElementById("ResizeIcon");
             var EquationsContainer = this.shadowDom.getElementById("EquationsContainer");
-            if(submitButton == null || resizeIcon == null || EquationsContainer == null)
+            var dragImage = this.shadowDom.getElementById("TestDrag");
+
+            if(submitButton == null || resizeIcon == null || EquationsContainer == null || dragImage == null)
                 throw("can't add event handlers becuase elms still loading");
 
-            submitButton.onclick = function(){
+            submitButton.onclick = ()=>{
                 document.execCommand("cut");
+                //document.execCommand("copy");
                 console.log("going to cut Button");
+            }
+            
+            dragImage.draggable = true;
+            dragImage.ondragstart = (ev)=>{
+                console.log("started to drag image");
+
+                //ev.dataTransfer.setData("text", '"<img id="CanvasImg" src="'+ this.pngBase64Image +'>');
+                var testImage = <HTMLImageElement>document.createElement("img"); 
+                testImage.src = this.pngBase64Image;
+                
+                
+                //set tmp image 
+                ev.dataTransfer.setDragImage(testImage,10,10);
+
+                //set the data of drag and drop
+                var wrapper = document.createElement("div");
+                wrapper.appendChild(testImage);
+                ev.dataTransfer.setData("text/html",wrapper.innerHTML);
+                
             }
             /*
             For some reason copy doesn't work on firefox
             */
             document.addEventListener("cut", (event:ClipboardEvent)=>{
                 event.preventDefault();
-                console.log("started copying");
+                console.log("started copying 1");
                 
                 if (event.clipboardData) {
                     if(this.pngBase64Image != ""){

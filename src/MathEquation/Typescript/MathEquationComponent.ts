@@ -191,8 +191,6 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
             dragImage.draggable = true;
             dragImage.ondragstart = (ev)=>{
                 console.log("started to drag image");
-
-                //ev.dataTransfer.setData("text", '"<img id="CanvasImg" src="'+ this.pngBase64Image +'>');
                 var testImage = <HTMLImageElement>document.createElement("img"); 
                 testImage.src = this.pngBase64Image;
                 

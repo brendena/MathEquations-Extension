@@ -302,17 +302,18 @@ view model =
         , div [ id MyCss.NavContainer ]
             [ img [ id "logo", class [ MyCss.NavLogo ], src (model.baseUrl ++ "Img/logoClearBackground.svg") ] []
             , div [ id MyCss.ContainerMathEquationSelectors, mathEquationSelectorsStyles model ]
-                [ button
-                    [ id HiddenSmall
-                    , class [ MyCss.NavButton ]
-                    , onClick ToggleEnableSmallSelect
+                [ 
+                    button [ onClick (ChangeMathType Tex), (navButtonClass model.selectedMathType Tex) ]
+                     [ img [ id MyCss.LatexImage, src (model.baseUrl ++ "Img/latex.svg") ] []
                     ]
-                    [ text (toString model.selectedMathType) ]
-                , button [ onClick (ChangeMathType Tex), (navButtonClass model.selectedMathType Tex) ]
-                    [ img [ id MyCss.LatexImage, src (model.baseUrl ++ "Img/latex.svg") ] []
-                    ]
-                , button [ onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath) ] [ text "AsciiMath" ]
-                , button [ onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML) ] [ text "MathML" ]
+
+                --    ]
+                --  button [ id HiddenSmall , class [ MyCss.NavButton ], onClick ToggleEnableSmallSelect] [ text (toString model.selectedMathType) ]
+                --, button [ onClick (ChangeMathType Tex), (navButtonClass model.selectedMathType Tex) ]
+                --    [ img [ id MyCss.LatexImage, src (model.baseUrl ++ "Img/latex.svg") ] []
+                --    ]
+                -- , button [ onClick (ChangeMathType AsciiMath), (navButtonClass model.selectedMathType AsciiMath) ] [ text "AsciiMath" ]
+                -- , button [ onClick (ChangeMathType MathML), (navButtonClass model.selectedMathType MathML) ] [ text "MathML" ]
                 ]
             , div [ id "NavActionsButtonsContainer" ]
                 [ button [onClick ToggleEquationContainerVisible, iconClass MyCss.IconUpOpen, class [ MyCss.NavButton ], equationContainerToggleStyles model.equationContainerOpen] []

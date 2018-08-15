@@ -40,8 +40,7 @@
       "96": "./Img/96x96.png",
       "128": "./Img/128x128.png" 
     },
-    "default_title": "Math Equations",
-    "default_popup": "popUp.html"
+    "default_title": "Math Equations"
   },
   "content_scripts": [
     {

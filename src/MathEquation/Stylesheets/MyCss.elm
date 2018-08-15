@@ -279,34 +279,38 @@ css =
                 [ height (pct 50)
                 ]
             ]
-        , mediaQuery [ "screen and ( max-width: 800px )" ]
-            [ id ContainerMathEquationSelectors
-                [ flexDirection column
-                , height (px (heightNavContainer * 4))
-                , flex (int 1)
-                ]
-            , class LastOrderNavBar
-                [ Css.order (int 99)
-                ]
-            , class MathEquationSelectorsOpen
-                [ transform (translateY (px (heightNavContainer * -2)))
-                , children
-                    [ id HiddenSmall [ Css.order (int 50) ]
-                    ]
-                ]
-            , id NavContainer
-                [ justifyContent spaceBetween
-                ]
-            , class OptionsSlideMenuTransitionOpen
-                [ transformString "translateY(0) translateX(5%)"
-                , width (pct 90)
-                ]
-            ,class OptionsSlideMenuTransitionClose
-                [ transformString "translateY(100%) translateX(5%)"
-                , width (pct 90)
-                ]
-            ]
-        , mediaQuery [ "screen and ( min-width: 800px )" ]
+            
+        -- This was used when i had lots of stuff
+        --, mediaQuery [ "screen and ( max-width: 800px )" ]
+        --    [ 
+        --    id ContainerMathEquationSelectors
+        --        [ flexDirection column
+        --        , height (px (heightNavContainer * 4))
+        --        , flex (int 1)
+        --        ]
+        --    , class LastOrderNavBar
+        --        [ Css.order (int 99)
+        --        ]
+        --    , class MathEquationSelectorsOpen
+        --        [ transform (translateY (px (heightNavContainer * -2)))
+        --        , children
+        --            [ id HiddenSmall [ Css.order (int 50) ]
+        --            ]
+        --        ]
+        --    , id NavContainer
+        --        [ justifyContent spaceBetween
+        --        ]
+        --    , class OptionsSlideMenuTransitionOpen
+        --        [ transformString "translateY(0) translateX(5%)"
+        --        , width (pct 90)
+        --        ]
+        --    ,class OptionsSlideMenuTransitionClose
+        --        [ transformString "translateY(100%) translateX(5%)"
+        --        , width (pct 90)
+        --        ]
+        --    ]
+                                                --changed from 800px
+        , mediaQuery [ "screen and ( min-width: 100px )" ]
             [ id ContainerMathEquationSelectors
                 [ flexDirection row
                 ]

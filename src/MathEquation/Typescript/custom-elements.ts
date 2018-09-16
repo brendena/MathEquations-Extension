@@ -7,10 +7,9 @@ export interface CustomElementConfig {
 
 export const CustomElement = (config: CustomElementConfig) => {
   return (Element:any) => {
-    //if(document.createElement(config.tagName).constructor === HTMLElement){
-    //  console.log("")
-      window['customElements'].define(config.tagName, Element, config.options);
-    //}    
+    
+    window['customElements'].define(config.tagName, Element, config.options);   
+
   };
 };
 

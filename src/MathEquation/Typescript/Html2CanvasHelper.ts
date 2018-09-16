@@ -1,13 +1,11 @@
 import { ImageTypesEnum} from './ImageTypes.ts'
 export {Html2CanvasHelper}
-
-var html2canvas: any = require('../../../lib/html2canvas.min.js');
-
 class Html2CanvasHelper {
     constructor(){
     }
 
     downloadImagePromise(imageType :ImageTypesEnum, imageSize:number,  color: string  ): Promise<string>{
+        /*
         let divImage =  document.getElementById("mathEquationSlotLightDom");
         let copyDivSvg = document.getElementById("tmpImageContainer");
 
@@ -18,27 +16,31 @@ class Html2CanvasHelper {
                 let copyEquation = firstItem.cloneNode(true);
                 copyDivSvg.appendChild(copyEquation);
                 copyDivSvg.style.color = color;
-                copyDivSvg.style.fontSize = imageSize + "px"
+                copyDivSvg.style.fontSize = imageSize + "px";
+                                
                 return new Promise((resolve, reject) => {
                     console.log(html2canvas)
                     console.log(copyEquation);
-                    html2canvas(copyEquation).then((canvas:any)=> {
+                    html2canvas(copyEquation,{
+                        allowTaint:true,
+                        useCORS:true}).then((canvas:any)=> {
                         console.log(canvas);
                         if(imageType == ImageTypesEnum.Png){
-                            resolve(canvas.toDataURL("image/png"));
+                            //resolve(canvas.toDataURL("image/png"));
                         }
                         else if(imageType == ImageTypesEnum.Jpg){
-                            resolve(canvas.toDataURL("image/jpeg"));
+                            //resolve(canvas.toDataURL("image/jpeg"));
                         }
-                    }).catch(()=>{
+                    }).catch((error:any)=>{
+                        console.log(error);
                         reject("html2canvas failed")
-                    });
-                    
+                    });  
                 });
+                
             }
 
         }
-        
+        */
         //fail
         return new Promise((resolve, reject) => {
             console.log('Faild to load image');

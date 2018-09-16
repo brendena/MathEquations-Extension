@@ -17,7 +17,7 @@ const Elm : any = require('../Elm/Main.elm');
     //    extends: "div"
     //}
 })
-class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
+export class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
     private shadowDom : ShadowRoot;
     container: HTMLDivElement;
     slotLightDom : HTMLElement;
@@ -60,9 +60,23 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.slotLightDom.setAttribute("slot","EquationDisplay"); 
         this.appendChild(this.slotLightDom); 
 
+       
+
+
+        
+    }
+    static get observedAttributes(){
+        return [MathCompAttributes.baseurl,
+                MathCompAttributes.color,
+                MathCompAttributes.mathtype]
+    }
+    connectedCallback() {
+        var event = new CustomEvent('MathEquationAdded');
+        document.dispatchEvent(event);
+        
         /*load certain items off screen on the actuall dom.
-          This pervents them from being slotted into the main program
-          which is needed for the html rendering library.*/
+        This pervents them from being slotted into the main program
+        which is needed for the html rendering library.*/
 
         this.offScreenItemDiv = document.createElement("div");
         this.offScreenItemDiv.id = "MathEquationsOffscreenItems";
@@ -82,26 +96,12 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.offScreenItemDiv.appendChild(styleLinkKatex);
 
 
-        
-    }
-    static get observedAttributes(){
-        return [MathCompAttributes.baseurl,
-                MathCompAttributes.color,
-                MathCompAttributes.mathtype]
-    }
-    connectedCallback() {
-
-        var event = new CustomEvent('MathEquationAdded');
-        document.dispatchEvent(event);
-        var origin = this.getAttribute("originurl");
+        //load in css code
 
         let script = document.createElement("script");
         script.src = this.getAttribute("baseurl") + "mathEquationComponentOnload.js"
-        
         this.shadowDom.appendChild(script);
         
-
-
         let styleLinkElm = document.createElement("link");
         styleLinkElm.href = this.getAttribute("baseurl") + "css/mathEquationComponentElm.css" 
         styleLinkElm.rel = "stylesheet";
@@ -109,11 +109,6 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         this.shadowDom.appendChild(styleLinkElm);
 
 
-        let styleLink = document.createElement("link");
-        styleLink.href = this.getAttribute("baseurl") + "css/mathEquationComponent.css" 
-        styleLink.rel = "stylesheet";
-        styleLink.type = "text/css";
-        this.shadowDom.appendChild(styleLink);
 
 
         /**********************setting-elm-up************************************/
@@ -136,7 +131,10 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                     this.html2CanvasHelper.downloadImagePromise(ImageTypesEnum.Png, elmObject.mathEquationFontSize, this.color).then((canvasData :any)=>{
                         console.log(canvasData)
                         this.pngBase64Image = canvasData;
-                    }).catch(()=>{console.error("failed to get image")});
+                    }).catch((error:any)=>{
+                        console.error(error);
+                        console.error("failed to get image")
+                    });
                 }, 500);
             }
             catch(errorCantConvertEquation){

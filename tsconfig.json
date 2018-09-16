@@ -10,7 +10,7 @@
     "noImplicitAny": true,
     "sourceMap": true,
     "lib": ["es2017", "dom"],
-    "types": ["node"],
+    "types": ["node","chrome"],
     "typeRoots": [
       "types",
       "node_modules/@types"

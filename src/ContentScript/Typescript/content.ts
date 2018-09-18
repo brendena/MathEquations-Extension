@@ -1,23 +1,13 @@
-import { MathEquationAnywhere } from '../../MathEquation/Typescript/MathEquationComponent.ts'
+import { MathEquationAnywhere } from '../../MathEquation/Typescript/MathEquationDiv.ts'
 
 
 var mathEquationEditorId = "MathEquationElement";
 export var constructUi = function(configOptions :any){
 
-    var addScript = function(scriptName:string){
-        let scriptTag = document.createElement('script');
-        scriptTag.src = chrome.extension.getURL(scriptName + ".js")
-        document.head.appendChild(scriptTag)
-    }
-    
-    addScript("html2canvas.min")
-    addScript("mathEquationComponent")
+    console.log("construction ui")
+    var MathEquationTag = new MathEquationAnywhere(chrome.extension.getURL(""));
 
-    var MathEquationTag = new MathEquationAnywhere();
-    MathEquationTag.id = mathEquationEditorId
-    MathEquationTag.setAttribute("baseurl", chrome.extension.getURL(""));
-
-    document.body.appendChild(MathEquationTag)
+    document.body.appendChild(MathEquationTag.shadowDom);
 }
 
 

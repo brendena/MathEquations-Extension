@@ -45,7 +45,7 @@
   "content_scripts": [
     {
       "matches":["<all_urls>"],
-      "js": ["./bundles/webcomponents-sd-ce-pf.js", "html2canvas.min.js","contentScript.js"],
+      "js": [ "html2canvas.min.js","contentScript.js"],
       "run_at": "document_end"
     }
   ],

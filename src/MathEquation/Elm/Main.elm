@@ -275,7 +275,7 @@ view model =
             , div [ id MyCss.MathTextEquationContainer ]
                 [ textarea [ onInput UpdateEquation, value model.mathEquation, placeholder "equation location", id MyCss.MathEquationText, class [ MyCss.ItemsEquationContainer ] ] [ text "" ]
                 , div [ id MyCss.MathOutputContainer, class [ MyCss.ItemsEquationContainer ] ]
-                    [slot [id MyCss.SlotShadowDomEquation, slotName "EquationDisplay"] [] 
+                    [div [id MyCss.DisplayEquation] [] 
                     , div [ id MyCss.MathOutputMenu ]
                         [ button [ style [ ( "height", "100%" ) ], id MyCss.NavSubmitButton ] [ text "copy image" ]
                         , span [ id "TestDrag"] [ text "Drag me" ]

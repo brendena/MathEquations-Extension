@@ -28,7 +28,7 @@ type CssIds
     | ResizeIcon
     | MathTextEquationContainer
     | MathEquationText
-    | SlotShadowDomEquation
+    | DisplayEquation
     | NavSubmitButton
     | MathOutputContainer
     | MathOutputMenu
@@ -202,6 +202,12 @@ css =
             , maxHeight (pct 90)
             , transition ".5s"
             , zIndex (int 2)
+            ]
+        , id DisplayEquation
+            [ flex (int 1)
+            , padding (px 20)
+            , paddingBottom (px 0)
+            , displayFlex
             ]
         , class ItemsEquationContainer
             [ width (pct 50)

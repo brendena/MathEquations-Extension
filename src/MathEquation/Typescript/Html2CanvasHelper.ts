@@ -5,7 +5,7 @@ class Html2CanvasHelper {
     }
 
     downloadImagePromise(imageType :ImageTypesEnum, imageSize:number,  color: string  ): Promise<string>{
-        /*
+        
         let divImage =  document.getElementById("mathEquationSlotLightDom");
         let copyDivSvg = document.getElementById("tmpImageContainer");
 
@@ -40,7 +40,7 @@ class Html2CanvasHelper {
             }
 
         }
-        */
+        
         //fail
         return new Promise((resolve, reject) => {
             console.log('Faild to load image');

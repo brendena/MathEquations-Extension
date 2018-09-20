@@ -16,7 +16,7 @@ export class MathEquationAnywhere {
     container: HTMLDivElement;
     slotLightDom : HTMLElement;
     tmpImageContainer: HTMLDivElement;
-    offScreenItemDiv: HTMLElement;
+    offScreenItemIframe: HTMLIFrameElement;
 
     app:any;
     postMessageHandler: PostMessageHandler;
@@ -48,50 +48,69 @@ export class MathEquationAnywhere {
         /*load certain items off screen on the actuall dom.
           This pervents them from being slotted into the main program
           which is needed for the html rendering library.*/
-
-        this.offScreenItemDiv = document.createElement("div");
-        this.offScreenItemDiv.id = "MathEquationsOffscreenItems";
-        document.body.appendChild(this.offScreenItemDiv);
+        this.offScreenItemIframe = document.createElement("iframe");
+        this.offScreenItemIframe.id = "MathEquationsOffscreenItems";
+        document.body.appendChild(this.offScreenItemIframe);
+        
 
         this.tmpImageContainer = document.createElement("div");
         this.tmpImageContainer.id = "tmpImageContainer";
-        this.tmpImageContainer.style.position = "fixed";
-        this.tmpImageContainer.style.left = "-100%";
-        this.tmpImageContainer.style.top = "-100%";
-        this.offScreenItemDiv.appendChild(this.tmpImageContainer); 
+        //this.tmpImageContainer.style.position = "fixed";
+        //this.tmpImageContainer.style.left = "-100%";
+        //this.tmpImageContainer.style.top = "-100%";
 
-        let styleLinkKatex = document.createElement("link");
+        var styleLinkKatex = document.createElement("link");
         styleLinkKatex.href = this.baseUrl + "katex.min.css" 
         styleLinkKatex.rel = "stylesheet";
         styleLinkKatex.type = "text/css";
-        this.offScreenItemDiv.appendChild(styleLinkKatex);
+
+        
+
+        var scriptIframe = document.createElement("script")
+        scriptIframe.src = this.baseUrl + "./mathEquationComponent.js"
+
+        
 
         this.connectedCallback();
+
+
         
+        setTimeout(() => {
+            if(this.offScreenItemIframe.contentDocument != null){
+                console.log("adding this stuff")
+                this.offScreenItemIframe.contentDocument.body.appendChild(this.tmpImageContainer); 
+                this.offScreenItemIframe.contentDocument.body.appendChild(styleLinkKatex);
+                this.offScreenItemIframe.contentDocument.body.appendChild(scriptIframe);
+            }  
+        }, 1000);
+        
+        setTimeout(()=>{
+            console.log("sending message")
+            if(this.offScreenItemIframe.contentWindow != null){
+                console.log("sending MMMASSage")
+                this.offScreenItemIframe.contentWindow.postMessage({"baseUrl": this.baseUrl},"*") 
+            }
+        },2000)
+
+
+        window.onmessage = (event)=>{
+            var messageData = event.data;
+            if(messageData != undefined){
+                if(messageData["returnImage"] != null &&
+                   messageData["imageType"] != null){
+                    if(messageData["imageType"] == ImageTypesEnum.Png){
+                        this.pngBase64Image = messageData["returnImage"];
+                    }
+                }
+            }
+
+        };
     }
     connectedCallback() {
 
-
         let script = document.createElement("script");
         script.src = this.baseUrl + "mathEquationComponentOnload.js"
-        
         this.shadowDom.appendChild(script);
-        
-
-
-        let styleLinkElm = document.createElement("link");
-        styleLinkElm.href = this.baseUrl + "css/mathEquationComponentElm.css" 
-        styleLinkElm.rel = "stylesheet";
-        styleLinkElm.type = "text/css";
-        this.shadowDom.appendChild(styleLinkElm);
-
-
-        let styleLink = document.createElement("link");
-        styleLink.href = this.baseUrl + "css/mathEquationComponent.css" 
-        styleLink.rel = "stylesheet";
-        styleLink.type = "text/css";
-        this.shadowDom.appendChild(styleLink);
-
 
         /**********************setting-elm-up************************************/
         this.app = Elm.Main.embed(this.container,{
@@ -106,10 +125,14 @@ export class MathEquationAnywhere {
                 katex.render(elmObject.mathEquation, document.getElementById("DisplayEquation"));
                 window.clearTimeout(this.createBase64ImageTimerId);
                 this.createBase64ImageTimerId = window.setTimeout(() => {
-                    this.html2CanvasHelper.downloadImagePromise(ImageTypesEnum.Png, elmObject.mathEquationFontSize, this.color).then((canvasData :any)=>{
-                        console.log(canvasData)
-                        this.pngBase64Image = canvasData;
-                    }).catch(()=>{console.error("failed to get image")});
+                    console.log("sending a")
+                    let divImage =  document.getElementById("DisplayEquation");
+                    if(this.offScreenItemIframe.contentWindow != null && divImage != null){
+                        this.offScreenItemIframe.contentWindow.postMessage({"imageType": ImageTypesEnum.Png,
+                                                                            "imageSize": elmObject.mathEquationFontSize,
+                                                                            "color": elmObject.mathEquationColor,
+                                                                            "EquationHtml": divImage.innerHTML},"*") 
+                    }
                 }, 500);
             }
             catch(errorCantConvertEquation){
@@ -130,13 +153,17 @@ export class MathEquationAnywhere {
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
             var elmObject = new ElmPort(elmJsonString);
             console.log("download iamge")
-            //this.canvasToImage.downloadImage(elmObject.GetMathEquationId(),elmObject.downloadImageType, elmObject.mathEquationColor);
+            
+
+            /*
             this.html2CanvasHelper.downloadImagePromise(elmObject.downloadImageType, elmObject.mathEquationFontSize, elmObject.mathEquationColor).then((dataImage:string)=>{
                 var downloadButton = document.getElementById("DownloadButton");
                 if(downloadButton != null){
                     downloadButton.setAttribute("href", dataImage);
                 }
             });
+            */
+
         });
         /**********************setting-elm-up************************************/
         
@@ -202,7 +229,6 @@ export class MathEquationAnywhere {
                     throw "no source element"
 
                 let touchMoveFunc = (event:TouchEvent)=>{
-                    //this.postMessageHandler.mouseResize(event.changedTouches[0].clientY);
                     event.preventDefault();
                 }
                 let touchEndFunc = (event:TouchEvent)=>{

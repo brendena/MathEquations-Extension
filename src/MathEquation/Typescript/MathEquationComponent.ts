@@ -17,7 +17,7 @@ const Elm : any = require('../Elm/Main.elm');
     //    extends: "div"
     //}
 })
-export class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
+class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, OnConnected, OnDisconnected {
     private shadowDom : ShadowRoot;
     container: HTMLDivElement;
     slotLightDom : HTMLElement;

@@ -45,7 +45,8 @@
   "content_scripts": [
     {
       "matches":["<all_urls>"],
-      "js": [ "html2canvas.min.js","contentScript.js"],
+      "js": [ "contentScript.js"],
+      "css": ["css/mathEquationComponentElm.css","katex.min.css", "css/fontello.css", "css/animation.css"],
       "run_at": "document_end"
     }
   ],
@@ -64,9 +65,7 @@
     "fonts/*.woff2",
     "fonts/*.ttf",
     "katex.min.css",
-    "mathEquationComponentOnload.js",
-    "mathEquationComponent.js",
-    "html2canvas.min.js"
+    "mathEquationComponent.js"
   ],
   
   "permissions": [

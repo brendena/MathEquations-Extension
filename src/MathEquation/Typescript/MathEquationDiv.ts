@@ -50,14 +50,14 @@ export class MathEquationAnywhere {
           which is needed for the html rendering library.*/
         this.offScreenItemIframe = document.createElement("iframe");
         this.offScreenItemIframe.id = "MathEquationsOffscreenItems";
+        this.offScreenItemIframe.style.position = "fixed";
+        this.offScreenItemIframe.style.left = "-100%";
+        this.offScreenItemIframe.style.top = "-100%";
+
         document.body.appendChild(this.offScreenItemIframe);
         
 
-        this.tmpImageContainer = document.createElement("div");
-        this.tmpImageContainer.id = "tmpImageContainer";
-        //this.tmpImageContainer.style.position = "fixed";
-        //this.tmpImageContainer.style.left = "-100%";
-        //this.tmpImageContainer.style.top = "-100%";
+
 
         var styleLinkKatex = document.createElement("link");
         styleLinkKatex.href = this.baseUrl + "katex.min.css" 
@@ -67,7 +67,7 @@ export class MathEquationAnywhere {
         
 
         var scriptIframe = document.createElement("script")
-        scriptIframe.src = this.baseUrl + "./mathEquationComponent.js"
+        scriptIframe.src = this.baseUrl + "iframe2Canvas.js"
 
         
 
@@ -77,20 +77,10 @@ export class MathEquationAnywhere {
         
         setTimeout(() => {
             if(this.offScreenItemIframe.contentDocument != null){
-                console.log("adding this stuff")
-                this.offScreenItemIframe.contentDocument.body.appendChild(this.tmpImageContainer); 
                 this.offScreenItemIframe.contentDocument.body.appendChild(styleLinkKatex);
                 this.offScreenItemIframe.contentDocument.body.appendChild(scriptIframe);
             }  
         }, 1000);
-        
-        setTimeout(()=>{
-            console.log("sending message")
-            if(this.offScreenItemIframe.contentWindow != null){
-                console.log("sending MMMASSage")
-                this.offScreenItemIframe.contentWindow.postMessage({"baseUrl": this.baseUrl},"*") 
-            }
-        },2000)
 
 
         window.onmessage = (event)=>{
@@ -100,6 +90,12 @@ export class MathEquationAnywhere {
                    messageData["imageType"] != null){
                     if(messageData["imageType"] == ImageTypesEnum.Png){
                         this.pngBase64Image = messageData["returnImage"];
+                    }
+                    if(messageData["downloadImage"] == true){
+                        var downloadButton = document.getElementById("DownloadButton");
+                        if(downloadButton != null){
+                            downloadButton.setAttribute("href", messageData["returnImage"]);
+                        }
                     }
                 }
             }
@@ -125,7 +121,6 @@ export class MathEquationAnywhere {
                 katex.render(elmObject.mathEquation, document.getElementById("DisplayEquation"));
                 window.clearTimeout(this.createBase64ImageTimerId);
                 this.createBase64ImageTimerId = window.setTimeout(() => {
-                    console.log("sending a")
                     let divImage =  document.getElementById("DisplayEquation");
                     if(this.offScreenItemIframe.contentWindow != null && divImage != null){
                         this.offScreenItemIframe.contentWindow.postMessage({"imageType": ImageTypesEnum.Png,
@@ -152,18 +147,14 @@ export class MathEquationAnywhere {
 
         this.app.ports.downloadImage.subscribe((elmJsonString:string)=>{
             var elmObject = new ElmPort(elmJsonString);
-            console.log("download iamge")
-            
-
-            /*
-            this.html2CanvasHelper.downloadImagePromise(elmObject.downloadImageType, elmObject.mathEquationFontSize, elmObject.mathEquationColor).then((dataImage:string)=>{
-                var downloadButton = document.getElementById("DownloadButton");
-                if(downloadButton != null){
-                    downloadButton.setAttribute("href", dataImage);
-                }
-            });
-            */
-
+            let divImage =  document.getElementById("DisplayEquation");
+            if(this.offScreenItemIframe.contentWindow != null && divImage != null){
+                this.offScreenItemIframe.contentWindow.postMessage({"imageType": ImageTypesEnum.Png,
+                                                                    "imageSize": elmObject.mathEquationFontSize,
+                                                                    "color": elmObject.mathEquationColor,
+                                                                    "EquationHtml": divImage.innerHTML,
+                                                                    "downloadImage":true},"*") 
+            }
         });
         /**********************setting-elm-up************************************/
         
@@ -198,11 +189,11 @@ export class MathEquationAnywhere {
                 //set tmp image 
                 ev.dataTransfer.setDragImage(testImage,10,10);
 
-                //set the data of drag and drop
-                var wrapper = document.createElement("div");
-                wrapper.appendChild(testImage);
-                ev.dataTransfer.setData("text/html",wrapper.innerHTML);
-                
+                //this works in chrome
+                //ev.dataTransfer.setData("text/html",'<img id="CanvasImg" src="'+ this.pngBase64Image +'">');
+                ev.dataTransfer.setData("text/html", "Hello there, <strong>stranger</strong>");
+                ev.dataTransfer.setData("text/plain", "Hello there, stranger");
+
             }
             /*
             For some reason copy doesn't work on firefox

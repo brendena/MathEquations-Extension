@@ -38,11 +38,10 @@ const extractCSSElm = new ExtractTextPlugin({ filename: 'css/mathEquationCompone
 const extractCSSOther = new ExtractTextPlugin({ filename: 'css/mathEquationComponent.css' })
 module.exports = {
   entry: {
-    mathEquationComponent: "./src/webPackMathEquation.js",
+    iframe2Canvas: "./src/webPackIframe2Canvas.js",
     contentScript: "./src/webPackContentScript.js",
     popUp: "./src/webPackPopUp.js",
-    background: "./src/webPackBackground.js",
-    mathEquationComponentOnload: "./src/webPackMathEquationOnload.js"
+    background: "./src/webPackBackground.js"
   },
   output: {
     path: path.resolve(__dirname + '/../dist'),
@@ -55,15 +54,15 @@ module.exports = {
       { from: "./src/manifest.json" },
       { from: "./src/PopUpMenu/Html/popUp.html" },
       { from: "./src/StaticFiles/Img", to: "./Img" },
-      { from: "./node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"},
-      { from: "./node_modules/@webcomponents/webcomponentsjs/bundles", to : "bundles"},
-
       { from: "./src/Background/Html/background.html" },
       { from: "./src/Background/Js/background.js" },
       { from: "./src/StaticFiles/Edge" },
 
       { from: "./node_modules/katex/dist/katex.min.css"},
       { from: "./node_modules/katex/dist/fonts", to :"./fonts"},
+      { from: "./src/MathEquation/Stylesheets/fontello/css/animation.css", to :"./css"},
+      { from: "./src/MathEquation/Stylesheets/fontello/css/fontello.css", to :"./css"},
+
       { from: "./src/MathEquation/Stylesheets/fontello/font", to :"./font"}
     ]),
     new webpack.EnvironmentPlugin([

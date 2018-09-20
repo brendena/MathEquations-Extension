@@ -16,11 +16,7 @@ class Html2CanvasHelper {
         divImage.style.fontSize = imageSize + "px";
                         
         return new Promise((resolve, reject) => {
-            console.log(html2canvas)
-            console.log(divImage);
             html2canvas(divImage).then((canvas:any)=> {
-                console.log(canvas);
-                console.log(imageType)
                 if(imageType == ImageTypesEnum.Png){
                     resolve(canvas.toDataURL("image/png"));
                 }
@@ -28,7 +24,6 @@ class Html2CanvasHelper {
                     resolve(canvas.toDataURL("image/jpeg"));
                 }
             }).catch((error:any)=>{
-                console.log(error);
                 reject("html2canvas failed")
             });  
         });

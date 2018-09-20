@@ -1,3 +1,4 @@
+/*
 import { CustomElement, OnConnected, OnDisconnected, OnAttributeChanged } from './custom-elements.ts';
 import { ElmPort } from './ElmPort.ts'
 import { MathTypes,ConvertMathTypes } from './MathTypes.ts'
@@ -74,9 +75,9 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
         var event = new CustomEvent('MathEquationAdded');
         document.dispatchEvent(event);
         
-        /*load certain items off screen on the actuall dom.
-        This pervents them from being slotted into the main program
-        which is needed for the html rendering library.*/
+        //load certain items off screen on the actuall dom.
+        //This pervents them from being slotted into the main program
+        //which is needed for the html rendering library.
 
         this.offScreenItemDiv = document.createElement("div");
         this.offScreenItemDiv.id = "MathEquationsOffscreenItems";
@@ -111,7 +112,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
 
 
 
-        /**********************setting-elm-up************************************/
+        //**********************setting-elm-up************************************
         this.app = Elm.Main.embed(this.container,{
             "baseUrl": this.getAttribute("baseurl")
         });
@@ -163,7 +164,7 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 }
             });
         });
-        /**********************setting-elm-up************************************/
+        //**********************setting-elm-up************************************
         
         //wait untill elm load to load the clipboard element
 
@@ -202,9 +203,9 @@ class MathEquationAnywhere extends HTMLElement implements OnAttributeChanged, On
                 ev.dataTransfer.setData("text/html",wrapper.innerHTML);
                 
             }
-            /*
-            For some reason copy doesn't work on firefox
-            */
+            
+            //For some reason copy doesn't work on firefox
+            
             document.addEventListener("cut", (event:ClipboardEvent)=>{
                 event.preventDefault();
                 console.log("started copying 1");
@@ -305,3 +306,4 @@ const enum MathCompAttributes {
     color = "equationcolor",
     mathtype = "mathtype"
 }
+*/

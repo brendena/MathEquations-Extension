@@ -7,4 +7,5 @@
 //background pages
 //https://developer.chrome.com/extensions/background_pages
 
-console.log("test")
+
+require('./Background/Js/background.js');

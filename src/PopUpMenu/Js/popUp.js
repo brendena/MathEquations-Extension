@@ -7,7 +7,9 @@ browser.storage.sync  = browser.storage.local
 or something
 https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API
 */
-var browser = browser || chrome
+
+var browser = browser || chrome;
+/*
 document.addEventListener('DOMContentLoaded', function() {
   browser.storage.sync.get(["fontStyles"], function (result) {
     var fontContainer = document.getElementById("selectedFont");
@@ -22,9 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 }.bind(this));
 
-browser.browserAction.onClicked.addListener(function(tab) {
 
-});
 
 var selectImage = function(imgName){
   var imgExampleFont = document.getElementById("imgExampleFontSelected");
@@ -46,3 +46,4 @@ var resetUI = function(){
 
 document.getElementById("selectedFont").addEventListener("change", onSelectFont);
 document.getElementById("resetUIButton").addEventListener("click", resetUI);
+*/

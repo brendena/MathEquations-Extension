@@ -5,7 +5,6 @@ import { ImageTypesEnum} from './ImageTypes.ts'
 import { Html2CanvasHelper } from './Html2CanvasHelper.ts'
 import { setTimeout } from 'timers';
 
-console.log("loading MathEquations")
 
 const katex : any = require('katex');
 const Elm : any = require('../Elm/Main.elm');
@@ -54,10 +53,7 @@ export class MathEquationAnywhere {
         this.offScreenItemIframe.style.left = "-100%";
         this.offScreenItemIframe.style.top = "-100%";
 
-        document.body.appendChild(this.offScreenItemIframe);
-        
-
-
+        this.shadowDom.appendChild(this.offScreenItemIframe);
 
         var styleLinkKatex = document.createElement("link");
         styleLinkKatex.href = this.baseUrl + "katex.min.css" 
@@ -103,10 +99,6 @@ export class MathEquationAnywhere {
         };
     }
     connectedCallback() {
-
-        let script = document.createElement("script");
-        script.src = this.baseUrl + "mathEquationComponentOnload.js"
-        this.shadowDom.appendChild(script);
 
         /**********************setting-elm-up************************************/
         this.app = Elm.Main.embed(this.container,{
@@ -168,17 +160,20 @@ export class MathEquationAnywhere {
             var submitButton = document.getElementById("NavSubmitButton")
             var resizeIcon = document.getElementById("ResizeIcon");
             var EquationsContainer = document.getElementById("EquationsContainer");
-            var dragImage = document.getElementById("TestDrag");
 
-            if(submitButton == null || resizeIcon == null || EquationsContainer == null || dragImage == null)
+            if(submitButton == null || resizeIcon == null || EquationsContainer == null)
                 throw("can't add event handlers becuase elms still loading");
 
             submitButton.onclick = ()=>{
                 document.execCommand("cut");
                 //document.execCommand("copy");
-                console.log("going to cut Button");
+                //console.log("going to cut Button");
             }
             
+
+            /*
+            var dragImage = document.getElementById("DragEquation");
+
             dragImage.draggable = true;
             dragImage.ondragstart = (ev)=>{
                 console.log("started to drag image");
@@ -195,16 +190,18 @@ export class MathEquationAnywhere {
                 ev.dataTransfer.setData("text/plain", "Hello there, stranger");
 
             }
+            */
+
             /*
             For some reason copy doesn't work on firefox
             */
             document.addEventListener("cut", (event:ClipboardEvent)=>{
                 event.preventDefault();
-                console.log("started copying 1");
+                //console.log("started copying 1");
                 
                 if (event.clipboardData) {
                     if(this.pngBase64Image != ""){
-                        console.log("setting the clipboard")
+                        //console.log("setting the clipboard")
                         event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ this.pngBase64Image +'">');
                     }
                 }

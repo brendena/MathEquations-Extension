@@ -70,7 +70,7 @@
   
   "permissions": [
     "storage",
-    "clipboardRead",
+    "activeTab",
     "clipboardWrite"
   ],
   "applications": {
@@ -82,6 +82,14 @@
   "background": {
     "page": "background.html",
     "persistent": true
+  },
+  "commands": {
+    "open-close-extension": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U"
+      },
+      "description": "Send a Opens the extension or closes it"
+    }
   },
   "-ms-preload": {
       "backgroundScript": "backgroundScriptsAPIBridge.js",

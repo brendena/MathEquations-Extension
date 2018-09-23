@@ -7,8 +7,6 @@ class Html2CanvasHelper {
     }
 
     downloadImagePromise(divImage:HTMLElement, imageType :ImageTypesEnum, imageSize:number,  color: string  ): Promise<string>{
-        
-        console.log("startign to go through this")
         let copyDivSvg = document.getElementById("tmpImageContainer");
 
 

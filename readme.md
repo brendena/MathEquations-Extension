@@ -12,7 +12,7 @@
 
 
 ## Getting started
-* npm install -g elm elm-format bower webpack 
+* npm install -g elm@0.18.0 elm-format bower webpack 
 * npm install
 * bower install
 * elm-package install

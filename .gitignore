@@ -1,12 +1,3 @@
-/elm-stuff
-/StyleSheets/elm-stuff
-*.log
-/bower_components
-/node_modules
-/.vscode
-*js.map
-*.zip
-/src/MathEquation/Typescript/*.js
-/dist
-/package-lock.json
-/src/MathEquation/StyleSheets/*.css
+dist/
+node_modules/
+

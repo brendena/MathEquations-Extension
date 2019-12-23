@@ -1,5 +1,4 @@
 var path = require("path");
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
 const WebpackShellPlugin = require('webpack-shell-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
@@ -30,17 +29,12 @@ https://medium.com/@bogdan_plieshka/loading-static-and-dynamic-images-with-webpa
  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
  /*
  https://github.com/TypeStrong/ts-loader
-
  */
 
 
-const extractCSSElm = new ExtractTextPlugin({ filename: 'css/mathEquationComponentElm.css' })
-const extractCSSOther = new ExtractTextPlugin({ filename: 'css/mathEquationComponent.css' })
 module.exports = {
   entry: {
-    iframe2Canvas: "./src/webPackIframe2Canvas.js",
     contentScript: "./src/webPackContentScript.js",
-    popUp: "./src/webPackPopUp.js",
     background: "./src/webPackBackground.js"
   },
   output: {
@@ -49,102 +43,44 @@ module.exports = {
   },
   plugins: [
     new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']}),
-    //new WebpackShellPlugin({onBuildStart: ['elm-css src/MathEquation/Stylesheets/StylesheetCompiler.elm --output src/MathEquation/Stylesheets/']}),
     new CopyWebpackPlugin([
       { from: "./src/manifest.json" },
-      { from: "./src/PopUpMenu/Html/popUp.html" },
       { from: "./src/StaticFiles/Img", to: "./Img" },
+
       { from: "./src/Background/Html/background.html" },
-      { from: "./src/Background/Js/background.js" },
-      { from: "./src/StaticFiles/Edge" },
-
-      { from: "./node_modules/katex/dist/katex.min.css"},
-      { from: "./node_modules/katex/dist/fonts", to :"./fonts"},
-      { from: "./src/MathEquation/Stylesheets/fontello/css/animation.css", to :"./css"},
-      { from: "./src/MathEquation/Stylesheets/fontello/css/fontello.css", to :"./css"},
-
-      { from: "./src/MathEquation/Stylesheets/fontello/font", to :"./font"}
+      { from: "./src/Background/Js/background.js" }
     ]),
     new webpack.EnvironmentPlugin([
       'NODE_ENV',
-    ]),
-    extractCSSElm,
-    extractCSSOther
-    
-
+    ])
   ],
   module: {
     rules: [
-      {
-        test:    /\.html$/,
-        exclude: /node_modules/,
-        loader:  'file-loader?name=[name].[ext]',
-      },
-      //*
-      {
-        test:    /\.elm$/,
-        exclude: [/elm-stuff/, /node_modules/, /StylesheetCompiler\.elm/],
-        loader:  'elm-webpack-loader?verbose=true&warn=true',
-      },
-      ///*
-      {
-        test: /\.(css|scss)$/,
-        exclude : [/MathEquation/],
-        use: [
-          'style-loader',
-          'css-loader',
-        ]
-      },
-      ///*
-      {
-        test: /\.(css|scss)$/,
-        include : [/MathEquation/],
-        use: extractCSSOther.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-          ]
-        })
-      },
-      //*/
-      ///*
-      {
-        test: /StylesheetCompiler\.elm$/,
-        use: extractCSSElm.extract({
-          fallback: 'style-loader',
-          use: [
-            'css-loader',
-            'elm-css-webpack-loader'
-          ]
-        })
-       
-      },
-      //*/
-      {
-        test:    /\.(html|json)$/,
-        exclude: /node_modules/,
-        loader:  'file-loader?name=[name].[ext]',
-      },
-      {
-        test: /\.(ttf|eot|svg|png)$/,
-        loader: 'file-loader',
-        options: {
-          //potential problem since i'm not using the directory of the image
-          name: '[name].[ext]', 
-          outputPath: 'Img/'
-        }
-      },
-      { 
-        test: /\.(ts)?$/,
-        exclude: /node_modules/, 
-        include: /src/,
-        loader: 'ts-loader'
-      },
-      {  //loading font data
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader'//?limit=10000&mimetype=application/font-woff',
-      }
-    ]
-    ,noParse: /^((?!StylesheetCompiler).)*\.elm.*$/
+        {
+            test: /\.js?$/,
+            exclude: /node_module/,
+            use: 'babel-loader'
+        },
+        {
+            test: /\.css?$/,
+            use: [ 'style-loader', 'css-loader' ]
+        },
+        {
+            test: /\.(png|j?g|svg|gif)?$/,
+            use: 'file-loader'
+        },
+        {
+            test: /\.(woff(2)?)(\?v=\d+\.\d+\.\d+)?$/,
+            use: [
+              {
+                loader: 'file-loader',
+                options: {
+                  name: '[name].[ext]',
+                  outputPath: 'src/lib/fontello'
+                }
+              }
+            ]
+          }
+      ]
   }
 };

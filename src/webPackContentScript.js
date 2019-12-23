@@ -1,9 +1,3 @@
-'use strict'
+var mathEquation = require('./MathEquation/index');
 
-
-
-require('./MathEquation/Stylesheets/StylesheetCompiler.elm');
-
-
-var handler = require('./ContentScript/Typescript/content.ts');
-//handler.constructUi({});
+console.log("------------------------------this might be working")

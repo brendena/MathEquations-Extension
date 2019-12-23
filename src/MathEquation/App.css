@@ -1,0 +1,172 @@
+.App {
+  background:blue;
+  bottom:0px;
+  left:0px;
+  position:fixed;
+  width:100%;
+  min-height:20vh;
+  transition: all 0.1s ease 0s;
+}
+
+
+#slideItem{
+  margin: auto;
+  text-align: center;
+  cursor: ns-resize;
+  opacity:0.5;
+  min-height:10px;
+}
+#slideItem:hover{
+  opacity:1;
+}
+
+#test{
+  background:green;
+  width:100%;
+  height:100%;
+  position:fixed;
+}
+#ActionBar
+{
+  position:fixed;
+  bottom:0px;
+  left:0px;
+  width:100%;
+  height:75px;
+  background-color:#ffdc78;
+  color:black;
+  display:flex;
+  flex-direction: row;
+}
+#TextSlideBox
+{
+  background:white;
+  border-top-style: solid;
+  border-top-width: 1px;
+  height: calc( 100% - 75px);
+  display:flex;
+  flex-direction:column;
+}
+.classTextBoxOffscreen
+{
+  padding-top:100%;
+}
+
+#TextSectionDivider
+{
+  flex-grow:2;
+  display:flex;
+  flex-direction:row;
+}
+#inputTextMathEquation
+{
+  width:50%;
+  resize: none;
+  box-sizing: border-box;
+  padding: 20px;
+  border-width: 0;
+}
+#textOutputBox
+{
+  width:50%;
+  border-left-style: solid;
+  border-left-width: 1px;
+  display:flex;
+  flex-direction: column;
+}
+
+.buttonOptionsImage{
+  background-color: #ffffff;
+  border: 0;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.buttonOptionsImage:hover{
+  background-color: #b9b9b9;
+}
+
+#imageOptions{
+  align-items: center;
+  display: flex;
+  height:40px;
+}
+.removeStyles
+{
+  background: none; 
+  border: none;
+}
+#MathEquationBox
+{
+  flex-grow:2;
+}
+.navButton
+{
+  height:100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 30px;
+  border-width: 0px;
+  background-color: #ffdc78;
+  font-family: 'Times New Roman', Times, serif;
+  box-shadow: none;
+  transition: all 0.5s ease 0s;
+}
+
+.navButton:hover
+{
+  background-color: #aaaa78;
+}
+
+.selectedMathInput
+{
+  background-color: #aaaa78;
+}
+
+.flexSpacer{
+  flex-grow:2;
+}
+
+#navBarLogo
+{
+  background-color: #8064d6;
+  height:100%;
+}
+#latexImage
+{
+  height:50%;
+}
+
+#canvasVisible
+{
+  position:fixed;
+  top:0px;
+  left:0px;
+  z-index: 3000000;
+
+}
+
+/*
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #09d3ac;
+}
+*/

@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './lib/fontello/css/fontello.css'
-import './lib/fontello/css/animation.css'
+
 import App from './App';
+
+//need to import it here for everybody else
 import * as MathJax from "./lib/custom-mathjax/custom-mathjax.min"
 
 import { Provider } from "react-redux";

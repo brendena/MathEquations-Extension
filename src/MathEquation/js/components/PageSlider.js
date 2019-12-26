@@ -1,7 +1,7 @@
 import React from "react";
 import * as Actions from '../actions/index'
 import  store  from "../store/index"
-import resizeIcon from "../../../StaticFiles/Img/resizeIcon.svg"
+import * as ConstsID from "../constants/constsID"
 
 class PageSlider extends React.Component{
     constructor(props){
@@ -30,7 +30,7 @@ class PageSlider extends React.Component{
     render(){
         return (
             <img id="slideItem" 
-                  src={resizeIcon}
+                  src={ConstsID.UrlImage + "resizeIcon.svg"}
                   draggable="false"
                   onDragStart={this.handleDragEvents}
                   onDrop={this.handleDragEvents}

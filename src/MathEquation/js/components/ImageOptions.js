@@ -4,6 +4,9 @@ import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
 
 
+import { faImage, faDownload } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 @connect((store)=>{
     return{
         base64Image: store.propsPage.base64MathImage
@@ -42,10 +45,20 @@ class ImageOptions extends React.Component{
                 <button className="buttonOptionsImage"
                         onClick={this.CopyImageToClipboard}>copy image</button>
                 <input  className="removeStyles" type="color"/>
-                <button className="icon-download-1 buttonOptionsImage"></button>
-                <button className="icon-picture buttonOptionsImage" style={styleSmallPicture}></button>
-                <button className="icon-picture buttonOptionsImage" style={styleMediumPicture}></button>
-                <button className="icon-picture buttonOptionsImage" style={styleLargePicture}></button>
+                
+                <button className="icon-download-1 buttonOptionsImage">
+                    <FontAwesomeIcon icon={faDownload} />
+                </button>
+                
+                <button className="buttonOptionsImage" style={styleSmallPicture}>
+                    <FontAwesomeIcon icon={faImage} />
+                </button>
+                <button className="buttonOptionsImage" style={styleMediumPicture}>
+                    <FontAwesomeIcon icon={faImage} />
+                </button>
+                <button className="buttonOptionsImage" style={styleLargePicture}>
+                    <FontAwesomeIcon icon={faImage} />
+                </button>
                 
             </div>
         )

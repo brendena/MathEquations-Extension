@@ -1,9 +1,12 @@
 import React from "react";
-import latexImg from "../../../StaticFiles/Img/latex.svg"
-import logoImg from "../../../StaticFiles/Img/logoClearBackground.svg"
 import * as Actions from '../actions/index'
 import * as ConstTypes from "../constants/constsTypes"
+import * as ConstsID from "../constants/constsID"
 import  store  from "../store/index"
+
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { faWindowClose, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class ActionBar extends React.Component{
     constructor(props){
@@ -40,10 +43,10 @@ class ActionBar extends React.Component{
 
         return (
             <div id="ActionBar">
-                <img src={logoImg} id="navBarLogo" alt="Math Equations Logo"/>
+                <img src={ConstsID.UrlImage + "logoClearBackground.svg"} id="navBarLogo" alt="Math Equations Logo"/>
 
                 <button className={latexButtonClassName} 
-                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.latex)}} ><img src={latexImg} id="latexImage" alt="latex logo"/></button>
+                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.latex)}} ><img src={ConstsID.UrlImage + "latex.svg"} id="latexImage" alt="latex logo"/></button>
                 <button className={mathMLButtonClassName} 
                         onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.mathML)}}>MathML</button>
                 <button className={asciiMathButtonClassName} 
@@ -51,13 +54,20 @@ class ActionBar extends React.Component{
 
                 <div className="flexSpacer"></div>
 
+                
                 <button className="navButton icon-up-open" 
                         onClick={this.toggleMathEquationBoxShow}
-                        style={stylesSlideMathTextBox}></button>
+                        style={stylesSlideMathTextBox}>
+                    <FontAwesomeIcon icon={faChevronUp} />        
+                </button>
                 <a href="https://github.com/brendena/MathEquations-Extension">
-                    <button className="navButton icon-github-circled"></button>
+                    <button className="navButton">
+                        <FontAwesomeIcon icon={faGithub} />
+                    </button>
                 </a>
-                <button className="navButton icon-cancel-1"></button>
+                <button className="navButton icon-cancel-1">
+                    <FontAwesomeIcon icon={faWindowClose} />
+                </button>
             </div>
         )
     }

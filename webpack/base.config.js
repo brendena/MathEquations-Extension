@@ -41,17 +41,18 @@ module.exports = {
     path: path.resolve(__dirname + '/../dist'),
     filename: '[name].js',
   },
+  mode: "development",
+	optimization: {
+		// We no not want to minimize our code.
+		minimize: false
+	},
   plugins: [
     new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']}),
     new CopyWebpackPlugin([
       { from: "./src/manifest.json" },
       { from: "./src/StaticFiles/Img", to: "./Img" },
-
       { from: "./src/Background/Html/background.html" },
       { from: "./src/Background/Js/background.js" }
-    ]),
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV',
     ])
   ],
   module: {

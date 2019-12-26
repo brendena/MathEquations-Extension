@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import  ActionBar  from "./js/components/ActionBar"
 import TextSlideBox from "./js/components/TextSlideBox"
 import SVGToCanvas from "./js/components/SVGToCanvas"
+import * as ConstsID from "./js/constants/constsID"
 
 @connect((store)=>{
   return{
@@ -36,11 +37,18 @@ class App extends React.Component{
     if(!this.props.showMathEquationBox){
       position.bottom = "-" + this.props.pageHeight + "vh";
       console.log("test")
+      
     }
 
+    //<link rel="stylesheet" type="text/css" href={ConstsID.UrlImage + "css/fontello.css"}></link>
+    //<link rel="stylesheet" type="text/css" href={ConstsID.UrlImage + "css/animation.css"}></link>
+   
 
     return(
-    <div style={position} className="App">
+      
+
+
+     <div style={position} className="App">
           <TextSlideBox/>
           <ActionBar stateMathTextBox={this.props.showMathEquationBox} 
                      currentMathInput={this.props.typeMathInput}/>

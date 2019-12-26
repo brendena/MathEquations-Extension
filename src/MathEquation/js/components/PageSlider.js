@@ -12,7 +12,7 @@ class PageSlider extends React.Component{
     }
     changeHeight(event){
         //https://stackoverflow.com/questions/1145850/how-to-get-height-of-entire-document-with-javascript
-        var height =  100 - ((event.clientY / document.documentElement.scrollHeight) * 100);
+        var height =  100 - ((event.clientY / window.innerHeight) * 100);
         store.dispatch(Actions.changeHeightPage(height));
         
     }

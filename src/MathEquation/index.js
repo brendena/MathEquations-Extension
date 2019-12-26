@@ -11,10 +11,8 @@ import { Provider } from "react-redux";
 import store from "./js/store/index";
 
 ReactDOM.render(
-            <div id="test">
             <Provider store={store}>   
                     <App />  
-            </Provider>
-            </div>,
+            </Provider>,
              document.getElementById('root'));
 

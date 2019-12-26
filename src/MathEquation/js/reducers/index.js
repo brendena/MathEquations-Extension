@@ -8,6 +8,7 @@ const initialState = {
         height: 30,
         showMathEquationTextBox: true,
         typeMathInput: constTypes.MathEquationInput.latex,
+        sizeMathOutput: constTypes.MathSizeMedium,
         mathInputString:"",
         updateRenderCanvas: false,
         base64MathImage: ""
@@ -46,6 +47,11 @@ function rootReducer(state = initialState, action){
         else if(action.type === consts.UPDATE_BASE64_Math_IMAGE)
         {
             draft.propsPage.base64MathImage = action.payload;
+        }
+        else if(action.type === consts.UPDATE_SIZE_MATH_EQUATION)
+        {
+            console.log("testing")
+            draft.propsPage.sizeMathOutput = action.payload;
         }
     });
 }

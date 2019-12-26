@@ -6,6 +6,7 @@
   width:100%;
   min-height:20vh;
   transition: all 0.1s ease 0s;
+  z-index: 9999999;
 }
 
 
@@ -20,12 +21,7 @@
   opacity:1;
 }
 
-#test{
-  background:green;
-  width:100%;
-  height:100%;
-  position:fixed;
-}
+
 #ActionBar
 {
   position:fixed;
@@ -80,6 +76,8 @@
   border: 0;
   height: 100%;
   box-sizing: border-box;
+  margin-left:2px;
+  border-color:white;
 }
 
 .buttonOptionsImage:hover{
@@ -90,6 +88,7 @@
   align-items: center;
   display: flex;
   height:40px;
+  padding-bottom: 3px;
 }
 .removeStyles
 {
@@ -140,10 +139,15 @@
 #canvasVisible
 {
   position:fixed;
-  top:0px;
-  left:0px;
-  z-index: 3000000;
+  top:-100%;
+  left:-100%;
+  z-index: -3000000;
+}
 
+.sizeImageStyles
+{
+  border-width: 1px;
+  border-style: solid;
 }
 
 /*

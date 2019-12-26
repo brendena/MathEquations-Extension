@@ -1,5 +1,6 @@
 import React from "react";
 import  store  from "../store/index"
+import  * as ConstsTypes  from "../constants/constsTypes"
 import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
 
@@ -9,7 +10,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 @connect((store)=>{
     return{
-        base64Image: store.propsPage.base64MathImage
+        base64Image: store.propsPage.base64MathImage,
+        sizeMathOutput: store.propsPage.sizeMathOutput
     }
 })
 class ImageOptions extends React.Component{
@@ -36,27 +38,56 @@ class ImageOptions extends React.Component{
         document.execCommand("cut");
         console.log("going to cut Button");
     }
+    changeMathSizeImage(size)
+    {
+        console.log("teseting thiasdf asdfasdf")
+        store.dispatch(Actions.updateSizeMathEquation(size));
+    }
+
+
+
     render(){
-        const styleSmallPicture  = {"font-size":"10px"}
-        const styleMediumPicture = {"font-size":"20px"}
-        const styleLargePicture  = {"font-size":"30px"}
+        var styleSmallPicture  = {"font-size":"10px"}
+        var styleMediumPicture = {"font-size":"20px"}
+        var styleLargePicture  = {"font-size":"30px"}
+
+        if(this.props.sizeMathOutput == ConstsTypes.MathSizeSmall)
+        {
+            console.log("00000000000000000000")
+            styleSmallPicture["borderColor"] = "black";
+        }
+        else if(this.props.sizeMathOutput == ConstsTypes.MathSizeMedium)
+        {
+            styleMediumPicture["borderColor"] = "black";
+        }
+        else if(this.props.sizeMathOutput == ConstsTypes.MathSizeLarge)
+        {
+            styleLargePicture["borderColor"] = "black";
+        }
+ 
         return (
             <div id="imageOptions">
-                <button className="buttonOptionsImage"
+                <button className="buttonOptionsImage "
                         onClick={this.CopyImageToClipboard}>copy image</button>
                 <input  className="removeStyles" type="color"/>
                 
-                <button className="icon-download-1 buttonOptionsImage">
+                <button className="buttonOptionsImage">
                     <FontAwesomeIcon icon={faDownload} />
                 </button>
                 
-                <button className="buttonOptionsImage" style={styleSmallPicture}>
+                <button className="buttonOptionsImage sizeImageStyles" 
+                        onClick={()=>{this.changeMathSizeImage(ConstsTypes.MathSizeSmall);}}
+                        style={styleSmallPicture}>
                     <FontAwesomeIcon icon={faImage} />
                 </button>
-                <button className="buttonOptionsImage" style={styleMediumPicture}>
+                <button className="buttonOptionsImage sizeImageStyles"
+                        onClick={()=>{this.changeMathSizeImage(ConstsTypes.MathSizeMedium);}} 
+                        style={styleMediumPicture}>
                     <FontAwesomeIcon icon={faImage} />
                 </button>
-                <button className="buttonOptionsImage" style={styleLargePicture}>
+                <button className="buttonOptionsImage sizeImageStyles"
+                        onClick={()=>{this.changeMathSizeImage(ConstsTypes.MathSizeLarge);}} 
+                        style={styleLargePicture}>
                     <FontAwesomeIcon icon={faImage} />
                 </button>
                 

@@ -9,8 +9,6 @@ function drawSVGCanvas(childNodes,ctx){
         tag = defs.childNodes[i];
         useTags[tag.id] = tag.attributes.getNamedItem("d").value;
     }
-    console.log("+++++use tags ")
-    console.log(useTags)
     recursiveLoopTags(childNodes,ctx,useTags);
 }
 
@@ -28,7 +26,7 @@ function recursiveLoopTags(childNodes,ctx,useTags){
             case "use":
                 let userLink = tag.getAttribute("xlink:href").substr(1);
                 let path = new Path2D(useTags[userLink]);
-                ctx.fillStyle = "#FF0000";
+                //ctx.fillStyle = "#FFFFFF";
                 if("transform" in tag.attributes){
                     let transformString = tag.attributes.getNamedItem("transform").value;
                     let canvasTransfer = new CanvasTransformerClass(ctx, transformString)

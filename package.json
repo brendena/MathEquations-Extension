@@ -6,7 +6,7 @@
   "scripts": {
     "run-as-webpage": "webpack-dev-server --config webpack/webPage.config.js",
     "start:noWatch": "webpack --config webpack/dev.config.js",
-    "start:chrome": "webpack --watch --config webpack/devChrome.config.js"
+    "start:chrome": "webpack --mode=development --watch --config webpack/devChrome.config.js"
   },
   "keywords": [],
   "author": "",

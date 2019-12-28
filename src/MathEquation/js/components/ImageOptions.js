@@ -47,9 +47,9 @@ class ImageOptions extends React.Component{
 
 
     render(){
-        var styleSmallPicture  = {"font-size":"10px"}
-        var styleMediumPicture = {"font-size":"20px"}
-        var styleLargePicture  = {"font-size":"30px"}
+        var styleSmallPicture  = {"fontSize":"10px"}
+        var styleMediumPicture = {"fontSize":"20px"}
+        var styleLargePicture  = {"fontSize":"30px"}
 
         if(this.props.sizeMathOutput == ConstsTypes.MathSizeSmall)
         {

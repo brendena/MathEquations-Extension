@@ -4,7 +4,13 @@ import ImageOptions from "./ImageOptions"
 import MathEquationBox from "./MathEquationBox"
 import  store  from "../store/index"
 import * as Actions from '../actions/index'
+import { connect } from 'react-redux';
 
+@connect((store)=>{
+    return{
+        mathInputString: store.propsPage.mathInputString
+    }
+})
 class TextSlideBox extends React.Component{
     constructor(props){
         super(props);
@@ -12,6 +18,11 @@ class TextSlideBox extends React.Component{
     updateLatexInput(){
         var inputEl = document.getElementById("inputTextMathEquation").value.trim();
         store.dispatch(Actions.changeSelectedMathInput(inputEl));
+    }
+    componentDidMount(){
+        var inputEl = document.getElementById("inputTextMathEquation");
+        
+        inputEl.value = this.props.mathInputString;
     }
     render(){
 

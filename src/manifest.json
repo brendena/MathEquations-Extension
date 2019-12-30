@@ -4,7 +4,7 @@
     "name": "Math Equations Anywhere",
     "author": "brendenA",
     "description": "This extension allows you to create math equation with latex, mathml, ascii text and convert them to Img.",
-    "version": "2",
+    "version": "2.1",
     "icons": { 
       "16": "./Img/16x16.png",
       "19": "./Img/19x19.png",

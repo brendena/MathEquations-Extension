@@ -18,14 +18,28 @@ class MathEquationBox extends React.Component{
     constructor(props){
         super(props);
         this.outputRef = React.createRef();
+        this.MathJax;
+        /*
+        if(MathJax != null)
+        {
+            this.MathJax = MathJax;
+        }else if(window.MathJax != null)
+        {
+            this.MathJax = window.MathJax;
+        }
+        */
+
+        this.changeLatexInput = this.changeLatexInput.bind(this);
     }
 
     changeLatexInput(inputEl, outputEl)
     {
+
         const MathJax = window.MathJax;
 
         outputEl.innerHTML = '';
 
+        
         
         MathJax.texReset();
 

@@ -28,8 +28,6 @@ class App extends React.Component{
                     }
     if(!this.props.showMathEquationBox){
       position.bottom = "-" + this.props.pageHeight + "vh";
-      console.log("test")
-      
     }
 
     return(

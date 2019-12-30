@@ -41,7 +41,7 @@ module.exports = {
     path: path.resolve(__dirname + '/../dist'),
     filename: '[name].js',
   },
-  mode: "development",
+  mode: "development",// "development",
   devtool:"source-map",
 	optimization: {
 		// We no not want to minimize our code.

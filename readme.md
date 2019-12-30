@@ -1,14 +1,18 @@
-You can find the download load page ehre
-https://fontawesome.com/icons/download?style=solid
+![logo for MathEquation Extension](https://github.com/brendena/MathEquations-Extension/blob/master/Img/96x96.png?raw=true)
+# MathEquations-Extension - [Chrome](https://chrome.google.com/webstore/detail/math-equations/fkioioejambaepmmpepneigdadjpfamh?hl=en) [Firefox](https://addons.mozilla.org/en-US/firefox/addon/math-equations-anywhere)
 
 
 
-
-To-Do
-
---then figure out debug console logs
+![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/readmeExample.png?raw=true)
 
 
-Apparently you can't use web components in a extension
-https://stackoverflow.com/questions/30022350/registering-a-custom-element-from-a-chrome-extension
-https://bugs.chromium.org/p/chromium/issues/detail?id=390807#c12
+## Getting started
+* npm install --global web-ext
+* npm install
+
+
+## Firefox
+* npm run start:chrome
+* cd dist && web-ext run
+
+## Work in progress

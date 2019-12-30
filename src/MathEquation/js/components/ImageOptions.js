@@ -3,6 +3,7 @@ import  store  from "../store/index"
 import  * as ConstsTypes  from "../constants/constsTypes"
 import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
+import * as log from 'loglevel';
 
 
 import { faImage, faDownload } from "@fortawesome/free-solid-svg-icons";
@@ -19,18 +20,23 @@ class ImageOptions extends React.Component{
         super(props);
         document.addEventListener("cut", (event)=>{
             event.preventDefault();
-            console.log("started copying 1");
+            log.info("cut event triggered")
+            
             
             if (event.clipboardData) {
                 if(this.pngBase64Image != ""){
-                    console.log("setting the clipboard")
-                    console.log(this.props.base64Image)
+                    log.info("setting clipboard data")
+                    console.log(event);
+                    //console.log(this.props.base64Image)
                     event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ this.props.base64Image +'">');
+                    //event.clipboardData.setData('text', "testing this out");
+                    
                 }
             }
             else{
                 throw("your browser does not support clipboardData.")
             }
+            
         });
     }
     CopyImageToClipboard()

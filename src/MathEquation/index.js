@@ -14,11 +14,12 @@ import ReactWebComponent from 'react-web-component';
 
 class RenderMathEquation extends React.Component {
         render() {
-          return <Provider store={store}>   
-                        <App />  
+                return <Provider store={store}>
+                        <App />
                 </Provider>;
         }
-      }
+}
+
 
 
 ReactWebComponent.create(<RenderMathEquation />, 'math-equations');

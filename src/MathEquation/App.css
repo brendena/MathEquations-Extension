@@ -1,5 +1,5 @@
 .App {
-  background:blue;
+  color:black;
   bottom:0px;
   left:0px;
   position:fixed;
@@ -8,6 +8,18 @@
   z-index: 9999999;
 }
 
+a:link
+{
+  color: #800080;
+}
+a:visited
+{
+  color:#0000FF;
+}
+a:active
+{
+  color:red;
+}
 
 #slideItem{
   margin: auto;

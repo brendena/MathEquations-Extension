@@ -3,6 +3,7 @@ import * as Actions from '../actions/index'
 import * as ConstTypes from "../constants/constsTypes"
 import * as ConstsID from "../constants/constsID"
 import  store  from "../store/index"
+import * as log from 'loglevel';
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faWindowClose, faChevronUp } from "@fortawesome/free-solid-svg-icons";
@@ -12,14 +13,19 @@ class ActionBar extends React.Component{
     constructor(props){
         super(props);
         this.toggleMathEquationBoxShow = this.toggleMathEquationBoxShow.bind(this);
+        this.closeExtension = this.closeExtension.bind(this);
+        this.closeButton = React.createRef();
     }
     toggleMathEquationBoxShow(){
         store.dispatch(Actions.showMathEquationTextBox(!this.props.stateMathTextBox));
     }
     changeSelectedInput(typeInput){
-        console.log("fired")
-        console.log(typeInput)
         store.dispatch(Actions.changeSelectedMathTypeInput(typeInput));
+    }
+    closeExtension(){
+        log.info("event - closed extension")
+        var event = new Event(ConstsID.CloseMathExtEventName, {"bubbles":true,"composed":true});
+        this.closeButton.current.dispatchEvent(event);
     }
 
     render(){
@@ -65,7 +71,9 @@ class ActionBar extends React.Component{
                         <FontAwesomeIcon icon={faGithub} />
                     </button>
                 </a>
-                <button className="navButton">
+                <button className="navButton" 
+                        onClick={this.closeExtension}
+                        ref={this.closeButton}>
                     <FontAwesomeIcon icon={faWindowClose} />
                 </button>
             </div>

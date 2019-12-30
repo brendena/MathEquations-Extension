@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "run-as-webpage": "webpack-dev-server --config webpack/webPage.config.js",
-    "start:noWatch": "webpack --config webpack/dev.config.js",
+    "start": "webpack --config webpack/dev.config.js",
     "start:chrome": "webpack --mode=development --watch --config webpack/devChrome.config.js"
   },
   "keywords": [],

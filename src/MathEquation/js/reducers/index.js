@@ -12,7 +12,7 @@ const initialState = {
         sizeMathOutput: constTypes.MathSizeMedium,
         mathInputString:"",
         updateRenderCanvas: false,
-        downloadImagePage: true,
+        downloadImagePage: false,
         downloadImageType: constTypes.ImageDownloadType.png,
         base64MathImage: "",
         svgMathImage:"",

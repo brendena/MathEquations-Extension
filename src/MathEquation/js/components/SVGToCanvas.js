@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import * as Actions from '../actions/index'
 import  store  from "../store/index"
 import SvgToCanvas from "../backendCode/SvgToCanvas"
-import * as constID from '../constants/constsID.js'
 
 @connect((store)=>{
     return{

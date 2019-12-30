@@ -1,6 +1,7 @@
 import * as log from 'loglevel';
 
 export const MathEquationBox = "MathEquationBox";
+export const CloseMathExtEventName = "CloseMathEquation";
 
 var tmpUrlImage
 if(chrome)

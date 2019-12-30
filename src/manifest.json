@@ -46,7 +46,7 @@
     "content_scripts": [
       {
         "matches":["<all_urls>"],
-        "js": [ "webcomponents-sd-ce.js","contentScript.js"],
+        "js": ["contentScript.js"],
         "run_at": "document_end"
       }
     ],
@@ -61,8 +61,8 @@
     ],
     
     "permissions": [
-      "storage",
       "activeTab",
+      "clipboard",
       "clipboardWrite"
     ],
     "background": {

@@ -11,7 +11,13 @@ export const MathEquationSizeCustom={
     custom:"custom"
 }
 
-export const MathSizeSmall = 100;
-export const MathSizeMedium = 200;
-export const MathSizeLarge = 300;
+export const ImageDownloadType={
+    png:"small",
+    svg:"medium"
+}
+
+
+export const MathSizeSmall = 200;
+export const MathSizeMedium = 400;
+export const MathSizeLarge = 800;
 

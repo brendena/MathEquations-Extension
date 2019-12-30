@@ -1,5 +1,6 @@
 import * as consts from "../constants/action-types";
 import * as constTypes from "../constants/constsTypes"
+import * as log from 'loglevel';
 import produce from "immer"
 
 
@@ -11,20 +12,19 @@ const initialState = {
         sizeMathOutput: constTypes.MathSizeMedium,
         mathInputString:"",
         updateRenderCanvas: false,
-        base64MathImage: ""
+        downloadImagePage: true,
+        downloadImageType: constTypes.ImageDownloadType.png,
+        base64MathImage: "",
+        svgMathImage:"",
+
     }
 };
 
 function rootReducer(state = initialState, action){
     return produce(state,draft =>{
-        console.log("changing state - " + action.type)
-        if(action.type === consts.ADD_ARTICLE){
-            //replace with the actual object
-            console.log("changed state")
-            draft.articles.concat(action.payload)
-            
-        }
-        else if(action.type === consts.CHANGE_HEIGHT_PAGE)
+        log.info("changing state - " + action.type);
+        
+        if(action.type === consts.CHANGE_HEIGHT_PAGE)
         {
             draft.propsPage.height = action.payload;
         }
@@ -48,10 +48,21 @@ function rootReducer(state = initialState, action){
         {
             draft.propsPage.base64MathImage = action.payload;
         }
+        else if(action.type === consts.UPDATE_SVG_MATH_IMAGE)
+        {
+            draft.propsPage.svgMathImage = action.payload;
+        }
         else if(action.type === consts.UPDATE_SIZE_MATH_EQUATION)
         {
-            console.log("testing")
             draft.propsPage.sizeMathOutput = action.payload;
+        }
+        else if(action.type === consts.UPDATE_DOWNLOAD_IMAGE_PAGE)
+        {
+            draft.propsPage.downloadImagePage = action.payload;
+        }
+        else if(action.type === consts.UPDATE_DOWNLOAD_IMAGE_TYPE)
+        {
+            draft.propsPage.downloadImageType = action.payload;
         }
     });
 }

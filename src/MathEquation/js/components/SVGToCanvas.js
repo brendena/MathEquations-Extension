@@ -15,6 +15,10 @@ class SVGToCanvas extends React.Component{
         super(props);
         this.canvas = React.createRef();
     }
+    convertSvgToData(svgElement){
+        let svgURL = new XMLSerializer().serializeToString(svgElement);
+        return 'data:image/svg+xml; charset=utf8, '+encodeURIComponent(svgURL);
+    }
    
     updateCanvas()
     {
@@ -26,6 +30,7 @@ class SVGToCanvas extends React.Component{
         try{
             var drawingClass = new SvgToCanvas(svg,canvas,"#000000");
             store.dispatch(Actions.updateBase64MathImage(drawingClass.getPng64()));
+            store.dispatch(Actions.updateSVGMathImage(this.convertSvgToData(svg)));
         }
         catch(error)
         {

@@ -9,7 +9,8 @@ import SVGToCanvas from "./SVGToCanvas"
 @connect((store)=>{
     return{
         mathInputString: store.propsPage.mathInputString,
-        typeMathInput: store.propsPage.typeMathInput
+        typeMathInput: store.propsPage.typeMathInput,
+        sizeMathOutput: store.propsPage.sizeMathOutput
 
     }
 })
@@ -25,7 +26,6 @@ class MathEquationBox extends React.Component{
 
         outputEl.innerHTML = '';
 
-        console.log(MathJax)
         
         MathJax.texReset();
 
@@ -36,7 +36,6 @@ class MathEquationBox extends React.Component{
         }
         else if(this.props.typeMathInput === constTypes.MathEquationInput.mathML)
         {
-            console.log("using mathml")
             equationToSvgPromise = MathJax.mathml2svgPromise;
         }
         else if(this.props.typeMathInput === constTypes.MathEquationInput.asciiMath)
@@ -56,6 +55,7 @@ class MathEquationBox extends React.Component{
                 MathJax.startup.document.clear();
                 MathJax.startup.document.updateDocument();
                 store.dispatch(Actions.updateRenderCanvas(true));
+
             }).catch(function (err) {
                 //
                 //  If there was an error, put the message into the output instead
@@ -70,7 +70,6 @@ class MathEquationBox extends React.Component{
     changeLatex(){
         if(this.props.mathInputString != "" && this.outputRef.current != null)
         {
-            console.log("changed!!")
             this.changeLatexInput(this.props.mathInputString,this.outputRef.current);
         }
     }
@@ -79,7 +78,6 @@ class MathEquationBox extends React.Component{
         this.changeLatex();
     }
     render(){
-
         this.changeLatex();
         return (
             <div id={constID.MathEquationBox}>
@@ -88,8 +86,8 @@ class MathEquationBox extends React.Component{
                 </div>
                 <SVGToCanvas    
                                 locationSVG={this.outputRef}
-                                canvasHeight={100} 
-                                canvasWidth={100}>
+                                canvasHeight={this.props.sizeMathOutput} 
+                                canvasWidth={this.props.sizeMathOutput}>
                 </SVGToCanvas>
             </div>
 

@@ -5,10 +5,8 @@ https://fontawesome.com/icons/download?style=solid
 
 
 To-Do
--Get size working
--Get downloads working -- i might save this for a seperateSection
--getting different type of math exaction and ascii math working
 
+--then figure out debug console logs
 
 
 Apparently you can't use web components in a extension

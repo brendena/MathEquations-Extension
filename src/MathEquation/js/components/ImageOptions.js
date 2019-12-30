@@ -36,14 +36,15 @@ class ImageOptions extends React.Component{
     CopyImageToClipboard()
     {
         document.execCommand("cut");
-        console.log("going to cut Button");
     }
     changeMathSizeImage(size)
     {
-        console.log("teseting thiasdf asdfasdf")
         store.dispatch(Actions.updateSizeMathEquation(size));
     }
-
+    launchDownloadPage()
+    {
+        store.dispatch(Actions.updateDownloadImagePage(true));
+    }
 
 
     render(){
@@ -53,7 +54,6 @@ class ImageOptions extends React.Component{
 
         if(this.props.sizeMathOutput == ConstsTypes.MathSizeSmall)
         {
-            console.log("00000000000000000000")
             styleSmallPicture["borderColor"] = "black";
         }
         else if(this.props.sizeMathOutput == ConstsTypes.MathSizeMedium)
@@ -71,7 +71,8 @@ class ImageOptions extends React.Component{
                         onClick={this.CopyImageToClipboard}>copy image</button>
                 <input  className="removeStyles" type="color"/>
                 
-                <button className="buttonOptionsImage">
+                <button className="buttonOptionsImage"
+                        onClick={this.launchDownloadPage}>
                     <FontAwesomeIcon icon={faDownload} />
                 </button>
                 

@@ -55,7 +55,7 @@ class ActionBar extends React.Component{
                 <div className="flexSpacer"></div>
 
                 
-                <button className="navButton icon-up-open" 
+                <button className="navButton" 
                         onClick={this.toggleMathEquationBoxShow}
                         style={stylesSlideMathTextBox}>
                     <FontAwesomeIcon icon={faChevronUp} />        
@@ -65,7 +65,7 @@ class ActionBar extends React.Component{
                         <FontAwesomeIcon icon={faGithub} />
                     </button>
                 </a>
-                <button className="navButton icon-cancel-1">
+                <button className="navButton">
                     <FontAwesomeIcon icon={faWindowClose} />
                 </button>
             </div>

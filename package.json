@@ -20,6 +20,7 @@
     "babel": "^6.23.0",
     "css-loader": "^2.1.1",
     "immer": "^5.0.1",
+    "loglevel": "^1.6.6",
     "mathjax-full": "^3.0.0",
     "mathjax3": "^3.0.0-beta.4",
     "react": "^16.12.0",

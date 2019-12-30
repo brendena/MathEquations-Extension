@@ -1,11 +1,19 @@
-console.log("_________________________asdasdf")
-console.log("------------------------------this might be working")
+import * as log from 'loglevel';
+log.setDefaultLevel("trace")
+
+
 
 var browser = browser || chrome;
-
 var mathApp = require('./MathEquation/index');
-import ReactDOM from 'react-dom';
 require("./MathEquation/lib/custom-mathjax/custom-mathjax.min");
+
+import ReactDOM from 'react-dom';
+
+
+
+
+
+
 
 
 
@@ -29,7 +37,7 @@ var constructUi = function(configOptions){
 
 browser.runtime.onMessage.addListener(
 	function(request, sender) {
-        console.log(request)
+        log.info(request);
         constructUi(request);
     }
 );

@@ -4,7 +4,6 @@ class SvgToCanvas
 {
     constructor(svgElement,canvas,color)
     {
-        console.log("svgCanvas")
         this.canvas = canvas;
         this.color = color;
         this.ctx =  canvas.getContext('2d');

@@ -5,7 +5,6 @@
   position:fixed;
   width:100%;
   min-height:20vh;
-  transition: all 0.1s ease 0s;
   z-index: 9999999;
 }
 
@@ -154,13 +153,54 @@
 
 mjx-container svg
 {
-  width:14ex;
+  /*width:14ex;*/
+  width:100%;
 }
 
 svg
 {
   width: 2ex;
 }
+
+#DownloadImagePopUp
+{
+  background-color: #fff;
+  padding: 25px;
+  padding-bottom: 0;
+  border-style: solid;
+  border-width: 3px;
+  border-bottom-width: 0;
+  min-height: 90px;
+  box-sizing: border-box;
+  max-height: 90%;
+  position: absolute;
+  bottom: 0px;
+}
+#DownloadImagePopUpCenter
+{
+  z-index: 3000000;
+  position:absolute;
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .5s;
+  bottom: 0;
+}
+
+#DownloadForm
+{
+  display: flex;
+  justify-content: center;
+}
+#ExitDownloadPage
+{
+  position: absolute; 
+  top: 0px; 
+  right: 0px;
+}
+
+
 /*
 .App {
   text-align: center;

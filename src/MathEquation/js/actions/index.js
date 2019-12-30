@@ -28,7 +28,17 @@ export function updateRenderCanvas(payload) {
 export function updateBase64MathImage(payload) {
     return { type: consts.UPDATE_BASE64_Math_IMAGE, payload }
 }
-
+export function updateSVGMathImage(payload) {
+    return { type: consts.UPDATE_SVG_MATH_IMAGE, payload }
+}
 export function updateSizeMathEquation(payload) {
     return { type: consts.UPDATE_SIZE_MATH_EQUATION, payload }
+}
+
+export function updateDownloadImagePage(payload) {
+    return { type: consts.UPDATE_DOWNLOAD_IMAGE_PAGE, payload }
+}
+
+export function updateDownloadImageType(payload) {
+    return { type: consts.UPDATE_DOWNLOAD_IMAGE_TYPE, payload }
 }

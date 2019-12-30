@@ -3,62 +3,98 @@ import  store  from "../store/index"
 import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
 import * as constID from '../constants/constsID'
-
+import * as constTypes from "../constants/constsTypes"
+import SVGToCanvas from "./SVGToCanvas"
 
 @connect((store)=>{
     return{
-        mathInputString: store.propsPage.mathInputString
+        mathInputString: store.propsPage.mathInputString,
+        typeMathInput: store.propsPage.typeMathInput
+
     }
 })
 class MathEquationBox extends React.Component{
     constructor(props){
         super(props);
+        this.outputRef = React.createRef();
     }
 
     changeLatexInput(inputEl, outputEl)
     {
         const MathJax = window.MathJax;
-        
-        
-        
+
         outputEl.innerHTML = '';
 
-        MathJax.texReset();
-        var options = MathJax.getMetricsFor(outputEl);
+        console.log(MathJax)
         
-        MathJax.tex2svgPromise(inputEl, options).then(function (node) {
-            //
-            //  The promise returns the typeset node, which we add to the output
-            //  Then update the document to include the adjusted CSS for the
-            //    content of the new equation.
-            //
-            outputEl.appendChild(node);
-            MathJax.startup.document.clear();
-            MathJax.startup.document.updateDocument();
-            store.dispatch(Actions.updateRenderCanvas(true));
-        }).catch(function (err) {
-            //
-            //  If there was an error, put the message into the output instead
-            //
-            console.log("error");
-            console.log(err.message)
-            outputEl.appendChild(document.createElement('pre')).appendChild(document.createTextNode(err.message));
-            store.dispatch(Actions.updateRenderCanvas(true));
-        })
+        MathJax.texReset();
+
+        var equationToSvgPromise;
+        if(this.props.typeMathInput === constTypes.MathEquationInput.latex)
+        {
+            equationToSvgPromise = MathJax.tex2svgPromise;
+        }
+        else if(this.props.typeMathInput === constTypes.MathEquationInput.mathML)
+        {
+            console.log("using mathml")
+            equationToSvgPromise = MathJax.mathml2svgPromise;
+        }
+        else if(this.props.typeMathInput === constTypes.MathEquationInput.asciiMath)
+        {
+            equationToSvgPromise = MathJax.asciimath2svgPromise;
+        }
+
+        var options = MathJax.getMetricsFor(outputEl);
+
+            equationToSvgPromise(inputEl, options).then(function (node) {
+                //
+                //  The promise returns the typeset node, which we add to the output
+                //  Then update the document to include the adjusted CSS for the
+                //    content of the new equation.
+                //
+                outputEl.appendChild(node);
+                MathJax.startup.document.clear();
+                MathJax.startup.document.updateDocument();
+                store.dispatch(Actions.updateRenderCanvas(true));
+            }).catch(function (err) {
+                //
+                //  If there was an error, put the message into the output instead
+                //
+                console.log("error");
+                console.log(err.message)
+                outputEl.appendChild(document.createElement('pre')).appendChild(document.createTextNode(err.message));
+                store.dispatch(Actions.updateRenderCanvas(true));
+            })
+
     }
+    changeLatex(){
+        if(this.props.mathInputString != "" && this.outputRef.current != null)
+        {
+            console.log("changed!!")
+            this.changeLatexInput(this.props.mathInputString,this.outputRef.current);
+        }
+    }
+
     componentDidMount(){
-        var outputEl = document.getElementById(constID.MathEquationBox);
-        this.changeLatexInput(this.props.mathInputString,outputEl);
+        this.changeLatex();
     }
     render(){
-        var outputEl = document.getElementById(constID.MathEquationBox);
 
-        if(this.props.mathInputString != "" && outputEl != null)
-        {
-            this.changeLatexInput(this.props.mathInputString,outputEl);
-        }
+        this.changeLatex();
         return (
-            <div id={constID.MathEquationBox}></div>
+            <div id={constID.MathEquationBox}>
+                <div  ref={this.outputRef}>
+                
+                </div>
+                <SVGToCanvas    
+                                locationSVG={this.outputRef}
+                                canvasHeight={100} 
+                                canvasWidth={100}>
+                </SVGToCanvas>
+            </div>
+
+
+
         )
     }
 }

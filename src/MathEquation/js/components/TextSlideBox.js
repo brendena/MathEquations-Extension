@@ -14,17 +14,16 @@ import { connect } from 'react-redux';
 class TextSlideBox extends React.Component{
     constructor(props){
         super(props);
+        this.state = {"localMathInputString": this.props.mathInputString};
+        this.updateLatexInput = this.updateLatexInput.bind(this);
     }
-    updateLatexInput(){
-        var inputEl = document.getElementById("inputTextMathEquation").value.trim();
+    updateLatexInput(event){
+        this.state.localMathInputString = event.target.value;
+        var inputEl = event.target.value.trim();
         store.dispatch(Actions.changeSelectedMathInput(inputEl));
     }
-    componentDidMount(){
-        var inputEl = document.getElementById("inputTextMathEquation");
-        inputEl.value = this.props.mathInputString;
-    }
     render(){
-
+        //onKeyUp={this.updateLatexInput}
         return (
             <div id="TextSlideBox">
                 <PageSlider/>
@@ -32,7 +31,8 @@ class TextSlideBox extends React.Component{
                 <div id="TextSectionDivider">
                     <textarea id="inputTextMathEquation" 
                               placeholder="equation location"
-                              onKeyUp={this.updateLatexInput}>
+                              value={this.state.localMathInputString}
+                              onChange={this.updateLatexInput}>
                     </textarea>
                     <div id="textOutputBox">
                         <MathEquationBox/> 

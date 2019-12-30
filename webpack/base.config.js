@@ -65,7 +65,9 @@ module.exports = {
         },
         {
             test: /\.css?$/,
-            use: [ 'style-loader', 'css-loader' ]
+            use: [  { loader: "react-web-component-style-loader" },
+                    { loader: 'css-loader'} 
+                ]
         },
         {
             test: /\.(png|j?g|svg|gif)?$/,

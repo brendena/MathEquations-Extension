@@ -13,12 +13,15 @@ import * as constID from '../constants/constsID.js'
 class SVGToCanvas extends React.Component{
     constructor(props){
         super(props);
+        this.canvas = React.createRef();
     }
    
     updateCanvas()
     {
-        var canvas = document.getElementById("canvasVisible");
-        var svgContainer = document.getElementById(constID.MathEquationBox);
+        
+        var canvas = this.canvas.current;
+        
+        var svgContainer = this.props.locationSVG.current;
         var svg = svgContainer.getElementsByTagName("svg")[0];
         try{
             var drawingClass = new SvgToCanvas(svg,canvas,"#000000");
@@ -28,7 +31,6 @@ class SVGToCanvas extends React.Component{
         {
             console.log("error " + error)
         }
-        
     }
 
     render(){
@@ -39,6 +41,7 @@ class SVGToCanvas extends React.Component{
         }
         return (
             <canvas id="canvasVisible"
+                    ref={this.canvas}
                     height={this.props.canvasHeight} 
                     width={this.props.canvasWidth}></canvas>
         )

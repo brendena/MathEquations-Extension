@@ -98,6 +98,8 @@
 #MathEquationBox
 {
   flex-grow:2;
+  margin: auto;
+  text-align: center;
 }
 .navButton
 {
@@ -150,6 +152,15 @@
   border-style: solid;
 }
 
+mjx-container svg
+{
+  width:14ex;
+}
+
+svg
+{
+  width: 2ex;
+}
 /*
 .App {
   text-align: center;

@@ -6,7 +6,6 @@ import  store  from "./js/store/index"
 import { connect } from 'react-redux';
 import  ActionBar  from "./js/components/ActionBar"
 import TextSlideBox from "./js/components/TextSlideBox"
-import SVGToCanvas from "./js/components/SVGToCanvas"
 import * as ConstsID from "./js/constants/constsID"
 
 @connect((store)=>{
@@ -39,9 +38,6 @@ class App extends React.Component{
           <TextSlideBox/>
           <ActionBar stateMathTextBox={this.props.showMathEquationBox} 
                      currentMathInput={this.props.typeMathInput}/>
-          <SVGToCanvas canvasHeight={100} 
-                       canvasWidth={100}>
-          </SVGToCanvas>
     </div>)
   };
 }

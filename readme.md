@@ -6,7 +6,17 @@
 ![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/readmeExample.png?raw=true)
 
 
-## Building
+## **File Structor**
+* **/dist/** - distributable folder 
+* **/src/** - source folder
+* **/src/Background/** - background script handles the events from the browser action.
+* **/src/MathEquation/** - Bulk of the code.  This hold all the code for the ui that convert the equations into images.
+* **/src/StaticFiles/** - Mostly just images
+
+
+
+
+## **Building**
 
 ### Getting started
 * npm install --global web-ext
@@ -27,4 +37,5 @@
 ## External Builds
 * MathJax 3 is built with a different build system.
 * Instruction for that will be found in the src/MathEquation/lib/custom-mathjax  
+
 

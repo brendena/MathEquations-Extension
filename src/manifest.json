@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
   
-    "name": "TEST",
+    "name": "Math Equations Anywhere",
     "author": "brendenA",
     "description": "This extension allows you to create math equation with latex, mathml, ascii text and convert them to Img.",
     "version": "2",
@@ -46,7 +46,7 @@
     "content_scripts": [
       {
         "matches":["<all_urls>"],
-        "js": ["contentScript.js"],
+        "js": ["custom-mathjax.min.js","contentScript.js"],
         "run_at": "document_end"
       }
     ],
@@ -62,7 +62,6 @@
     
     "permissions": [
       "activeTab",
-      "clipboard",
       "clipboardWrite"
     ],
     "background": {
@@ -75,6 +74,12 @@
           "default": "Ctrl+Shift+U"
         },
         "description": "Opens the extension or closes it"
+      }
+    },
+    "applications": {
+      "gecko": {
+        "id": "{f7d3c7b6-861a-49b6-85d7-04ae3f260ab9}",
+        "strict_min_version": "48.0"
       }
     }
   }

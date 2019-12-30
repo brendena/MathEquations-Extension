@@ -6,13 +6,25 @@
 ![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/readmeExample.png?raw=true)
 
 
-## Getting started
+## Building
+
+### Getting started
 * npm install --global web-ext
 * npm install
 
 
-## Firefox
+### Building Firefox
+* npm run start
+* In firefox's url put **about:debugging** 
+* This will load a page that will allow you to add the extension by uploading the manifest.json document.
+
+
+### LiveView Firefox
 * npm run start:chrome
 * cd dist && web-ext run
 
-## Work in progress
+
+## External Builds
+* MathJax 3 is built with a different build system.
+* Instruction for that will be found in the src/MathEquation/lib/custom-mathjax  
+

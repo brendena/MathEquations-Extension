@@ -41,7 +41,7 @@ module.exports = {
     path: path.resolve(__dirname + '/../dist'),
     filename: '[name].js',
   },
-  mode: "development",// "development",
+  mode: "production",// development //production
   devtool:"source-map",
 	optimization: {
 		// We no not want to minimize our code.
@@ -53,7 +53,8 @@ module.exports = {
       { from: "./src/manifest.json" },
       { from: "./src/StaticFiles/Img", to: "./Img" },
       { from: "./src/Background/Html/background.html" },
-      { from: "./src/Background/Js/background.js" }
+      { from: "./src/Background/Js/background.js" },
+      { from: "./src/MathEquation/lib/custom-mathjax/custom-mathjax.min.js" }
     ])
   ],
   module: {

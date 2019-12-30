@@ -3,16 +3,12 @@ import * as ConstsID from "./MathEquation/js/constants/constsID"
 
 log.setDefaultLevel("trace")
 
-console.log("---------ttest")
-console.log(window)
-
 var browser = browser || chrome;
 require('./MathEquation/index');
 
 
-require("./MathEquation/lib/custom-mathjax/custom-mathjax.min");
+//require("./MathEquation/lib/custom-mathjax/custom-mathjax.min");
 
-import ReactDOM from 'react-dom';
 
 
 
@@ -52,7 +48,6 @@ var constructUi = function(configOptions){
     }
 }
 
-console.log("----testase")
 
 browser.runtime.onMessage.addListener(
 	function(request, sender) {
@@ -62,6 +57,5 @@ browser.runtime.onMessage.addListener(
 );
 
 //auto load application
-console.log("test")
-constructUi({"openCloseMenu":true})
+//constructUi({"openCloseMenu":true})
 //*/

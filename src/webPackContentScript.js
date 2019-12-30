@@ -14,21 +14,16 @@ require("./MathEquation/lib/custom-mathjax/custom-mathjax.min");
 var constructUi = function(configOptions){
 
     if(configOptions.hasOwnProperty('openCloseMenu')){
-        //console.log(MathJax);
-        MathJax.texReset();
-        MathJax.startup.document.clear();
-        var MathEquationTag = document.getElementById("root");
+        console.log("----1")
+        var MathEquationTag = document.getElementsByTagName("math-equations")[0];
         if(MathEquationTag == undefined)
         {
-            var paragraph = document.createElement("div");
-            var nameOfRootName = "root";
-            paragraph.id = nameOfRootName;
+            console.log("----2")
+            var paragraph = document.createElement("math-equations");
             document.body.appendChild(paragraph);
-            
-            mathApp.default();
+            console.log("----3")
         }
         else {
-            ReactDOM.unmountComponentAtNode(MathEquationTag);
             MathEquationTag.parentNode.removeChild(MathEquationTag);
         }
     }

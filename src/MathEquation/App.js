@@ -19,15 +19,6 @@ import * as ConstsID from "./js/constants/constsID"
 class App extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-        title:""
-    }
-  }
-  addArticle(){
-    console.log("shit might be working");
-
-    store.dispatch(Actions.addArticle({ title: 'React Redux Tutorial for Beginners', id: Math.floor(Math.random() * 10000) }));
-
   }
 
   render (){
@@ -40,10 +31,6 @@ class App extends React.Component{
       
     }
 
-    //<link rel="stylesheet" type="text/css" href={ConstsID.UrlImage + "css/fontello.css"}></link>
-    //<link rel="stylesheet" type="text/css" href={ConstsID.UrlImage + "css/animation.css"}></link>
-   
-
     return(
       
 
@@ -52,8 +39,8 @@ class App extends React.Component{
           <TextSlideBox/>
           <ActionBar stateMathTextBox={this.props.showMathEquationBox} 
                      currentMathInput={this.props.typeMathInput}/>
-          <SVGToCanvas canvasHeight={500} 
-                       canvasWidth={500}>
+          <SVGToCanvas canvasHeight={100} 
+                       canvasWidth={100}>
           </SVGToCanvas>
     </div>)
   };

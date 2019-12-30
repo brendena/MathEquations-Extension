@@ -21,7 +21,6 @@ class TextSlideBox extends React.Component{
     }
     componentDidMount(){
         var inputEl = document.getElementById("inputTextMathEquation");
-        
         inputEl.value = this.props.mathInputString;
     }
     render(){
@@ -36,12 +35,10 @@ class TextSlideBox extends React.Component{
                               onKeyUp={this.updateLatexInput}>
                     </textarea>
                     <div id="textOutputBox">
-                        <MathEquationBox/>
+                        <MathEquationBox/> 
                         <ImageOptions/>
                     </div>
-                    
                 </div>
-
             </div>
         )
     }

@@ -57,5 +57,5 @@ browser.runtime.onMessage.addListener(
 );
 
 //auto load application
-//constructUi({"openCloseMenu":true})
+constructUi({"openCloseMenu":true})
 //*/

@@ -16,6 +16,11 @@ export const ImageDownloadType={
     svg:"medium"
 }
 
+export const PopUpUi={
+    DownloadImagePage:"DownloadImagePage",
+    DonatePage :"DonatePage"
+}
+
 
 export const MathSizeSmall = 200;
 export const MathSizeMedium = 400;

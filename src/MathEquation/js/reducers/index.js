@@ -14,6 +14,7 @@ const initialState = {
         updateRenderCanvas: false,
         downloadImagePage: false,
         downloadImageType: constTypes.ImageDownloadType.png,
+        popUiType :  constTypes.PopUpUi.DownloadImagePage,
         base64MathImage: "",
         svgMathImage:"",
 
@@ -54,6 +55,8 @@ function rootReducer(state = initialState, action){
         }
         else if(action.type === consts.UPDATE_SIZE_MATH_EQUATION)
         {
+            console.log("testing");
+            console.log(action.payload);
             draft.propsPage.sizeMathOutput = action.payload;
         }
         else if(action.type === consts.UPDATE_DOWNLOAD_IMAGE_PAGE)
@@ -63,6 +66,10 @@ function rootReducer(state = initialState, action){
         else if(action.type === consts.UPDATE_DOWNLOAD_IMAGE_TYPE)
         {
             draft.propsPage.downloadImageType = action.payload;
+        }
+        else if(action.type === consts.UPDATE_POP_UI_TYPE)
+        {
+            draft.propsPage.popUiType = action.payload;
         }
     });
 }

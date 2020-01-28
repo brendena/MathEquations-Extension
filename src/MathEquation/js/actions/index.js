@@ -42,3 +42,7 @@ export function updateDownloadImagePage(payload) {
 export function updateDownloadImageType(payload) {
     return { type: consts.UPDATE_DOWNLOAD_IMAGE_TYPE, payload }
 }
+
+export function updatePageUiType(payload) {
+    return { type: consts.UPDATE_POP_UI_TYPE, payload }
+}

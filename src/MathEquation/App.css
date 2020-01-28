@@ -154,7 +154,8 @@ a:active
   position:fixed;
   top:-100%;
   left:-100%;
-  z-index: -3000000;
+  opacity:0;
+  z-index: -3000;
 }
 
 .sizeImageStyles
@@ -184,7 +185,7 @@ svg
   border-bottom-width: 0;
   min-height: 90px;
   box-sizing: border-box;
-  max-height: 90%;
+  /*max-height: 90%; don't know what it doing*/
   position: absolute;
   bottom: 0px;
 }
@@ -212,6 +213,10 @@ svg
   right: 0px;
 }
 
+#textInputSize
+{
+  width:50px;
+}
 
 /*
 .App {

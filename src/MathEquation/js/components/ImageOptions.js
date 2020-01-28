@@ -1,6 +1,6 @@
 import React from "react";
 import  store  from "../store/index"
-import  * as ConstsTypes  from "../constants/constsTypes"
+import  * as ConstTypes  from "../constants/constsTypes"
 import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
 import * as log from 'loglevel';
@@ -18,6 +18,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class ImageOptions extends React.Component{
     constructor(props){
         super(props);
+        this.state = 
+        {
+            "TextSize": this.props.sizeMathOutput
+        };
+        this.textInputChange = this.textInputChange.bind(this);
+
+
         document.addEventListener("cut", (event)=>{
             event.preventDefault();
             log.info("cut event triggered")
@@ -49,7 +56,25 @@ class ImageOptions extends React.Component{
     }
     launchDownloadPage()
     {
+        store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.DownloadImagePage))
         store.dispatch(Actions.updateDownloadImagePage(true));
+    }
+    textInputChange(event)
+    {
+        const maxImageHeight = 10000;
+        var newSizeImage = event.target.value;
+
+
+        if(newSizeImage <= 0)
+        {
+            newSizeImage = 1;
+        }
+        //it start to really slow down your computer when you go higher then this number
+        else if (newSizeImage >= maxImageHeight)
+        {
+            newSizeImage = maxImageHeight;
+        }
+        store.dispatch(Actions.updateSizeMathEquation(newSizeImage));
     }
 
 
@@ -58,18 +83,20 @@ class ImageOptions extends React.Component{
         var styleMediumPicture = {"fontSize":"20px"}
         var styleLargePicture  = {"fontSize":"30px"}
 
-        if(this.props.sizeMathOutput == ConstsTypes.MathSizeSmall)
+        if(this.props.sizeMathOutput == ConstTypes.MathSizeSmall)
         {
             styleSmallPicture["borderColor"] = "black";
         }
-        else if(this.props.sizeMathOutput == ConstsTypes.MathSizeMedium)
+        else if(this.props.sizeMathOutput == ConstTypes.MathSizeMedium)
         {
             styleMediumPicture["borderColor"] = "black";
         }
-        else if(this.props.sizeMathOutput == ConstsTypes.MathSizeLarge)
+        else if(this.props.sizeMathOutput == ConstTypes.MathSizeLarge)
         {
             styleLargePicture["borderColor"] = "black";
         }
+
+        
  
         return (
             <div id="imageOptions">
@@ -83,20 +110,21 @@ class ImageOptions extends React.Component{
                 </button>
                 
                 <button className="buttonOptionsImage sizeImageStyles" 
-                        onClick={()=>{this.changeMathSizeImage(ConstsTypes.MathSizeSmall);}}
+                        onClick={()=>{this.changeMathSizeImage(ConstTypes.MathSizeSmall);}}
                         style={styleSmallPicture}>
                     <FontAwesomeIcon icon={faImage} />
                 </button>
                 <button className="buttonOptionsImage sizeImageStyles"
-                        onClick={()=>{this.changeMathSizeImage(ConstsTypes.MathSizeMedium);}} 
+                        onClick={()=>{this.changeMathSizeImage(ConstTypes.MathSizeMedium);}} 
                         style={styleMediumPicture}>
                     <FontAwesomeIcon icon={faImage} />
                 </button>
                 <button className="buttonOptionsImage sizeImageStyles"
-                        onClick={()=>{this.changeMathSizeImage(ConstsTypes.MathSizeLarge);}} 
+                        onClick={()=>{this.changeMathSizeImage(ConstTypes.MathSizeLarge);}} 
                         style={styleLargePicture}>
                     <FontAwesomeIcon icon={faImage} />
                 </button>
+                <input id="textInputSize" type="number" value={this.props.sizeMathOutput} onChange={this.textInputChange} />
                 
             </div>
         )

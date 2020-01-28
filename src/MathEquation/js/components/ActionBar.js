@@ -6,7 +6,7 @@ import  store  from "../store/index"
 import * as log from 'loglevel';
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faWindowClose, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose, faChevronUp, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class ActionBar extends React.Component{
@@ -27,6 +27,13 @@ class ActionBar extends React.Component{
         var event = new Event(ConstsID.CloseMathExtEventName, {"bubbles":true,"composed":true});
         this.closeButton.current.dispatchEvent(event);
     }
+
+    launchDownloadPage()
+    {
+        store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.DonatePage))
+        store.dispatch(Actions.updateDownloadImagePage(true));
+    }
+
 
     render(){
         var stylesSlideMathTextBox = { transform: "rotate(0deg)"}
@@ -65,6 +72,10 @@ class ActionBar extends React.Component{
                         onClick={this.toggleMathEquationBoxShow}
                         style={stylesSlideMathTextBox}>
                     <FontAwesomeIcon icon={faChevronUp} />        
+                </button>
+                <button className="navButton" 
+                        onClick={this.launchDownloadPage}>
+                    <FontAwesomeIcon icon={faCoins} />        
                 </button>
                 <a href="https://github.com/brendena/MathEquations-Extension">
                     <button className="navButton">

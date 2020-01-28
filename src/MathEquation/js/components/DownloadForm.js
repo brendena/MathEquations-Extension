@@ -15,7 +15,7 @@ import  store  from "../store/index"
         svgMathImage : store.propsPage.svgMathImage
     }
 })
-class DownloadImagePopUp extends React.Component{
+class DownloadForm extends React.Component{
     constructor(props){
         super(props);
         this.state = 
@@ -34,11 +34,6 @@ class DownloadImagePopUp extends React.Component{
     updateFileName(event)
     {
         this.setState({fileName: event.target.value});
-    }
-
-    closeDownloadPage()
-    {
-        store.dispatch(Actions.updateDownloadImagePage(false));
     }
 
     render(){
@@ -62,45 +57,35 @@ class DownloadImagePopUp extends React.Component{
             hrefData = this.props.base64MathImage;
         }
 
-        var styleToClose = {};
-        if(this.props.pageOpen == false)
-        {
-            styleToClose["bottom"] = "-100%";
-        }
 
 
 
         return (
-            <div id="DownloadImagePopUpCenter" style={styleToClose}>
-                <div id="DownloadImagePopUp" >
-                    <div id="ExitDownloadPage" 
-                        onClick={this.closeDownloadPage}>
-                        <FontAwesomeIcon icon={faWindowClose} />
-                    </div>
-                    <div id="DownloadForm">
-                        <input placeholder="fileName" pattern="[a-zA-Z0-9-]+" 
-                            value={this.state.fileName} 
-                            onChange={this.updateFileName}></input>
-                        <button className="buttonOptionsImage sizeImageStyles" 
-                                onClick={()=>{this.updateDownloadImageType(constTypes.ImageDownloadType.svg)}}
-                                style={styleSVG}>
-                                .svg
-                        </button>  
-                        <button className="buttonOptionsImage sizeImageStyles" 
-                                onClick={()=>{this.updateDownloadImageType(constTypes.ImageDownloadType.png)}}
-                                style={stylePNG}>
-                                .png
-                        </button>  
 
-                        <a id="DownloadButton" download={fileName} href={hrefData}>
-                            <FontAwesomeIcon icon={faDownload} />
-                            download image
-                        </a>
-                    </div>
-                </div>
+
+                    
+            <div id="DownloadForm">
+                <input placeholder="fileName" pattern="[a-zA-Z0-9-]+" 
+                    value={this.state.fileName} 
+                    onChange={this.updateFileName}></input>
+                <button className="buttonOptionsImage sizeImageStyles" 
+                        onClick={()=>{this.updateDownloadImageType(constTypes.ImageDownloadType.svg)}}
+                        style={styleSVG}>
+                        .svg
+                </button>  
+                <button className="buttonOptionsImage sizeImageStyles" 
+                        onClick={()=>{this.updateDownloadImageType(constTypes.ImageDownloadType.png)}}
+                        style={stylePNG}>
+                        .png
+                </button>  
+
+                <a id="DownloadButton" download={fileName} href={hrefData}>
+                    <FontAwesomeIcon icon={faDownload} />
+                    download image
+                </a>
             </div>
         )
     }
 }
 
-export default DownloadImagePopUp;
+export default DownloadForm;

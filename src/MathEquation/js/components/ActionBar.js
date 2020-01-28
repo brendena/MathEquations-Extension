@@ -31,7 +31,7 @@ class ActionBar extends React.Component{
     launchDownloadPage()
     {
         store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.DonatePage))
-        store.dispatch(Actions.updateDownloadImagePage(true));
+        store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
     }
 
 

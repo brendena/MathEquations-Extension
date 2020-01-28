@@ -175,7 +175,7 @@ svg
   width: 2ex;
 }
 
-#DownloadImagePopUp
+#InnerPopUpUiContainer
 {
   background-color: #fff;
   padding: 25px;
@@ -189,7 +189,7 @@ svg
   position: absolute;
   bottom: 0px;
 }
-#DownloadImagePopUpCenter
+#PopUpUiContainer
 {
   z-index: 3000000;
   position:absolute;
@@ -206,7 +206,7 @@ svg
   display: flex;
   justify-content: center;
 }
-#ExitDownloadPage
+#ExitPopUpUi
 {
   position: absolute; 
   top: 0px; 
@@ -216,6 +216,26 @@ svg
 #textInputSize
 {
   width:50px;
+}
+#paypalButton
+{
+  font-size: 20px;
+  border-color: gold;
+  border-radius: 20px;
+  display: flex;
+  cursor: pointer;
+  background:white;
+}
+
+#paypalButton:hover
+{
+  background:#98c6ff;
+}
+
+#paypalLogo
+{
+  color:#1a73e8;
+  padding-right: 4px;
 }
 
 /*

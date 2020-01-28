@@ -16,6 +16,13 @@ export const ImageDownloadType={
     svg:"medium"
 }
 
+export const TrueFalseToggle={
+    false:false,
+    true:true,
+    toggle:2
+}
+
+
 export const PopUpUi={
     DownloadImagePage:"DownloadImagePage",
     DonatePage :"DonatePage"

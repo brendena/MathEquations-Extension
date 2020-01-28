@@ -19,19 +19,21 @@ var MathEquationTag = document.createElement("math-equations");
 
 var constructUi = function(configOptions){
     if(configOptions.hasOwnProperty('openCloseMenu')){
-        var MathEquationTagAdded = document.getElementsByTagName("math-equations")[0];
+        var MathEquationTagAdded = document.getElementsByTagName("math-equations");
+        console.log(MathEquationTagAdded);
+        console.log(MathEquationTagAdded.length)
         
-        
-        if(MathEquationTagAdded == undefined)
+        if(MathEquationTagAdded.length == 0)
         {
             log.info("opening extension");
             MathEquationTag.style.display = "initial" ;  
             document.body.appendChild(MathEquationTag);
 
             MathEquationTag.addEventListener(ConstsID.CloseMathExtEventName, function (e) { 
-                console.log("removing extension from ui")
-                MathEquationTag.parentNode.removeChild(MathEquationTag);
-             }, false);
+                console.log("hidding the extension")
+                //MathEquationTag.parentNode.removeChild(MathEquationTag);
+                MathEquationTag.style.display = "none";
+            }, false);
         }
         else{
             if(MathEquationTag.style.display === "initial")

@@ -10,7 +10,7 @@ import DonatePage from "./DonatePage"
 
 @connect((store)=>{
     return{
-        pageOpen: store.propsPage.downloadImagePage,
+        pageOpen: store.propsPage.popUpUiPage,
         popUiType: store.propsPage.popUiType
     }
 })
@@ -21,7 +21,7 @@ class PopUpUi extends React.Component{
     
     closePopUpPage()
     {
-        store.dispatch(Actions.updateDownloadImagePage(false));
+        store.dispatch(Actions.updatePopUiPage(false));
     }
 
     render(){
@@ -31,16 +31,15 @@ class PopUpUi extends React.Component{
         {
             styleToClose["bottom"] = "-100%";
         }
-        console.log(this.popUiType)
         return (
-            <div id="DownloadImagePopUpCenter" style={styleToClose}>
-                <div id="DownloadImagePopUp" >
-                    <div id="ExitDownloadPage" 
+            <div id="PopUpUiContainer" style={styleToClose}>
+                <div id="InnerPopUpUiContainer" >
+                    <div id="ExitPopUpUi" 
                         onClick={this.closePopUpPage}>
                         <FontAwesomeIcon icon={faWindowClose} />
                     </div>
 
-                    {this.props.popUiType == constTypes.PopUpUi.DownloadImagePage ? (<DownloadForm />) : (<div></div>)  }
+                    {this.props.popUiType == constTypes.PopUpUi.popUpUiPage ? (<DownloadForm />) : (<div></div>)  }
                     {this.props.popUiType == constTypes.PopUpUi.DonatePage ? (<DonatePage />) : (<div></div>)  }
 
                 </div>

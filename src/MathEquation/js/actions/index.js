@@ -35,8 +35,8 @@ export function updateSizeMathEquation(payload) {
     return { type: consts.UPDATE_SIZE_MATH_EQUATION, payload }
 }
 
-export function updateDownloadImagePage(payload) {
-    return { type: consts.UPDATE_DOWNLOAD_IMAGE_PAGE, payload }
+export function updatePopUiPage(payload) {
+    return { type: consts.UPDATE_POP_UI_PAGE, payload }
 }
 
 export function updateDownloadImageType(payload) {

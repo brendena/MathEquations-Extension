@@ -56,8 +56,8 @@ class ImageOptions extends React.Component{
     }
     launchDownloadPage()
     {
-        store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.DownloadImagePage))
-        store.dispatch(Actions.updateDownloadImagePage(true));
+        store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.popUpUiPage))
+        store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
     }
     textInputChange(event)
     {

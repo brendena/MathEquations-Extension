@@ -10,7 +10,7 @@ import  store  from "../store/index"
 @connect((store)=>{
     return{
         mathDownloadType: store.propsPage.downloadImageType,
-        pageOpen: store.propsPage.downloadImagePage,
+        pageOpen: store.propsPage.popUpUiPage,
         base64MathImage : store.propsPage.base64MathImage,
         svgMathImage : store.propsPage.svgMathImage
     }

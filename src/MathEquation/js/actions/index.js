@@ -46,3 +46,7 @@ export function updateDownloadImageType(payload) {
 export function updatePageUiType(payload) {
     return { type: consts.UPDATE_POP_UI_TYPE, payload }
 }
+
+export function updateMathTextColor(payload) {
+    return { type: consts.UPDATE_MATH_TEXT_COLOR, payload }
+}

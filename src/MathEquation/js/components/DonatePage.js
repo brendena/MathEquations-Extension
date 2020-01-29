@@ -7,11 +7,12 @@ class DonatePage extends React.Component{
         super(props);
     }
     render(){
-        //<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-                    
+        
+        var floatLeft  = {"float":"left","paddingRight": "10px"}   
+        
         return (
             <div>
-                <p>Supports the development of the application</p>
+                <p style={floatLeft}>Ways to support the development of this application</p>
                 <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top" id="paypalForm">
                     <input type="hidden" name="cmd" value="_donations" />
                     <input type="hidden" name="business" value="6GQXV84G2PEFJ" />

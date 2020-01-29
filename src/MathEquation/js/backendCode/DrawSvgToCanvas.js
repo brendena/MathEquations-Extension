@@ -1,5 +1,5 @@
 
-function drawSVGCanvas(childNodes,ctx){
+function drawSVGCanvas(childNodes,ctx,color){
     var defs = childNodes[0];
     var useTags = {};
     let tag;
@@ -9,13 +9,13 @@ function drawSVGCanvas(childNodes,ctx){
         tag = defs.childNodes[i];
         useTags[tag.id] = tag.attributes.getNamedItem("d").value;
     }
-    recursiveLoopTags(childNodes,ctx,useTags);
+    recursiveLoopTags(childNodes,ctx,useTags,color);
 }
 
 
 
 
-function recursiveLoopTags(childNodes,ctx,useTags){
+function recursiveLoopTags(childNodes,ctx,useTags,color){
     let tag;
     for(let i = 0; i < childNodes.length; i++)
     {
@@ -26,7 +26,7 @@ function recursiveLoopTags(childNodes,ctx,useTags){
             case "use":
                 let userLink = tag.getAttribute("xlink:href").substr(1);
                 let path = new Path2D(useTags[userLink]);
-                //ctx.fillStyle = "#FFFFFF";
+                ctx.fillStyle = color;
                 if("transform" in tag.attributes){
                     let transformString = tag.attributes.getNamedItem("transform").value;
                     let canvasTransfer = new CanvasTransformerClass(ctx, transformString)
@@ -46,14 +46,14 @@ function recursiveLoopTags(childNodes,ctx,useTags){
 
                     let canvasTransfer = new CanvasTransformerClass(ctx, transformString)
                     canvasTransfer.initTransform(ctx);
-                    recursiveLoopTags(tag.childNodes,ctx,useTags);
+                    recursiveLoopTags(tag.childNodes,ctx,useTags,color);
                     canvasTransfer.reverseTransform(ctx);
                 }
                 else
                 {
                     if(tag.childNodes.length > 0)
                     {
-                        recursiveLoopTags(tag.childNodes,ctx,useTags);
+                        recursiveLoopTags(tag.childNodes,ctx,useTags,color);
                     }
                 }
                 break;

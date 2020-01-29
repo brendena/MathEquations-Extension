@@ -10,15 +10,14 @@ import SVGToCanvas from "./SVGToCanvas"
     return{
         mathInputString: store.propsPage.mathInputString,
         typeMathInput: store.propsPage.typeMathInput,
-        sizeMathOutput: store.propsPage.sizeMathOutput
-
+        sizeMathOutput: store.propsPage.sizeMathOutput,
+        textColor: store.propsPage.mathTextColor
     }
 })
 class MathEquationBox extends React.Component{
     constructor(props){
         super(props);
         this.outputRef = React.createRef();
-        this.MathJax;
         this.changeLatexInput = this.changeLatexInput.bind(this);
     }
 
@@ -66,7 +65,9 @@ class MathEquationBox extends React.Component{
                 //
                 console.log("error");
                 console.log(err.message)
-                outputEl.appendChild(document.createElement('pre')).appendChild(document.createTextNode(err.message));
+                var preElement = document.createElement('pre');
+                preElement.style.fontSize = "15px";
+                outputEl.appendChild(preElement).appendChild(document.createTextNode(err.message));
                 store.dispatch(Actions.updateRenderCanvas(true));
             })
 
@@ -77,15 +78,20 @@ class MathEquationBox extends React.Component{
             this.changeLatexInput(this.props.mathInputString,this.outputRef.current);
         }
     }
-
     componentDidMount(){
         this.changeLatex();
     }
+
     render(){
         this.changeLatex();
+
+        //make the text change color with the input
+        //"color":this.props.textColor,
+        var colorMathEquation  = {"fontSize":"30px","margin":0}
+
         return (
             <div id={constID.MathEquationBox}>
-                <div  ref={this.outputRef}>
+                <div  style={colorMathEquation} ref={this.outputRef}>
                 
                 </div>
                 <SVGToCanvas    

@@ -6,13 +6,16 @@ import SvgToCanvas from "../backendCode/SvgToCanvas"
 
 @connect((store)=>{
     return{
-        updateRenderCanvas: store.propsPage.updateRenderCanvas
+        updateRenderCanvas: store.propsPage.updateRenderCanvas,
+        textColor: store.propsPage.mathTextColor
     }
 })
 class SVGToCanvas extends React.Component{
     constructor(props){
         super(props);
         this.canvas = React.createRef();
+
+        this.updateCanvas = this.updateCanvas.bind(this);
     }
     convertSvgToData(svgElement){
         let svgURL = new XMLSerializer().serializeToString(svgElement);
@@ -21,13 +24,12 @@ class SVGToCanvas extends React.Component{
    
     updateCanvas()
     {
-        
         var canvas = this.canvas.current;
         
         var svgContainer = this.props.locationSVG.current;
         var svg = svgContainer.getElementsByTagName("svg")[0];
         try{
-            var drawingClass = new SvgToCanvas(svg,canvas,"#000000");
+            var drawingClass = new SvgToCanvas(svg,canvas,this.props.textColor);
             store.dispatch(Actions.updateBase64MathImage(drawingClass.getPng64()));
             store.dispatch(Actions.updateSVGMathImage(this.convertSvgToData(svg)));
         }

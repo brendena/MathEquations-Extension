@@ -33,7 +33,7 @@ class ImageOptions extends React.Component{
             if (event.clipboardData) {
                 if(this.pngBase64Image != ""){
                     log.info("setting clipboard data")
-                    console.log(event);
+                    log.info(event)
                     //console.log(this.props.base64Image)
                     event.clipboardData.setData('text/html', '<meta http-equiv="content-type" content="text/html; charset=utf-8"><img id="CanvasImg" src="'+ this.props.base64Image +'">');
                     //event.clipboardData.setData('text', "testing this out");
@@ -76,7 +76,10 @@ class ImageOptions extends React.Component{
         }
         store.dispatch(Actions.updateSizeMathEquation(newSizeImage));
     }
-
+    textColorChanged(event)
+    {
+        store.dispatch(Actions.updateMathTextColor(event.target.value));
+    }
 
     render(){
         var styleSmallPicture  = {"fontSize":"10px"}
@@ -96,13 +99,13 @@ class ImageOptions extends React.Component{
             styleLargePicture["borderColor"] = "black";
         }
 
-        
+        var stylePixelSizeDescription  = {"paddingLeft":"10px"}
  
         return (
             <div id="imageOptions">
                 <button className="buttonOptionsImage "
                         onClick={this.CopyImageToClipboard}>copy image</button>
-                <input  className="removeStyles" type="color"/>
+                <input  className="removeStyles" type="color" onChange={this.textColorChanged}/>
                 
                 <button className="buttonOptionsImage"
                         onClick={this.launchDownloadPage}>
@@ -125,6 +128,7 @@ class ImageOptions extends React.Component{
                     <FontAwesomeIcon icon={faImage} />
                 </button>
                 <input id="textInputSize" type="number" value={this.props.sizeMathOutput} onChange={this.textInputChange} />
+                <span style={stylePixelSizeDescription}>   Img pixel Width  </span>
                 
             </div>
         )

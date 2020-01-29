@@ -1,7 +1,8 @@
 import * as log from 'loglevel';
 import * as ConstsID from "./MathEquation/js/constants/constsID"
 
-log.setDefaultLevel("trace")
+//log.setDefaultLevel("trace")
+log.setDefaultLevel("warn")
 
 var browser = browser || chrome;
 require('./MathEquation/index');
@@ -20,8 +21,6 @@ var MathEquationTag = document.createElement("math-equations");
 var constructUi = function(configOptions){
     if(configOptions.hasOwnProperty('openCloseMenu')){
         var MathEquationTagAdded = document.getElementsByTagName("math-equations");
-        console.log(MathEquationTagAdded);
-        console.log(MathEquationTagAdded.length)
         
         if(MathEquationTagAdded.length == 0)
         {
@@ -30,7 +29,7 @@ var constructUi = function(configOptions){
             document.body.appendChild(MathEquationTag);
 
             MathEquationTag.addEventListener(ConstsID.CloseMathExtEventName, function (e) { 
-                console.log("hidding the extension")
+                console.log("hidding the extension");
                 //MathEquationTag.parentNode.removeChild(MathEquationTag);
                 MathEquationTag.style.display = "none";
             }, false);
@@ -59,5 +58,5 @@ browser.runtime.onMessage.addListener(
 );
 
 //auto load application
-constructUi({"openCloseMenu":true})
+//constructUi({"openCloseMenu":true})
 //*/

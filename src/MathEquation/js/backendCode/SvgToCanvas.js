@@ -32,7 +32,7 @@ class SvgToCanvas
         //remove the offset from having a orgin of not (0,0)
         this.ctx.translate(-(this.viewBox.minX),-(this.viewBox.minY));
         
-        drawSVGCanvas(svgElement.childNodes,this.ctx);
+        drawSVGCanvas(svgElement.childNodes,this.ctx,color);
     }
 
     getPng64(){

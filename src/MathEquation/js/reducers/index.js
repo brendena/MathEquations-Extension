@@ -11,6 +11,7 @@ const initialState = {
         typeMathInput: constTypes.MathEquationInput.latex,
         sizeMathOutput: constTypes.MathSizeMedium,
         mathInputString:"",
+        mathTextColor:"0x000000",
         updateRenderCanvas: false,
         popUpUiPage: false,
         downloadImageType: constTypes.ImageDownloadType.png,
@@ -76,6 +77,10 @@ function rootReducer(state = initialState, action){
         else if(action.type === consts.UPDATE_POP_UI_TYPE)
         {
             draft.propsPage.popUiType = action.payload;
+        }
+        else if(action.type === consts.UPDATE_MATH_TEXT_COLOR)
+        {
+            draft.propsPage.mathTextColor = action.payload;
         }
     });
 }

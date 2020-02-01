@@ -238,27 +238,44 @@ svg
   padding-right: 4px;
 }
 
-/*
-.App {
-  text-align: center;
+
+.selectedMathInput::after
+{
+  content: '';
+  position: relative;
+  top: 10%;
+  bottom: 10%;
+  right: -5%;
+  left: -5%;
+  background: inherit;
+  border-radius: 5% / 50%;
+  background: red;
 }
 
-.App-logo {
-  height: 40vmin;
-}
+@media screen and (max-width: 1000px)
+{
+  #TextSectionDivider
+  {
+    flex-direction: column;
+ 
+  }
+  #inputTextMathEquation
+  {
+    width:100%;
+    flex-grow:1;
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #09d3ac;
+  }
+  #textOutputBox
+  {
+    width:100%;
+    flex-grow:1;
+
+    border-left-style: solid;
+    border-left-width: 0px;
+
+    border-top-style: solid;
+    border-top-width: 1px;
+  }
+
 }
-*/

@@ -34,6 +34,10 @@
 * cd dist && web-ext run
 
 
+### Release Build
+* npm run start
+
+
 ## External Builds
 * MathJax 3 is built with a different build system.
 * Instruction for that will be found in the src/MathEquation/lib/custom-mathjax  

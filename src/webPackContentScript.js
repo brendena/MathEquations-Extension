@@ -1,8 +1,8 @@
 import * as log from 'loglevel';
 import * as ConstsID from "./MathEquation/js/constants/constsID"
 
-//log.setDefaultLevel("trace")
-log.setDefaultLevel("warn")
+log.setDefaultLevel("trace")
+//log.setDefaultLevel("warn")
 
 var browser = browser || chrome;
 require('./MathEquation/index');

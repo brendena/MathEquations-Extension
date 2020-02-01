@@ -12,7 +12,6 @@ import * as ConstsID from "./js/constants/constsID"
 
 @connect((store)=>{
   return{
-    pageHeight: store.propsPage.height,
     showMathEquationBox: store.propsPage.showMathEquationTextBox,
     typeMathInput: store.propsPage.typeMathInput
   }
@@ -23,18 +22,13 @@ class App extends React.Component{
   }
 
   render (){
-    var position = {bottom: "0px",
-                    height: this.props.pageHeight+"vh"
-                    }
-    if(!this.props.showMathEquationBox){
-      position.bottom = "-" + this.props.pageHeight + "vh";
-    }
 
     return(
       
 
 
-     <div style={position} className="App">
+     <div className="App appGrid_H">
+          <div id="appSpacer" class="appSpacer_H"></div>
           <TextSlideBox/>
           <ActionBar stateMathTextBox={this.props.showMathEquationBox} 
                      currentMathInput={this.props.typeMathInput}/>

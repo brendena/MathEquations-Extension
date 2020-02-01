@@ -8,7 +8,9 @@ import { connect } from 'react-redux';
 
 @connect((store)=>{
     return{
-        mathInputString: store.propsPage.mathInputString
+        pageHeight: store.propsPage.height,
+        mathInputString: store.propsPage.mathInputString,
+        showMathEquationBox: store.propsPage.showMathEquationTextBox
     }
 })
 class TextSlideBox extends React.Component{
@@ -23,9 +25,17 @@ class TextSlideBox extends React.Component{
         store.dispatch(Actions.changeSelectedMathInput(inputEl));
     }
     render(){
-        //onKeyUp={this.updateLatexInput}
+    
+        console.log("-------------")
+        console.log(this.props.showMathEquationBox)
+        var position = {height: this.props.pageHeight+"vh"}
+        if(!this.props.showMathEquationBox){
+            position.transform = "translateY(" + (this.props.pageHeight + (75/ window.innerHeight * 100))  + "vh)";
+            position.transition = "0.2s";
+        }
+        
         return (
-            <div id="TextSlideBox">
+            <div id="TextSlideBox" style={position} class="textSlideBox_H">
                 <PageSlider/>
                 
                 <div id="TextSectionDivider">

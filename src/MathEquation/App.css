@@ -2,10 +2,79 @@
   color:black;
   bottom:0px;
   left:0px;
+  display:grid;
   position:fixed;
-  width:100%;
+  width:100vw;
+  height:100vh;
   min-height:20vh;
   z-index: 9999999;
+  pointer-events: none;
+}
+
+
+.appGrid_H
+{
+  grid-template-columns: auto;
+  grid-template-rows: auto auto 75px;
+  grid-gap: 0;
+}
+
+#appSpacer
+{
+  opacity: 0;
+  pointer-events: none;
+}
+
+.appSpacer_H
+{
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+
+#TextSlideBox
+{
+  background:white;
+  border-top-style: solid;
+  border-top-width: 1px;
+  display:flex;
+  flex-direction:column;
+  pointer-events: auto;
+  z-index:200;
+}
+
+.textSlideBox_H
+{
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  height: 200px;
+  align-self: end;
+}
+
+
+#ActionBar
+{
+  bottom:0px;
+  left:0px;
+  width:100%;
+  background-color:#ffdc78;
+  color:black;
+  display:flex;
+  flex-direction: row;
+  pointer-events: auto;
+  z-index:300;
+}
+
+.actionBar_H
+{
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 2;
 }
 
 a:link
@@ -28,32 +97,14 @@ a:active
   opacity:0.5;
   min-height:10px;
 }
+
 #slideItem:hover{
   opacity:1;
 }
 
 
-#ActionBar
-{
-  position:fixed;
-  bottom:0px;
-  left:0px;
-  width:100%;
-  height:75px;
-  background-color:#ffdc78;
-  color:black;
-  display:flex;
-  flex-direction: row;
-}
-#TextSlideBox
-{
-  background:white;
-  border-top-style: solid;
-  border-top-width: 1px;
-  height: calc( 100% - 75px);
-  display:flex;
-  flex-direction:column;
-}
+
+
 .classTextBoxOffscreen
 {
   padding-top:100%;
@@ -123,6 +174,7 @@ a:active
   font-family: 'Times New Roman', Times, serif;
   box-shadow: none;
   transition: all 0.5s ease 0s;
+  outline: 0;
 }
 
 .navButton:hover
@@ -185,9 +237,9 @@ svg
   border-bottom-width: 0;
   min-height: 90px;
   box-sizing: border-box;
-  /*max-height: 90%; don't know what it doing*/
   position: absolute;
   bottom: 0px;
+  pointer-events: auto;
 }
 #PopUpUiContainer
 {

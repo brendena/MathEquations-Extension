@@ -12,7 +12,8 @@ class PageSlider extends React.Component{
     }
     changeHeight(event){
         //https://stackoverflow.com/questions/1145850/how-to-get-height-of-entire-document-with-javascript
-        var height =  100 - ((event.clientY / window.innerHeight) * 100);
+                                                                            //this is the offset from the bottom nav bar
+        var height =  (100 - ((event.clientY / window.innerHeight) * 100)) - (75/ window.innerHeight * 100);
         store.dispatch(Actions.changeHeightPage(height));
         
     }
@@ -32,8 +33,6 @@ class PageSlider extends React.Component{
             <img id="slideItem" 
                   src={ConstsID.UrlImage + "resizeIcon.svg"}
                   draggable="false"
-                  onDragStart={this.handleDragEvents}
-                  onDrop={this.handleDragEvents}
                   onMouseDown={this.handleMoveStart} alt="icon to increase size"/>
         )
     }

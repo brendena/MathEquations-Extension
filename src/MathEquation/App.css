@@ -304,6 +304,13 @@ svg
   background: red;
 }
 
+#selectMathTypeSpan
+{
+  display:flex;
+}
+
+
+
 @media screen and (max-width: 1000px)
 {
   #TextSectionDivider
@@ -330,4 +337,26 @@ svg
     border-top-width: 1px;
   }
 
+}
+
+
+@media screen and (max-width: 800px)
+{
+
+  #selectMathTypeSpan
+  {
+    flex-direction:column;
+    min-width: 200px;
+    height: 225px;
+    transition: 0.5s;
+  }
+  .selectedMathTypeScanShow
+  {
+    transform: translateY(-150px);
+  }
+  .selectedMathInput
+  {
+    order: -1;
+    background-color: #ffdc78;;
+  }
 }

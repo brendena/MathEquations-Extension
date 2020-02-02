@@ -5,52 +5,61 @@ import * as ConstsID from "../constants/constsID"
 import  store  from "../store/index"
 import * as log from 'loglevel';
 
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faWindowClose, faChevronUp, faCoins } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 class SelectedMathType extends React.Component{
     constructor(props){
         super(props);
-        this.toggleMathEquationBoxShow = this.toggleMathEquationBoxShow.bind(this);
-        this.closeExtension = this.closeExtension.bind(this);
-        this.closeButton = React.createRef();
+        this.latexButtonClassName = "";
     }
 
-    changeSelectedInput(typeInput){
+    changeSelectedInput(event,typeInput)
+    {
+        var parentsDiv = event.target.parentElement;
+        if(window.innerWidth < 800)
+        {
+            console.log(parentsDiv.nodeName);
+            if(event.target.parentElement.className.length == 0)
+            {
+                event.target.parentElement.className = "selectedMathTypeScanShow";
+            }
+            else
+            {
+                event.target.parentElement.className = "";
+            }
+        }else
+        {
+            event.target.parentElement.className = "";
+        }
+        
         store.dispatch(Actions.changeSelectedMathTypeInput(typeInput));
     }
 
     render(){
-        var stylesSlideMathTextBox = { transform: "rotate(0deg)"}
-        if(this.props.stateMathTextBox)
-        {
-            stylesSlideMathTextBox.transform = "rotate(180deg)"
-        }
 
-        var latexButtonClassName= "navButton";
+        this.latexButtonClassName= "navButton";
         var mathMLButtonClassName= "navButton";
         var asciiMathButtonClassName= "navButton";
-        
         if(this.props.currentMathInput === ConstTypes.MathEquationInput.latex){
-            latexButtonClassName += " selectedMathInput";
+            this.latexButtonClassName += " selectedMathInput";
         }else if(this.props.currentMathInput === ConstTypes.MathEquationInput.mathML){
             mathMLButtonClassName += " selectedMathInput";
         }else if(this.props.currentMathInput === ConstTypes.MathEquationInput.asciiMath){
             asciiMathButtonClassName += " selectedMathInput";
         }
 
-        const stylesLatex = {"maxWidth": "140px"};
+        const stylesLatex = {"paddingTop": "20px", "height": "35px","paddingBottom": "15px","pointerEvents": "none" }//{"maxWidth": "140px"};
 
         return (
-            <div>
-                <button className={latexButtonClassName} style={stylesLatex}
-                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.latex)}} ><img src={ConstsID.UrlImage + "latex.svg"} id="latexImage" alt="latex logo"/></button>
+            <span id="selectMathTypeSpan">
+                <button className={this.latexButtonClassName}
+                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MathEquationInput.latex)}} ><img   style={stylesLatex} src={ConstsID.UrlImage + "latex.svg"} id="latexImage" alt="latex logo"/></button>
                 <button className={mathMLButtonClassName} 
-                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.mathML)}}>MathML</button>
+                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MathEquationInput.mathML)}}>MathML</button>
                 <button className={asciiMathButtonClassName} 
-                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.asciiMath)}}>AsciiMath</button>
-            </div>
+                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MathEquationInput.asciiMath)}}>AsciiMath</button>
+            </span>
         )
     }
 }

@@ -4,10 +4,13 @@ import * as ConstTypes from "../constants/constsTypes"
 import * as ConstsID from "../constants/constsID"
 import  store  from "../store/index"
 import * as log from 'loglevel';
+import SelectedMathType from "./SelectedMathType.js"
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faWindowClose, faChevronUp, faCoins } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 class ActionBar extends React.Component{
     constructor(props){
@@ -18,9 +21,6 @@ class ActionBar extends React.Component{
     }
     toggleMathEquationBoxShow(){
         store.dispatch(Actions.showMathEquationTextBox(!this.props.stateMathTextBox));
-    }
-    changeSelectedInput(typeInput){
-        store.dispatch(Actions.changeSelectedMathTypeInput(typeInput));
     }
     closeExtension(){
         log.info("event - closed extension")
@@ -42,31 +42,14 @@ class ActionBar extends React.Component{
             stylesSlideMathTextBox.transform = "rotate(180deg)"
         }
 
-        var latexButtonClassName= "navButton";
-        var mathMLButtonClassName= "navButton";
-        var asciiMathButtonClassName= "navButton";
-        
-        if(this.props.currentMathInput === ConstTypes.MathEquationInput.latex){
-            latexButtonClassName += " selectedMathInput";
-        }else if(this.props.currentMathInput === ConstTypes.MathEquationInput.mathML){
-            mathMLButtonClassName += " selectedMathInput";
-        }else if(this.props.currentMathInput === ConstTypes.MathEquationInput.asciiMath){
-            asciiMathButtonClassName += " selectedMathInput";
-        }
 
-        const stylesLatex = {"maxWidth": "140px"};
 
         return (
             <div id="ActionBar">
                 <img src={ConstsID.UrlImage + "logoClearBackground.svg"} id="navBarLogo" alt="Math Equations Logo"/>
 
-                <button className={latexButtonClassName} style={stylesLatex}
-                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.latex)}} ><img src={ConstsID.UrlImage + "latex.svg"} id="latexImage" alt="latex logo"/></button>
-                <button className={mathMLButtonClassName} 
-                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.mathML)}}>MathML</button>
-                <button className={asciiMathButtonClassName} 
-                        onClick={()=>{this.changeSelectedInput(ConstTypes.MathEquationInput.asciiMath)}}>AsciiMath</button>
-
+                <SelectedMathType currentMathInput={this.props.currentMathInput}/>
+             
                 <div className="flexSpacer"></div>
 
                 

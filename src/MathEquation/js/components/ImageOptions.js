@@ -128,7 +128,7 @@ class ImageOptions extends React.Component{
                     <FontAwesomeIcon icon={faImage} />
                 </button>
                 <input id="textInputSize" type="number" value={this.props.sizeMathOutput} onChange={this.textInputChange} />
-                <span style={stylePixelSizeDescription}>   Img pixel Width  </span>
+                <span style={stylePixelSizeDescription}> width-px  </span>
                 
             </div>
         )

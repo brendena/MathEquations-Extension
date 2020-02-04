@@ -5,85 +5,40 @@ import { connect } from 'react-redux';
 import * as constID from '../constants/constsID'
 import * as constTypes from "../constants/constsTypes"
 import SVGToCanvas from "./SVGToCanvas"
+import MathJaxComponent from "./MathJaxComponent"
 
 @connect((store)=>{
     return{
         mathInputString: store.propsPage.mathInputString,
-        typeMathInput: store.propsPage.typeMathInput,
-        sizeMathOutput: store.propsPage.sizeMathOutput,
-        textColor: store.propsPage.mathTextColor
+        base64MathImage: store.propsPage.base64MathImage
     }
 })
 class MathEquationBox extends React.Component{
     constructor(props){
         super(props);
         this.outputRef = React.createRef();
-        this.changeLatexInput = this.changeLatexInput.bind(this);
+
+        this.dragImage = this.dragImage.bind(this);
     }
 
-    changeLatexInput(inputEl, outputEl)
+    dragImage(event)
     {
+        console.log("got a drag event")
+        console.log(event)
 
-        const MathJax = window.MathJax;
+        var testImage = document.createElement("img"); 
+        testImage.src = this.props.base64MathImage;
 
-        outputEl.innerHTML = '';
 
-        
-        
-        MathJax.texReset();
 
-        var equationToSvgPromise;
-        if(this.props.typeMathInput === constTypes.MathEquationInput.latex)
-        {
-            equationToSvgPromise = MathJax.tex2svgPromise;
-        }
-        else if(this.props.typeMathInput === constTypes.MathEquationInput.mathML)
-        {
-            equationToSvgPromise = MathJax.mathml2svgPromise;
-        }
-        else if(this.props.typeMathInput === constTypes.MathEquationInput.asciiMath)
-        {
-            equationToSvgPromise = MathJax.asciimath2svgPromise;
-        }
 
-        var options = MathJax.getMetricsFor(outputEl);
+        var wrapper = document.createElement("div");
+        wrapper.appendChild(testImage);
+        event.dataTransfer.setData("text/html",wrapper.innerHTML);
 
-            equationToSvgPromise(inputEl, options).then(function (node) {
-                //
-                //  The promise returns the typeset node, which we add to the output
-                //  Then update the document to include the adjusted CSS for the
-                //    content of the new equation.
-                //
-                outputEl.appendChild(node);
-                MathJax.startup.document.clear();
-                MathJax.startup.document.updateDocument();
-                store.dispatch(Actions.updateRenderCanvas(true));
-
-            }).catch(function (err) {
-                //
-                //  If there was an error, put the message into the output instead
-                //
-                console.log("error");
-                console.log(err.message)
-                var preElement = document.createElement('pre');
-                preElement.style.fontSize = "15px";
-                outputEl.appendChild(preElement).appendChild(document.createTextNode(err.message));
-                store.dispatch(Actions.updateRenderCanvas(true));
-            })
-
+        //event.dataTransfer.setDragImage(testImage,10,10);
     }
-    changeLatex(){
-        if(this.props.mathInputString != "" && this.outputRef.current != null)
-        {
-            this.changeLatexInput(this.props.mathInputString,this.outputRef.current);
-        }
-    }
-    componentDidMount(){
-        this.changeLatex();
-    }
-
     render(){
-        this.changeLatex();
 
         //make the text change color with the input
         //"color":this.props.textColor,
@@ -91,7 +46,10 @@ class MathEquationBox extends React.Component{
 
         return (
             <div id={constID.MathEquationBox}>
-                <div  style={colorMathEquation} ref={this.outputRef}>
+                <MathJaxComponent renderDiv={this.outputRef}></MathJaxComponent>
+
+
+                <div draggable="true" onDragStart={this.dragImage} style={colorMathEquation} ref={this.outputRef}>
                 
                 </div>
                 <SVGToCanvas    

@@ -20,6 +20,7 @@ var MathEquationTag = document.createElement("math-equations");
 
 var constructUi = function(configOptions){
     if(configOptions.hasOwnProperty('openCloseMenu')){
+        log.info("openCloseMenu");
         var MathEquationTagAdded = document.getElementsByTagName("math-equations");
         
         if(MathEquationTagAdded.length == 0)

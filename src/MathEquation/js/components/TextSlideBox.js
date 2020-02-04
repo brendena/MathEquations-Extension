@@ -25,9 +25,6 @@ class TextSlideBox extends React.Component{
         store.dispatch(Actions.changeSelectedMathInput(inputEl));
     }
     render(){
-    
-        console.log("-------------")
-        console.log(this.props.showMathEquationBox)
         var position = {height: this.props.pageHeight+"vh"}
         if(!this.props.showMathEquationBox){
             position.transform = "translateY(" + (this.props.pageHeight + (75/ window.innerHeight * 100))  + "vh)";

@@ -15,6 +15,10 @@ browser.commands.onCommand.addListener(function(command) {
         if (command == "open-close-extension") {
             browser.tabs.sendMessage(tabs[0].id, {openCloseMenu: true});
         }
+        if(command == "copy-image")
+        {
+          console.log("copy the image");
+        }
     });
     
   });

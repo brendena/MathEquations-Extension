@@ -7,7 +7,7 @@ import * as log from 'loglevel';
 import SelectedMathType from "./SelectedMathType.js"
 
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { faWindowClose, faChevronUp, faCoins } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose, faChevronUp, faCoins, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
@@ -57,6 +57,9 @@ class ActionBar extends React.Component{
                         onClick={this.toggleMathEquationBoxShow}
                         style={stylesSlideMathTextBox}>
                     <FontAwesomeIcon icon={faChevronUp} />        
+                </button>
+                <button className="navButton">
+                    <FontAwesomeIcon icon={faCog} />        
                 </button>
                 <button className="navButton" 
                         onClick={this.launchDownloadPage}>

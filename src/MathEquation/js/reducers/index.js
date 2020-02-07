@@ -1,5 +1,6 @@
 import * as consts from "../constants/action-types";
 import * as constTypes from "../constants/constsTypes"
+import * as ConstsID from "../constants/constsID"
 import * as log from 'loglevel';
 import produce from "immer"
 
@@ -17,19 +18,22 @@ const initialState = {
         updateRenderCanvas: false,
         popUpUiPage: false,
         downloadImageType: constTypes.ImageDownloadType.png,
-        popUiType :  constTypes.PopUpUi.SettingsPage,
+        popUiType :  constTypes.PopUpUi.NoPage,
         base64MathImage: "",
         svgMathImage:""
         
     },
     //properties that will be locally synced
     localSync:{
-        imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight
+        imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedWidth
     }
 };
 
 function rootReducer(state = initialState, action){
-    return produce(state,draft =>{
+    var updateLocalSyncObject = false;
+
+    var newState = produce(state,draft =>{
+        
         log.info("changing state - " + action.type);
         //page settings
         if(action.type === consts.CHANGE_HEIGHT_PAGE)
@@ -76,9 +80,14 @@ function rootReducer(state = initialState, action){
             }
             else
             {
+                
                 draft.propsPage.popUpUiPage = action.payload;
+                
             }
-            
+            if(draft.propsPage.popUpUiPage == false)
+            {
+                draft.propsPage.popUiType = constTypes.PopUpUi.NoPage;
+            }
         }
         else if(action.type === consts.UPDATE_DOWNLOAD_IMAGE_TYPE)
         {
@@ -86,7 +95,16 @@ function rootReducer(state = initialState, action){
         }
         else if(action.type === consts.UPDATE_POP_UI_TYPE)
         {
-            draft.propsPage.popUiType = action.payload;
+            if(draft.propsPage.popUiType != action.payload)
+            {
+                draft.propsPage.popUpUiPage = true;
+                draft.propsPage.popUiType = action.payload;
+            }
+            else
+            {
+                draft.propsPage.popUpUiPage = false;
+                draft.propsPage.popUiType = constTypes.PopUpUi.NoPage;
+            }
         }
         else if(action.type === consts.UPDATE_MATH_TEXT_COLOR)
         {
@@ -96,8 +114,31 @@ function rootReducer(state = initialState, action){
         else if(action.type === consts.UPDATE_IMAGE_DIMENSIONS_SETTINGS)
         {
             draft.localSync.imageDimensionsSettings = action.payload;
+            updateLocalSyncObject = true;
         }
+
+
+
     });
+
+    if(updateLocalSyncObject === true)
+    {
+        //grab the components tag and send out a event
+        var componentsTag = document.getElementsByTagName("math-equations");
+        if(componentsTag.length == 1)
+        {   
+            var event = new Event(ConstsID.UpdateLocalSyncProperties, {"bubbles":true,"composed":true});
+            event.data = newState.localSync;
+            console.log("sending")
+            console.log(newState.localSync)
+            componentsTag[0].dispatchEvent(event);
+        }
+        
+    }
+
+    
+
+    return newState;
 }
 
 export default rootReducer;

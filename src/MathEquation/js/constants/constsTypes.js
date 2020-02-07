@@ -19,7 +19,7 @@ export const ImageDownloadType={
 export const ImageDimensionsSettings={
     UserDefinedWidth:"UserDefinedWidth", //so the height will change
     UserDefinedHeight:"UserDefinedHeight", // the width will change
-    UserDefinedHeightAndHeight:"UserDefinedHeightAndHeight" //the height and width won't change based on the image you make
+    UserDefinedWidthAndHeight:"UserDefinedWidthAndHeight" //the height and width won't change based on the image you make
 }
 
 
@@ -31,6 +31,8 @@ export const TrueFalseToggle={
 
 
 export const PopUpUi={
+
+    NoPage :"NoPage",
     DownloadImagePage:"DownloadImagePage",
     DonatePage :"DonatePage",
     SettingsPage :"SettingsPage"

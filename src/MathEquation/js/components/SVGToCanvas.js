@@ -38,7 +38,7 @@ class SVGToCanvas extends React.Component{
             store.dispatch(Actions.updateSVGMathImage(this.convertSvgToData(svg)));
 
             //don't need to update when the image dimentations are fixed.
-            if(this.props.imageDimensionsSettings != ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight)
+            if(this.props.imageDimensionsSettings != ConstTypes.ImageDimensionsSettings.UserDefinedWidthAndHeight)
             {
                 if(this.props.imageDimensionsSettings == ConstTypes.ImageDimensionsSettings.UserDefinedHeight)
                 {

@@ -53,7 +53,6 @@ class ImageOptions extends React.Component{
     launchDownloadPage()
     {
         store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.popUpUiPage))
-        store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
     }
     changeWidthMathEquation(event)
     {

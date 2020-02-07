@@ -2,6 +2,7 @@ import * as log from 'loglevel';
 
 export const MathEquationBox = "MathEquationBox";
 export const CloseMathExtEventName = "CloseMathEquation";
+export const UpdateLocalSyncProperties = "UpdateLocalSyncProperties";
 
 var tmpUrlImage
 if(chrome)

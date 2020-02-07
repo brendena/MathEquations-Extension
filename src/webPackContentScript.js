@@ -8,12 +8,6 @@ var browser = browser || chrome;
 require('./MathEquation/index');
 
 
-//require("./MathEquation/lib/custom-mathjax/custom-mathjax.min");
-
-
-
-
-
 
 var MathEquationTag = document.createElement("math-equations");
 
@@ -33,6 +27,12 @@ var constructUi = function(configOptions){
                 console.log("hidding the extension");
                 //MathEquationTag.parentNode.removeChild(MathEquationTag);
                 MathEquationTag.style.display = "none";
+            }, false);
+
+            MathEquationTag.addEventListener(ConstsID.UpdateLocalSyncProperties, function (e) { 
+                console.log("Got a update to change properties");
+                console.log(e.data)
+                browser.storage.local.set(e.data);
             }, false);
         }
         else{
@@ -57,6 +57,28 @@ browser.runtime.onMessage.addListener(
         constructUi(request);
     }
 );
+
+browser.storage.onChanged.addListener(function(chagnedData){
+    console.log(data)
+    console.log("-------------somebody changed local storage")
+    /*
+    //firefox way of doing it
+    let gettingItem = browser.storage.local.get(function(data){
+        console.log("open got the info")
+    });
+
+    gettingItem.then(function(data){
+        console.log("open got the info")
+    }, function(error){
+        console.log("failed to open");
+    });
+    */
+    //grab all the data
+    let gettingItem = browser.storage.local.get(function(data){
+        console.log("open got the info")
+        console.log(data)
+    });
+});
 
 //auto load application
 constructUi({"openCloseMenu":true})

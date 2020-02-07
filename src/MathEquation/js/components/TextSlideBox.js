@@ -32,7 +32,7 @@ class TextSlideBox extends React.Component{
         }
         
         return (
-            <div id="TextSlideBox" style={position} class="textSlideBox_H">
+            <div id="TextSlideBox" style={position} className="textSlideBox_H">
                 <PageSlider/>
                 
                 <div id="TextSectionDivider">

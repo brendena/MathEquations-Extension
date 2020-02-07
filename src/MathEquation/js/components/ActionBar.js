@@ -32,13 +32,11 @@ class ActionBar extends React.Component{
     launchDonatePage()
     {
         store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.DonatePage))
-        store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
     }
 
     launchSettingsPage()
     {
         store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.SettingsPage))
-        store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
     }
 
 

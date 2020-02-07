@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import './Buttons.css';
 import * as Actions from './js/actions/index'
 import  store  from "./js/store/index"
 
@@ -28,7 +29,7 @@ class App extends React.Component{
 
 
      <div className="App appGrid_H">
-          <div id="appSpacer" class="appSpacer_H"></div>
+          <div id="appSpacer" className="appSpacer_H"></div>
           <TextSlideBox/>
           <ActionBar stateMathTextBox={this.props.showMathEquationBox} 
                      currentMathInput={this.props.typeMathInput}/>

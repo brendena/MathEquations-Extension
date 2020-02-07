@@ -18,19 +18,16 @@ class SvgToCanvas
             throw("can't get viewbox on svg")
         }
         this.viewBox = new ViewBox(splitString(viewBoxString));
-        
-        console.log("svgToCanvase");
 
         var tempHeight = this.canvas.height;
             
         if(imageSizingSettings == ConstTypes.ImageDimensionsSettings.UserDefinedHeight )
         {
-            console.log("sizing width");
             let ratioSvg = this.viewBox.width/this.viewBox.height;
             this.canvas.width =  Math.round(this.canvas.height * ratioSvg);
-        }
+        } 
         else if(imageSizingSettings == ConstTypes.ImageDimensionsSettings.UserDefinedWidth ||
-                imageSizingSettings == ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight)
+                imageSizingSettings == ConstTypes.ImageDimensionsSettings.UserDefinedWidthAndHeight)
         {
             let ratioSvg = this.viewBox.height/this.viewBox.width;
             this.canvas.height =  Math.round(this.canvas.width * ratioSvg);
@@ -52,27 +49,18 @@ class SvgToCanvas
         drawSVGCanvas(svgElement.childNodes,this.ctx,color);
 
         
-        if(imageSizingSettings == ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight)
+        if(imageSizingSettings == ConstTypes.ImageDimensionsSettings.UserDefinedWidthAndHeight)
         {
-            console.log(tempHeight)
-
-            /*
-            let tempImage = this.ctx.getImageData(0,0,this.canvas.width,this.canvas.height);
-            console.log(tempImage)
-            this.canvas.height = tempHeight;
-            
-            this.ctx.scale(1,0.5)
-            this.ctx.putImageData(tempImage,0,0)
-            */
+            //copy the canvas and load the current canvas into the copy canvas
             let tempImage = this.ctx.getImageData(0,0,this.canvas.width,this.canvas.height);
             let tmpCanvas = this.canvas.cloneNode(true);
             tmpCanvas.getContext('2d').putImageData(tempImage,0,0)
 
 
-
+            //then change the canvas height which will erase the canvas.
+            //then take the copy canvas and draw the image to the current canvas size.
             this.canvas.height = tempHeight;
             this.ctx.drawImage(tmpCanvas,0,0,tmpCanvas.width,tmpCanvas.height,0,0,this.canvas.width,this.canvas.height)
-            console.log(tmpCanvas)
         }
 
 

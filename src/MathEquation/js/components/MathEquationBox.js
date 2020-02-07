@@ -1,16 +1,15 @@
 import React from "react";
-import  store  from "../store/index"
-import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
 import * as constID from '../constants/constsID'
-import * as constTypes from "../constants/constsTypes"
 import SVGToCanvas from "./SVGToCanvas"
 import MathJaxComponent from "./MathJaxComponent"
 
 @connect((store)=>{
     return{
         mathInputString: store.propsPage.mathInputString,
-        base64MathImage: store.propsPage.base64MathImage
+        base64MathImage: store.propsPage.base64MathImage,
+        widthMathOutput: store.propsPage.widthMathOutput,
+        heightMathOutput: store.propsPage.heightMathOutput,
     }
 })
 class MathEquationBox extends React.Component{
@@ -54,8 +53,8 @@ class MathEquationBox extends React.Component{
                 </div>
                 <SVGToCanvas    
                                 locationSVG={this.outputRef}
-                                canvasHeight={this.props.sizeMathOutput} 
-                                canvasWidth={this.props.sizeMathOutput}>
+                                canvasHeight={this.props.heightMathOutput} 
+                                canvasWidth={this.props.widthMathOutput}>
                 </SVGToCanvas>
             </div>
 

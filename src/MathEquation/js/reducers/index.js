@@ -10,11 +10,12 @@ const initialState = {
         height: 30,
         showMathEquationTextBox: true,
         typeMathInput: constTypes.MathEquationInput.latex,
-        sizeMathOutput: constTypes.MathSizeMedium,
+        widthMathOutput: constTypes.MathSizeMedium,
+        heightMathOutput: 100,
         mathInputString:"",
         mathTextColor:"0x000000",
         updateRenderCanvas: false,
-        popUpUiPage: true,
+        popUpUiPage: false,
         downloadImageType: constTypes.ImageDownloadType.png,
         popUiType :  constTypes.PopUpUi.SettingsPage,
         base64MathImage: "",
@@ -23,7 +24,7 @@ const initialState = {
     },
     //properties that will be locally synced
     localSync:{
-        imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedHeight
+        imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight
     }
 };
 
@@ -59,9 +60,13 @@ function rootReducer(state = initialState, action){
         {
             draft.propsPage.svgMathImage = action.payload;
         }
-        else if(action.type === consts.UPDATE_SIZE_MATH_EQUATION)
+        else if(action.type === consts.UPDATE_WIDTH_MATH_EQUATION)
         {
-            draft.propsPage.sizeMathOutput = action.payload;
+            draft.propsPage.widthMathOutput = action.payload;
+        }
+        else if(action.type === consts.UPDATE_HEIGHT_MATH_EQUATION)
+        {
+            draft.propsPage.heightMathOutput = action.payload;
         }
         else if(action.type === consts.UPDATE_POP_UI_PAGE)
         {

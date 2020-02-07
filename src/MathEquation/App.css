@@ -204,10 +204,18 @@ a:active
 #canvasVisible
 {
   position:fixed;
+  /*/
   top:-100%;
   left:-100%;
   opacity:0;
   z-index: -3000;
+  /**/
+
+  /**/
+  top:0px;
+  left:0px;
+  z-index: 3000;
+  /**/
 }
 
 .sizeImageStyles
@@ -315,7 +323,10 @@ svg
   display:flex;
 }
 
-
+.inputDisabledLooking
+{
+  background:#b9b9b9
+}
 
 @media screen and (max-width: 1000px)
 {

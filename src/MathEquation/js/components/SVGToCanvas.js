@@ -3,11 +3,14 @@ import { connect } from "react-redux";
 import * as Actions from '../actions/index'
 import  store  from "../store/index"
 import SvgToCanvas from "../backendCode/SvgToCanvas"
+import  * as ConstTypes  from "../constants/constsTypes"
 
 @connect((store)=>{
     return{
         updateRenderCanvas: store.propsPage.updateRenderCanvas,
-        textColor: store.propsPage.mathTextColor
+        textColor: store.propsPage.mathTextColor,
+        imageDimensionsSettings: store.localSync.imageDimensionsSettings,
+        
     }
 })
 class SVGToCanvas extends React.Component{
@@ -29,9 +32,26 @@ class SVGToCanvas extends React.Component{
         var svgContainer = this.props.locationSVG.current;
         var svg = svgContainer.getElementsByTagName("svg")[0];
         try{
-            var drawingClass = new SvgToCanvas(svg,canvas,this.props.textColor);
+            var drawingClass = new SvgToCanvas(svg,canvas,this.props.textColor, this.props.imageDimensionsSettings);
+            
             store.dispatch(Actions.updateBase64MathImage(drawingClass.getPng64()));
             store.dispatch(Actions.updateSVGMathImage(this.convertSvgToData(svg)));
+
+            //don't need to update when the image dimentations are fixed.
+            if(this.props.imageDimensionsSettings != ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight)
+            {
+                if(this.props.imageDimensionsSettings == ConstTypes.ImageDimensionsSettings.UserDefinedHeight)
+                {
+                    store.dispatch(Actions.updateWidthSizeMathEquation(drawingClass.canvas.width));
+                }
+                else if(this.props.imageDimensionsSettings == ConstTypes.ImageDimensionsSettings.UserDefinedWidth)
+                {
+                    store.dispatch(Actions.updateHeightSizeMathEquation(drawingClass.canvas.height));
+                }
+
+
+                
+            }
         }
         catch(error)
         {

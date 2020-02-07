@@ -10,8 +10,9 @@ import SVGToCanvas from "./SVGToCanvas"
     return{
         mathInputString: store.propsPage.mathInputString,
         typeMathInput: store.propsPage.typeMathInput,
-        sizeMathOutput: store.propsPage.sizeMathOutput,
-        textColor: store.propsPage.mathTextColor
+        textColor: store.propsPage.mathTextColor,
+        widthMathOutput: store.propsPage.widthMathOutput,
+        heightMathOutput: store.propsPage.heightMathOutput,
     }
 })
 class MathJaxComponent extends React.Component{

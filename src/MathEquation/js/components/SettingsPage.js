@@ -18,7 +18,6 @@ class SettingsPage extends React.Component{
     }
     onChangeImageDimensionsSettings(event){
         var settings = event.target.value;
-        console.log(settings)
         store.dispatch(Actions.updateImageDimensionsSettings(settings));
     }
 
@@ -40,17 +39,20 @@ class SettingsPage extends React.Component{
                 <p>Settings</p>
                 
                 <input type="radio"  value={ConstTypes.ImageDimensionsSettings.UserDefinedHeight} id={ConstTypes.ImageDimensionsSettings.UserDefinedHeight} 
-                       name="imageDimensionsSettings" onChange={this.onChangeImageDimensionsSettings}/>
+                       name="imageDimensionsSettings" onChange={this.onChangeImageDimensionsSettings}
+                       checked={this.props.imageDimensionsSettings === ConstTypes.ImageDimensionsSettings.UserDefinedHeight}/>
 
-                <label for="UserDefinedWidth">user defined height</label>
+                <label for={ConstTypes.ImageDimensionsSettings.UserDefinedHeight}>user defined height</label>
                 <input type="radio"  value={ConstTypes.ImageDimensionsSettings.UserDefinedWidth}  id={ConstTypes.ImageDimensionsSettings.UserDefinedWidth}     
-                       name="imageDimensionsSettings"     onChange={this.onChangeImageDimensionsSettings}/>
+                       name="imageDimensionsSettings"     onChange={this.onChangeImageDimensionsSettings}
+                       checked={this.props.imageDimensionsSettings === ConstTypes.ImageDimensionsSettings.UserDefinedWidth}/>
                 
-                <label for="UserDefinedHeight">user defined width</label>
+                <label for={ConstTypes.ImageDimensionsSettings.UserDefinedWidth}>user defined width</label>
                 <input type="radio" value={ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight} id={ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight}
-                       name="imageDimensionsSettings"  onChange={this.onChangeImageDimensionsSettings}/>
+                       name="imageDimensionsSettings"  onChange={this.onChangeImageDimensionsSettings}
+                       checked={this.props.imageDimensionsSettings === ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight}/>
                 
-                <label for="UserDefinedHeightAndHeight">user defined width and height</label>
+                <label for={ConstTypes.ImageDimensionsSettings.UserDefinedHeightAndHeight}>user defined width and height</label>
             </div>
         )
     }

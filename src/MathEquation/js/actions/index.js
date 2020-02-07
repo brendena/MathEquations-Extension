@@ -34,6 +34,9 @@ export function updateSVGMathImage(payload) {
 export function updateWidthSizeMathEquation(payload) {
     return { type: consts.UPDATE_WIDTH_MATH_EQUATION, payload }
 }
+export function updateHeightSizeMathEquation(payload) {
+    return { type: consts.UPDATE_HEIGHT_MATH_EQUATION, payload }
+}
 
 export function updatePopUiPage(payload) {
     return { type: consts.UPDATE_POP_UI_PAGE, payload }

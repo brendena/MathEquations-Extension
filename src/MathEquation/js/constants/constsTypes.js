@@ -16,6 +16,13 @@ export const ImageDownloadType={
     svg:"medium"
 }
 
+export const ImageDimensionsSettings={
+    UserDefinedWidth:"UserDefinedWidth", //so the height will change
+    UserDefinedHeight:"UserDefinedHeight", // the width will change
+    UserDefinedHeightAndHeight:"UserDefinedHeightAndHeight" //the height and width won't change based on the image you make
+}
+
+
 export const TrueFalseToggle={
     false:false,
     true:true,
@@ -25,7 +32,8 @@ export const TrueFalseToggle={
 
 export const PopUpUi={
     DownloadImagePage:"DownloadImagePage",
-    DonatePage :"DonatePage"
+    DonatePage :"DonatePage",
+    SettingsPage :"SettingsPage"
 }
 
 

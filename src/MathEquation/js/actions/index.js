@@ -31,8 +31,8 @@ export function updateBase64MathImage(payload) {
 export function updateSVGMathImage(payload) {
     return { type: consts.UPDATE_SVG_MATH_IMAGE, payload }
 }
-export function updateSizeMathEquation(payload) {
-    return { type: consts.UPDATE_SIZE_MATH_EQUATION, payload }
+export function updateWidthSizeMathEquation(payload) {
+    return { type: consts.UPDATE_WIDTH_MATH_EQUATION, payload }
 }
 
 export function updatePopUiPage(payload) {
@@ -49,4 +49,12 @@ export function updatePageUiType(payload) {
 
 export function updateMathTextColor(payload) {
     return { type: consts.UPDATE_MATH_TEXT_COLOR, payload }
+}
+
+
+
+//local sync settings
+
+export function updateImageDimensionsSettings(payload) {
+    return { type: consts.UPDATE_IMAGE_DIMENSIONS_SETTINGS, payload }
 }

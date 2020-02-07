@@ -7,6 +7,7 @@ import * as constTypes from "../constants/constsTypes"
 import  store  from "../store/index"
 import DownloadForm from "./DownloadForm"
 import DonatePage from "./DonatePage"
+import SettingsPage from "./SettingsPage"
 
 @connect((store)=>{
     return{
@@ -41,6 +42,7 @@ class PopUpUi extends React.Component{
 
                     {this.props.popUiType == constTypes.PopUpUi.popUpUiPage ? (<DownloadForm />) : (<div></div>)  }
                     {this.props.popUiType == constTypes.PopUpUi.DonatePage ? (<DonatePage />) : (<div></div>)  }
+                    {this.props.popUiType == constTypes.PopUpUi.SettingsPage ? (<SettingsPage />) : (<div></div>)  }
 
                 </div>
             </div>

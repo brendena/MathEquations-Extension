@@ -12,7 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 @connect((store)=>{
     return{
         base64Image: store.propsPage.base64MathImage,
-        sizeMathOutput: store.propsPage.sizeMathOutput
+        sizeMathOutput: store.propsPage.sizeMathOutput,
+        imageDimensionsSettings: store.localSync.imageDimensionsSettings
     }
 })
 class ImageOptions extends React.Component{
@@ -22,7 +23,6 @@ class ImageOptions extends React.Component{
         {
             "TextSize": this.props.sizeMathOutput
         };
-        this.textInputChange = this.textInputChange.bind(this);
 
 
         document.addEventListener("cut", (event)=>{
@@ -52,19 +52,17 @@ class ImageOptions extends React.Component{
     }
     changeMathSizeImage(size)
     {
-        store.dispatch(Actions.updateSizeMathEquation(size));
+        store.dispatch(Actions.updateWidthSizeMathEquation(size));
     }
     launchDownloadPage()
     {
         store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.popUpUiPage))
         store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
     }
-    textInputChange(event)
+    changeWidthMathEquation(event)
     {
         const maxImageHeight = 10000;
         var newSizeImage = event.target.value;
-
-
         if(newSizeImage <= 0)
         {
             newSizeImage = 1;
@@ -74,8 +72,15 @@ class ImageOptions extends React.Component{
         {
             newSizeImage = maxImageHeight;
         }
-        store.dispatch(Actions.updateSizeMathEquation(newSizeImage));
+        store.dispatch(Actions.updateWidthSizeMathEquation(newSizeImage));
     }
+    changeHeightMathEquation(event)
+    {
+
+    }
+
+
+    
     textColorChanged(event)
     {
         store.dispatch(Actions.updateMathTextColor(event.target.value));
@@ -85,6 +90,20 @@ class ImageOptions extends React.Component{
         var styleSmallPicture  = {"fontSize":"10px"}
         var styleMediumPicture = {"fontSize":"20px"}
         var styleLargePicture  = {"fontSize":"30px"}
+        var widthImageDisabled = false;
+        var heightImageDisabled= false;
+        
+
+
+        if(this.props.imageDimensionsSettings == ConstTypes.ImageDimensionsSettings.UserDefinedWidth)
+        {
+            heightImageDisabled = true;
+        }
+        else if(this.props.imageDimensionsSettings == ConstTypes.ImageDimensionsSettings.UserDefinedHeight)
+        {
+            widthImageDisabled = true;
+        }
+
 
         if(this.props.sizeMathOutput == ConstTypes.MathSizeSmall)
         {
@@ -127,8 +146,11 @@ class ImageOptions extends React.Component{
                         style={styleLargePicture}>
                     <FontAwesomeIcon icon={faImage} />
                 </button>
-                <input id="textInputSize" type="number" value={this.props.sizeMathOutput} onChange={this.textInputChange} />
+                <input id="textInputSizeWidth" type="number" value={this.props.sizeMathOutput} onChange={this.changeWidthMathEquation}  disabled={widthImageDisabled} />
                 <span style={stylePixelSizeDescription}> width-px  </span>
+
+                <input id="textInputSizeHeight" type="number" value={this.props.sizeMathOutput} onChange={this.changeHeightMathEquation}  disabled={heightImageDisabled} />
+                <span style={stylePixelSizeDescription}> height-px  </span>
                 
             </div>
         )

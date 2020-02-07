@@ -5,6 +5,7 @@ import produce from "immer"
 
 
 const initialState = {
+    //properties of the page that will not be synced across all instances of the browser
     propsPage:{
         height: 30,
         showMathEquationTextBox: true,
@@ -13,19 +14,23 @@ const initialState = {
         mathInputString:"",
         mathTextColor:"0x000000",
         updateRenderCanvas: false,
-        popUpUiPage: false,
+        popUpUiPage: true,
         downloadImageType: constTypes.ImageDownloadType.png,
-        popUiType :  constTypes.PopUpUi.DownloadImagePage,
+        popUiType :  constTypes.PopUpUi.SettingsPage,
         base64MathImage: "",
-        svgMathImage:"",
-
+        svgMathImage:""
+        
+    },
+    //properties that will be locally synced
+    localSync:{
+        imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedHeight
     }
 };
 
 function rootReducer(state = initialState, action){
     return produce(state,draft =>{
         log.info("changing state - " + action.type);
-        
+        //page settings
         if(action.type === consts.CHANGE_HEIGHT_PAGE)
         {
             draft.propsPage.height = action.payload;
@@ -81,6 +86,11 @@ function rootReducer(state = initialState, action){
         else if(action.type === consts.UPDATE_MATH_TEXT_COLOR)
         {
             draft.propsPage.mathTextColor = action.payload;
+        }
+        //local sync
+        else if(action.type === consts.UPDATE_IMAGE_DIMENSIONS_SETTINGS)
+        {
+            draft.localSync.imageDimensionsSettings = action.payload;
         }
     });
 }

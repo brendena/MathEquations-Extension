@@ -265,10 +265,16 @@ svg
   right: 0px;
 }
 
-#textInputSize
+#textInputSizeWidth
 {
   width:50px;
 }
+
+#textInputSizeHeight
+{
+  width:50px;
+}
+
 #paypalButton
 {
   font-size: 20px;

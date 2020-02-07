@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware } from "redux";
 import rootReducer  from "../reducers/index";
-import  { forbiddenWordsMiddleware}   from "../middleware/index";
+import  { handleSettings}   from "../middleware/index";
 const store = createStore(rootReducer,
-    applyMiddleware(forbiddenWordsMiddleware)
+    applyMiddleware(handleSettings)
     );
 
 export default store;

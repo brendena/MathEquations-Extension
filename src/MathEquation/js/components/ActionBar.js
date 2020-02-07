@@ -22,17 +22,25 @@ class ActionBar extends React.Component{
     toggleMathEquationBoxShow(){
         store.dispatch(Actions.showMathEquationTextBox(!this.props.stateMathTextBox));
     }
+
     closeExtension(){
         log.info("event - closed extension")
         var event = new Event(ConstsID.CloseMathExtEventName, {"bubbles":true,"composed":true});
         this.closeButton.current.dispatchEvent(event);
     }
 
-    launchDownloadPage()
+    launchDonatePage()
     {
         store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.DonatePage))
         store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
     }
+
+    launchSettingsPage()
+    {
+        store.dispatch(Actions.updatePageUiType(ConstTypes.PopUpUi.SettingsPage))
+        store.dispatch(Actions.updatePopUiPage(ConstTypes.TrueFalseToggle.toggle));
+    }
+
 
 
     render(){
@@ -58,11 +66,13 @@ class ActionBar extends React.Component{
                         style={stylesSlideMathTextBox}>
                     <FontAwesomeIcon icon={faChevronUp} />        
                 </button>
-                <button className="navButton">
+                <button className="navButton"
+                        onClick={this.launchSettingsPage}>
+                        
                     <FontAwesomeIcon icon={faCog} />        
                 </button>
                 <button className="navButton" 
-                        onClick={this.launchDownloadPage}>
+                        onClick={this.launchDonatePage}>
                     <FontAwesomeIcon icon={faCoins} />        
                 </button>
                 <a href="https://github.com/brendena/MathEquations-Extension">

@@ -1,20 +1,13 @@
-import { ADD_ARTICLE,FOUND_BAD_WORD } from "../constants/action-types";
-
+import * as Consts from "../constants/action-types";
 const forbiddenWords = ["spam", "money"];
 
-const forbiddenWordsMiddleware = (store) => (next) => (action) =>
+const handleSettings = (store) => (next) => (action) =>
 {
-    if(action.type === ADD_ARTICLE){
-        const foundWord = forbiddenWords.filter(word =>
-            action.payload.title.includes(word)
-        );
+    if(action.type === Consts.UPDATE_WIDTH_MATH_EQUATION || action.type === Consts.UPDATE_IMAGE_DIMENSIONS_SETTINGS)
+    {
 
-        if(foundWord.length){
-
-            return store.dispatch({type: FOUND_BAD_WORD});
-        }
     }
     return next(action);
 }
 
-export {forbiddenWordsMiddleware};
+export {handleSettings};

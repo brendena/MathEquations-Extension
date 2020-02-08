@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 @connect((store)=>{
     return{
         pageHeight: store.propsPage.height,
-        mathInputString: store.propsPage.mathInputString,
+        mathEquationText: store.propsPage.mathEquationText,
         showMathEquationBox: store.propsPage.showMathEquationTextBox
     }
 })
@@ -35,7 +35,7 @@ class TextSlideBox extends React.Component{
                 <div id="TextSectionDivider">
                     <textarea id="inputTextMathEquation" 
                               placeholder="equation location"
-                              value={this.props.mathInputString}
+                              value={this.props.mathEquationText}
                               onChange={this.updateMathEquationText}>
                     </textarea>
                     <div id="textOutputBox">

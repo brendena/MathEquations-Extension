@@ -8,7 +8,7 @@ import SVGToCanvas from "./SVGToCanvas"
 
 @connect((store)=>{
     return{
-        mathInputString: store.propsPage.mathInputString,
+        mathEquationText: store.propsPage.mathEquationText,
         selectedMarkupLanguage: store.propsPage.selectedMarkupLanguage,
         textColor: store.propsPage.mathTextColor,
         widthMathOutput: store.propsPage.widthMathOutput,
@@ -71,9 +71,9 @@ class MathJaxComponent extends React.Component{
 
     }
     changeLatex(){
-        if(this.props.mathInputString != "" && this.props.renderDiv.current != null)
+        if(this.props.mathEquationText != "" && this.props.renderDiv.current != null)
         {
-            this.changeLatexInput(this.props.mathInputString,this.props.renderDiv.current);
+            this.changeLatexInput(this.props.mathEquationText,this.props.renderDiv.current);
         }
     }
     componentDidMount(){

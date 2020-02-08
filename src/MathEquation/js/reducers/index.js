@@ -13,7 +13,7 @@ const initialState = {
         selectedMarkupLanguage: constTypes.MarkupLanguages.latex,
         widthMathOutput: constTypes.MathSizeMedium,
         heightMathOutput: 100,
-        mathInputString:"",
+        mathEquationText:"",
         mathTextColor:"0x000000",
         updateRenderCanvas: false,
         popUpUiPage: false,
@@ -50,7 +50,7 @@ function rootReducer(state = initialState, action){
         }
         else if(action.type === consts.UPDATE_MATH_EQUATION_TEXT)
         {
-            draft.propsPage.mathInputString = action.payload;
+            draft.propsPage.mathEquationText = action.payload;
         }
         else if(action.type === consts.UPDATE_RENDER_CANVAS)
         {

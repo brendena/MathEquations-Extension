@@ -31,6 +31,7 @@ class SVGToCanvas extends React.Component{
         
         var svgContainer = this.props.locationSVG.current;
         var svg = svgContainer.getElementsByTagName("svg")[0];
+        console.log(svg)
         try{
             var drawingClass = new SvgToCanvas(svg,canvas,this.props.textColor, this.props.imageDimensionsSettings);
             

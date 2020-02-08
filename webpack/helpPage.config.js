@@ -6,9 +6,7 @@ const HtmlWebPackPlugin = require( 'html-webpack-plugin' );
 
 
 module.exports = {
-  entry: {
-    contentScript: "./src/webPackHelpPage.js"
-  },
+  entry:"./src/webPackHelpPage.js",
   output: {
     path: path.resolve(__dirname + '/../docs'),
     filename: '[name].js',
@@ -54,7 +52,8 @@ module.exports = {
     new WebpackShellPlugin({onBuildStart:['echo "Webpack Start"'], onBuildEnd:['echo "Webpack End"']}),
     new CopyWebpackPlugin([
       { from: "./src/StaticFiles/Img", to: "./Img" },
-      { from: "./src/MathEquation/lib/custom-mathjax/custom-mathjax.min.js" }
+      { from: "./src/MathEquation/lib/custom-mathjax/custom-mathjax.min.js" },
+      { from: "./src/HelpPage/styles.css" }
     ]),
 		new HtmlWebPackPlugin({
 			template: path.resolve( __dirname, '../src/HelpPage/index.html' ),

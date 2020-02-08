@@ -12,10 +12,6 @@ const webpack = require('webpack');
 https://www.youtube.com/watch?v=zFoBYfMLUCM
 */ 
 /*
-elm-css-loader
-https://github.com/tcoopman/elm-css-webpack-loader
-*/
-/*
 Image Loader - load iamges as base 64 
 // to reduce server alls.
 // not implemented

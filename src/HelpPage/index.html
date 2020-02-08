@@ -6,31 +6,40 @@
     <title>The HTML5 Herald</title>
     <meta name="description" content="The HTML5 Herald">
     <meta name="author" content="SitePoint">
-<style>
-    body{
-        min-height:100vh;
-    }
-</style>
+<script>
+    /*
+    MathJax = {
+      tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]},
+      svg: {fontCache: 'global'}
+    };
+    //*/
+</script>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <button id="test">send text</button>
+    <div id="root"></div>
     
-    <script src="custom-mathjax.min.js"></script>
-    <script src="contentScript.js"></script>
-    <script>
-        var button = document.getElementById("test")
-        button.addEventListener("click", function(event){
-            console.log("clicked button");
-            var componentsTag = document.getElementsByTagName("math-equations");
-            if(componentsTag.length == 1)
-            {   
-                console.log("sending the event")
-                var event = new Event("UpdateMathEquationTextEvent", {"bubbles":true,"composed":true});
-                event.data = "testthis out";
-                componentsTag[0].dispatchEvent(event);
-            }
-        });
+<!--
 
-    </script>
+    <h2>The Lorenz Equations</h2>
+
+    <p>
+    \begin{align}
+    \dot{x} &amp; = \sigma(y-x) \\
+    \dot{y} &amp; = \rho x - y - xz \\
+    \dot{z} &amp; = -\beta z + xy
+    \end{align}
+    </p>
+
+    <h2>The Cauchy-Schwarz Inequality</h2>
+
+    <p>\[
+    \left( \sum_{k=1}^n a_k b_k \right)^{\!\!2} \leq
+     \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+    \]</p>
+
+-->
+
+    <script src="custom-mathjax.min.js"></script>
 </body>
 </html>

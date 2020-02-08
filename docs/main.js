@@ -12992,7 +12992,7 @@ nativeTree:wc,patchElementProto:ac};Cc();$b("__shady_");Object.defineProperty(do
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".mathEquationsExamples{\n    display:flex;\n    flex-direction: row;\n}\n    \nbody\n{\n    min-height:100vh;\n    background-color:blue;\n}", ""]);
+exports.push([module.i, "body\n{\n    min-height:100vh;\n    background-color: #15a6ffab;\n}\n\n.equationTitle\n{\n    grid-row-start: 1;\n    grid-row-end: 2;\n}\n\n.latexTextArea{\n    margin: 25px;\n    padding: 5%;\n    resize: none;\n\n    grid-row-start: 2;\n    grid-row-end: 3;\n\n}\n\n.buttonSubmitTextEquation{\n    width:100%;\n    grid-row-start: 3;\n    grid-row-end: 4;\n}\n\n.mathEquationsExamples{\n    display:grid;\n    grid-template-columns:1fr 1fr;\n    padding: 30px;\n    background:#ffe59c;\n    margin: 30px;\n    border-radius: 10px;\n}\n.generatedImage\n{\n    font-size: 40px;\n\n    grid-row-start: 2;\n    grid-row-end: 3;\n}\n\n    \n", ""]);
 
 
 
@@ -45227,16 +45227,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ViewerMathEquations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ViewerMathEquations */ "./src/HelpPage/ViewerMathEquations.js");
 /* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./styles.css */ "./src/HelpPage/styles.css");
 /* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_styles_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _exampleLatexEquations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./exampleLatexEquations */ "./src/HelpPage/exampleLatexEquations.js");
+
 
 
 
 
 class HelpPageApp extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   render() {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Examples "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ViewerMathEquations__WEBPACK_IMPORTED_MODULE_1__["default"], {
-      title: "testing this out",
-      equationText: "testhing this otu"
-    }));
+    console.log(_exampleLatexEquations__WEBPACK_IMPORTED_MODULE_3__["default"]);
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Examples"), _exampleLatexEquations__WEBPACK_IMPORTED_MODULE_3__["default"].map(item => react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ViewerMathEquations__WEBPACK_IMPORTED_MODULE_1__["default"], {
+      key: item.title,
+      title: item.title,
+      equationText: item.equationText
+    })));
   }
 
 }
@@ -45259,15 +45263,71 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class ViewerMathEquations extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(props) {
+    super(props);
+    this.loadCode = this.loadCode.bind(this);
+  }
+
+  loadCode() {
+    var componentsTag = document.getElementsByTagName("math-equations");
+
+    if (componentsTag.length == 1) {
+      console.log("sending the event");
+      var event = new Event("UpdateMathEquationTextEvent", {
+        "bubbles": true,
+        "composed": true
+      });
+      event.data = this.props.equationText;
+      componentsTag[0].dispatchEvent(event);
+    }
+  }
+
   render() {
     return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       className: "mathEquationsExamples"
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", null, this.props.equationText)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "\\[ ", this.props.equationText, " \\]"));
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+      className: "equationTitle"
+    }, this.props.title), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+      className: "latexTextArea",
+      disabled: true,
+      value: this.props.equationText
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "buttonSubmitTextEquation",
+      onClick: this.loadCode
+    }, "Load/Edit Equation"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "generatedImage"
+    }, "\\[ ", this.props.equationText, " \\]"));
   }
 
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (ViewerMathEquations);
+
+/***/ }),
+
+/***/ "./src/HelpPage/exampleLatexEquations.js":
+/*!***********************************************!*\
+  !*** ./src/HelpPage/exampleLatexEquations.js ***!
+  \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const exampleLatexData = [{
+  "title": "power",
+  "equationText": " x^n + y^n = z^n"
+}, {
+  "title": "Greek Letters",
+  "equationText": "\\alpha \n\\beta \n\\gamma \n\\rho \n\\sigma \n\\delta \n\\epsilon"
+}, {
+  "title": "Binary operators",
+  "equationText": "\\times \\otimes \\oplus \\cup \\cap"
+}, {
+  "title": "d operators",
+  "equationText": "\\times \\otimes \\oplus \\cup \\cap"
+}];
+/* harmony default export */ __webpack_exports__["default"] = (exampleLatexData);
 
 /***/ }),
 
@@ -47373,4 +47433,4 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(element, document.getEle
 /***/ })
 
 /******/ });
-//# sourceMappingURL=contentScript.js.map
+//# sourceMappingURL=main.js.map

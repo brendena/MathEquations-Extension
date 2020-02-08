@@ -17,8 +17,8 @@ export function changeSelectedMarkupLanguage(payload) {
     return { type: consts.CHANGE_MARKUP_LANGUAGE, payload }
 }
 
-export function changeSelectedMathInput(payload) {
-    return { type: consts.CHANGE_MATH_INPUT, payload }
+export function updateMathEquationText(payload) {
+    return { type: consts.UPDATE_MATH_EQUATION_TEXT, payload }
 }
 
 export function updateRenderCanvas(payload) {

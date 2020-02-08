@@ -12,8 +12,6 @@ import './index.css';
 
 class RenderMathEquation extends React.Component 
 {
-
-
     webComponentAttributeChanged(props)
     {
         const varPos = 0;
@@ -26,16 +24,32 @@ class RenderMathEquation extends React.Component
         try
         {
             var obj = JSON.parse(props[newVal]);
-            store.dispatch(Actions.updateAllLocalSyncOptions(obj));
+            if(props[varPos] === ConstsID.localSyncAttribute)
+            {
+                store.dispatch(Actions.updateAllLocalSyncOptions(obj));
+            }
+            
         }
         catch(ex)
         {
             log.error("coudn't parse the [attribute] - " + props[varPos] + " [value] " +  props[newVal]);
             log.error("JS Error - " + ex);
         }
-        
-
     }
+
+    componentDidMount()
+    {
+        var componentsTag = document.getElementsByTagName("math-equations");
+        if(componentsTag.length == 1)
+        { 
+            componentsTag[0].addEventListener(ConstsID.UpdateMathEquationTextEvent, function (e) { 
+                console.log("got the text");
+                console.log(e.data);
+                store.dispatch(Actions.updateMathEquationText(e.data));
+            }, false);
+        }
+    }
+
     render() {
         return <Provider store={store}>
                         <App />

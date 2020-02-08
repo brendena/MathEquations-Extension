@@ -16,13 +16,10 @@ import { connect } from 'react-redux';
 class TextSlideBox extends React.Component{
     constructor(props){
         super(props);
-        this.state = {"localMathInputString": this.props.mathInputString};
-        this.updateLatexInput = this.updateLatexInput.bind(this);
     }
-    updateLatexInput(event){
-        this.state.localMathInputString = event.target.value;
+    updateMathEquationText(event){
         var inputEl = event.target.value.trim();
-        store.dispatch(Actions.changeSelectedMathInput(inputEl));
+        store.dispatch(Actions.updateMathEquationText(inputEl));
     }
     render(){
         var position = {height: this.props.pageHeight+"vh"}
@@ -38,8 +35,8 @@ class TextSlideBox extends React.Component{
                 <div id="TextSectionDivider">
                     <textarea id="inputTextMathEquation" 
                               placeholder="equation location"
-                              value={this.state.localMathInputString}
-                              onChange={this.updateLatexInput}>
+                              value={this.props.mathInputString}
+                              onChange={this.updateMathEquationText}>
                     </textarea>
                     <div id="textOutputBox">
                         <MathEquationBox/> 

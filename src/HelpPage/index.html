@@ -13,8 +13,24 @@
 </style>
 </head>
 <body>
-    <p>testing this out</p>
+    <button id="test">send text</button>
+    
     <script src="custom-mathjax.min.js"></script>
     <script src="contentScript.js"></script>
+    <script>
+        var button = document.getElementById("test")
+        button.addEventListener("click", function(event){
+            console.log("clicked button");
+            var componentsTag = document.getElementsByTagName("math-equations");
+            if(componentsTag.length == 1)
+            {   
+                console.log("sending the event")
+                var event = new Event("UpdateMathEquationTextEvent", {"bubbles":true,"composed":true});
+                event.data = "testthis out";
+                componentsTag[0].dispatchEvent(event);
+            }
+        });
+
+    </script>
 </body>
 </html>

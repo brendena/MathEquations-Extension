@@ -45298,7 +45298,7 @@ var _dec, _class;
 let App = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(store => {
   return {
     showMathEquationBox: store.propsPage.showMathEquationTextBox,
-    typeMathInput: store.propsPage.typeMathInput
+    selectedMarkupLanguage: store.propsPage.selectedMarkupLanguage
   };
 }), _dec(_class = class App extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
@@ -45313,7 +45313,7 @@ let App = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(st
       className: "appSpacer_H"
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_TextSlideBox__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_ActionBar__WEBPACK_IMPORTED_MODULE_5__["default"], {
       stateMathTextBox: this.props.showMathEquationBox,
-      currentMathInput: this.props.typeMathInput
+      currentMathInput: this.props.selectedMarkupLanguage
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_PopUpUi__WEBPACK_IMPORTED_MODULE_7__["default"], null));
   }
 
@@ -45414,10 +45414,25 @@ class RenderMathEquation extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Co
 
     try {
       var obj = JSON.parse(props[newVal]);
-      _js_store_index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_js_actions_index__WEBPACK_IMPORTED_MODULE_4__["updateAllLocalSyncOptions"](obj));
+
+      if (props[varPos] === _js_constants_constsID__WEBPACK_IMPORTED_MODULE_6__["localSyncAttribute"]) {
+        _js_store_index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_js_actions_index__WEBPACK_IMPORTED_MODULE_4__["updateAllLocalSyncOptions"](obj));
+      }
     } catch (ex) {
       loglevel__WEBPACK_IMPORTED_MODULE_7__["error"]("coudn't parse the [attribute] - " + props[varPos] + " [value] " + props[newVal]);
       loglevel__WEBPACK_IMPORTED_MODULE_7__["error"]("JS Error - " + ex);
+    }
+  }
+
+  componentDidMount() {
+    var componentsTag = document.getElementsByTagName("math-equations");
+
+    if (componentsTag.length == 1) {
+      componentsTag[0].addEventListener(_js_constants_constsID__WEBPACK_IMPORTED_MODULE_6__["UpdateMathEquationTextEvent"], function (e) {
+        console.log("got the text");
+        console.log(e.data);
+        _js_store_index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_js_actions_index__WEBPACK_IMPORTED_MODULE_4__["updateMathEquationText"](e.data));
+      }, false);
     }
   }
 
@@ -45437,7 +45452,7 @@ react_web_component__WEBPACK_IMPORTED_MODULE_5___default.a.create(react__WEBPACK
 /*!**********************************************!*\
   !*** ./src/MathEquation/js/actions/index.js ***!
   \**********************************************/
-/*! exports provided: addArticle, changeHeightPage, showMathEquationTextBox, changeSelectedMarkupLanguage, changeSelectedMathInput, updateRenderCanvas, updateBase64MathImage, updateSVGMathImage, updateWidthSizeMathEquation, updateHeightSizeMathEquation, updatePopUiPage, updateDownloadImageType, updatePageUiType, updateMathTextColor, updateAllLocalSyncOptions, updateImageDimensionsSettings */
+/*! exports provided: addArticle, changeHeightPage, showMathEquationTextBox, changeSelectedMarkupLanguage, updateMathEquationText, updateRenderCanvas, updateBase64MathImage, updateSVGMathImage, updateWidthSizeMathEquation, updateHeightSizeMathEquation, updatePopUiPage, updateDownloadImageType, updatePageUiType, updateMathTextColor, updateAllLocalSyncOptions, updateImageDimensionsSettings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45446,7 +45461,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeHeightPage", function() { return changeHeightPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showMathEquationTextBox", function() { return showMathEquationTextBox; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeSelectedMarkupLanguage", function() { return changeSelectedMarkupLanguage; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeSelectedMathInput", function() { return changeSelectedMathInput; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateMathEquationText", function() { return updateMathEquationText; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateRenderCanvas", function() { return updateRenderCanvas; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBase64MathImage", function() { return updateBase64MathImage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateSVGMathImage", function() { return updateSVGMathImage; });
@@ -45487,9 +45502,9 @@ function changeSelectedMarkupLanguage(payload) {
     payload
   };
 }
-function changeSelectedMathInput(payload) {
+function updateMathEquationText(payload) {
   return {
-    type: _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MATH_INPUT"],
+    type: _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_MATH_EQUATION_TEXT"],
     payload
   };
 }
@@ -46324,7 +46339,7 @@ var _dec, _class;
 
 let MathEquationBox = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(store => {
   return {
-    mathInputString: store.propsPage.mathInputString,
+    mathEquationText: store.propsPage.mathEquationText,
     base64MathImage: store.propsPage.base64MathImage,
     widthMathOutput: store.propsPage.widthMathOutput,
     heightMathOutput: store.propsPage.heightMathOutput
@@ -46403,7 +46418,7 @@ var _dec, _class;
 let MathJaxComponent = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["connect"])(store => {
   return {
     mathInputString: store.propsPage.mathInputString,
-    typeMathInput: store.propsPage.typeMathInput,
+    selectedMarkupLanguage: store.propsPage.selectedMarkupLanguage,
     textColor: store.propsPage.mathTextColor,
     widthMathOutput: store.propsPage.widthMathOutput,
     heightMathOutput: store.propsPage.heightMathOutput
@@ -46420,11 +46435,11 @@ let MathJaxComponent = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_3__["
     MathJax.texReset();
     var equationToSvgPromise;
 
-    if (this.props.typeMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_5__["MathEquationInput"].latex) {
+    if (this.props.selectedMarkupLanguage === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_5__["MarkupLanguages"].latex) {
       equationToSvgPromise = MathJax.tex2svgPromise;
-    } else if (this.props.typeMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_5__["MathEquationInput"].mathML) {
+    } else if (this.props.selectedMarkupLanguage === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_5__["MarkupLanguages"].mathML) {
       equationToSvgPromise = MathJax.mathml2svgPromise;
-    } else if (this.props.typeMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_5__["MathEquationInput"].asciiMath) {
+    } else if (this.props.selectedMarkupLanguage === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_5__["MarkupLanguages"].asciiMath) {
       equationToSvgPromise = MathJax.asciimath2svgPromise;
     }
 
@@ -46905,16 +46920,11 @@ let TextSlideBox = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["conn
 }), _dec(_class = class TextSlideBox extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      "localMathInputString": this.props.mathInputString
-    };
-    this.updateLatexInput = this.updateLatexInput.bind(this);
   }
 
-  updateLatexInput(event) {
-    this.state.localMathInputString = event.target.value;
+  updateMathEquationText(event) {
     var inputEl = event.target.value.trim();
-    _store_index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch(_actions_index__WEBPACK_IMPORTED_MODULE_5__["changeSelectedMathInput"](inputEl));
+    _store_index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch(_actions_index__WEBPACK_IMPORTED_MODULE_5__["updateMathEquationText"](inputEl));
   }
 
   render() {
@@ -46936,8 +46946,8 @@ let TextSlideBox = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["conn
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
       id: "inputTextMathEquation",
       placeholder: "equation location",
-      value: this.state.localMathInputString,
-      onChange: this.updateLatexInput
+      value: this.props.mathInputString,
+      onChange: this.updateMathEquationText
     }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       id: "textOutputBox"
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_MathEquationBox__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ImageOptions__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
@@ -46952,7 +46962,7 @@ let TextSlideBox = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["conn
 /*!*******************************************************!*\
   !*** ./src/MathEquation/js/constants/action-types.js ***!
   \*******************************************************/
-/*! exports provided: ADD_ARTICLE, FOUND_BAD_WORD, CHANGE_HEIGHT_PAGE, SHOW_MATH_EQUATION_TEXT_BOX, CHANGE_MARKUP_LANGUAGE, CHANGE_MATH_INPUT, UPDATE_RENDER_CANVAS, UPDATE_BASE64_Math_IMAGE, UPDATE_SVG_MATH_IMAGE, UPDATE_WIDTH_MATH_EQUATION, UPDATE_HEIGHT_MATH_EQUATION, UPDATE_POP_UI_PAGE, UPDATE_DOWNLOAD_IMAGE_TYPE, UPDATE_POP_UI_TYPE, UPDATE_MATH_TEXT_COLOR, UPDATE_ALL_LOCAL_SYNC_OPTIONS, UPDATE_IMAGE_DIMENSIONS_SETTINGS */
+/*! exports provided: ADD_ARTICLE, FOUND_BAD_WORD, CHANGE_HEIGHT_PAGE, SHOW_MATH_EQUATION_TEXT_BOX, CHANGE_MARKUP_LANGUAGE, UPDATE_MATH_EQUATION_TEXT, UPDATE_RENDER_CANVAS, UPDATE_BASE64_Math_IMAGE, UPDATE_SVG_MATH_IMAGE, UPDATE_WIDTH_MATH_EQUATION, UPDATE_HEIGHT_MATH_EQUATION, UPDATE_POP_UI_PAGE, UPDATE_DOWNLOAD_IMAGE_TYPE, UPDATE_POP_UI_TYPE, UPDATE_MATH_TEXT_COLOR, UPDATE_ALL_LOCAL_SYNC_OPTIONS, UPDATE_IMAGE_DIMENSIONS_SETTINGS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46962,7 +46972,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_HEIGHT_PAGE", function() { return CHANGE_HEIGHT_PAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHOW_MATH_EQUATION_TEXT_BOX", function() { return SHOW_MATH_EQUATION_TEXT_BOX; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_MARKUP_LANGUAGE", function() { return CHANGE_MARKUP_LANGUAGE; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_MATH_INPUT", function() { return CHANGE_MATH_INPUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_MATH_EQUATION_TEXT", function() { return UPDATE_MATH_EQUATION_TEXT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_RENDER_CANVAS", function() { return UPDATE_RENDER_CANVAS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_BASE64_Math_IMAGE", function() { return UPDATE_BASE64_Math_IMAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_SVG_MATH_IMAGE", function() { return UPDATE_SVG_MATH_IMAGE; });
@@ -46980,7 +46990,7 @@ const FOUND_BAD_WORD = "FOUND_BAD_WORD";
 const CHANGE_HEIGHT_PAGE = "CHANGE_HEIGHT_PAGE";
 const SHOW_MATH_EQUATION_TEXT_BOX = "SHOW_MATH_TEXT_BOX";
 const CHANGE_MARKUP_LANGUAGE = "CHANGE_MARKUP_LANGUAGE";
-const CHANGE_MATH_INPUT = "CHANGE_MATH_INPUT";
+const UPDATE_MATH_EQUATION_TEXT = "UPDATE_MATH_EQUATION_TEXT";
 const UPDATE_RENDER_CANVAS = "UPDATE_RENDER_CANVAS";
 const UPDATE_BASE64_Math_IMAGE = "UPDATE_BASE64_Math_IMAGE";
 const UPDATE_SVG_MATH_IMAGE = "UPDATE_SVG_MATH_IMAGE";
@@ -47000,7 +47010,7 @@ const UPDATE_IMAGE_DIMENSIONS_SETTINGS = "UPDATE_IMAGE_DIMENSIONS_SETTINGS";
 /*!***************************************************!*\
   !*** ./src/MathEquation/js/constants/constsID.js ***!
   \***************************************************/
-/*! exports provided: MathEquationBox, CloseMathExtEventName, UpdateLocalSyncProperties, localSyncAttribute, MarkupLanguageAttribute, allMathEquationAttributes, UrlImage */
+/*! exports provided: MathEquationBox, CloseMathExtEventName, UpdateLocalSyncProperties, UpdateMathEquationTextEvent, localSyncAttribute, MarkupLanguageAttribute, allMathEquationAttributes, UrlImage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47008,6 +47018,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathEquationBox", function() { return MathEquationBox; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CloseMathExtEventName", function() { return CloseMathExtEventName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdateLocalSyncProperties", function() { return UpdateLocalSyncProperties; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdateMathEquationTextEvent", function() { return UpdateMathEquationTextEvent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "localSyncAttribute", function() { return localSyncAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkupLanguageAttribute", function() { return MarkupLanguageAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allMathEquationAttributes", function() { return allMathEquationAttributes; });
@@ -47015,10 +47026,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! loglevel */ "./node_modules/loglevel/lib/loglevel.js");
 /* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(loglevel__WEBPACK_IMPORTED_MODULE_0__);
 
-const MathEquationBox = "MathEquationBox"; //events
+const MathEquationBox = "MathEquationBox"; //events Out
 
 const CloseMathExtEventName = "CloseMathEquation";
-const UpdateLocalSyncProperties = "UpdateLocalSyncProperties"; //attributes
+const UpdateLocalSyncProperties = "UpdateLocalSyncProperties"; //events Out
+
+const UpdateMathEquationTextEvent = "UpdateMathEquationTextEvent"; //attributes
 
 const localSyncAttribute = "local-sync";
 const MarkupLanguageAttribute = "markup-language";
@@ -47153,15 +47166,15 @@ const initialState = {
   propsPage: {
     height: 30,
     showMathEquationTextBox: true,
-    typeMathInput: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["MarkupLanguages"].latex,
+    selectedMarkupLanguage: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["MarkupLanguages"].latex,
     widthMathOutput: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["MathSizeMedium"],
     heightMathOutput: 100,
     mathInputString: "",
     mathTextColor: "0x000000",
     updateRenderCanvas: false,
-    popUpUiPage: true,
+    popUpUiPage: false,
     downloadImageType: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["ImageDownloadType"].png,
-    popUiType: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["PopUpUi"].SettingsPage,
+    popUiType: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["PopUpUi"].NoPage,
     base64MathImage: "",
     svgMathImage: ""
   },
@@ -47181,8 +47194,8 @@ function rootReducer(state = initialState, action) {
     } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["SHOW_MATH_EQUATION_TEXT_BOX"]) {
       draft.propsPage.showMathEquationTextBox = action.payload;
     } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MARKUP_LANGUAGE"]) {
-      draft.propsPage.typeMathInput = action.payload;
-    } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MATH_INPUT"]) {
+      draft.propsPage.selectedMarkupLanguage = action.payload;
+    } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_MATH_EQUATION_TEXT"]) {
       draft.propsPage.mathInputString = action.payload;
     } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_RENDER_CANVAS"]) {
       draft.propsPage.updateRenderCanvas = action.payload;

@@ -9,7 +9,7 @@ import SVGToCanvas from "./SVGToCanvas"
 @connect((store)=>{
     return{
         mathInputString: store.propsPage.mathInputString,
-        typeMathInput: store.propsPage.typeMathInput,
+        selectedMarkupLanguage: store.propsPage.selectedMarkupLanguage,
         textColor: store.propsPage.mathTextColor,
         widthMathOutput: store.propsPage.widthMathOutput,
         heightMathOutput: store.propsPage.heightMathOutput,
@@ -31,15 +31,15 @@ class MathJaxComponent extends React.Component{
         MathJax.texReset();
 
         var equationToSvgPromise;
-        if(this.props.typeMathInput === constTypes.MarkupLanguages.latex)
+        if(this.props.selectedMarkupLanguage === constTypes.MarkupLanguages.latex)
         {
             equationToSvgPromise = MathJax.tex2svgPromise;
         }
-        else if(this.props.typeMathInput === constTypes.MarkupLanguages.mathML)
+        else if(this.props.selectedMarkupLanguage === constTypes.MarkupLanguages.mathML)
         {
             equationToSvgPromise = MathJax.mathml2svgPromise;
         }
-        else if(this.props.typeMathInput === constTypes.MarkupLanguages.asciiMath)
+        else if(this.props.selectedMarkupLanguage === constTypes.MarkupLanguages.asciiMath)
         {
             equationToSvgPromise = MathJax.asciimath2svgPromise;
         }

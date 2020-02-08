@@ -2,10 +2,12 @@ import * as log from 'loglevel';
 
 export const MathEquationBox = "MathEquationBox";
 
-//events
+//events Out
 export const CloseMathExtEventName = "CloseMathEquation";
 export const UpdateLocalSyncProperties = "UpdateLocalSyncProperties";
 
+//events Out
+export const UpdateMathEquationTextEvent = "UpdateMathEquationTextEvent";
 
 //attributes
 export const localSyncAttribute = "local-sync";

@@ -10,15 +10,15 @@ const initialState = {
     propsPage:{
         height: 30,
         showMathEquationTextBox: true,
-        typeMathInput: constTypes.MarkupLanguages.latex,
+        selectedMarkupLanguage: constTypes.MarkupLanguages.latex,
         widthMathOutput: constTypes.MathSizeMedium,
         heightMathOutput: 100,
         mathInputString:"",
         mathTextColor:"0x000000",
         updateRenderCanvas: false,
-        popUpUiPage: true,
+        popUpUiPage: false,
         downloadImageType: constTypes.ImageDownloadType.png,
-        popUiType :  constTypes.PopUpUi.SettingsPage,
+        popUiType :  constTypes.PopUpUi.NoPage,
         base64MathImage: "",
         svgMathImage:""
         
@@ -46,9 +46,9 @@ function rootReducer(state = initialState, action){
         }
         else if(action.type === consts.CHANGE_MARKUP_LANGUAGE)
         {
-            draft.propsPage.typeMathInput = action.payload;
+            draft.propsPage.selectedMarkupLanguage = action.payload;
         }
-        else if(action.type === consts.CHANGE_MATH_INPUT)
+        else if(action.type === consts.UPDATE_MATH_EQUATION_TEXT)
         {
             draft.propsPage.mathInputString = action.payload;
         }

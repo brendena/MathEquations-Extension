@@ -6,7 +6,7 @@ import MathJaxComponent from "./MathJaxComponent"
 
 @connect((store)=>{
     return{
-        mathInputString: store.propsPage.mathInputString,
+        mathEquationText: store.propsPage.mathEquationText,
         base64MathImage: store.propsPage.base64MathImage,
         widthMathOutput: store.propsPage.widthMathOutput,
         heightMathOutput: store.propsPage.heightMathOutput,

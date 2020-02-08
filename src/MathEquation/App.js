@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import './Buttons.css';
-import * as Actions from './js/actions/index'
 import  store  from "./js/store/index"
 
 import { connect } from 'react-redux';
@@ -21,6 +20,7 @@ class App extends React.Component{
   constructor(props){
     super(props);
   }
+  
 
   render (){
 

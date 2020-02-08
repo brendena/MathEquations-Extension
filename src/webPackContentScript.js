@@ -11,6 +11,7 @@ require('./MathEquation/index');
 
 var MathEquationTag = document.createElement("math-equations");
 
+var thisPageChangeLocalStorage = false;
 
 var constructUi = function(configOptions){
     if(configOptions.hasOwnProperty('openCloseMenu')){
@@ -25,13 +26,12 @@ var constructUi = function(configOptions){
 
             MathEquationTag.addEventListener(ConstsID.CloseMathExtEventName, function (e) { 
                 console.log("hidding the extension");
-                //MathEquationTag.parentNode.removeChild(MathEquationTag);
+                log.info("hidding the extension");
                 MathEquationTag.style.display = "none";
             }, false);
 
             MathEquationTag.addEventListener(ConstsID.UpdateLocalSyncProperties, function (e) { 
-                console.log("Got a update to change properties");
-                console.log(e.data)
+                thisPageChangeLocalStorage = true;
                 browser.storage.local.set(e.data);
             }, false);
         }
@@ -59,8 +59,7 @@ browser.runtime.onMessage.addListener(
 );
 
 browser.storage.onChanged.addListener(function(chagnedData){
-    console.log(data)
-    console.log("-------------somebody changed local storage")
+    log.info("changed local storage");
     /*
     //firefox way of doing it
     let gettingItem = browser.storage.local.get(function(data){
@@ -73,11 +72,19 @@ browser.storage.onChanged.addListener(function(chagnedData){
         console.log("failed to open");
     });
     */
+
+    //if changes where made locally don't reload the attribute 
+    //if(thisPageChangeLocalStorage === false)
+    //{
     //grab all the data
     let gettingItem = browser.storage.local.get(function(data){
-        console.log("open got the info")
-        console.log(data)
+        log.info("modifying attribute -" + ConstsID.localSyncAttribute);
+        MathEquationTag.setAttribute(ConstsID.localSyncAttribute, JSON.stringify(data))
     });
+    //}
+
+
+    thisPageChangeLocalStorage = false;
 });
 
 //auto load application

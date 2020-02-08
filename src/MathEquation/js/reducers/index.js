@@ -16,9 +16,9 @@ const initialState = {
         mathInputString:"",
         mathTextColor:"0x000000",
         updateRenderCanvas: false,
-        popUpUiPage: false,
+        popUpUiPage: true,
         downloadImageType: constTypes.ImageDownloadType.png,
-        popUiType :  constTypes.PopUpUi.NoPage,
+        popUiType :  constTypes.PopUpUi.SettingsPage,
         base64MathImage: "",
         svgMathImage:""
         
@@ -80,9 +80,7 @@ function rootReducer(state = initialState, action){
             }
             else
             {
-                
                 draft.propsPage.popUpUiPage = action.payload;
-                
             }
             if(draft.propsPage.popUpUiPage == false)
             {
@@ -111,6 +109,10 @@ function rootReducer(state = initialState, action){
             draft.propsPage.mathTextColor = action.payload;
         }
         //local sync
+        else if(action.type === consts.UPDATE_ALL_LOCAL_SYNC_OPTIONS)
+        {
+            draft.localSync = action.payload;
+        }
         else if(action.type === consts.UPDATE_IMAGE_DIMENSIONS_SETTINGS)
         {
             draft.localSync.imageDimensionsSettings = action.payload;

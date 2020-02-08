@@ -58,6 +58,12 @@ export function updateMathTextColor(payload) {
 
 //local sync settings
 
+export function updateAllLocalSyncOptions(payload) {
+    return { type: consts.UPDATE_ALL_LOCAL_SYNC_OPTIONS, payload }
+}
+
+
+
 export function updateImageDimensionsSettings(payload) {
     return { type: consts.UPDATE_IMAGE_DIMENSIONS_SETTINGS, payload }
 }

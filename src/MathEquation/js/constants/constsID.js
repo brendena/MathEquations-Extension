@@ -15,10 +15,11 @@ export const allMathEquationAttributes = [localSyncAttribute]
 
 
 var tmpUrlImage
-if(chrome)
+var browser = undefined;//= browser || chrome || undefined;
+if(browser)
 {
     log.debug("browser exists")
-    tmpUrlImage = chrome.extension.getURL("") + "Img/";
+    tmpUrlImage = browser.extension.getURL("") + "Img/";
 }
 else
 {

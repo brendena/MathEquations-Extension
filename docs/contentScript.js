@@ -45437,7 +45437,7 @@ react_web_component__WEBPACK_IMPORTED_MODULE_5___default.a.create(react__WEBPACK
 /*!**********************************************!*\
   !*** ./src/MathEquation/js/actions/index.js ***!
   \**********************************************/
-/*! exports provided: addArticle, changeHeightPage, showMathEquationTextBox, changeSelectedMathTypeInput, changeSelectedMathInput, updateRenderCanvas, updateBase64MathImage, updateSVGMathImage, updateWidthSizeMathEquation, updateHeightSizeMathEquation, updatePopUiPage, updateDownloadImageType, updatePageUiType, updateMathTextColor, updateAllLocalSyncOptions, updateImageDimensionsSettings */
+/*! exports provided: addArticle, changeHeightPage, showMathEquationTextBox, changeSelectedMarkupLanguage, changeSelectedMathInput, updateRenderCanvas, updateBase64MathImage, updateSVGMathImage, updateWidthSizeMathEquation, updateHeightSizeMathEquation, updatePopUiPage, updateDownloadImageType, updatePageUiType, updateMathTextColor, updateAllLocalSyncOptions, updateImageDimensionsSettings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45445,7 +45445,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addArticle", function() { return addArticle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeHeightPage", function() { return changeHeightPage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "showMathEquationTextBox", function() { return showMathEquationTextBox; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeSelectedMathTypeInput", function() { return changeSelectedMathTypeInput; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeSelectedMarkupLanguage", function() { return changeSelectedMarkupLanguage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "changeSelectedMathInput", function() { return changeSelectedMathInput; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateRenderCanvas", function() { return updateRenderCanvas; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateBase64MathImage", function() { return updateBase64MathImage; });
@@ -45481,9 +45481,9 @@ function showMathEquationTextBox(payload) {
     payload
   };
 }
-function changeSelectedMathTypeInput(payload) {
+function changeSelectedMarkupLanguage(payload) {
   return {
-    type: _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MATH_TYPE_INPUT"],
+    type: _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MARKUP_LANGUAGE"],
     payload
   };
 }
@@ -46736,7 +46736,7 @@ class SelectedMathType extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Comp
       event.target.parentElement.className = "";
     }
 
-    _store_index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch(_actions_index__WEBPACK_IMPORTED_MODULE_1__["changeSelectedMathTypeInput"](typeInput));
+    _store_index__WEBPACK_IMPORTED_MODULE_4__["default"].dispatch(_actions_index__WEBPACK_IMPORTED_MODULE_1__["changeSelectedMarkupLanguage"](typeInput));
   }
 
   render() {
@@ -46744,11 +46744,11 @@ class SelectedMathType extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Comp
     var mathMLButtonClassName = "navButton";
     var asciiMathButtonClassName = "navButton";
 
-    if (this.props.currentMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MathEquationInput"].latex) {
+    if (this.props.currentMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MarkupLanguages"].latex) {
       this.latexButtonClassName += " selectedMathInput";
-    } else if (this.props.currentMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MathEquationInput"].mathML) {
+    } else if (this.props.currentMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MarkupLanguages"].mathML) {
       mathMLButtonClassName += " selectedMathInput";
-    } else if (this.props.currentMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MathEquationInput"].asciiMath) {
+    } else if (this.props.currentMathInput === _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MarkupLanguages"].asciiMath) {
       asciiMathButtonClassName += " selectedMathInput";
     }
 
@@ -46764,7 +46764,7 @@ class SelectedMathType extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Comp
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: this.latexButtonClassName,
       onClick: event => {
-        this.changeSelectedInput(event, _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MathEquationInput"].latex);
+        this.changeSelectedInput(event, _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MarkupLanguages"].latex);
       }
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
       style: stylesLatex,
@@ -46774,12 +46774,12 @@ class SelectedMathType extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Comp
     })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: mathMLButtonClassName,
       onClick: event => {
-        this.changeSelectedInput(event, _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MathEquationInput"].mathML);
+        this.changeSelectedInput(event, _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MarkupLanguages"].mathML);
       }
     }, "MathML"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
       className: asciiMathButtonClassName,
       onClick: event => {
-        this.changeSelectedInput(event, _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MathEquationInput"].asciiMath);
+        this.changeSelectedInput(event, _constants_constsTypes__WEBPACK_IMPORTED_MODULE_2__["MarkupLanguages"].asciiMath);
       }
     }, "AsciiMath"));
   }
@@ -46952,7 +46952,7 @@ let TextSlideBox = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["conn
 /*!*******************************************************!*\
   !*** ./src/MathEquation/js/constants/action-types.js ***!
   \*******************************************************/
-/*! exports provided: ADD_ARTICLE, FOUND_BAD_WORD, CHANGE_HEIGHT_PAGE, SHOW_MATH_EQUATION_TEXT_BOX, CHANGE_MATH_TYPE_INPUT, CHANGE_MATH_INPUT, UPDATE_RENDER_CANVAS, UPDATE_BASE64_Math_IMAGE, UPDATE_SVG_MATH_IMAGE, UPDATE_WIDTH_MATH_EQUATION, UPDATE_HEIGHT_MATH_EQUATION, UPDATE_POP_UI_PAGE, UPDATE_DOWNLOAD_IMAGE_TYPE, UPDATE_POP_UI_TYPE, UPDATE_MATH_TEXT_COLOR, UPDATE_ALL_LOCAL_SYNC_OPTIONS, UPDATE_IMAGE_DIMENSIONS_SETTINGS */
+/*! exports provided: ADD_ARTICLE, FOUND_BAD_WORD, CHANGE_HEIGHT_PAGE, SHOW_MATH_EQUATION_TEXT_BOX, CHANGE_MARKUP_LANGUAGE, CHANGE_MATH_INPUT, UPDATE_RENDER_CANVAS, UPDATE_BASE64_Math_IMAGE, UPDATE_SVG_MATH_IMAGE, UPDATE_WIDTH_MATH_EQUATION, UPDATE_HEIGHT_MATH_EQUATION, UPDATE_POP_UI_PAGE, UPDATE_DOWNLOAD_IMAGE_TYPE, UPDATE_POP_UI_TYPE, UPDATE_MATH_TEXT_COLOR, UPDATE_ALL_LOCAL_SYNC_OPTIONS, UPDATE_IMAGE_DIMENSIONS_SETTINGS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46961,7 +46961,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOUND_BAD_WORD", function() { return FOUND_BAD_WORD; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_HEIGHT_PAGE", function() { return CHANGE_HEIGHT_PAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SHOW_MATH_EQUATION_TEXT_BOX", function() { return SHOW_MATH_EQUATION_TEXT_BOX; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_MATH_TYPE_INPUT", function() { return CHANGE_MATH_TYPE_INPUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_MARKUP_LANGUAGE", function() { return CHANGE_MARKUP_LANGUAGE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CHANGE_MATH_INPUT", function() { return CHANGE_MATH_INPUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_RENDER_CANVAS", function() { return UPDATE_RENDER_CANVAS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_BASE64_Math_IMAGE", function() { return UPDATE_BASE64_Math_IMAGE; });
@@ -46979,7 +46979,7 @@ const ADD_ARTICLE = "ADD_ARTICLE";
 const FOUND_BAD_WORD = "FOUND_BAD_WORD";
 const CHANGE_HEIGHT_PAGE = "CHANGE_HEIGHT_PAGE";
 const SHOW_MATH_EQUATION_TEXT_BOX = "SHOW_MATH_TEXT_BOX";
-const CHANGE_MATH_TYPE_INPUT = "CHANGE_MATH_TYPE_INPUT";
+const CHANGE_MARKUP_LANGUAGE = "CHANGE_MARKUP_LANGUAGE";
 const CHANGE_MATH_INPUT = "CHANGE_MATH_INPUT";
 const UPDATE_RENDER_CANVAS = "UPDATE_RENDER_CANVAS";
 const UPDATE_BASE64_Math_IMAGE = "UPDATE_BASE64_Math_IMAGE";
@@ -47000,7 +47000,7 @@ const UPDATE_IMAGE_DIMENSIONS_SETTINGS = "UPDATE_IMAGE_DIMENSIONS_SETTINGS";
 /*!***************************************************!*\
   !*** ./src/MathEquation/js/constants/constsID.js ***!
   \***************************************************/
-/*! exports provided: MathEquationBox, CloseMathExtEventName, UpdateLocalSyncProperties, localSyncAttribute, allMathEquationAttributes, UrlImage */
+/*! exports provided: MathEquationBox, CloseMathExtEventName, UpdateLocalSyncProperties, localSyncAttribute, MarkupLanguageAttribute, allMathEquationAttributes, UrlImage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -47009,6 +47009,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CloseMathExtEventName", function() { return CloseMathExtEventName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdateLocalSyncProperties", function() { return UpdateLocalSyncProperties; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "localSyncAttribute", function() { return localSyncAttribute; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkupLanguageAttribute", function() { return MarkupLanguageAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allMathEquationAttributes", function() { return allMathEquationAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UrlImage", function() { return UrlImage; });
 /* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! loglevel */ "./node_modules/loglevel/lib/loglevel.js");
@@ -47020,7 +47021,8 @@ const CloseMathExtEventName = "CloseMathEquation";
 const UpdateLocalSyncProperties = "UpdateLocalSyncProperties"; //attributes
 
 const localSyncAttribute = "local-sync";
-const allMathEquationAttributes = [localSyncAttribute];
+const MarkupLanguageAttribute = "markup-language";
+const allMathEquationAttributes = [localSyncAttribute, MarkupLanguageAttribute];
 var tmpUrlImage;
 var browser = browser;
 
@@ -47048,12 +47050,12 @@ const UrlImage = tmpUrlImage;
 /*!******************************************************!*\
   !*** ./src/MathEquation/js/constants/constsTypes.js ***!
   \******************************************************/
-/*! exports provided: MathEquationInput, MathEquationSizeCustom, ImageDownloadType, ImageDimensionsSettings, TrueFalseToggle, PopUpUi, MathSizeSmall, MathSizeMedium, MathSizeLarge */
+/*! exports provided: MarkupLanguages, MathEquationSizeCustom, ImageDownloadType, ImageDimensionsSettings, TrueFalseToggle, PopUpUi, MathSizeSmall, MathSizeMedium, MathSizeLarge */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathEquationInput", function() { return MathEquationInput; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MarkupLanguages", function() { return MarkupLanguages; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathEquationSizeCustom", function() { return MathEquationSizeCustom; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ImageDownloadType", function() { return ImageDownloadType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ImageDimensionsSettings", function() { return ImageDimensionsSettings; });
@@ -47062,7 +47064,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathSizeSmall", function() { return MathSizeSmall; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathSizeMedium", function() { return MathSizeMedium; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathSizeLarge", function() { return MathSizeLarge; });
-const MathEquationInput = {
+const MarkupLanguages = {
   latex: 'Latex',
   asciiMath: "asciiMath",
   mathML: "mathML"
@@ -47151,7 +47153,7 @@ const initialState = {
   propsPage: {
     height: 30,
     showMathEquationTextBox: true,
-    typeMathInput: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["MathEquationInput"].latex,
+    typeMathInput: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["MarkupLanguages"].latex,
     widthMathOutput: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["MathSizeMedium"],
     heightMathOutput: 100,
     mathInputString: "",
@@ -47178,7 +47180,7 @@ function rootReducer(state = initialState, action) {
       draft.propsPage.height = action.payload;
     } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["SHOW_MATH_EQUATION_TEXT_BOX"]) {
       draft.propsPage.showMathEquationTextBox = action.payload;
-    } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MATH_TYPE_INPUT"]) {
+    } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MARKUP_LANGUAGE"]) {
       draft.propsPage.typeMathInput = action.payload;
     } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["CHANGE_MATH_INPUT"]) {
       draft.propsPage.mathInputString = action.payload;

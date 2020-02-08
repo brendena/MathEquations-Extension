@@ -6,12 +6,17 @@
 ![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/readmeExample.png?raw=true)
 
 
+# [Try it live here](https://brendena.github.io/MathEquations-Extension/)
+
+
 ## **File Structor**
 * **/dist/** - distributable folder 
+* **/docs/** - Github pages folder 
 * **/src/** - source folder
 * **/src/Background/** - background script handles the events from the browser action.
 * **/src/MathEquation/** - Bulk of the code.  This hold all the code for the ui that convert the equations into images.
 * **/src/StaticFiles/** - Mostly just images
+* **/src/HelpPage/** - Code for the GithubPages
 
 
 
@@ -29,8 +34,8 @@
 * This will load a page that will allow you to add the extension by uploading the manifest.json document.
 
 
-### LiveView Firefox
-* npm run start:chrome
+### LiveView Firefox and Chrome
+* npm run start:autoRefresh
 * cd dist && web-ext run
 
 

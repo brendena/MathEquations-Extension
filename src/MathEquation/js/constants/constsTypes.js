@@ -1,4 +1,4 @@
-export const MathEquationInput = {
+export const MarkupLanguages = {
     latex: 'Latex',
     asciiMath: "asciiMath",
     mathML: "mathML"

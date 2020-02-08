@@ -6,7 +6,7 @@
   "scripts": {
     "run-as-webpage": "webpack-dev-server --config webpack/webPage.config.js",
     "start": "webpack --config webpack/dev.config.js",
-    "start:chrome": "webpack --mode=development --watch --config webpack/devChrome.config.js",
+    "start:autoRefresh": "webpack --mode=development --watch --config webpack/devChrome.config.js",
     "buildHelpPage": "webpack --mode=development  --watch --config webpack/helpPage.config.js"
   },
   "keywords": [],

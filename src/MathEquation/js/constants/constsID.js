@@ -9,8 +9,8 @@ export const UpdateLocalSyncProperties = "UpdateLocalSyncProperties";
 
 //attributes
 export const localSyncAttribute = "local-sync";
-
-export const allMathEquationAttributes = [localSyncAttribute]
+export const MarkupLanguageAttribute = "markup-language";
+export const allMathEquationAttributes = [localSyncAttribute,MarkupLanguageAttribute]
 
 
 

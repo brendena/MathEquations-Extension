@@ -31,15 +31,15 @@ class MathJaxComponent extends React.Component{
         MathJax.texReset();
 
         var equationToSvgPromise;
-        if(this.props.typeMathInput === constTypes.MathEquationInput.latex)
+        if(this.props.typeMathInput === constTypes.MarkupLanguages.latex)
         {
             equationToSvgPromise = MathJax.tex2svgPromise;
         }
-        else if(this.props.typeMathInput === constTypes.MathEquationInput.mathML)
+        else if(this.props.typeMathInput === constTypes.MarkupLanguages.mathML)
         {
             equationToSvgPromise = MathJax.mathml2svgPromise;
         }
-        else if(this.props.typeMathInput === constTypes.MathEquationInput.asciiMath)
+        else if(this.props.typeMathInput === constTypes.MarkupLanguages.asciiMath)
         {
             equationToSvgPromise = MathJax.asciimath2svgPromise;
         }

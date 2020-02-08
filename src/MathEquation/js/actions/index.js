@@ -13,8 +13,8 @@ export function showMathEquationTextBox(payload) {
     return { type: consts.SHOW_MATH_EQUATION_TEXT_BOX, payload }
 }
 
-export function changeSelectedMathTypeInput(payload) {
-    return { type: consts.CHANGE_MATH_TYPE_INPUT, payload }
+export function changeSelectedMarkupLanguage(payload) {
+    return { type: consts.CHANGE_MARKUP_LANGUAGE, payload }
 }
 
 export function changeSelectedMathInput(payload) {

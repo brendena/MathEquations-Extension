@@ -33,7 +33,7 @@ class SelectedMathType extends React.Component{
             event.target.parentElement.className = "";
         }
         
-        store.dispatch(Actions.changeSelectedMathTypeInput(typeInput));
+        store.dispatch(Actions.changeSelectedMarkupLanguage(typeInput));
     }
 
     render(){
@@ -41,11 +41,11 @@ class SelectedMathType extends React.Component{
         this.latexButtonClassName= "navButton";
         var mathMLButtonClassName= "navButton";
         var asciiMathButtonClassName= "navButton";
-        if(this.props.currentMathInput === ConstTypes.MathEquationInput.latex){
+        if(this.props.currentMathInput === ConstTypes.MarkupLanguages.latex){
             this.latexButtonClassName += " selectedMathInput";
-        }else if(this.props.currentMathInput === ConstTypes.MathEquationInput.mathML){
+        }else if(this.props.currentMathInput === ConstTypes.MarkupLanguages.mathML){
             mathMLButtonClassName += " selectedMathInput";
-        }else if(this.props.currentMathInput === ConstTypes.MathEquationInput.asciiMath){
+        }else if(this.props.currentMathInput === ConstTypes.MarkupLanguages.asciiMath){
             asciiMathButtonClassName += " selectedMathInput";
         }
 
@@ -54,11 +54,11 @@ class SelectedMathType extends React.Component{
         return (
             <span id="selectMathTypeSpan">
                 <button className={this.latexButtonClassName}
-                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MathEquationInput.latex)}} ><img   style={stylesLatex} src={ConstsID.UrlImage + "latex.svg"} id="latexImage" alt="latex logo"/></button>
+                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MarkupLanguages.latex)}} ><img   style={stylesLatex} src={ConstsID.UrlImage + "latex.svg"} id="latexImage" alt="latex logo"/></button>
                 <button className={mathMLButtonClassName} 
-                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MathEquationInput.mathML)}}>MathML</button>
+                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MarkupLanguages.mathML)}}>MathML</button>
                 <button className={asciiMathButtonClassName} 
-                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MathEquationInput.asciiMath)}}>AsciiMath</button>
+                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MarkupLanguages.asciiMath)}}>AsciiMath</button>
             </span>
         )
     }

@@ -10,7 +10,7 @@ const initialState = {
     propsPage:{
         height: 30,
         showMathEquationTextBox: true,
-        typeMathInput: constTypes.MathEquationInput.latex,
+        typeMathInput: constTypes.MarkupLanguages.latex,
         widthMathOutput: constTypes.MathSizeMedium,
         heightMathOutput: 100,
         mathInputString:"",
@@ -44,7 +44,7 @@ function rootReducer(state = initialState, action){
         {
             draft.propsPage.showMathEquationTextBox = action.payload;
         }
-        else if(action.type === consts.CHANGE_MATH_TYPE_INPUT)
+        else if(action.type === consts.CHANGE_MARKUP_LANGUAGE)
         {
             draft.propsPage.typeMathInput = action.payload;
         }

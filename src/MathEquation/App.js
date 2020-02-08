@@ -13,7 +13,7 @@ import * as ConstsID from "./js/constants/constsID"
 @connect((store)=>{
   return{
     showMathEquationBox: store.propsPage.showMathEquationTextBox,
-    typeMathInput: store.propsPage.typeMathInput
+    selectedMarkupLanguage: store.propsPage.selectedMarkupLanguage
   }
 })
 class App extends React.Component{
@@ -32,7 +32,7 @@ class App extends React.Component{
           <div id="appSpacer" className="appSpacer_H"></div>
           <TextSlideBox/>
           <ActionBar stateMathTextBox={this.props.showMathEquationBox} 
-                     currentMathInput={this.props.typeMathInput}/>
+                     currentMathInput={this.props.selectedMarkupLanguage}/>
           <PopUpUi/>
     </div>)
   };

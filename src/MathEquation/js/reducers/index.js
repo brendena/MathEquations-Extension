@@ -131,8 +131,7 @@ function rootReducer(state = initialState, action){
         {   
             var event = new Event(ConstsID.UpdateLocalSyncProperties, {"bubbles":true,"composed":true});
             event.data = newState.localSync;
-            console.log("sending")
-            console.log(newState.localSync)
+            log.info("[event]" + ConstsID.UpdateLocalSyncProperties);
             componentsTag[0].dispatchEvent(event);
         }
         

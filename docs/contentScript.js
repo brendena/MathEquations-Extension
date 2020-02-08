@@ -12898,7 +12898,7 @@ var x=Element.prototype,la=x.matches||x.matchesSelector||x.mozMatchesSelector||x
 function y(a){for(var b=a.length-1;0<=b;b--){var c=a[b],d=c.getAttribute("id")||c.getAttribute("name");d&&"length"!==d&&isNaN(d)&&(a[d]=c)}a.item=function(e){return a[e]};a.namedItem=function(e){if("length"!==e&&isNaN(e)&&a[e])return a[e];for(var f=ba(a),g=f.next();!g.done;g=f.next())if(g=g.value,(g.getAttribute("id")||g.getAttribute("name"))==e)return g;return null};return a}function sa(a){var b=[];for(a=a.__shady_native_firstChild;a;a=a.__shady_native_nextSibling)b.push(a);return b}
 function ta(a){var b=[];for(a=a.__shady_firstChild;a;a=a.__shady_nextSibling)b.push(a);return b}function ua(a,b,c){c.configurable=!0;if(c.value)a[b]=c.value;else try{Object.defineProperty(a,b,c)}catch(d){}}function z(a,b,c,d){c=void 0===c?"":c;for(var e in b)d&&0<=d.indexOf(e)||ua(a,c+e,b[e])}function va(a,b){for(var c in b)c in a&&ua(a,c,b[c])}function A(a){var b={};Object.getOwnPropertyNames(a).forEach(function(c){b[c]=Object.getOwnPropertyDescriptor(a,c)});return b};var B=[],wa;function xa(a){wa||(wa=!0,pa(C));B.push(a)}function C(){wa=!1;for(var a=!!B.length;B.length;)B.shift()();return a}C.list=B;var ya=A({get childNodes(){return this.__shady_childNodes},get firstChild(){return this.__shady_firstChild},get lastChild(){return this.__shady_lastChild},get childElementCount(){return this.__shady_childElementCount},get children(){return this.__shady_children},get firstElementChild(){return this.__shady_firstElementChild},get lastElementChild(){return this.__shady_lastElementChild},get shadowRoot(){return this.__shady_shadowRoot}}),za=A({get textContent(){return this.__shady_textContent},set textContent(a){this.__shady_textContent=
 a},get innerHTML(){return this.__shady_innerHTML},set innerHTML(a){return this.__shady_innerHTML=a}}),Aa=A({get parentElement(){return this.__shady_parentElement},get parentNode(){return this.__shady_parentNode},get nextSibling(){return this.__shady_nextSibling},get previousSibling(){return this.__shady_previousSibling},get nextElementSibling(){return this.__shady_nextElementSibling},get previousElementSibling(){return this.__shady_previousElementSibling},get className(){return this.__shady_className},
-set className(a){return this.__shady_className=a}});function Ba(a){for(var b in a){var c=a[b];c&&(c.enumerable=!1)}}Ba(ya);Ba(za);Ba(Aa);var Ca=u.c||!0===u.g,Da=Ca?function(){}:function(a){var b=r(a);b.N||(b.N=!0,va(a,Aa))},Fa=Ca?function(){}:function(a){var b=r(a);b.M||(b.M=!0,va(a,ya),window.customElements&&!u.g||va(a,za))};var E="__eventWrappers"+Date.now(),Ga=function(){var a=Object.getOwnPropertyDescriptor(Event.prototype,"composed");return a?function(b){return a.get.call(b)}:null}(),Ha=function(){function a(){}var b=!1,c={get capture(){b=!0;return!1}};window.addEventListener("test",a,c);window.removeEventListener("test",a,c);return b}();function Ia(a){if(a&&"object"===typeof a){var b=!!a.capture;var c=!!a.once;var d=!!a.passive;var e=a.i}else b=!!a,d=c=!1;return{K:e,capture:b,once:c,passive:d,J:Ha?a:b}}
+set className(a){return this.__shady_className=a}});function Ba(a){for(var b in a){var c=a[b];c&&(c.enumerable=!1)}}Ba(ya);Ba(za);Ba(Aa);var Ca=u.c||!0===u.g,Da=Ca?function(){}:function(a){var b=r(a);b.N||(b.N=!0,va(a,Aa))},Fa=Ca?function(){}:function(a){var b=r(a);b.M||(b.M=!0,va(a,ya),window.customElements&&window.customElements.polyfillWrapFlushCallback&&!u.g||va(a,za))};var E="__eventWrappers"+Date.now(),Ga=function(){var a=Object.getOwnPropertyDescriptor(Event.prototype,"composed");return a?function(b){return a.get.call(b)}:null}(),Ha=function(){function a(){}var b=!1,c={get capture(){b=!0;return!1}};window.addEventListener("test",a,c);window.removeEventListener("test",a,c);return b}();function Ia(a){if(a&&"object"===typeof a){var b=!!a.capture;var c=!!a.once;var d=!!a.passive;var e=a.i}else b=!!a,d=c=!1;return{K:e,capture:b,once:c,passive:d,J:Ha?a:b}}
 var Ja={blur:!0,focus:!0,focusin:!0,focusout:!0,click:!0,dblclick:!0,mousedown:!0,mouseenter:!0,mouseleave:!0,mousemove:!0,mouseout:!0,mouseover:!0,mouseup:!0,wheel:!0,beforeinput:!0,input:!0,keydown:!0,keyup:!0,compositionstart:!0,compositionupdate:!0,compositionend:!0,touchstart:!0,touchend:!0,touchmove:!0,touchcancel:!0,pointerover:!0,pointerenter:!0,pointerdown:!0,pointermove:!0,pointerup:!0,pointercancel:!0,pointerout:!0,pointerleave:!0,gotpointercapture:!0,lostpointercapture:!0,dragstart:!0,
 drag:!0,dragenter:!0,dragleave:!0,dragover:!0,drop:!0,dragend:!0,DOMActivate:!0,DOMFocusIn:!0,DOMFocusOut:!0,keypress:!0},Ka={DOMAttrModified:!0,DOMAttributeNameChanged:!0,DOMCharacterDataModified:!0,DOMElementNameChanged:!0,DOMNodeInserted:!0,DOMNodeInsertedIntoDocument:!0,DOMNodeRemoved:!0,DOMNodeRemovedFromDocument:!0,DOMSubtreeModified:!0};function La(a){return a instanceof Node?a.__shady_getRootNode():a}
 function F(a,b){var c=[],d=a;for(a=La(a);d;)c.push(d),d.__shady_assignedSlot?d=d.__shady_assignedSlot:d.nodeType===Node.DOCUMENT_FRAGMENT_NODE&&d.host&&(b||d!==a)?d=d.host:d=d.__shady_parentNode;c[c.length-1]===document&&c.push(window);return c}function Ma(a){a.__composedPath||(a.__composedPath=F(a.target,!0));return a.__composedPath}function Na(a,b){if(!w)return a;a=F(a,!0);for(var c=0,d,e=void 0,f,g=void 0;c<b.length;c++)if(d=b[c],f=La(d),f!==e&&(g=a.indexOf(f),e=f),!w(f)||-1<g)return d}
@@ -12953,9 +12953,9 @@ function Db(a){var b=a.name||a.getAttribute("name")||"__catchall";return a.O=b}f
 function tb(a,b){if(a.a){O(a);var c=a.b,d;for(d in c)for(var e=c[d],f=0;f<e.length;f++){var g=e[f];if(ra(b,g)){e.splice(f,1);var h=a.a.indexOf(g);0<=h&&(a.a.splice(h,1),(h=t(g.__shady_parentNode))&&h.s&&h.s--);f--;g=t(g);if(h=g.l)for(var m=0;m<h.length;m++){var k=h[m],l=k.__shady_native_parentNode;l&&l.__shady_native_removeChild(k)}g.l=[];g.assignedNodes=[];h=!0}}return h}}function ka(a){O(a);return!(!a.a||!a.a.length)}
 (function(a){a.__proto__=DocumentFragment.prototype;gc(a,"__shady_");gc(a);Object.defineProperties(a,{nodeType:{value:Node.DOCUMENT_FRAGMENT_NODE,configurable:!0},nodeName:{value:"#document-fragment",configurable:!0},nodeValue:{value:null,configurable:!0}});["localName","namespaceURI","prefix"].forEach(function(b){Object.defineProperty(a,b,{value:void 0,configurable:!0})});["ownerDocument","baseURI","isConnected"].forEach(function(b){Object.defineProperty(a,b,{get:function(){return this.host[b]},
 configurable:!0})})})(Q.prototype);
-if(window.customElements&&u.D&&!u.preferPerformance){var mc=new Map;hc=function(){var a=[];mc.forEach(function(d,e){a.push([e,d])});mc.clear();for(var b=0;b<a.length;b++){var c=a[b][0];a[b][1]?c.__shadydom_connectedCallback():c.__shadydom_disconnectedCallback()}};U&&document.addEventListener("readystatechange",function(){U=!1;hc()},{once:!0});var nc=function(a,b,c){var d=0,e="__isConnected"+d++;if(b||c)a.prototype.connectedCallback=a.prototype.__shadydom_connectedCallback=function(){U?mc.set(this,
-!0):this[e]||(this[e]=!0,b&&b.call(this))},a.prototype.disconnectedCallback=a.prototype.__shadydom_disconnectedCallback=function(){U?this.isConnected||mc.set(this,!1):this[e]&&(this[e]=!1,c&&c.call(this))};return a},oc=window.customElements.define,pc=function(a,b){var c=b.prototype.connectedCallback,d=b.prototype.disconnectedCallback;oc.call(window.customElements,a,nc(b,c,d));b.prototype.connectedCallback=c;b.prototype.disconnectedCallback=d};window.customElements.define=pc;Object.defineProperty(window.CustomElementRegistry.prototype,
-"define",{value:pc,configurable:!0})}function G(a){a=a.__shady_getRootNode();if(w(a))return a};function qc(){this.a=!1;this.addedNodes=[];this.removedNodes=[];this.v=new Set}function nb(a){a.a||(a.a=!0,pa(function(){a.flush()}))}qc.prototype.flush=function(){if(this.a){this.a=!1;var a=this.takeRecords();a.length&&this.v.forEach(function(b){b(a)})}};qc.prototype.takeRecords=function(){if(this.addedNodes.length||this.removedNodes.length){var a=[{addedNodes:this.addedNodes,removedNodes:this.removedNodes}];this.addedNodes=[];this.removedNodes=[];return a}return[]};
+if(window.customElements&&window.customElements.define&&u.D&&!u.preferPerformance){var mc=new Map;hc=function(){var a=[];mc.forEach(function(d,e){a.push([e,d])});mc.clear();for(var b=0;b<a.length;b++){var c=a[b][0];a[b][1]?c.__shadydom_connectedCallback():c.__shadydom_disconnectedCallback()}};U&&document.addEventListener("readystatechange",function(){U=!1;hc()},{once:!0});var nc=function(a,b,c){var d=0,e="__isConnected"+d++;if(b||c)a.prototype.connectedCallback=a.prototype.__shadydom_connectedCallback=
+function(){U?mc.set(this,!0):this[e]||(this[e]=!0,b&&b.call(this))},a.prototype.disconnectedCallback=a.prototype.__shadydom_disconnectedCallback=function(){U?this.isConnected||mc.set(this,!1):this[e]&&(this[e]=!1,c&&c.call(this))};return a},oc=window.customElements.define,pc=function(a,b){var c=b.prototype.connectedCallback,d=b.prototype.disconnectedCallback;oc.call(window.customElements,a,nc(b,c,d));b.prototype.connectedCallback=c;b.prototype.disconnectedCallback=d};window.customElements.define=
+pc;Object.defineProperty(window.CustomElementRegistry.prototype,"define",{value:pc,configurable:!0})}function G(a){a=a.__shady_getRootNode();if(w(a))return a};function qc(){this.a=!1;this.addedNodes=[];this.removedNodes=[];this.v=new Set}function nb(a){a.a||(a.a=!0,pa(function(){a.flush()}))}qc.prototype.flush=function(){if(this.a){this.a=!1;var a=this.takeRecords();a.length&&this.v.forEach(function(b){b(a)})}};qc.prototype.takeRecords=function(){if(this.addedNodes.length||this.removedNodes.length){var a=[{addedNodes:this.addedNodes,removedNodes:this.removedNodes}];this.addedNodes=[];this.removedNodes=[];return a}return[]};
 function rc(a,b){var c=r(a);c.m||(c.m=new qc);c.m.v.add(b);var d=c.m;return{P:b,S:d,R:a,takeRecords:function(){return d.takeRecords()}}}function sc(a){var b=a&&a.S;b&&(b.v.delete(a.P),b.v.size||(r(a.R).m=null))}
 function tc(a,b){var c=b.getRootNode();return a.map(function(d){var e=c===d.target.getRootNode();if(e&&d.addedNodes){if(e=Array.from(d.addedNodes).filter(function(f){return c===f.getRootNode()}),e.length)return d=Object.create(d),Object.defineProperty(d,"addedNodes",{value:e,configurable:!0}),d}else if(e)return d}).filter(function(d){return d})};var uc=u.c,vc={querySelector:function(a){return this.__shady_native_querySelector(a)},querySelectorAll:function(a){return this.__shady_native_querySelectorAll(a)}},wc={};function xc(a){wc[a]=function(b){return b["__shady_native_"+a]}}function V(a,b){z(a,b,"__shady_native_");for(var c in b)xc(c)}function W(a,b){b=void 0===b?[]:b;for(var c=0;c<b.length;c++){var d=b[c],e=Object.getOwnPropertyDescriptor(a,d);e&&(Object.defineProperty(a,"__shady_native_"+d,e),e.value?vc[d]||(vc[d]=e.value):xc(d))}}
 var X=document.createTreeWalker(document,NodeFilter.SHOW_ALL,null,!1),Y=document.createTreeWalker(document,NodeFilter.SHOW_ELEMENT,null,!1),yc=document.implementation.createHTMLDocument("inert");function zc(a){for(var b;b=a.__shady_native_firstChild;)a.__shady_native_removeChild(b)}var Ac=["firstElementChild","lastElementChild","children","childElementCount"],Bc=["querySelector","querySelectorAll"];
@@ -13007,7 +13007,7 @@ exports.push([module.i, "", ""]);
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, ".App {\r\n  color:black;\r\n  bottom:0px;\r\n  left:0px;\r\n  display:grid;\r\n  position:fixed;\r\n  width:100vw;\r\n  height:100vh;\r\n  min-height:20vh;\r\n  z-index: 9999999;\r\n  pointer-events: none;\r\n}\r\n\r\n\r\n.appGrid_H\r\n{\r\n  grid-template-columns: auto;\r\n  grid-template-rows: auto auto 75px;\r\n  grid-gap: 0;\r\n}\r\n\r\n#appSpacer\r\n{\r\n  opacity: 0;\r\n  pointer-events: none;\r\n}\r\n\r\n.appSpacer_H\r\n{\r\n  grid-row-start: 1;\r\n  grid-row-end: 2;\r\n  grid-column-start: 1;\r\n  grid-column-end: 2;\r\n}\r\n\r\n\r\n#TextSlideBox\r\n{\r\n  background:white;\r\n  border-top-style: solid;\r\n  border-top-width: 1px;\r\n  display:flex;\r\n  flex-direction:column;\r\n  pointer-events: auto;\r\n  z-index:200;\r\n}\r\n\r\n.textSlideBox_H\r\n{\r\n  grid-row-start: 2;\r\n  grid-row-end: 3;\r\n  grid-column-start: 1;\r\n  grid-column-end: 2;\r\n  height: 200px;\r\n  align-self: end;\r\n}\r\n\r\n\r\n#ActionBar\r\n{\r\n  bottom:0px;\r\n  left:0px;\r\n  width:100%;\r\n  background-color:#ffdc78;\r\n  color:black;\r\n  display:flex;\r\n  flex-direction: row;\r\n  pointer-events: auto;\r\n  z-index:300;\r\n}\r\n\r\n.actionBar_H\r\n{\r\n  grid-row-start: 2;\r\n  grid-row-end: 3;\r\n  grid-column-start: 1;\r\n  grid-column-end: 2;\r\n}\r\n\r\na:link\r\n{\r\n  color: #800080;\r\n}\r\na:visited\r\n{\r\n  color:#0000FF;\r\n}\r\na:active\r\n{\r\n  color:red;\r\n}\r\n\r\n#slideItem{\r\n  margin: auto;\r\n  text-align: center;\r\n  cursor: ns-resize;\r\n  opacity:0.5;\r\n  min-height:10px;\r\n}\r\n\r\n#slideItem:hover{\r\n  opacity:1;\r\n}\r\n\r\n\r\n\r\n\r\n.classTextBoxOffscreen\r\n{\r\n  padding-top:100%;\r\n}\r\n\r\n#TextSectionDivider\r\n{\r\n  flex-grow:2;\r\n  display:flex;\r\n  flex-direction:row;\r\n}\r\n#inputTextMathEquation\r\n{\r\n  width:50%;\r\n  resize: none;\r\n  box-sizing: border-box;\r\n  padding: 20px;\r\n  border-width: 0;\r\n}\r\ninput:disabled {\r\n  background: #bfbdbd70;\r\n\r\n}\r\n#textOutputBox\r\n{\r\n  width:50%;\r\n  border-left-style: solid;\r\n  border-left-width: 1px;\r\n  display:flex;\r\n  flex-direction: column;\r\n}\r\n\r\n.buttonOptionsImage{\r\n  background-color: #ffffff;\r\n  border: 0;\r\n  height: 100%;\r\n  box-sizing: border-box;\r\n  margin-left:2px;\r\n  border-color:white;\r\n}\r\n\r\n.buttonOptionsImage:hover{\r\n  background-color: #b9b9b9;\r\n}\r\n\r\n#imageOptions{\r\n  align-items: center;\r\n  display: flex;\r\n  height:40px;\r\n  padding-bottom: 3px;\r\n}\r\n.removeStyles\r\n{\r\n  background: none; \r\n  border: none;\r\n}\r\n#MathEquationBox\r\n{\r\n  flex-grow:2;\r\n  margin: auto;\r\n  text-align: center;\r\n}\r\n.navButton\r\n{\r\n  height:100%;\r\n  padding-left: 10px;\r\n  padding-right: 10px;\r\n  font-size: 30px;\r\n  border-width: 0px;\r\n  background-color: #ffdc78;\r\n  font-family: 'Times New Roman', Times, serif;\r\n  box-shadow: none;\r\n  transition: all 0.5s ease 0s;\r\n  outline: 0;\r\n}\r\n\r\n.navButton:hover\r\n{\r\n  background-color: #aaaa78;\r\n}\r\n\r\n.selectedMathInput\r\n{\r\n  background-color: #aaaa78;\r\n}\r\n\r\n.flexSpacer{\r\n  flex-grow:2;\r\n}\r\n\r\n#navBarLogo\r\n{\r\n  background-color: #8064d6;\r\n  height:100%;\r\n}\r\n#latexImage\r\n{\r\n  height:50%;\r\n}\r\n\r\n#canvasVisible\r\n{\r\n  position:fixed;\r\n  /**/\r\n  top:-100%;\r\n  left:-100%;\r\n  opacity:0;\r\n  z-index: -3000;\r\n  /**/\r\n\r\n  /*/\r\n  top:0px;\r\n  left:0px;\r\n  z-index: 3000;\r\n  /**/\r\n}\r\n\r\n.sizeImageStyles\r\n{\r\n  border-width: 1px;\r\n  border-style: solid;\r\n}\r\n\r\nmjx-container svg\r\n{\r\n  /*width:14ex;*/\r\n  width:100%;\r\n}\r\n\r\nsvg\r\n{\r\n  width: 2ex;\r\n}\r\n\r\n#InnerPopUpUiContainer\r\n{\r\n  background-color: #fff;\r\n  padding: 25px;\r\n  padding-bottom: 0;\r\n  border-style: solid;\r\n  border-width: 3px;\r\n  border-bottom-width: 0;\r\n  min-height: 90px;\r\n  box-sizing: border-box;\r\n  position: absolute;\r\n  bottom: 0px;\r\n  pointer-events: auto;\r\n  padding-bottom: 30px;\r\n}\r\n#PopUpUiContainer\r\n{\r\n  z-index: 3000000;\r\n  position:absolute;\r\n  width:100%;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  transition: .5s;\r\n  bottom: 0;\r\n}\r\n\r\n#DownloadForm\r\n{\r\n  display: flex;\r\n  justify-content: center;\r\n}\r\n#ExitPopUpUi\r\n{\r\n  position: absolute; \r\n  top: 0px; \r\n  right: 0px;\r\n}\r\n\r\n#textInputSizeWidth\r\n{\r\n  width:50px;\r\n}\r\n\r\n#textInputSizeHeight\r\n{\r\n  width:50px;\r\n}\r\n\r\n#paypalButton\r\n{\r\n  font-size: 20px;\r\n  border-color: gold;\r\n  border-radius: 20px;\r\n  display: flex;\r\n  cursor: pointer;\r\n  background:white;\r\n}\r\n\r\n#paypalButton:hover\r\n{\r\n  background:#98c6ff;\r\n}\r\n\r\n#paypalLogo\r\n{\r\n  color:#1a73e8;\r\n  padding-right: 4px;\r\n}\r\n\r\n\r\n.selectedMathInput::after\r\n{\r\n  content: '';\r\n  position: relative;\r\n  top: 10%;\r\n  bottom: 10%;\r\n  right: -5%;\r\n  left: -5%;\r\n  background: inherit;\r\n  border-radius: 5% / 50%;\r\n  background: red;\r\n}\r\n\r\n#selectMathTypeSpan\r\n{\r\n  display:flex;\r\n}\r\n\r\n.inputDisabledLooking\r\n{\r\n  background:#b9b9b9\r\n}\r\n\r\n#settingsPageContainer\r\n{\r\n  display:grid;\r\n  grid-template-columns:repeat(2,1fr);\r\n  max-width: 50vw;\r\n}\r\n\r\n@media screen and (max-width: 1000px)\r\n{\r\n  #TextSectionDivider\r\n  {\r\n    flex-direction: column;\r\n \r\n  }\r\n  #inputTextMathEquation\r\n  {\r\n    width:100%;\r\n    flex-grow:1;\r\n\r\n\r\n  }\r\n  #textOutputBox\r\n  {\r\n    width:100%;\r\n    flex-grow:1;\r\n\r\n    border-left-style: solid;\r\n    border-left-width: 0px;\r\n\r\n    border-top-style: solid;\r\n    border-top-width: 1px;\r\n  }\r\n\r\n}\r\n\r\n\r\n@media screen and (max-width: 800px)\r\n{\r\n  #settingsPageContainer\r\n  {\r\n    display:grid;\r\n    grid-template-columns:repeat(2,1fr);\r\n    max-width: 100vw;\r\n  }\r\n\r\n  #selectMathTypeSpan\r\n  {\r\n    flex-direction:column;\r\n    min-width: 200px;\r\n    height: 225px;\r\n    transition: 0.5s;\r\n  }\r\n  .selectedMathTypeScanShow\r\n  {\r\n    transform: translateY(-150px);\r\n  }\r\n  .selectedMathInput\r\n  {\r\n    order: -1;\r\n    background-color: #ffdc78;;\r\n  }\r\n}\r\n", ""]);
+exports.push([module.i, ".App {\n  color:black;\n  bottom:0px;\n  left:0px;\n  display:grid;\n  position:fixed;\n  width:100vw;\n  height:100vh;\n  min-height:20vh;\n  z-index: 9999999;\n  pointer-events: none;\n}\n\n\n.appGrid_H\n{\n  grid-template-columns: auto;\n  grid-template-rows: auto auto 75px;\n  grid-gap: 0;\n}\n\n#appSpacer\n{\n  opacity: 0;\n  pointer-events: none;\n}\n\n.appSpacer_H\n{\n  grid-row-start: 1;\n  grid-row-end: 2;\n  grid-column-start: 1;\n  grid-column-end: 2;\n}\n\n\n#TextSlideBox\n{\n  background:white;\n  border-top-style: solid;\n  border-top-width: 1px;\n  display:flex;\n  flex-direction:column;\n  pointer-events: auto;\n  z-index:200;\n}\n\n.textSlideBox_H\n{\n  grid-row-start: 2;\n  grid-row-end: 3;\n  grid-column-start: 1;\n  grid-column-end: 2;\n  height: 200px;\n  align-self: end;\n}\n\n\n#ActionBar\n{\n  bottom:0px;\n  left:0px;\n  width:100%;\n  background-color:#ffdc78;\n  color:black;\n  display:flex;\n  flex-direction: row;\n  pointer-events: auto;\n  z-index:300;\n}\n\n.actionBar_H\n{\n  grid-row-start: 2;\n  grid-row-end: 3;\n  grid-column-start: 1;\n  grid-column-end: 2;\n}\n\na:link\n{\n  color: #800080;\n}\na:visited\n{\n  color:#0000FF;\n}\na:active\n{\n  color:red;\n}\n\n#slideItem{\n  margin: auto;\n  text-align: center;\n  cursor: ns-resize;\n  opacity:0.5;\n  min-height:10px;\n}\n\n#slideItem:hover{\n  opacity:1;\n}\n\n\n\n\n.classTextBoxOffscreen\n{\n  padding-top:100%;\n}\n\n#TextSectionDivider\n{\n  flex-grow:2;\n  display:flex;\n  flex-direction:row;\n}\n#inputTextMathEquation\n{\n  width:50%;\n  resize: none;\n  box-sizing: border-box;\n  padding: 20px;\n  border-width: 0;\n}\ninput:disabled {\n  background: #bfbdbd70;\n\n}\n#textOutputBox\n{\n  width:50%;\n  border-left-style: solid;\n  border-left-width: 1px;\n  display:flex;\n  flex-direction: column;\n}\n\n.buttonOptionsImage{\n  background-color: #ffffff;\n  border: 0;\n  height: 100%;\n  box-sizing: border-box;\n  margin-left:2px;\n  border-color:white;\n}\n\n.buttonOptionsImage:hover{\n  background-color: #b9b9b9;\n}\n\n#imageOptions{\n  align-items: center;\n  display: flex;\n  height:40px;\n  padding-bottom: 3px;\n}\n.removeStyles\n{\n  background: none; \n  border: none;\n}\n#MathEquationBox\n{\n  flex-grow:2;\n  margin: auto;\n  text-align: center;\n}\n.navButton\n{\n  height:100%;\n  padding-left: 10px;\n  padding-right: 10px;\n  font-size: 30px;\n  border-width: 0px;\n  background-color: #ffdc78;\n  font-family: 'Times New Roman', Times, serif;\n  box-shadow: none;\n  transition: all 0.5s ease 0s;\n  outline: 0;\n}\n\n.navButton:hover\n{\n  background-color: #aaaa78;\n}\n\n.selectedMathInput\n{\n  background-color: #aaaa78;\n}\n\n.flexSpacer{\n  flex-grow:2;\n}\n\n#navBarLogo\n{\n  background-color: #8064d6;\n  height:100%;\n}\n#latexImage\n{\n  height:50%;\n}\n\n#canvasVisible\n{\n  position:fixed;\n  /**/\n  top:-100%;\n  left:-100%;\n  opacity:0;\n  z-index: -3000;\n  /**/\n\n  /*/\n  top:0px;\n  left:0px;\n  z-index: 3000;\n  /**/\n}\n\n.sizeImageStyles\n{\n  border-width: 1px;\n  border-style: solid;\n}\n\nmjx-container svg\n{\n  /*width:14ex;*/\n  width:100%;\n}\n\nsvg\n{\n  width: 2ex;\n}\n\n#InnerPopUpUiContainer\n{\n  background-color: #fff;\n  padding: 25px;\n  padding-bottom: 0;\n  border-style: solid;\n  border-width: 3px;\n  border-bottom-width: 0;\n  min-height: 90px;\n  box-sizing: border-box;\n  position: absolute;\n  bottom: 0px;\n  pointer-events: auto;\n  padding-bottom: 30px;\n}\n#PopUpUiContainer\n{\n  z-index: 3000000;\n  position:absolute;\n  width:100%;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  transition: .5s;\n  bottom: 0;\n}\n\n#DownloadForm\n{\n  display: flex;\n  justify-content: center;\n}\n#ExitPopUpUi\n{\n  position: absolute; \n  top: 0px; \n  right: 0px;\n}\n\n#textInputSizeWidth\n{\n  width:50px;\n}\n\n#textInputSizeHeight\n{\n  width:50px;\n}\n\n#paypalButton\n{\n  font-size: 20px;\n  border-color: gold;\n  border-radius: 20px;\n  display: flex;\n  cursor: pointer;\n  background:white;\n}\n\n#paypalButton:hover\n{\n  background:#98c6ff;\n}\n\n#paypalLogo\n{\n  color:#1a73e8;\n  padding-right: 4px;\n}\n\n\n.selectedMathInput::after\n{\n  content: '';\n  position: relative;\n  top: 10%;\n  bottom: 10%;\n  right: -5%;\n  left: -5%;\n  background: inherit;\n  border-radius: 5% / 50%;\n  background: red;\n}\n\n#selectMathTypeSpan\n{\n  display:flex;\n}\n\n.inputDisabledLooking\n{\n  background:#b9b9b9\n}\n\n#settingsPageContainer\n{\n  display:grid;\n  grid-template-columns:repeat(2,1fr);\n  max-width: 50vw;\n}\n\n@media screen and (max-width: 1000px)\n{\n  #TextSectionDivider\n  {\n    flex-direction: column;\n \n  }\n  #inputTextMathEquation\n  {\n    width:100%;\n    flex-grow:1;\n\n\n  }\n  #textOutputBox\n  {\n    width:100%;\n    flex-grow:1;\n\n    border-left-style: solid;\n    border-left-width: 0px;\n\n    border-top-style: solid;\n    border-top-width: 1px;\n  }\n\n}\n\n\n@media screen and (max-width: 800px)\n{\n  #settingsPageContainer\n  {\n    display:grid;\n    grid-template-columns:repeat(2,1fr);\n    max-width: 100vw;\n  }\n\n  #selectMathTypeSpan\n  {\n    flex-direction:column;\n    min-width: 200px;\n    height: 225px;\n    transition: 0.5s;\n  }\n  .selectedMathTypeScanShow\n  {\n    transform: translateY(-150px);\n  }\n  .selectedMathInput\n  {\n    order: -1;\n    background-color: #ffdc78;;\n  }\n}\n", ""]);
 
 
 
@@ -13022,7 +13022,7 @@ exports.push([module.i, ".App {\r\n  color:black;\r\n  bottom:0px;\r\n  left:0px
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "/*\r\nstyles for radio buttons \r\nhttps://codepen.io/wilder_taype/pen/pNXwMW/\r\n*/\r\n*{font-family: 'Roboto', sans-serif;}\r\n\r\n\r\n.option-input {\r\n  -webkit-appearance: none;\r\n  -moz-appearance: none;\r\n  -ms-appearance: none;\r\n  -o-appearance: none;\r\n  appearance: none;\r\n  position: relative;\r\n  top: 13.33333px;\r\n  right: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  height: 30px;\r\n  width: 30px;\r\n  transition: all 0.15s ease-out 0s;\r\n  background: #cbd1d8;\r\n  border: none;\r\n  color: #fff;\r\n  cursor: pointer;\r\n  display: inline-block;\r\n  margin-right: 0.5rem;\r\n  outline: none;\r\n  position: relative;\r\n  z-index: 1000;\r\n}\r\n.option-input:hover {\r\n  background: #9faab7;\r\n}\r\n.option-input:checked {\r\n  background: #ac94f7;\r\n}\r\n\r\n.option-input:checked::after {\r\n  background:#ac94f7 ;\r\n  content: '';\r\n  display: block;\r\n  position: relative;\r\n  z-index: 100;\r\n}\r\n.option-input.radio {\r\n  border-radius: 50%;\r\n}\r\n.option-input.radio::after {\r\n  border-radius: 50%;\r\n}\r\n", ""]);
+exports.push([module.i, "/*\nstyles for radio buttons \nhttps://codepen.io/wilder_taype/pen/pNXwMW/\n*/\n*{font-family: 'Roboto', sans-serif;}\n\n\n.option-input {\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  -ms-appearance: none;\n  -o-appearance: none;\n  appearance: none;\n  position: relative;\n  top: 13.33333px;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  height: 30px;\n  width: 30px;\n  transition: all 0.15s ease-out 0s;\n  background: #cbd1d8;\n  border: none;\n  color: #fff;\n  cursor: pointer;\n  display: inline-block;\n  margin-right: 0.5rem;\n  outline: none;\n  position: relative;\n  z-index: 1000;\n}\n.option-input:hover {\n  background: #9faab7;\n}\n.option-input:checked {\n  background: #ac94f7;\n}\n\n.option-input:checked::after {\n  background:#ac94f7 ;\n  content: '';\n  display: block;\n  position: relative;\n  z-index: 100;\n}\n.option-input.radio {\n  border-radius: 50%;\n}\n.option-input.radio::after {\n  border-radius: 50%;\n}\n", ""]);
 
 
 
@@ -13037,7 +13037,7 @@ exports.push([module.i, "/*\r\nstyles for radio buttons \r\nhttps://codepen.io/w
 
 exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "body {\r\n  margin: 0;\r\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\",\r\n    \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\",\r\n    sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n}\r\n\r\ncode {\r\n  font-family: source-code-pro, Menlo, Monaco, Consolas, \"Courier New\",\r\n    monospace;\r\n}\r\n", ""]);
+exports.push([module.i, "body {\n  margin: 0;\n  font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Roboto\", \"Oxygen\",\n    \"Ubuntu\", \"Cantarell\", \"Fira Sans\", \"Droid Sans\", \"Helvetica Neue\",\n    sans-serif;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n\ncode {\n  font-family: source-code-pro, Menlo, Monaco, Consolas, \"Courier New\",\n    monospace;\n}\n", ""]);
 
 
 
@@ -39863,7 +39863,14 @@ module.exports = function retargetEvents(shadowRoot) {
             }
         }
 
-        shadowRoot.addEventListener(nativeEventName, retargetEvent, false);
+        var eventListenerOptions = false;
+
+        // See https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md
+        if (supportsPassiveEventListeners() && (nativeEventName === 'touchmove' || nativeEventName === 'touchstart')) {
+            eventListenerOptions = {capture: true, passive: true};
+        }
+
+        shadowRoot.addEventListener(nativeEventName, retargetEvent, eventListenerOptions);
         
         removeEventListeners.push(function () { shadowRoot.removeEventListener(nativeEventName, retargetEvent, false); })
     });
@@ -39920,6 +39927,22 @@ function composedPath(el) {
     }
     el = el.parentElement;
   }
+}
+
+// Copied from https://github.com/WICG/EventListenerOptions/blob/gh-pages/explainer.md#feature-detection
+function supportsPassiveEventListeners() {
+  var supportsPassive = false;
+  try {
+    var opts = Object.defineProperty({}, 'passive', {
+        get: function() {
+        supportsPassive = true;
+        }
+    });
+    window.addEventListener("testPassive", null, opts);
+    window.removeEventListener("testPassive", null, opts);
+  } catch (e) {}
+
+  return supportsPassive;
 }
 
 
@@ -40427,10 +40450,32 @@ module.exports = function (css) {
   !*** ./node_modules/react-web-component/src/extractAttributes.js ***!
   \*******************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-function _defineProperty(a,b,c){return b in a?Object.defineProperty(a,b,{value:c,enumerable:!0,configurable:!0,writable:!0}):a[b]=c,a}function _toConsumableArray(a){if(Array.isArray(a)){for(var b=0,c=Array(a.length);b<a.length;b++)c[b]=a[b];return c}return Array.from(a)}module.exports=function(a){if(!a.attributes)return{};var b={},c=void 0,d=[].concat(_toConsumableArray(a.attributes)),e=d.map(function(a){return _defineProperty({},a.name,a.value)}),f=!0,g=!1,h=void 0;try{for(var i,j=e[Symbol.iterator]();!(f=(i=j.next()).done);f=!0){c=i.value;var k=Object.keys(c)[0],l=k.replace(/-([a-z])/g,function(a){return a[1].toUpperCase()});b[l]=c[k]}}catch(a){g=!0,h=a}finally{try{!f&&j.return&&j.return()}finally{if(g)throw h}}return b};
+/**
+ * Takes in a node attributes map and returns an object with camelCased properties and values
+ * @param nodeMap
+ * @returns {{}}
+ */
+module.exports = function extractAttributes(nodeMap) {
+  if (!nodeMap.attributes) {
+    return {};
+  }
+
+  let obj = {};
+  let attribute;
+  const attributesAsNodeMap = [...nodeMap.attributes];
+  const attributes = attributesAsNodeMap.map((attribute) => ({ [attribute.name]: attribute.value }));
+
+  for (attribute of attributes) {
+    const key = Object.keys(attribute)[0];
+    const camelCasedKey = key.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
+    obj[camelCasedKey] = attribute[key];
+  }
+
+  return obj;
+};
+
 
 /***/ }),
 
@@ -40441,8 +40486,18 @@ function _defineProperty(a,b,c){return b in a?Object.defineProperty(a,b,{value:c
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-module.exports=function(){try{return __webpack_require__(/*! react-web-component-style-loader/exports */ "./node_modules/react-web-component-style-loader/exports.js").styleElements}catch(a){return[]}};
+/**
+ * An optional library which is conditionally added
+ * @returns {[]}
+ */
+module.exports = () => {
+  try {
+    return __webpack_require__(/*! react-web-component-style-loader/exports */ "./node_modules/react-web-component-style-loader/exports.js").styleElements;
+  } catch (e) {
+    return [];
+  }
+};
+
 
 /***/ }),
 
@@ -40453,8 +40508,95 @@ module.exports=function(){try{return __webpack_require__(/*! react-web-component
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-var _createClass=function(){function a(a,b){for(var c,d=0;d<b.length;d++)c=b[d],c.enumerable=c.enumerable||!1,c.configurable=!0,'value'in c&&(c.writable=!0),Object.defineProperty(a,c.key,c)}return function(b,c,d){return c&&a(b.prototype,c),d&&a(b,d),b}}();function _classCallCheck(a,b){if(!(a instanceof b))throw new TypeError('Cannot call a class as a function')}function _possibleConstructorReturn(a,b){if(!a)throw new ReferenceError('this hasn\'t been initialised - super() hasn\'t been called');return b&&('object'==typeof b||'function'==typeof b)?b:a}function _inherits(a,b){if('function'!=typeof b&&null!==b)throw new TypeError('Super expression must either be null or a function, not '+typeof b);a.prototype=Object.create(b&&b.prototype,{constructor:{value:a,enumerable:!1,writable:!0,configurable:!0}}),b&&(Object.setPrototypeOf?Object.setPrototypeOf(a,b):a.__proto__=b)}function _CustomElement(){return Reflect.construct(HTMLElement,[],this.__proto__.constructor)}Object.setPrototypeOf(_CustomElement.prototype,HTMLElement.prototype),Object.setPrototypeOf(_CustomElement,HTMLElement);var React=__webpack_require__(/*! react */ "./node_modules/react/index.js"),ReactDOM=__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"),retargetEvents=__webpack_require__(/*! react-shadow-dom-retarget-events */ "./node_modules/react-shadow-dom-retarget-events/index.js"),getStyleElementsFromReactWebComponentStyleLoader=__webpack_require__(/*! ./getStyleElementsFromReactWebComponentStyleLoader */ "./node_modules/react-web-component/src/getStyleElementsFromReactWebComponentStyleLoader.js"),extractAttributes=__webpack_require__(/*! ./extractAttributes */ "./node_modules/react-web-component/src/extractAttributes.js");__webpack_require__(/*! @webcomponents/shadydom */ "./node_modules/@webcomponents/shadydom/shadydom.min.js"),__webpack_require__(/*! @webcomponents/custom-elements */ "./node_modules/@webcomponents/custom-elements/custom-elements.min.js"),module.exports={create:function create(a,b){function c(a){f.webComponentConstructed&&f.webComponentConstructed.apply(f,[a])}function d(a,b){var c=g[a];c&&f&&f[c]&&f[c].apply(f,b||[])}var e=!(2<arguments.length&&arguments[2]!==void 0)||arguments[2],f=void 0,g={attachedCallback:'webComponentAttached',connectedCallback:'webComponentConnected',disconnectedCallback:'webComponentDisconnected',attributeChangedCallback:'webComponentAttributeChanged',adoptedCallback:'webComponentAdopted'},h=function(b){function g(){return _classCallCheck(this,g),_possibleConstructorReturn(this,(g.__proto__||Object.getPrototypeOf(g)).apply(this,arguments))}return _inherits(g,b),_createClass(g,[{key:'connectedCallback',value:function connectedCallback(){var b=this,g=b;if(e){var h=b.attachShadow({mode:'open'});g=document.createElement('div');var i=getStyleElementsFromReactWebComponentStyleLoader();i.forEach(function(a){h.appendChild(a.cloneNode(h))}),h.appendChild(g),retargetEvents(h)}ReactDOM.render(React.cloneElement(a,extractAttributes(b)),g,function(){f=this,c(b),d('connectedCallback')})}},{key:'disconnectedCallback',value:function disconnectedCallback(){d('disconnectedCallback')}},{key:'attributeChangedCallback',value:function attributeChangedCallback(a,b,c,e){d('attributeChangedCallback',[a,b,c,e])}},{key:'adoptedCallback',value:function adoptedCallback(a,b){d('adoptedCallback',[a,b])}}]),g}(_CustomElement);customElements.define(b,h)}};
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+const ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+const retargetEvents = __webpack_require__(/*! react-shadow-dom-retarget-events */ "./node_modules/react-shadow-dom-retarget-events/index.js");
+const getStyleElementsFromReactWebComponentStyleLoader = __webpack_require__(/*! ./getStyleElementsFromReactWebComponentStyleLoader */ "./node_modules/react-web-component/src/getStyleElementsFromReactWebComponentStyleLoader.js");
+const extractAttributes = __webpack_require__(/*! ./extractAttributes */ "./node_modules/react-web-component/src/extractAttributes.js");
+
+__webpack_require__(/*! @webcomponents/shadydom */ "./node_modules/@webcomponents/shadydom/shadydom.min.js");
+__webpack_require__(/*! @webcomponents/custom-elements */ "./node_modules/@webcomponents/custom-elements/custom-elements.min.js");
+
+module.exports = {
+  /**
+   * @param {JSX.Element} app
+   * @param {string} tagName - The name of the web component. Has to be minus "-" delimited.
+   * @param {boolean} useShadowDom - If the value is set to "true" the web component will use the `shadowDom`. The default value is true.
+   */
+  create: (app, tagName, useShadowDom = true, observedAttributes = [] ) => {
+    let appInstance;
+
+    const lifeCycleHooks = {
+      attachedCallback: 'webComponentAttached',
+      connectedCallback: 'webComponentConnected',
+      disconnectedCallback: 'webComponentDisconnected',
+      attributeChangedCallback: 'webComponentAttributeChanged',
+      adoptedCallback: 'webComponentAdopted'
+    };
+
+    function callConstructorHook(webComponentInstance) {
+      if (appInstance['webComponentConstructed']) {
+        appInstance['webComponentConstructed'].apply(appInstance, [webComponentInstance])
+      }
+    }
+
+    function callLifeCycleHook(hook, params) {
+      const instanceParams = params || [];
+      const instanceMethod = lifeCycleHooks[hook];
+
+      if (instanceMethod && appInstance && appInstance[instanceMethod]) {
+        appInstance[instanceMethod].call(appInstance, instanceParams);
+      }
+    }
+
+    const proto = class extends HTMLElement {
+      static get observedAttributes() {
+        return observedAttributes;
+      };
+      connectedCallback() {
+        const webComponentInstance = this;
+        let mountPoint = webComponentInstance;
+
+        if (useShadowDom) {
+          // Re-assign the webComponentInstance (this) to the newly created shadowRoot
+          const shadowRoot = webComponentInstance.attachShadow({ mode: 'open' });
+          // Re-assign the mountPoint to the newly created "div" element
+          mountPoint = document.createElement('div');
+
+          // Move all of the styles assigned to the react component inside of the shadowRoot.
+          // By default this is not used, only if the library is explicitly installed
+          const styles = getStyleElementsFromReactWebComponentStyleLoader();
+          styles.forEach((style) => {
+            shadowRoot.appendChild(style.cloneNode(shadowRoot));
+          });
+
+          shadowRoot.appendChild(mountPoint);
+
+          retargetEvents(shadowRoot);
+        }
+
+        ReactDOM.render(React.cloneElement(app, extractAttributes(webComponentInstance)) , mountPoint, function () {
+          appInstance = this;
+
+          callConstructorHook(webComponentInstance);
+          callLifeCycleHook('connectedCallback');
+        });
+      }
+      disconnectedCallback () {
+          callLifeCycleHook('disconnectedCallback');
+      }
+      attributeChangedCallback (attributeName, oldValue, newValue, namespace) {
+        callLifeCycleHook('attributeChangedCallback', [attributeName, oldValue, newValue, namespace]);
+      }
+      adoptedCallback (oldDocument, newDocument) {
+        callLifeCycleHook('adoptedCallback', [oldDocument, newDocument]);
+      }
+    }
+
+    customElements.define(tagName, proto);
+  },
+};
+
 
 /***/ }),
 
@@ -45136,13 +45278,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _App_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_App_css__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Buttons_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Buttons.css */ "./src/MathEquation/Buttons.css");
 /* harmony import */ var _Buttons_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_Buttons_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _js_actions_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/actions/index */ "./src/MathEquation/js/actions/index.js");
-/* harmony import */ var _js_store_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/store/index */ "./src/MathEquation/js/store/index.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _js_components_ActionBar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/components/ActionBar */ "./src/MathEquation/js/components/ActionBar.js");
-/* harmony import */ var _js_components_TextSlideBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/components/TextSlideBox */ "./src/MathEquation/js/components/TextSlideBox.js");
-/* harmony import */ var _js_components_PopUpUi__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/components/PopUpUi */ "./src/MathEquation/js/components/PopUpUi.js");
-/* harmony import */ var _js_constants_constsID__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./js/constants/constsID */ "./src/MathEquation/js/constants/constsID.js");
+/* harmony import */ var _js_store_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/store/index */ "./src/MathEquation/js/store/index.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _js_components_ActionBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./js/components/ActionBar */ "./src/MathEquation/js/components/ActionBar.js");
+/* harmony import */ var _js_components_TextSlideBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/components/TextSlideBox */ "./src/MathEquation/js/components/TextSlideBox.js");
+/* harmony import */ var _js_components_PopUpUi__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./js/components/PopUpUi */ "./src/MathEquation/js/components/PopUpUi.js");
+/* harmony import */ var _js_constants_constsID__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./js/constants/constsID */ "./src/MathEquation/js/constants/constsID.js");
 var _dec, _class;
 
 
@@ -45154,8 +45295,7 @@ var _dec, _class;
 
 
 
-
-let App = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["connect"])(store => {
+let App = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_4__["connect"])(store => {
   return {
     showMathEquationBox: store.propsPage.showMathEquationTextBox,
     typeMathInput: store.propsPage.typeMathInput
@@ -45171,10 +45311,10 @@ let App = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_5__["connect"])(st
     }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
       id: "appSpacer",
       className: "appSpacer_H"
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_TextSlideBox__WEBPACK_IMPORTED_MODULE_7__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_ActionBar__WEBPACK_IMPORTED_MODULE_6__["default"], {
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_TextSlideBox__WEBPACK_IMPORTED_MODULE_6__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_ActionBar__WEBPACK_IMPORTED_MODULE_5__["default"], {
       stateMathTextBox: this.props.showMathEquationBox,
       currentMathInput: this.props.typeMathInput
-    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_PopUpUi__WEBPACK_IMPORTED_MODULE_8__["default"], null));
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_js_components_PopUpUi__WEBPACK_IMPORTED_MODULE_7__["default"], null));
   }
 
 }) || _class);
@@ -45243,15 +45383,19 @@ if(false) {}
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index.css */ "./src/MathEquation/index.css");
-/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./App */ "./src/MathEquation/App.js");
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _js_store_index__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./js/store/index */ "./src/MathEquation/js/store/index.js");
-/* harmony import */ var react_web_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-web-component */ "./node_modules/react-web-component/src/index.js");
-/* harmony import */ var react_web_component__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_web_component__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _App__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./App */ "./src/MathEquation/App.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _js_store_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/store/index */ "./src/MathEquation/js/store/index.js");
+/* harmony import */ var _js_actions_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/actions/index */ "./src/MathEquation/js/actions/index.js");
+/* harmony import */ var react_web_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-web-component */ "./node_modules/react-web-component/src/index.js");
+/* harmony import */ var react_web_component__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_web_component__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _js_constants_constsID__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/constants/constsID */ "./src/MathEquation/js/constants/constsID.js");
+/* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! loglevel */ "./node_modules/loglevel/lib/loglevel.js");
+/* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(loglevel__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./index.css */ "./src/MathEquation/index.css");
+/* harmony import */ var _index_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_index_css__WEBPACK_IMPORTED_MODULE_8__);
+
+
 
 
 
@@ -45261,15 +45405,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 class RenderMathEquation extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  webComponentAttributeChanged(props) {
+    const varPos = 0;
+    const oldVal = 1;
+    const newVal = 2;
+    const namespace = 3;
+    loglevel__WEBPACK_IMPORTED_MODULE_7__["info"]("attribute has changed - " + props[varPos]);
+
+    try {
+      var obj = JSON.parse(props[newVal]);
+      _js_store_index__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch(_js_actions_index__WEBPACK_IMPORTED_MODULE_4__["updateAllLocalSyncOptions"](obj));
+    } catch (ex) {
+      loglevel__WEBPACK_IMPORTED_MODULE_7__["error"]("coudn't parse the [attribute] - " + props[varPos] + " [value] " + props[newVal]);
+      loglevel__WEBPACK_IMPORTED_MODULE_7__["error"]("JS Error - " + ex);
+    }
+  }
+
   render() {
-    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_4__["Provider"], {
-      store: _js_store_index__WEBPACK_IMPORTED_MODULE_5__["default"]
-    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_3__["default"], null));
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_redux__WEBPACK_IMPORTED_MODULE_2__["Provider"], {
+      store: _js_store_index__WEBPACK_IMPORTED_MODULE_3__["default"]
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_App__WEBPACK_IMPORTED_MODULE_1__["default"], null));
   }
 
 }
 
-react_web_component__WEBPACK_IMPORTED_MODULE_6___default.a.create(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderMathEquation, null), 'math-equations');
+react_web_component__WEBPACK_IMPORTED_MODULE_5___default.a.create(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderMathEquation, null), 'math-equations', true, _js_constants_constsID__WEBPACK_IMPORTED_MODULE_6__["allMathEquationAttributes"]);
 
 /***/ }),
 
@@ -45277,7 +45437,7 @@ react_web_component__WEBPACK_IMPORTED_MODULE_6___default.a.create(react__WEBPACK
 /*!**********************************************!*\
   !*** ./src/MathEquation/js/actions/index.js ***!
   \**********************************************/
-/*! exports provided: addArticle, changeHeightPage, showMathEquationTextBox, changeSelectedMathTypeInput, changeSelectedMathInput, updateRenderCanvas, updateBase64MathImage, updateSVGMathImage, updateWidthSizeMathEquation, updateHeightSizeMathEquation, updatePopUiPage, updateDownloadImageType, updatePageUiType, updateMathTextColor, updateImageDimensionsSettings */
+/*! exports provided: addArticle, changeHeightPage, showMathEquationTextBox, changeSelectedMathTypeInput, changeSelectedMathInput, updateRenderCanvas, updateBase64MathImage, updateSVGMathImage, updateWidthSizeMathEquation, updateHeightSizeMathEquation, updatePopUiPage, updateDownloadImageType, updatePageUiType, updateMathTextColor, updateAllLocalSyncOptions, updateImageDimensionsSettings */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -45296,6 +45456,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateDownloadImageType", function() { return updateDownloadImageType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updatePageUiType", function() { return updatePageUiType; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateMathTextColor", function() { return updateMathTextColor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateAllLocalSyncOptions", function() { return updateAllLocalSyncOptions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateImageDimensionsSettings", function() { return updateImageDimensionsSettings; });
 /* harmony import */ var _constants_action_types__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants/action-types */ "./src/MathEquation/js/constants/action-types.js");
 /* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/index */ "./src/MathEquation/js/store/index.js");
@@ -45387,6 +45548,12 @@ function updateMathTextColor(payload) {
   };
 } //local sync settings
 
+function updateAllLocalSyncOptions(payload) {
+  return {
+    type: _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_ALL_LOCAL_SYNC_OPTIONS"],
+    payload
+  };
+}
 function updateImageDimensionsSettings(payload) {
   return {
     type: _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_IMAGE_DIMENSIONS_SETTINGS"],
@@ -46785,7 +46952,7 @@ let TextSlideBox = (_dec = Object(react_redux__WEBPACK_IMPORTED_MODULE_6__["conn
 /*!*******************************************************!*\
   !*** ./src/MathEquation/js/constants/action-types.js ***!
   \*******************************************************/
-/*! exports provided: ADD_ARTICLE, FOUND_BAD_WORD, CHANGE_HEIGHT_PAGE, SHOW_MATH_EQUATION_TEXT_BOX, CHANGE_MATH_TYPE_INPUT, CHANGE_MATH_INPUT, UPDATE_RENDER_CANVAS, UPDATE_BASE64_Math_IMAGE, UPDATE_SVG_MATH_IMAGE, UPDATE_WIDTH_MATH_EQUATION, UPDATE_HEIGHT_MATH_EQUATION, UPDATE_POP_UI_PAGE, UPDATE_DOWNLOAD_IMAGE_TYPE, UPDATE_POP_UI_TYPE, UPDATE_MATH_TEXT_COLOR, UPDATE_IMAGE_DIMENSIONS_SETTINGS */
+/*! exports provided: ADD_ARTICLE, FOUND_BAD_WORD, CHANGE_HEIGHT_PAGE, SHOW_MATH_EQUATION_TEXT_BOX, CHANGE_MATH_TYPE_INPUT, CHANGE_MATH_INPUT, UPDATE_RENDER_CANVAS, UPDATE_BASE64_Math_IMAGE, UPDATE_SVG_MATH_IMAGE, UPDATE_WIDTH_MATH_EQUATION, UPDATE_HEIGHT_MATH_EQUATION, UPDATE_POP_UI_PAGE, UPDATE_DOWNLOAD_IMAGE_TYPE, UPDATE_POP_UI_TYPE, UPDATE_MATH_TEXT_COLOR, UPDATE_ALL_LOCAL_SYNC_OPTIONS, UPDATE_IMAGE_DIMENSIONS_SETTINGS */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46805,6 +46972,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_DOWNLOAD_IMAGE_TYPE", function() { return UPDATE_DOWNLOAD_IMAGE_TYPE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_POP_UI_TYPE", function() { return UPDATE_POP_UI_TYPE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_MATH_TEXT_COLOR", function() { return UPDATE_MATH_TEXT_COLOR; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_ALL_LOCAL_SYNC_OPTIONS", function() { return UPDATE_ALL_LOCAL_SYNC_OPTIONS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UPDATE_IMAGE_DIMENSIONS_SETTINGS", function() { return UPDATE_IMAGE_DIMENSIONS_SETTINGS; });
 //page settings
 const ADD_ARTICLE = "ADD_ARTICLE";
@@ -46823,6 +46991,7 @@ const UPDATE_DOWNLOAD_IMAGE_TYPE = "UPDATE_DOWNLOAD_IMAGE_TYPE";
 const UPDATE_POP_UI_TYPE = "UPDATE_POP_UI_TYPE";
 const UPDATE_MATH_TEXT_COLOR = "UPDATE_MATH_TEXT_COLOR"; //local sync
 
+const UPDATE_ALL_LOCAL_SYNC_OPTIONS = "UPDATE_ALL_LOCAL_SYNC_OPTIONS";
 const UPDATE_IMAGE_DIMENSIONS_SETTINGS = "UPDATE_IMAGE_DIMENSIONS_SETTINGS";
 
 /***/ }),
@@ -46831,7 +47000,7 @@ const UPDATE_IMAGE_DIMENSIONS_SETTINGS = "UPDATE_IMAGE_DIMENSIONS_SETTINGS";
 /*!***************************************************!*\
   !*** ./src/MathEquation/js/constants/constsID.js ***!
   \***************************************************/
-/*! exports provided: MathEquationBox, CloseMathExtEventName, UpdateLocalSyncProperties, UrlImage */
+/*! exports provided: MathEquationBox, CloseMathExtEventName, UpdateLocalSyncProperties, localSyncAttribute, allMathEquationAttributes, UrlImage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46839,15 +47008,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MathEquationBox", function() { return MathEquationBox; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CloseMathExtEventName", function() { return CloseMathExtEventName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UpdateLocalSyncProperties", function() { return UpdateLocalSyncProperties; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "localSyncAttribute", function() { return localSyncAttribute; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "allMathEquationAttributes", function() { return allMathEquationAttributes; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UrlImage", function() { return UrlImage; });
 /* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! loglevel */ "./node_modules/loglevel/lib/loglevel.js");
 /* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(loglevel__WEBPACK_IMPORTED_MODULE_0__);
 
-const MathEquationBox = "MathEquationBox";
+const MathEquationBox = "MathEquationBox"; //events
+
 const CloseMathExtEventName = "CloseMathEquation";
-const UpdateLocalSyncProperties = "UpdateLocalSyncProperties";
+const UpdateLocalSyncProperties = "UpdateLocalSyncProperties"; //attributes
+
+const localSyncAttribute = "local-sync";
+const allMathEquationAttributes = [localSyncAttribute];
 var tmpUrlImage;
-var browser = undefined; //= browser || chrome || undefined;
+var browser = browser;
+
+if (browser === undefined || browser === null) {
+  try {
+    browser = chrome;
+  } catch {
+    browser = undefined;
+  }
+}
 
 if (browser) {
   loglevel__WEBPACK_IMPORTED_MODULE_0__["debug"]("browser exists");
@@ -46974,9 +47157,9 @@ const initialState = {
     mathInputString: "",
     mathTextColor: "0x000000",
     updateRenderCanvas: false,
-    popUpUiPage: false,
+    popUpUiPage: true,
     downloadImageType: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["ImageDownloadType"].png,
-    popUiType: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["PopUpUi"].NoPage,
+    popUiType: _constants_constsTypes__WEBPACK_IMPORTED_MODULE_1__["PopUpUi"].SettingsPage,
     base64MathImage: "",
     svgMathImage: ""
   },
@@ -47032,7 +47215,9 @@ function rootReducer(state = initialState, action) {
     } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_MATH_TEXT_COLOR"]) {
       draft.propsPage.mathTextColor = action.payload;
     } //local sync
-    else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_IMAGE_DIMENSIONS_SETTINGS"]) {
+    else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_ALL_LOCAL_SYNC_OPTIONS"]) {
+        draft.localSync = action.payload;
+      } else if (action.type === _constants_action_types__WEBPACK_IMPORTED_MODULE_0__["UPDATE_IMAGE_DIMENSIONS_SETTINGS"]) {
         draft.localSync.imageDimensionsSettings = action.payload;
         updateLocalSyncObject = true;
       }
@@ -47048,8 +47233,7 @@ function rootReducer(state = initialState, action) {
         "composed": true
       });
       event.data = newState.localSync;
-      console.log("sending");
-      console.log(newState.localSync);
+      loglevel__WEBPACK_IMPORTED_MODULE_3__["info"]("[event]" + _constants_constsID__WEBPACK_IMPORTED_MODULE_2__["UpdateLocalSyncProperties"]);
       componentsTag[0].dispatchEvent(event);
     }
   }

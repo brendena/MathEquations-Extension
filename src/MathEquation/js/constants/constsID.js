@@ -15,7 +15,17 @@ export const allMathEquationAttributes = [localSyncAttribute]
 
 
 var tmpUrlImage
-var browser = undefined;//= browser || chrome || undefined;
+var browser =  browser;
+if(browser === undefined || browser === null)
+{
+    try{
+        browser = chrome;
+    }
+    catch{
+        browser = undefined;
+    }
+}
+
 if(browser)
 {
     log.debug("browser exists")

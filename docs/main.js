@@ -40445,161 +40445,6 @@ module.exports = function (css) {
 
 /***/ }),
 
-/***/ "./node_modules/react-web-component/src/extractAttributes.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/react-web-component/src/extractAttributes.js ***!
-  \*******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-/**
- * Takes in a node attributes map and returns an object with camelCased properties and values
- * @param nodeMap
- * @returns {{}}
- */
-module.exports = function extractAttributes(nodeMap) {
-  if (!nodeMap.attributes) {
-    return {};
-  }
-
-  let obj = {};
-  let attribute;
-  const attributesAsNodeMap = [...nodeMap.attributes];
-  const attributes = attributesAsNodeMap.map((attribute) => ({ [attribute.name]: attribute.value }));
-
-  for (attribute of attributes) {
-    const key = Object.keys(attribute)[0];
-    const camelCasedKey = key.replace(/-([a-z])/g, (g) => g[1].toUpperCase());
-    obj[camelCasedKey] = attribute[key];
-  }
-
-  return obj;
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/react-web-component/src/getStyleElementsFromReactWebComponentStyleLoader.js":
-/*!**************************************************************************************************!*\
-  !*** ./node_modules/react-web-component/src/getStyleElementsFromReactWebComponentStyleLoader.js ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * An optional library which is conditionally added
- * @returns {[]}
- */
-module.exports = () => {
-  try {
-    return __webpack_require__(/*! react-web-component-style-loader/exports */ "./node_modules/react-web-component-style-loader/exports.js").styleElements;
-  } catch (e) {
-    return [];
-  }
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/react-web-component/src/index.js":
-/*!*******************************************************!*\
-  !*** ./node_modules/react-web-component/src/index.js ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-const ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-const retargetEvents = __webpack_require__(/*! react-shadow-dom-retarget-events */ "./node_modules/react-shadow-dom-retarget-events/index.js");
-const getStyleElementsFromReactWebComponentStyleLoader = __webpack_require__(/*! ./getStyleElementsFromReactWebComponentStyleLoader */ "./node_modules/react-web-component/src/getStyleElementsFromReactWebComponentStyleLoader.js");
-const extractAttributes = __webpack_require__(/*! ./extractAttributes */ "./node_modules/react-web-component/src/extractAttributes.js");
-
-__webpack_require__(/*! @webcomponents/shadydom */ "./node_modules/@webcomponents/shadydom/shadydom.min.js");
-__webpack_require__(/*! @webcomponents/custom-elements */ "./node_modules/@webcomponents/custom-elements/custom-elements.min.js");
-
-module.exports = {
-  /**
-   * @param {JSX.Element} app
-   * @param {string} tagName - The name of the web component. Has to be minus "-" delimited.
-   * @param {boolean} useShadowDom - If the value is set to "true" the web component will use the `shadowDom`. The default value is true.
-   */
-  create: (app, tagName, useShadowDom = true, observedAttributes = [] ) => {
-    let appInstance;
-
-    const lifeCycleHooks = {
-      attachedCallback: 'webComponentAttached',
-      connectedCallback: 'webComponentConnected',
-      disconnectedCallback: 'webComponentDisconnected',
-      attributeChangedCallback: 'webComponentAttributeChanged',
-      adoptedCallback: 'webComponentAdopted'
-    };
-
-    function callConstructorHook(webComponentInstance) {
-      if (appInstance['webComponentConstructed']) {
-        appInstance['webComponentConstructed'].apply(appInstance, [webComponentInstance])
-      }
-    }
-
-    function callLifeCycleHook(hook, params) {
-      const instanceParams = params || [];
-      const instanceMethod = lifeCycleHooks[hook];
-
-      if (instanceMethod && appInstance && appInstance[instanceMethod]) {
-        appInstance[instanceMethod].call(appInstance, instanceParams);
-      }
-    }
-
-    const proto = class extends HTMLElement {
-      static get observedAttributes() {
-        return observedAttributes;
-      };
-      connectedCallback() {
-        const webComponentInstance = this;
-        let mountPoint = webComponentInstance;
-
-        if (useShadowDom) {
-          // Re-assign the webComponentInstance (this) to the newly created shadowRoot
-          const shadowRoot = webComponentInstance.attachShadow({ mode: 'open' });
-          // Re-assign the mountPoint to the newly created "div" element
-          mountPoint = document.createElement('div');
-
-          // Move all of the styles assigned to the react component inside of the shadowRoot.
-          // By default this is not used, only if the library is explicitly installed
-          const styles = getStyleElementsFromReactWebComponentStyleLoader();
-          styles.forEach((style) => {
-            shadowRoot.appendChild(style.cloneNode(shadowRoot));
-          });
-
-          shadowRoot.appendChild(mountPoint);
-
-          retargetEvents(shadowRoot);
-        }
-
-        ReactDOM.render(React.cloneElement(app, extractAttributes(webComponentInstance)) , mountPoint, function () {
-          appInstance = this;
-
-          callConstructorHook(webComponentInstance);
-          callLifeCycleHook('connectedCallback');
-        });
-      }
-      disconnectedCallback () {
-          callLifeCycleHook('disconnectedCallback');
-      }
-      attributeChangedCallback (attributeName, oldValue, newValue, namespace) {
-        callLifeCycleHook('attributeChangedCallback', [attributeName, oldValue, newValue, namespace]);
-      }
-      adoptedCallback (oldDocument, newDocument) {
-        callLifeCycleHook('adoptedCallback', [oldDocument, newDocument]);
-      }
-    }
-
-    customElements.define(tagName, proto);
-  },
-};
-
-
-/***/ }),
-
 /***/ "./node_modules/react/cjs/react.development.js":
 /*!*****************************************************!*\
   !*** ./node_modules/react/cjs/react.development.js ***!
@@ -45505,8 +45350,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _js_store_index__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./js/store/index */ "./src/MathEquation/js/store/index.js");
 /* harmony import */ var _js_actions_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./js/actions/index */ "./src/MathEquation/js/actions/index.js");
-/* harmony import */ var react_web_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-web-component */ "./node_modules/react-web-component/src/index.js");
-/* harmony import */ var react_web_component__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react_web_component__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _react_web_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./react-web-component */ "./src/MathEquation/react-web-component.js");
+/* harmony import */ var _react_web_component__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_react_web_component__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _js_constants_constsID__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./js/constants/constsID */ "./src/MathEquation/js/constants/constsID.js");
 /* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! loglevel */ "./node_modules/loglevel/lib/loglevel.js");
 /* harmony import */ var loglevel__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(loglevel__WEBPACK_IMPORTED_MODULE_7__);
@@ -45562,7 +45407,7 @@ class RenderMathEquation extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Co
 
 }
 
-react_web_component__WEBPACK_IMPORTED_MODULE_5___default.a.create(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderMathEquation, null), 'math-equations', true, _js_constants_constsID__WEBPACK_IMPORTED_MODULE_6__["allMathEquationAttributes"]);
+_react_web_component__WEBPACK_IMPORTED_MODULE_5___default.a.create(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RenderMathEquation, null), 'math-equations', true, _js_constants_constsID__WEBPACK_IMPORTED_MODULE_6__["allMathEquationAttributes"]);
 
 /***/ }),
 
@@ -47158,18 +47003,15 @@ const allMathEquationAttributes = [localSyncAttribute, MarkupLanguageAttribute];
 var tmpUrlImage;
 var browser = browser;
 
-if (browser === undefined || browser === null) {
-  try {
-    browser = chrome;
-  } catch {
-    browser = undefined;
-  }
+if (typeof chrome !== undefined && typeof browser === undefined) {
+  browser = chrome;
 }
 
-if (browser) {
-  loglevel__WEBPACK_IMPORTED_MODULE_0__["debug"]("browser exists");
+try {
+  //try and grab the browser get url object
   tmpUrlImage = browser.extension.getURL("") + "Img/";
-} else {
+} catch {
+  //this is not a extension.  Just use the base url 
   loglevel__WEBPACK_IMPORTED_MODULE_0__["debug"]("not a extension");
   tmpUrlImage = "Img/";
 }
@@ -47396,6 +47238,142 @@ __webpack_require__.r(__webpack_exports__);
 
 const store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_index__WEBPACK_IMPORTED_MODULE_1__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(_middleware_index__WEBPACK_IMPORTED_MODULE_2__["handleSettings"]));
 /* harmony default export */ __webpack_exports__["default"] = (store); //,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() //middle wear for a
+
+/***/ }),
+
+/***/ "./src/MathEquation/react-web-component.js":
+/*!*************************************************!*\
+  !*** ./src/MathEquation/react-web-component.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+//modification from this repo
+//https://github.com/LukasBombach/react-web-component
+const React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+const ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+const retargetEvents = __webpack_require__(/*! react-shadow-dom-retarget-events */ "./node_modules/react-shadow-dom-retarget-events/index.js");
+
+__webpack_require__(/*! @webcomponents/shadydom */ "./node_modules/@webcomponents/shadydom/shadydom.min.js");
+
+__webpack_require__(/*! @webcomponents/custom-elements */ "./node_modules/@webcomponents/custom-elements/custom-elements.min.js");
+
+const getStyleElementsFromReactWebComponentStyleLoader = () => {
+  try {
+    return __webpack_require__(/*! react-web-component-style-loader/exports */ "./node_modules/react-web-component-style-loader/exports.js").styleElements;
+  } catch (e) {
+    return [];
+  }
+};
+
+const extractAttributes = function extractAttributes(nodeMap) {
+  if (!nodeMap.attributes) {
+    return {};
+  }
+
+  let obj = {};
+  let attribute;
+  const attributesAsNodeMap = [...nodeMap.attributes];
+  const attributes = attributesAsNodeMap.map(attribute => ({
+    [attribute.name]: attribute.value
+  }));
+
+  for (attribute of attributes) {
+    const key = Object.keys(attribute)[0];
+    const camelCasedKey = key.replace(/-([a-z])/g, g => g[1].toUpperCase());
+    obj[camelCasedKey] = attribute[key];
+  }
+
+  return obj;
+};
+
+module.exports = {
+  /**
+   * @param {JSX.Element} app
+   * @param {string} tagName - The name of the web component. Has to be minus "-" delimited.
+   * @param {boolean} useShadowDom - If the value is set to "true" the web component will use the `shadowDom`. The default value is true.
+   */
+  create: (app, tagName, useShadowDom = true, observedAttributes = []) => {
+    let appInstance;
+    const lifeCycleHooks = {
+      attachedCallback: 'webComponentAttached',
+      connectedCallback: 'webComponentConnected',
+      disconnectedCallback: 'webComponentDisconnected',
+      attributeChangedCallback: 'webComponentAttributeChanged',
+      adoptedCallback: 'webComponentAdopted'
+    };
+
+    function callConstructorHook(webComponentInstance) {
+      if (appInstance['webComponentConstructed']) {
+        appInstance['webComponentConstructed'].apply(appInstance, [webComponentInstance]);
+      }
+    }
+
+    function callLifeCycleHook(hook, params) {
+      const instanceParams = params || [];
+      const instanceMethod = lifeCycleHooks[hook];
+
+      if (instanceMethod && appInstance && appInstance[instanceMethod]) {
+        appInstance[instanceMethod].call(appInstance, instanceParams);
+      }
+    }
+
+    const proto = class extends HTMLElement {
+      static get observedAttributes() {
+        return observedAttributes;
+      }
+
+      connectedCallback() {
+        const webComponentInstance = this;
+        let mountPoint = webComponentInstance;
+
+        if (useShadowDom) {
+          // Re-assign the webComponentInstance (this) to the newly created shadowRoot
+          const shadowRoot = webComponentInstance.attachShadow({
+            mode: 'open'
+          }); // Re-assign the mountPoint to the newly created "div" element
+
+          mountPoint = document.createElement('div'); // Move all of the styles assigned to the react component inside of the shadowRoot.
+          // By default this is not used, only if the library is explicitly installed
+
+          const styles = getStyleElementsFromReactWebComponentStyleLoader();
+          styles.forEach(style => {
+            shadowRoot.appendChild(style.cloneNode(shadowRoot));
+          });
+          shadowRoot.appendChild(mountPoint);
+          retargetEvents(shadowRoot);
+        }
+
+        ReactDOM.render(React.cloneElement(app, extractAttributes(webComponentInstance)), mountPoint, function () {
+          appInstance = this;
+          callConstructorHook(webComponentInstance);
+          callLifeCycleHook('connectedCallback');
+        });
+      }
+
+      disconnectedCallback() {
+        callLifeCycleHook('disconnectedCallback');
+      }
+
+      attributeChangedCallback(attributeName, oldValue, newValue, namespace) {
+        callLifeCycleHook('attributeChangedCallback', {
+          "test": attributeName,
+          "test": oldValue,
+          "test": newValue,
+          "test": namespace
+        });
+      }
+
+      adoptedCallback(oldDocument, newDocument) {
+        callLifeCycleHook('adoptedCallback', [oldDocument, newDocument]);
+      }
+
+    };
+    customElements.define(tagName, proto);
+  }
+};
 
 /***/ }),
 

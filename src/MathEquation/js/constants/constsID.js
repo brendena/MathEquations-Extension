@@ -18,25 +18,26 @@ export const allMathEquationAttributes = [localSyncAttribute,MarkupLanguageAttri
 
 var tmpUrlImage
 var browser =  browser;
-if(browser === undefined || browser === null)
+if(typeof chrome !== undefined  && typeof browser === undefined  )
 {
-    try{
-        browser = chrome;
-    }
-    catch{
-        browser = undefined;
-    }
+
+    browser = chrome;
 }
 
-if(browser)
+
+
+try
 {
-    log.debug("browser exists")
+    //try and grab the browser get url object
     tmpUrlImage = browser.extension.getURL("") + "Img/";
 }
-else
+catch
 {
-    log.debug("not a extension")
+    //this is not a extension.  Just use the base url 
+    log.debug("not a extension");
     tmpUrlImage = "Img/";
 }
+
+
 
 export const UrlImage = tmpUrlImage;

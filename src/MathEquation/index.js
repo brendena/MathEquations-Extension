@@ -3,7 +3,7 @@ import App from './App';
 import { Provider } from "react-redux";
 import store from "./js/store/index";
 import * as Actions from './js/actions/index'
-import ReactWebComponent from 'react-web-component';
+import ReactWebComponent from './react-web-component';
 import * as ConstsID from "./js/constants/constsID"
 import * as log from 'loglevel';
 import './index.css';

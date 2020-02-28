@@ -18,12 +18,10 @@ export const allMathEquationAttributes = [localSyncAttribute,MarkupLanguageAttri
 
 var tmpUrlImage
 var browser =  browser;
-if(typeof chrome !== undefined  && typeof browser === undefined  )
+if(typeof chrome !== "undefined"  && typeof browser === "undefined"  )
 {
-
     browser = chrome;
 }
-
 
 
 try
@@ -37,7 +35,5 @@ catch
     log.debug("not a extension");
     tmpUrlImage = "Img/";
 }
-
-
 
 export const UrlImage = tmpUrlImage;

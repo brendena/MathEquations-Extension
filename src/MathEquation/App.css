@@ -1,3 +1,9 @@
+:host {
+  --mainColor: #ffdc78;
+  --textBackground: white;
+  --clear: rgba(0,0,0,0);
+}
+
 .App {
   color:black;
   bottom:0px;
@@ -36,7 +42,7 @@
 
 #TextSlideBox
 {
-  background:white;
+  background:var(--textBackground);
   border-top-style: solid;
   border-top-width: 1px;
   display:flex;
@@ -61,7 +67,7 @@
   bottom:0px;
   left:0px;
   width:100%;
-  background-color:#ffdc78;
+  background-color: var(--mainColor);
   color:black;
   display:flex;
   flex-direction: row;
@@ -123,6 +129,7 @@ a:active
   box-sizing: border-box;
   padding: 20px;
   border-width: 0;
+  background: var(--clear);
 }
 input:disabled {
   background: #bfbdbd70;
@@ -135,15 +142,16 @@ input:disabled {
   border-left-width: 1px;
   display:flex;
   flex-direction: column;
+  background: var(--clear);
 }
 
 .buttonOptionsImage{
-  background-color: #ffffff;
+  background-color: var(--clear);
   border: 0;
   height: 100%;
   box-sizing: border-box;
   margin-left:2px;
-  border-color:white;
+  border-color:var(--textBackground);
 }
 
 .buttonOptionsImage:hover{
@@ -174,7 +182,7 @@ input:disabled {
   padding-right: 10px;
   font-size: 30px;
   border-width: 0px;
-  background-color: #ffdc78;
+  background-color: var(--mainColor);
   font-family: 'Times New Roman', Times, serif;
   box-shadow: none;
   transition: all 0.5s ease 0s;
@@ -183,12 +191,12 @@ input:disabled {
 
 .navButton:hover
 {
-  background-color: #aaaa78;
+  filter: brightness(90%);
 }
 
 .selectedMathInput
 {
-  background-color: #aaaa78;
+  filter: brightness(90%);
 }
 
 .flexSpacer{
@@ -281,6 +289,7 @@ svg
 #textInputSizeWidth
 {
   width:50px;
+  background: var(--clear);
 }
 
 #textInputSizeHeight
@@ -392,6 +401,6 @@ svg
   .selectedMathInput
   {
     order: -1;
-    background-color: #ffdc78;;
+    background-color: var(--mainColor);;
   }
 }

@@ -14,4 +14,4 @@
  ## JS Events In
  * UpdateMathEquationTextEvent - update the text inside of the extension 
 
- ## Slots  
+ ## CSS variables

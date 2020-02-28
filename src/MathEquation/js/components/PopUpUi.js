@@ -30,7 +30,7 @@ class PopUpUi extends React.Component{
         var styleToClose = {};
         if(this.props.pageOpen == false)
         {
-            styleToClose["bottom"] = "-100%";
+            styleToClose.transform = "translateY(100vh)";
         }
         return (
             <div id="PopUpUiContainer" style={styleToClose}>

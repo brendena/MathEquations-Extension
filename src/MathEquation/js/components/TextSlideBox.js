@@ -32,6 +32,7 @@ class TextSlideBox extends React.Component{
             <div id="TextSlideBox" style={position} className="textSlideBox_H">
                 <PageSlider/>
                 
+                
                 <div id="TextSectionDivider">
                     <textarea id="inputTextMathEquation" 
                               placeholder="equation location"

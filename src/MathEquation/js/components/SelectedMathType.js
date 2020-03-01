@@ -5,8 +5,10 @@ import * as ConstsID from "../constants/constsID"
 import  store  from "../store/index"
 import * as log from 'loglevel';
 
+import LatexImage from "./LatexImage";
 
 
+console.log("asdf")
 
 class SelectedMathType extends React.Component{
     constructor(props){
@@ -36,7 +38,9 @@ class SelectedMathType extends React.Component{
         store.dispatch(Actions.changeSelectedMarkupLanguage(typeInput));
     }
 
-    render(){
+    render()
+    {
+        
 
         this.latexButtonClassName= "navButton";
         var mathMLButtonClassName= "navButton";
@@ -54,7 +58,7 @@ class SelectedMathType extends React.Component{
         return (
             <span id="selectMathTypeSpan">
                 <button className={this.latexButtonClassName}
-                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MarkupLanguages.latex)}} ><img   style={stylesLatex} src={ConstsID.UrlImage + "latex.svg"} id="latexImage" alt="latex logo"/></button>
+                        onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MarkupLanguages.latex)}} ><LatexImage/></button>
                 <button className={mathMLButtonClassName} 
                         onClick={(event)=>{this.changeSelectedInput(event,ConstTypes.MarkupLanguages.mathML)}}>MathML</button>
                 <button className={asciiMathButtonClassName} 

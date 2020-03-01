@@ -1,11 +1,12 @@
 :host {
   --mainColor: #ffdc78;
   --textBackground: white;
+  --fontColor: black;
   --clear: rgba(0,0,0,0);
 }
 
 .App {
-  color:black;
+  color:var(--fontColor);;
   bottom:0px;
   left:0px;
   display:grid;
@@ -130,6 +131,7 @@ a:active
   padding: 20px;
   border-width: 0;
   background: var(--clear);
+  color: var(--fontColor);
 }
 input:disabled {
   background: #bfbdbd70;
@@ -152,6 +154,7 @@ input:disabled {
   box-sizing: border-box;
   margin-left:2px;
   border-color:var(--textBackground);
+  color:var(--fontColor);
 }
 
 .buttonOptionsImage:hover{
@@ -182,6 +185,7 @@ input:disabled {
   padding-right: 10px;
   font-size: 30px;
   border-width: 0px;
+  color: var(--fontColor);
   background-color: var(--mainColor);
   font-family: 'Times New Roman', Times, serif;
   box-shadow: none;
@@ -249,7 +253,7 @@ svg
 
 #InnerPopUpUiContainer
 {
-  background-color: #fff;
+  background-color: var(--textBackground);
   padding: 25px;
   padding-bottom: 0;
   border-style: solid;

@@ -3,7 +3,7 @@ import * as constTypes from "../constants/constsTypes"
 import * as ConstsID from "../constants/constsID"
 import * as log from 'loglevel';
 import produce from "immer"
-
+import ThemeColors from "../types/ThemeColors"
 
 const initialState = {
     //properties of the page that will not be synced across all instances of the browser
@@ -16,16 +16,17 @@ const initialState = {
         mathEquationText:"",
         mathTextColor:"0x000000",
         updateRenderCanvas: false,
-        popUpUiPage: false,
+        popUpUiPage: true,
         downloadImageType: constTypes.ImageDownloadType.png,
-        popUiType :  constTypes.PopUpUi.NoPage,
+        popUiType :  constTypes.PopUpUi.SettingsPage,
         base64MathImage: "",
         svgMathImage:""
         
     },
     //properties that will be locally synced
     localSync:{
-        imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedWidth
+        imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedWidth,
+        themeColors: new ThemeColors()
     }
 };
 
@@ -118,6 +119,11 @@ function rootReducer(state = initialState, action){
             draft.localSync.imageDimensionsSettings = action.payload;
             updateLocalSyncObject = true;
         }
+        else if(action.type === consts.UPDATE_COLOR_THEME)
+        {
+            draft.localSync.themeColors = action.payload;
+            updateLocalSyncObject = true;
+        }
 
 
 
@@ -134,7 +140,6 @@ function rootReducer(state = initialState, action){
             log.info("[event]" + ConstsID.UpdateLocalSyncProperties);
             componentsTag[0].dispatchEvent(event);
         }
-        
     }
 
     

@@ -4,7 +4,7 @@ import * as Actions from '../actions/index'
 
 import { connect } from 'react-redux';
 import  store  from "../store/index"
-
+import SettingsColor from "./SettingsColor"
 
 @connect((store)=>{
     return{
@@ -14,7 +14,6 @@ import  store  from "../store/index"
 class SettingsPage extends React.Component{
     constructor(props){
         super(props);
-        this.containerForInput = React.createRef();
     }
     onChangeImageDimensionsSettings(event){
         var settings = event.target.value;
@@ -26,7 +25,7 @@ class SettingsPage extends React.Component{
         
         
         return (
-            <div ref={this.containerForInput}>
+            <div >
                 <h2>Settings</h2>
                 
                 <h3>Image Dimensions</h3>
@@ -67,7 +66,7 @@ class SettingsPage extends React.Component{
                         </p>
                     </div>
                 </div>
-
+                <SettingsColor/>
             </div>
         )
     }

@@ -67,3 +67,7 @@ export function updateAllLocalSyncOptions(payload) {
 export function updateImageDimensionsSettings(payload) {
     return { type: consts.UPDATE_IMAGE_DIMENSIONS_SETTINGS, payload }
 }
+
+export function updateColorThemes(payload) {
+    return { type: consts.UPDATE_COLOR_THEME, payload }
+}

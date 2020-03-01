@@ -14,17 +14,13 @@ class RenderMathEquation extends React.Component
 {
     webComponentAttributeChanged(props)
     {
-        const varPos = 0;
-        const oldVal = 1;
-        const newVal = 2;
-        const namespace = 3;
-
-        log.info("attribute has changed - " + props[varPos]);
+        log.info(props);
+        log.info("attribute has changed -    " + props.attributeName);
         
         try
         {
-            var obj = JSON.parse(props[newVal]);
-            if(props[varPos] === ConstsID.localSyncAttribute)
+            var obj = JSON.parse(props.newValue);
+            if(props.attributeName === ConstsID.localSyncAttribute)
             {
                 store.dispatch(Actions.updateAllLocalSyncOptions(obj));
             }
@@ -32,7 +28,7 @@ class RenderMathEquation extends React.Component
         }
         catch(ex)
         {
-            log.error("coudn't parse the [attribute] - " + props[varPos] + " [value] " +  props[newVal]);
+            log.error("coudn't parse the [attribute] - " + props.attributeName + " [value] " +  props.newValue);
             log.error("JS Error - " + ex);
         }
     }

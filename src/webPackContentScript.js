@@ -24,13 +24,13 @@ var constructUi = function(configOptions){
             MathEquationTag.style.display = "initial" ;  
             document.body.appendChild(MathEquationTag);
 
-            MathEquationTag.addEventListener(ConstsID.CloseMathExtEventName, function (e) { 
-                console.log("hidding the extension");
+            MathEquationTag.addEventListener(ConstsID.CloseMathExtEventName, function (e) {
                 log.info("hidding the extension");
                 MathEquationTag.style.display = "none";
             }, false);
 
             MathEquationTag.addEventListener(ConstsID.UpdateLocalSyncProperties, function (e) { 
+                log.info("----UpdateLocalSyncProperties");
                 thisPageChangeLocalStorage = true;
                 browser.storage.local.set(e.data);
             }, false);
@@ -58,35 +58,29 @@ browser.runtime.onMessage.addListener(
     }
 );
 
-browser.storage.onChanged.addListener(function(chagnedData){
-    log.info("changed local storage");
-    /*
-    //firefox way of doing it
-    let gettingItem = browser.storage.local.get(function(data){
-        console.log("open got the info")
-    });
-
-    gettingItem.then(function(data){
-        console.log("open got the info")
-    }, function(error){
-        console.log("failed to open");
-    });
-    */
-
-    //if changes where made locally don't reload the attribute 
-    //if(thisPageChangeLocalStorage === false)
-    //{
-    //grab all the data
+var grabLocalData = function(){
     let gettingItem = browser.storage.local.get(function(data){
         log.info("modifying attribute -" + ConstsID.localSyncAttribute);
         MathEquationTag.setAttribute(ConstsID.localSyncAttribute, JSON.stringify(data))
     });
-    //}
+}
 
+browser.storage.onChanged.addListener(function(chagnedData){
+    log.info("----changed local storage");
 
+    //grab all the data
+    
+
+    grabLocalData();
     thisPageChangeLocalStorage = false;
 });
 
 //auto load application
 constructUi({"openCloseMenu":true})
 //*/
+
+//grab the local data
+if(typeof browser !== "undefined")
+{
+    grabLocalData();
+}

@@ -14,4 +14,8 @@
  ## JS Events In
  * UpdateMathEquationTextEvent - update the text inside of the extension 
 
+
+## local storage
+There basic local storage to hold the setting.  These settings get loaded into the web extension via its attributes 
+
  ## CSS variables

@@ -105,7 +105,7 @@ module.exports = {
           callLifeCycleHook('disconnectedCallback');
       }
       attributeChangedCallback (attributeName, oldValue, newValue, namespace) {
-        callLifeCycleHook('attributeChangedCallback', {"test":attributeName,"test": oldValue,"test": newValue,"test": namespace});
+        callLifeCycleHook('attributeChangedCallback', {"attributeName":attributeName,"oldValue": oldValue,"newValue": newValue,"namespace": namespace});
       }
       adoptedCallback (oldDocument, newDocument) {
         callLifeCycleHook('adoptedCallback', [oldDocument, newDocument]);

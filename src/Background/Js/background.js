@@ -7,7 +7,7 @@ console.log("loaded this extension");
 browser.browserAction.onClicked.addListener(function(tab) {
   console.log("test")
   console.log(tab)
-  //browser.tabs.sendMessage(tab.id, {openCloseMenu: true});
+  browser.tabs.sendMessage(tab.id, {openCloseMenu: true});
 
   /*
   browser.tabs.executeScript(null,{

@@ -66,6 +66,7 @@ class SettingsPage extends React.Component{
                         </p>
                     </div>
                 </div>
+                <hr></hr>
                 <SettingsColor/>
             </div>
         )

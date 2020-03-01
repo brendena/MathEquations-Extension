@@ -5,8 +5,13 @@
   --clear: rgba(0,0,0,0);
 }
 
+hr{
+  margin-top: 30px;
+  border-color:var(--fontColor);
+}
+
 .App {
-  color:var(--fontColor);;
+  color:var(--fontColor);
   bottom:0px;
   left:0px;
   display:grid;
@@ -189,7 +194,7 @@ input:disabled {
   background-color: var(--mainColor);
   font-family: 'Times New Roman', Times, serif;
   box-shadow: none;
-  transition: all 0.5s ease 0s;
+  /*transition: all 0.5s ease 0s;*/
   outline: 0;
 }
 
@@ -292,13 +297,34 @@ svg
 
 #textInputSizeWidth
 {
+  border-color:var(--fontColor);
   width:50px;
-  background: var(--clear);
+  background-color:var(--clear);
+  color:var(--fontColor);
 }
 
 #textInputSizeHeight
 {
+  border-color:var(--fontColor);
   width:50px;
+  background-color:var(--clear);
+  color:var(--fontColor);
+  
+}
+#textInputSizeWidth:disabled
+{
+  border-color:var(--textBackground);
+  text-align: right;
+  border-width:0px;
+  -moz-appearance:textfield;
+  
+}
+#textInputSizeHeight:disabled
+{
+  border-color:var(--textBackground);
+  text-align: right;
+  border-width:0px;
+  -moz-appearance:textfield;
 }
 
 #paypalButton
@@ -408,3 +434,33 @@ svg
     background-color: var(--mainColor);;
   }
 }
+
+.themeColorIcon
+{
+  margin-right: 20px;
+  padding: 0;
+  float:left;
+  position: relative;
+  width:0px;
+  height:0px;
+  border-style:solid;
+  border-width:30px;
+  border-color:red;
+  border-radius:5px;
+  border-left-color: coral;
+  border-top-color: coral;
+}
+
+/*
+.themeColorIcon:before{
+    content: '';
+    position: absolute;
+    top: -70px;
+    left: -70px;
+    right: -70px;
+    bottom: -70px;
+    background: black;
+    border-radius:990px;
+    z-index: -1;
+}
+*/

@@ -20,6 +20,14 @@ import * as ConstsID from "./js/constants/constsID"
 class App extends React.Component{
   constructor(props){
     super(props);
+    var browser = browser || chrome;
+    browser.storage.local.get(function(data){
+        var componentsTag = document.getElementsByTagName("math-equations");
+        var tag = componentsTag[0];
+        tag.style.setProperty("--mainColor",data.themeColors.mainColor);
+        tag.style.setProperty("--textBackground",data.themeColors.textBackground);
+        tag.style.setProperty("--fontColor",data.themeColors.fontColor);
+    });
   }
   
   updateTheme()

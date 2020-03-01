@@ -16,9 +16,9 @@ const initialState = {
         mathEquationText:"",
         mathTextColor:"0x000000",
         updateRenderCanvas: false,
-        popUpUiPage: true,
+        popUpUiPage: false,
         downloadImageType: constTypes.ImageDownloadType.png,
-        popUiType :  constTypes.PopUpUi.SettingsPage,
+        popUiType :  constTypes.PopUpUi.NoPage,
         base64MathImage: "",
         svgMathImage:""
         

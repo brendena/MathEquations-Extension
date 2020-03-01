@@ -1,8 +1,8 @@
 import * as log from 'loglevel';
 import * as ConstsID from "./MathEquation/js/constants/constsID"
 
-log.setDefaultLevel("trace")
-//log.setDefaultLevel("warn")
+//log.setDefaultLevel("trace")
+log.setDefaultLevel("warn")
 
 var browser = browser || chrome;
 require('./MathEquation/index');
@@ -53,6 +53,7 @@ var constructUi = function(configOptions){
 
 browser.runtime.onMessage.addListener(
 	function(request, sender) {
+        log.info("[event] - onMessage received");
         log.info(request);
         constructUi(request);
     }
@@ -76,11 +77,6 @@ browser.storage.onChanged.addListener(function(chagnedData){
 });
 
 //auto load application
-constructUi({"openCloseMenu":true})
+//constructUi({"openCloseMenu":true})
 //*/
 
-//grab the local data
-if(typeof browser !== "undefined")
-{
-    grabLocalData();
-}

@@ -33,11 +33,11 @@ https://codepen.io/wilder_taype/pen/pNXwMW/
   background: #9faab7;
 }
 .option-input:checked {
-  background: #ac94f7;
+  background: var(--mainColor);
 }
 
 .option-input:checked::after {
-  background:#ac94f7 ;
+  background: var(--mainColor);
   content: '';
   display: block;
   position: relative;

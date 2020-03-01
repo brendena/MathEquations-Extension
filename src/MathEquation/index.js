@@ -35,18 +35,22 @@ class RenderMathEquation extends React.Component
 
     componentDidMount()
     {
+
+
         var componentsTag = document.getElementsByTagName("math-equations");
         if(componentsTag.length == 1)
         { 
             componentsTag[0].addEventListener(ConstsID.UpdateMathEquationTextEvent, function (e) { 
-                console.log("got the text");
-                console.log(e.data);
+                log.info("[event] - received UpdateMathEquationTextEvent ");
+                log.info(e.data);
                 store.dispatch(Actions.updateMathEquationText(e.data));
             }, false);
         }
     }
 
     render() {
+
+        
         return <Provider store={store}>
                         <App />
                 </Provider>;

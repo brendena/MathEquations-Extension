@@ -10,7 +10,7 @@ class LatexImage extends React.Component {
                 viewBox="0 0 744.09449 300.00001"
                 id="svg2"
                 version="1.1"
-                style={{height:"100%",width:"75px"}}>
+                style={{height:"100%",width:"75px",pointerEvents: "none"}}>
                 <g
                     id="layer1"
                     transform="translate(0,-752.3622)">

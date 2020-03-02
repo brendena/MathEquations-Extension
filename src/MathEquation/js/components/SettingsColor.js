@@ -1,7 +1,7 @@
 import React from "react";
 import * as ConstTypes from "../constants/constsTypes"
 import * as Actions from '../actions/index'
-
+import * as log from 'loglevel';
 import { connect } from 'react-redux';
 import  store  from "../store/index"
 import ThemeColors from "../types/ThemeColors"
@@ -37,8 +37,9 @@ class SettingsColor extends React.Component{
     changeColors(themeName){
         var theme = new ThemeColors();
         
-        //if(default don't change anything)
+        log.info("changed theme");
 
+        //if(default don't change anything)
         if(themeName == "darkTheme")
         {
             theme = this.darkTheme;

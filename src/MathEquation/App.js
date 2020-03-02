@@ -7,8 +7,9 @@ import { connect } from 'react-redux';
 import  ActionBar  from "./js/components/ActionBar"
 import TextSlideBox from "./js/components/TextSlideBox"
 import PopUpUi from "./js/components/PopUpUi"
+import * as log from 'loglevel';
+import * as Actions from './js/actions/index'
 
-import * as ConstsID from "./js/constants/constsID"
 
 @connect((store)=>{
   return{
@@ -22,11 +23,7 @@ class App extends React.Component{
     super(props);
     var browser = browser || chrome;
     browser.storage.local.get(function(data){
-        var componentsTag = document.getElementsByTagName("math-equations");
-        var tag = componentsTag[0];
-        tag.style.setProperty("--mainColor",data.themeColors.mainColor);
-        tag.style.setProperty("--textBackground",data.themeColors.textBackground);
-        tag.style.setProperty("--fontColor",data.themeColors.fontColor);
+      store.dispatch(Actions.updateAllLocalSyncOptions(data));
     });
   }
   
@@ -37,7 +34,6 @@ class App extends React.Component{
     {
       
       var tag = componentsTag[0];
-      console.log(tag)
       tag.style.setProperty("--mainColor",this.props.themeColor.mainColor);
       tag.style.setProperty("--textBackground",this.props.themeColor.textBackground);
       tag.style.setProperty("--fontColor",this.props.themeColor.fontColor);

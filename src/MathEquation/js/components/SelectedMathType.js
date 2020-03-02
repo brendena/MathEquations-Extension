@@ -8,8 +8,6 @@ import * as log from 'loglevel';
 import LatexImage from "./LatexImage";
 
 
-console.log("asdf")
-
 class SelectedMathType extends React.Component{
     constructor(props){
         super(props);
@@ -19,20 +17,20 @@ class SelectedMathType extends React.Component{
     changeSelectedInput(event,typeInput)
     {
         var parentsDiv = event.target.parentElement;
+        //fix for the latex image button
         if(window.innerWidth < 800)
         {
-            console.log(parentsDiv.nodeName);
-            if(event.target.parentElement.className.length == 0)
+            if(parentsDiv.className.length == 0)
             {
-                event.target.parentElement.className = "selectedMathTypeScanShow";
+                parentsDiv.className = "selectedMathTypeScanShow";
             }
             else
             {
-                event.target.parentElement.className = "";
+                parentsDiv.className = "";
             }
         }else
         {
-            event.target.parentElement.className = "";
+            parentsDiv.className = "";
         }
         
         store.dispatch(Actions.changeSelectedMarkupLanguage(typeInput));

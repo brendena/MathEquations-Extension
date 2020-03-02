@@ -32,7 +32,7 @@ const initialState = {
 
 function rootReducer(state = initialState, action){
     var updateLocalSyncObject = false;
-
+    log.info(JSON.stringify(state.localSync));
     var newState = produce(state,draft =>{
         
         log.info("changing state - " + action.type);
@@ -129,8 +129,10 @@ function rootReducer(state = initialState, action){
 
     });
 
+    log.info(newState);
     if(updateLocalSyncObject === true)
     {
+        log.info("updateLocalSyncObject");
         //grab the components tag and send out a event
         var componentsTag = document.getElementsByTagName("math-equations");
         if(componentsTag.length == 1)

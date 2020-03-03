@@ -23,8 +23,13 @@ class App extends React.Component{
     super(props);
     var browser = browser || chrome;
     browser.storage.local.get(function(data){
-      store.dispatch(Actions.updateAllLocalSyncOptions(data));
+      if(Object.keys(data).length != 0)
+      {
+        store.dispatch(Actions.updateAllLocalSyncOptions(data));
+      }
+      
     });
+    this.updateTheme = this.updateTheme.bind(this);
   }
   
   updateTheme()

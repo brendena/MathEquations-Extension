@@ -3,7 +3,7 @@
 
 
 
-![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/readmeExample.png?raw=true)
+![example](https://github.com/brendena/MathEquations-Extension/blob/master/Img/exampleScreenShot.png?raw=true)
 
 
 # [Try it live here](https://brendena.github.io/MathEquations-Extension/)

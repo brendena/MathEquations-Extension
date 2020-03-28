@@ -77,6 +77,6 @@ browser.storage.onChanged.addListener(function(chagnedData){
 });
 
 //auto load application
-//constructUi({"openCloseMenu":true})
+constructUi({"openCloseMenu":true})
 //*/
 

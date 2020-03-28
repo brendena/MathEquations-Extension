@@ -24,12 +24,20 @@ hr{
 }
 
 
-.appGrid_H
+.appGrid_B
 {
   grid-template-columns: auto;
   grid-template-rows: auto auto 75px;
   grid-gap: 0;
 }
+
+.appGrid_R
+{
+  grid-template-columns: auto auto 75px;
+  grid-template-rows: auto;
+  grid-gap: 0;
+}
+
 
 #appSpacer
 {
@@ -37,13 +45,22 @@ hr{
   pointer-events: none;
 }
 
-.appSpacer_H
+.appSpacer_B
 {
   grid-row-start: 1;
   grid-row-end: 2;
   grid-column-start: 1;
   grid-column-end: 2;
 }
+
+.appSpacer_R
+{
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
 
 
 #TextSlideBox
@@ -57,12 +74,22 @@ hr{
   z-index:200;
 }
 
-.textSlideBox_H
+.textSlideBox_B
 {
   grid-row-start: 2;
   grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 2;
+  height: 200px;
+  align-self: end;
+}
+
+.textSlideBox_R
+{
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 3;
   height: 200px;
   align-self: end;
 }
@@ -76,18 +103,28 @@ hr{
   background-color: var(--mainColor);
   color:black;
   display:flex;
-  flex-direction: row;
   pointer-events: auto;
   z-index:300;
 }
 
-.actionBar_H
+.actionBar_B
 {
-  grid-row-start: 2;
-  grid-row-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
   grid-column-start: 1;
   grid-column-end: 2;
+  flex-direction: row;
 }
+
+.actionBar_R
+{
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 3;
+  grid-column-end: 4;
+  flex-direction: column;
+}
+
 
 a:link
 {

@@ -16,6 +16,13 @@ export const ImageDownloadType={
     svg:"medium"
 }
 
+export const UILocation = 
+{
+    Left:"Left",
+    Right:"Right",
+    Bottom:"Bottom"
+}
+
 export const ImageDimensionsSettings={
     UserDefinedWidth:"UserDefinedWidth", //so the height will change
     UserDefinedHeight:"UserDefinedHeight", // the width will change

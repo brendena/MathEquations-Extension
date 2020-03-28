@@ -3,6 +3,17 @@ var browser = browser || chrome;
 console.log("loaded this extension");
 var loadedExtension = {};
 
+
+var loadedExtension = (tabId)=>{
+  browser.tabs.executeScript(tabId,{
+    file: "custom-mathjax.min.js"
+  });
+  browser.tabs.executeScript(tabId,{
+    file:"contentScript.js"
+  });
+  loadedExtension[tabId] = true;
+};
+
 //browser action 
 browser.browserAction.onClicked.addListener(function(tab) {
   console.log("clicked browser action");
@@ -14,14 +25,8 @@ browser.browserAction.onClicked.addListener(function(tab) {
   if( (tab.id in loadedExtension) == false  || loadedExtension[tab.id] == false)
   {
     console.log("loading the content script");
-    browser.tabs.executeScript(tab.id,{
-      file: "custom-mathjax.min.js"
-    });
-    browser.tabs.executeScript(tab.id,{
-      file:"contentScript.js"
-    });
-    loadedExtension[tab.id] = true;
 
+    loadedExtension(tab.id);
 
   }
   else
@@ -54,6 +59,8 @@ function handleUpdate(tabId, removeInfo)
 {
   console.log("changed tab - " + tabId);
   loadedExtension[tabId] = false;
+
+
 }
 
 browser.tabs.onUpdated.addListener(handleUpdate);

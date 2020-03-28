@@ -9,18 +9,22 @@ import TextSlideBox from "./js/components/TextSlideBox"
 import PopUpUi from "./js/components/PopUpUi"
 import * as log from 'loglevel';
 import * as Actions from './js/actions/index'
+import UILocationNamingScheme from './js/backendCode/UILocationNamingScheme'
+
 
 
 @connect((store)=>{
   return{
     showMathEquationBox: store.propsPage.showMathEquationTextBox,
     selectedMarkupLanguage: store.propsPage.selectedMarkupLanguage,
-    themeColor: store.localSync.themeColors
+    themeColor: store.localSync.themeColors,
+    uiLocation: store.localSync.uiLocation
   }
 })
 class App extends React.Component{
   constructor(props){
     super(props);
+    /*
     var browser = browser || chrome;
     browser.storage.local.get(function(data){
       if(Object.keys(data).length != 0)
@@ -30,6 +34,7 @@ class App extends React.Component{
       
     });
     this.updateTheme = this.updateTheme.bind(this);
+    */
   }
   
   updateTheme()
@@ -47,15 +52,16 @@ class App extends React.Component{
 
   render (){
     this.updateTheme();
+    var appContainerClass = UILocationNamingScheme("App appGrid",this.props.uiLocation);
+    var appSpacer = UILocationNamingScheme("appSpacer",this.props.uiLocation); 
+    console.log(appContainerClass);
     return(
-      
-
-
-     <div className="App appGrid_H">
-          <div id="appSpacer" className="appSpacer_H"></div>
+     <div className={appContainerClass}>
+          <div id="appSpacer" className={appSpacer}></div>
           <TextSlideBox/>
           <ActionBar stateMathTextBox={this.props.showMathEquationBox} 
-                     currentMathInput={this.props.selectedMarkupLanguage}/>
+                     currentMathInput={this.props.selectedMarkupLanguage}
+                     uiLocation={this.props.uiLocation}/>
           <PopUpUi/>
     </div>)
   };

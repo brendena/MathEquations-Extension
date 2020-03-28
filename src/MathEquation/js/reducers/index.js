@@ -1,9 +1,9 @@
 import * as consts from "../constants/action-types";
-import * as constTypes from "../constants/constsTypes"
-import * as ConstsID from "../constants/constsID"
+import * as constTypes from "../constants/constsTypes";
+import * as ConstsID from "../constants/constsID";
 import * as log from 'loglevel';
-import produce from "immer"
-import ThemeColors from "../types/ThemeColors"
+import produce from "immer";
+import ThemeColors from "../types/ThemeColors";
 
 const initialState = {
     //properties of the page that will not be synced across all instances of the browser
@@ -26,7 +26,8 @@ const initialState = {
     //properties that will be locally synced
     localSync:{
         imageDimensionsSettings: constTypes.ImageDimensionsSettings.UserDefinedWidth,
-        themeColors: new ThemeColors()
+        themeColors: new ThemeColors(),
+        uiLocation: constTypes.UILocation.Right
     }
 };
 
@@ -123,7 +124,10 @@ function rootReducer(state = initialState, action){
             draft.localSync.themeColors = action.payload;
             updateLocalSyncObject = true;
         }
+        else if(action.type === consts.UPDATE_UI_LOCATION)
+        {
 
+        }
 
 
     });

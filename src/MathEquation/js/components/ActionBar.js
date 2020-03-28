@@ -9,6 +9,7 @@ import SelectedMathType from "./SelectedMathType.js"
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { faWindowClose, faChevronUp, faCoins, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import UILocationNamingScheme from '../backendCode/UILocationNamingScheme'
 
 
 
@@ -48,10 +49,11 @@ class ActionBar extends React.Component{
             stylesSlideMathTextBox.transform = "rotate(180deg)"
         }
 
+        var actionBarClass = UILocationNamingScheme("actionBar",this.props.uiLocation);
 
 
         return (
-            <div id="ActionBar">
+            <div id="ActionBar" className={actionBarClass}>
                 <img src={ConstsID.UrlImage + "logoClearBackground.svg"} id="navBarLogo" alt="Math Equations Logo"/>
 
                 <SelectedMathType currentMathInput={this.props.currentMathInput}/>

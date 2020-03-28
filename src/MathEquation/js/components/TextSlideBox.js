@@ -5,12 +5,14 @@ import MathEquationBox from "./MathEquationBox"
 import  store  from "../store/index"
 import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
+import UILocationNamingScheme from '../backendCode/UILocationNamingScheme'
 
 @connect((store)=>{
     return{
         pageHeight: store.propsPage.height,
         mathEquationText: store.propsPage.mathEquationText,
-        showMathEquationBox: store.propsPage.showMathEquationTextBox
+        showMathEquationBox: store.propsPage.showMathEquationTextBox,
+        uiLocation: store.localSync.uiLocation
     }
 })
 class TextSlideBox extends React.Component{
@@ -22,6 +24,9 @@ class TextSlideBox extends React.Component{
         store.dispatch(Actions.updateMathEquationText(inputEl));
     }
     render(){
+        var textSlideBoxClass = UILocationNamingScheme("textSlideBox",this.props.uiLocation);
+
+
         var position = {height: this.props.pageHeight+"vh"}
         if(!this.props.showMathEquationBox){
             position.transform = "translateY(" + (this.props.pageHeight + (75/ window.innerHeight * 100))  + "vh)";
@@ -29,7 +34,7 @@ class TextSlideBox extends React.Component{
         }
         
         return (
-            <div id="TextSlideBox" style={position} className="textSlideBox_H">
+            <div id="TextSlideBox" style={position} className={textSlideBoxClass}>
                 <PageSlider/>
                 
                 

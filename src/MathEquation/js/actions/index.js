@@ -71,3 +71,8 @@ export function updateImageDimensionsSettings(payload) {
 export function updateColorThemes(payload) {
     return { type: consts.UPDATE_COLOR_THEME, payload }
 }
+
+export function updateUILocation(payload) {
+    return { type: consts.UPDATE_UI_LOCATION, payload }
+}
+

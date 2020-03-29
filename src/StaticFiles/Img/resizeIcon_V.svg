@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg2"
+   viewBox="0 0 10 80"
+   height="80"
+   width="10">
+  <defs
+     id="defs4" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(90,-972.3621)"
+     id="layer1">
+    <g
+       transform="rotate(-90,480.81386,570.13221)"
+       id="g4156">
+      <path
+         style="fill:currentColor"
+         d="M 4.5,9 H 72 c 2.5,0 4.5,-2 4.5,-4.5 v 0 C 76.5,2 74.5,0 72,0 H 4.5 C 2,0 0,2 0,4.5 v 0 C 0,7 2,9 4.5,9 Z"
+         id="path4138" />
+      <circle
+         style="fill:#dcdfe2"
+         cx="9.6999998"
+         cy="4.5999999"
+         r="2.5"
+         id="circle4140" />
+      <circle
+         style="fill:#dcdfe2"
+         cx="24"
+         cy="4.5999999"
+         r="2.5"
+         id="circle4142" />
+      <circle
+         style="fill:#dcdfe2"
+         cx="38.299999"
+         cy="4.5999999"
+         r="2.5"
+         id="circle4144" />
+      <circle
+         style="fill:#dcdfe2"
+         cx="52.599998"
+         cy="4.5999999"
+         r="2.5"
+         id="circle4146" />
+      <circle
+         style="fill:#dcdfe2"
+         cx="66.800003"
+         cy="4.5999999"
+         r="2.5"
+         id="circle4148" />
+    </g>
+  </g>
+</svg>

@@ -2,7 +2,7 @@ import * as constTypes from "../constants/constsTypes"
 
 function UILocationNamingScheme (className,floatDirection){
     console.log(floatDirection)
-    /*
+    
     if(floatDirection === constTypes.UILocation.Bottom)
     {
 
@@ -16,9 +16,9 @@ function UILocationNamingScheme (className,floatDirection){
     {
         className += "_L";
     }
-    */
+    
    
-    return className + "_R";
+    return className;
 }
   
   

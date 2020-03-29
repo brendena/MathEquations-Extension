@@ -69,7 +69,6 @@ hr{
   border-top-style: solid;
   border-top-width: 1px;
   display:flex;
-  flex-direction:column;
   pointer-events: auto;
   z-index:200;
 }
@@ -82,16 +81,21 @@ hr{
   grid-column-end: 2;
   height: 200px;
   align-self: end;
+  flex-direction:column;
 }
 
 .textSlideBox_R
 {
+  height:100%;
+  border-left-style: solid;
+  border-left-width: 1px;
   grid-row-start: 1;
   grid-row-end: 2;
   grid-column-start: 2;
   grid-column-end: 3;
-  height: 200px;
   align-self: end;
+  flex-direction:row;
+  justify-self:end;
 }
 
 
@@ -142,16 +146,24 @@ a:active
 #slideItem{
   margin: auto;
   text-align: center;
-  cursor: ns-resize;
   opacity:0.5;
   min-height:10px;
+  min-width:10px;
 }
 
 #slideItem:hover{
   opacity:1;
 }
 
+.slideItem_B
+{
+  cursor: ns-resize;
+}
 
+.slideItem_R
+{
+  cursor: ew-resize;
+}
 
 
 .classTextBoxOffscreen
@@ -163,8 +175,18 @@ a:active
 {
   flex-grow:2;
   display:flex;
+  
+  max-width:100%;
+}
+.textSectionDividerClass_B
+{
   flex-direction:row;
 }
+.textSectionDividerClass_R
+{
+  flex-direction:column;
+}
+
 #inputTextMathEquation
 {
   width:50%;
@@ -418,17 +440,15 @@ svg
 
 @media screen and (max-width: 1000px)
 {
-  #TextSectionDivider
+  .textSectionDividerClass_B
   {
-    flex-direction: column;
- 
+    flex-direction: column; 
   }
+
   #inputTextMathEquation
   {
     width:100%;
     flex-grow:1;
-
-
   }
   #textOutputBox
   {

@@ -6,10 +6,11 @@ import  store  from "../store/index"
 import * as Actions from '../actions/index'
 import { connect } from 'react-redux';
 import UILocationNamingScheme from '../backendCode/UILocationNamingScheme'
+import * as constTypes from "../constants/constsTypes";
 
 @connect((store)=>{
     return{
-        pageHeight: store.propsPage.height,
+        height: store.propsPage.height,
         mathEquationText: store.propsPage.mathEquationText,
         showMathEquationBox: store.propsPage.showMathEquationTextBox,
         uiLocation: store.localSync.uiLocation
@@ -24,21 +25,42 @@ class TextSlideBox extends React.Component{
         store.dispatch(Actions.updateMathEquationText(inputEl));
     }
     render(){
-        var textSlideBoxClass = UILocationNamingScheme("textSlideBox",this.props.uiLocation);
+        
 
+        var position = {};
+        
+        if(this.props.uiLocation === constTypes.UILocation.Bottom)
+        {
+            position.height = this.props.height+"vh";
+            
+            if(!this.props.showMathEquationBox){
 
-        var position = {height: this.props.pageHeight+"vh"}
-        if(!this.props.showMathEquationBox){
-            position.transform = "translateY(" + (this.props.pageHeight + (75/ window.innerHeight * 100))  + "vh)";
-            position.transition = "0.2s";
+                position.transform = "translateY(" + (this.props.height + (75/ window.innerHeight * 100))  + "vh)";
+                position.transition = "0.2s";
+            }
+            
         }
+        else
+        {
+            position.width =  this.props.height+"vw";
+            
+            if(!this.props.showMathEquationBox){
+
+                position.transform = "translateX(" + (this.props.height + (75/ window.innerWidth * 100))  + "vw)";
+                position.transition = "0.2s";
+            }
+            
+        }
+        
+        var textSlideBoxClass = UILocationNamingScheme("textSlideBox",this.props.uiLocation);
+        var textSectionClass = UILocationNamingScheme("textSectionDividerClass",this.props.uiLocation);
         
         return (
             <div id="TextSlideBox" style={position} className={textSlideBoxClass}>
-                <PageSlider/>
+                <PageSlider uiLocation={this.props.uiLocation} />
                 
                 
-                <div id="TextSectionDivider">
+                <div id="TextSectionDivider" class={textSectionClass}>
                     <textarea id="inputTextMathEquation" 
                               placeholder="equation location"
                               value={this.props.mathEquationText}

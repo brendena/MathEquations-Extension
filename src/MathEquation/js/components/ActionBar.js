@@ -44,6 +44,8 @@ class ActionBar extends React.Component{
 
     render(){
         var stylesSlideMathTextBox = { transform: "rotate(0deg)"}
+
+        
         if(this.props.stateMathTextBox)
         {
             stylesSlideMathTextBox.transform = "rotate(180deg)"
